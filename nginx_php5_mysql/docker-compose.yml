@@ -20,8 +20,8 @@ services:
    volumes:
     - ./www:/var/www/html
    environment: 
-    DB_HOST=mysql
-    DB_PASS=root
+    - DB_HOST=mysql
+    - DB_PASS=root
  mysql:
    image: mysql:5
    volumes:
