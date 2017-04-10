@@ -13,8 +13,6 @@ services:
     - "443:443"
  php:
    build: .
-   ports:
-    - "127.0.0.1:8077:8077"
    depends_on:
     - mysql
    volumes:
