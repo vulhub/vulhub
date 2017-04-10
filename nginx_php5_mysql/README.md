@@ -53,3 +53,7 @@ Mysql的数据文件放在`mysql/data/`目录下（在第一次启动Mysql容器
 1. Mysql版本：修改docker-compose.yml中mysql段的image的值，如`mysql:5.5`，阅读 https://hub.docker.com/_/mysql/ 查看Docker支持的Mysql版本
 2. Nginx版本：修改docker-compose.yml中nginx段的image的值，如`nginx:1.10`，阅读 https://hub.docker.com/_/nginx/ 查看Docker支持的Nginx版本
 3. PHP版本：PHP版本变动比较大，当前Docker支持的PHP版本最低5.6，修改Dockerfile中`FROM php:5-fpm`为其他版本即可。阅读 https://hub.docker.com/_/php/ 查看Docker支持的PHP版本
+
+如果你对Dockerfile进行了一定修改，请执行`docker-compose build`重新编译环境。
+
+执行`docker-compose up -d`更新整体。
