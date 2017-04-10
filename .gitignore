@@ -4,3 +4,7 @@ nginx_php5_mysql/mysql/data/
 !nginx_php5_mysql/www
 nginx_php5_mysql/www/*
 !nginx_php5_mysql/www/index.php
+
+!nginx_parsing_vulnerability/www/uploadfiles
+nginx_parsing_vulnerability/www/uploadfiles/*
+!nginx_parsing_vulnerability/www/uploadfiles/nginx.png
