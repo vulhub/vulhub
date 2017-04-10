@@ -1,4 +1,6 @@
 .DS_Store
 
 nginx_php5_mysql/mysql/data/
-nginx_php5_mysql/www/
+!nginx_php5_mysql/www
+nginx_php5_mysql/www/*
+!nginx_php5_mysql/www/index.php
