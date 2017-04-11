@@ -1,0 +1,6 @@
+version: '2'
+services:
+ apache:
+   image: php:apache
+   volumes:
+    - ./www:/var/www/html
