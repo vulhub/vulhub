@@ -8,3 +8,7 @@ nginx_php5_mysql/www/*
 !nginx_parsing_vulnerability/www/uploadfiles
 nginx_parsing_vulnerability/www/uploadfiles/*
 !nginx_parsing_vulnerability/www/uploadfiles/nginx.png
+
+!apache_parsing_vulnerability/www/uploadfiles
+apache_parsing_vulnerability/www/uploadfiles/*
+!apache_parsing_vulnerability/www/uploadfiles/apache.php.jpeg
