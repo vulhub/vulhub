@@ -6,7 +6,7 @@ RUN wget http://xmlsoft.org/sources/libxml2-2.8.0.tar.gz -O /home/libxml2-2.8.0.
 
 RUN cd /home/ && tar -zxvf libxml2-2.8.0.tar.gz && rm -f /home/libxml2-2.8.0.tar.gz
 
-RUN cd /home/libxml2-2.8.0 && ./configure && make && make install && cd / && rm -rf /home/libxml2-2.8.0
+RUN cd /home/libxml2-2.8.0 && ./configure && make && make install && make clean && cd / && rm -rf /home/libxml2-2.8.0
 
 RUN set -xe \
 	&& buildDeps=" \
@@ -46,5 +46,5 @@ RUN set -xe \
 	&& make clean \
 	&& docker-php-source delete \
 	\
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps
+	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps wget
 
