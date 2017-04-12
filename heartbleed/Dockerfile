@@ -38,8 +38,11 @@ RUN touch /var/log/access.log \
 	&& ln -sf /dev/stderr /var/log/error.log \
     && ln -sf /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 
-RUN mkdir -p /etc/nginx/ssl/ \
-    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/local.key -out /etc/nginx/ssl/local.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost"
+RUN apt-get install -y openssl \
+    && mkdir -p /etc/nginx/ssl/ \
+    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/local.key -out /etc/nginx/ssl/local.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost" \
+    && rm -rf /var/lib/apt/lists/*
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false openssl
 
 EXPOSE 80 443
 
