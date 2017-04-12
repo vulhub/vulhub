@@ -40,8 +40,8 @@ RUN touch /var/log/access.log \
 
 RUN apt-get update \
     && apt-get install -y openssl \
-    && mkdir -p /etc/nginx/ssl/ \
-    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/local.key -out /etc/nginx/ssl/local.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost" \
+    && mkdir -p /etc/ssl/nginx/ \
+    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/nginx/local.key -out /etc/ssl/nginx/local.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost" \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false openssl
 
