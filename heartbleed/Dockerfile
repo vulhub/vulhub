@@ -38,6 +38,9 @@ RUN touch /var/log/access.log \
 	&& ln -sf /dev/stderr /var/log/error.log \
     && ln -sf /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 
+RUN mkdir -p /etc/nginx/ssl/ \
+    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/local.key -out /etc/nginx/ssl/local.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost"
+
 EXPOSE 80 443
 
 CMD ["nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
