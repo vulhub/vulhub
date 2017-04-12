@@ -6,6 +6,7 @@ ENV BUILD_TOOLS \
     gcc \
     libc-dev \
     make \
+    g++ \
     wget
 
 RUN apt-get update \
