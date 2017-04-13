@@ -33,7 +33,7 @@ RUN mkdir -p /usr/local/src/cve-2014-7169 \
     && cd /tmp/ \
     && rm -rf /usr/local/src/cve-2014-7169
 
-COPY ./cgi-bin/* /usr/local/apache2/cgi-bin/*
+COPY ./cgi-bin/ /usr/local/apache2/cgi-bin/
 
 RUN chmod a+x /usr/local/apache2/cgi-bin/* \
     && apt-get purge -y --auto-remove $BUILD_TOOLS
