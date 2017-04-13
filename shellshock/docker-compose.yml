@@ -1,0 +1,10 @@
+version: '2'
+services:
+ nginx:
+   build: .
+   volumes:
+    - ./cgi-bin:/usr/local/apache2/cgi-bin
+    - ./start.sh:/start.sh
+   command: /bin/sh start.sh
+   ports:
+    - "80:80"
