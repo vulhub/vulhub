@@ -44,9 +44,10 @@ RUN { \
         echo '<Directory "/usr/local/apache2/cgi-bin">'; \
         echo '  SetHandler cgi-script'; \
         echo '  AllowOverride None'; \
-        echo '  Options None'; \
+        echo '  Options +ExecCGI +Indexes'; \
         echo '  Require all granted'; \
         echo '</Directory>'; \
         echo; \
     } >> /usr/local/apache2/conf/httpd.conf \
-    && sed -i -e "s/\#LoadModule cgi_module/LoadModule cgi_module/g" /usr/local/apache2/conf/httpd.conf
+    && sed -i -e "s/\#LoadModule cgi_module/LoadModule cgi_module/g" /usr/local/apache2/conf/httpd.conf \
+    && sed -i -e "s/\#LoadModule cgid_module/LoadModule cgid_module/g" /usr/local/apache2/conf/httpd.conf
