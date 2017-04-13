@@ -10,7 +10,8 @@ ENV BUILD_TOOLS \
     autoconf
 
 RUN apt-get update \
-    && apt-get -y install $BUILD_TOOLS
+    && apt-get -y install $BUILD_TOOLS \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/local/src/cve-2014-6271 \
     && wget -qO- https://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz \
@@ -37,3 +38,15 @@ COPY ./cgi-bin/ /usr/local/apache2/cgi-bin/
 
 RUN chmod a+x /usr/local/apache2/cgi-bin/* \
     && apt-get purge -y --auto-remove $BUILD_TOOLS
+
+RUN { \
+        echo; \
+        echo '<Directory "/usr/local/apache2/cgi-bin">'; \
+        echo '  SetHandler cgi-script'; \
+        echo '  AllowOverride None'; \
+        echo '  Options None'; \
+        echo '  Require all granted'; \
+        echo '</Directory>'; \
+        echo; \
+    } >> /usr/local/apache2/conf/httpd.conf \
+    && sed -i -e "s/\#LoadModule cgi_module/LoadModule cgi_module/g" /usr/local/apache2/conf/httpd.conf
