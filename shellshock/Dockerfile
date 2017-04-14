@@ -1,5 +1,4 @@
 FROM httpd
-MAINTAINER Medici.Yan@Gmail.com
 
 WORKDIR /tmp
 
@@ -23,28 +22,19 @@ RUN mkdir -p /usr/local/src/cve-2014-6271 \
     && cd /tmp/ \
     && rm -rf /usr/local/src/cve-2014-6271
 
-RUN mkdir -p /usr/local/src/cve-2014-7169 \
-    && wget -qO- https://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz \
-        | tar zx -C /usr/local/src/cve-2014-7169 --strip-components=1 \
-    && cd /usr/local/src/cve-2014-7169 \
-    && wget -qO- $(seq -f "https://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-%03g" 25) | patch -p0 \
-    && ./configure --prefix=/usr/local/bash-4.3.25 \
-    && make \
-    && make install \
-    && cd /tmp/ \
-    && rm -rf /usr/local/src/cve-2014-7169
+COPY ./evil.cgi /usr/local/apache2/htdocs/evil.cgi
 
-COPY ./cgi-bin/ /usr/local/apache2/cgi-bin/
+COPY ./safe.cgi /usr/local/apache2/htdocs/safe.cgi
 
-RUN chmod a+x /usr/local/apache2/cgi-bin/* \
+RUN chmod a+x /usr/local/apache2/htdocs/*.cgi \
     && apt-get purge -y --auto-remove $BUILD_TOOLS
 
 RUN { \
         echo; \
-        echo '<Directory "/usr/local/apache2/cgi-bin">'; \
-        echo '  SetHandler cgi-script'; \
+        echo '<Directory "/usr/local/apache2/htdocs">'; \
+        echo '  AddHandler cgi-script .cgi'; \
         echo '  AllowOverride None'; \
-        echo '  Options +ExecCGI +Indexes'; \
+        echo '  Options Indexes FollowSymLinks ExecCGI'; \
         echo '  Require all granted'; \
         echo '</Directory>'; \
         echo; \
