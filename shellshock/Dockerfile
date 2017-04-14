@@ -22,22 +22,23 @@ RUN mkdir -p /usr/local/src/cve-2014-6271 \
     && cd /tmp/ \
     && rm -rf /usr/local/src/cve-2014-6271
 
-COPY ./evil.cgi /usr/local/apache2/htdocs/evil.cgi
+COPY ./evil.cgi ${HTTPD_PREFIX}/htdocs/evil.cgi
 
-COPY ./safe.cgi /usr/local/apache2/htdocs/safe.cgi
+COPY ./safe.cgi ${HTTPD_PREFIX}/htdocs/safe.cgi
 
-RUN chmod a+x /usr/local/apache2/htdocs/*.cgi \
-    && apt-get purge -y --auto-remove $BUILD_TOOLS
+RUN chmod a+x ${HTTPD_PREFIX}/htdocs/*.cgi \
+    && apt-get purge -y --auto-remove $BUILD_TOOLS \
+    && rm ${HTTPD_PREFIX}/htdocs/index.html
 
 RUN { \
         echo; \
-        echo '<Directory "/usr/local/apache2/htdocs">'; \
+        echo "<Directory \"${HTTPD_PREFIX}/htdocs\">"; \
         echo '  AddHandler cgi-script .cgi'; \
         echo '  AllowOverride None'; \
         echo '  Options Indexes FollowSymLinks ExecCGI'; \
         echo '  Require all granted'; \
         echo '</Directory>'; \
         echo; \
-    } >> /usr/local/apache2/conf/httpd.conf \
-    && sed -i -e "s/\#LoadModule cgi_module/LoadModule cgi_module/g" /usr/local/apache2/conf/httpd.conf \
-    && sed -i -e "s/\#LoadModule cgid_module/LoadModule cgid_module/g" /usr/local/apache2/conf/httpd.conf
+    } >> ${HTTPD_PREFIX}/conf/httpd.conf \
+    && sed -i -e "s/\#LoadModule cgi_module/LoadModule cgi_module/g" ${HTTPD_PREFIX}/conf/httpd.conf \
+    && sed -i -e "s/\#LoadModule cgid_module/LoadModule cgid_module/g" ${HTTPD_PREFIX}/conf/httpd.conf
