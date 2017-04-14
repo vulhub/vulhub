@@ -22,7 +22,7 @@ RUN mkdir -p /usr/local/src/cve-2014-6271 \
     && cd /tmp/ \
     && rm -rf /usr/local/src/cve-2014-6271
 
-COPY ./evil.cgi ${HTTPD_PREFIX}/htdocs/evil.cgi
+COPY ./victim.cgi ${HTTPD_PREFIX}/htdocs/victim.cgi
 
 COPY ./safe.cgi ${HTTPD_PREFIX}/htdocs/safe.cgi
 
