@@ -1,7 +1,5 @@
 FROM tomcat:8
 
-WORKDIR /tmp
-
 RUN set -ex \
     && rm -rf /usr/local/tomcat/webapps/* \
     && chmod a+x /usr/local/tomcat/bin/*.sh
