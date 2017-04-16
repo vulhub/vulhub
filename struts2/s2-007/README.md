@@ -3,6 +3,13 @@
 影响版本: 2.0.0 - 2.2.3
 漏洞详情: http://struts.apache.org/docs/s2-007.html
 
+## 测试环境搭建
+
+```
+docker-compose build
+docker-compose up -d
+```
+
 ## 原理
 
 参考 http://rickgray.me/2016/05/06/review-struts2-remote-command-execution-vulnerabilities.html
