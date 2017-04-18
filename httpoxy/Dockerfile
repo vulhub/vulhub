@@ -150,11 +150,11 @@ RUN set -ex \
 COPY www /var/www/html
 
 RUN set -ex \
-	&& apt-get update && apt-get install git \
+	&& apt-get update && apt-get install -y git \
     && wget -qO- https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && cd /var/www/html \
     && composer install \
-    && apt-get purge -y --auto-remove wget
+    && apt-get purge -y --auto-remove wget git
 
 EXPOSE 9000
 CMD ["php-fpm"]
