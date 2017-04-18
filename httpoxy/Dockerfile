@@ -150,6 +150,7 @@ RUN set -ex \
 COPY www /var/www/html
 
 RUN set -ex \
+	&& apt-get update && apt-get install git \
     && wget -qO- https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && cd /var/www/html \
     && composer install \
