@@ -147,8 +147,10 @@ RUN set -ex \
 		echo 'listen = [::]:9000'; \
 	} | tee php-fpm.d/zz-docker.conf
 
+COPY www /var/www/html
+
 RUN set -ex \
-    && wget -qO- https://getcomposer.org/installer | php \
+    && wget -qO- https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && cd /var/www/html \
     && composer install \
     && apt-get purge -y --auto-remove wget
