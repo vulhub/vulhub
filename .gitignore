@@ -12,3 +12,6 @@ nginx_parsing_vulnerability/www/uploadfiles/*
 !apache_parsing_vulnerability/www/uploadfiles
 apache_parsing_vulnerability/www/uploadfiles/*
 !apache_parsing_vulnerability/www/uploadfiles/apache.php.jpeg
+
+httpoxy/www/vendor/
+httpoxy/www/composer.lock
