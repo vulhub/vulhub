@@ -15,11 +15,4 @@ RUN rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false wget \
     && rm -rf /tmp/ImageMagick*
 
-RUN { \
-        echo; \
-        echo "<Directory \"/var/www/html\">"; \
-        echo '  Options Indexes'; \
-        echo '  Require all granted'; \
-        echo '</Directory>'; \
-        echo; \
-    } >> ${HTTPD_PREFIX}/conf/httpd.conf
+RUN sed -i -e "s/Options -Indexes/Options +Indexes/g" $APACHE_CONFDIR/conf-available/docker-php.conf
