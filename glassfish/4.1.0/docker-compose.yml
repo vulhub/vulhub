@@ -8,3 +8,5 @@ services:
    ports:
     - "8080:8080"
     - "4848:4848"
+   environment:
+    - ADMIN_PASSWORD=vulhub_default_password

@@ -16,7 +16,9 @@ EXPOSE      8080 4848 8181
 
 WORKDIR     /usr/local/glassfish4
 
-RUN         asadmin -H localhost change-master-password vulhub
+COPY        docker-entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT  ["/entrypoint.sh"]
 
 # verbose causes the process to remain in the foreground so that docker can track it
 CMD         ["asadmin", "start-domain", "--verbose"]
