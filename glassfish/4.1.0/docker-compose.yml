@@ -6,5 +6,5 @@ services:
     - ./www:/var/www/html
     - ./conf:/etc/nginx
    ports:
-    - "80:80"
-    - "443:443"
+    - "8080:8080"
+    - "4848:4848"
