@@ -1,4 +1,4 @@
-# Vulhub - Some Docker-Compose files for vulnerabilitis environment
+# Vulhub - Some Docker-Compose files for vulnerabilities environment
 
 使用docker-compose进行漏洞测试/环境一键搭建。
 
