@@ -1,5 +1,7 @@
 FROM php:apache
 
+MAINTAINER phithon <root@leavesongs.com>
+
 RUN apt-get update && apt-get install -y gcc wget
 
 RUN wget http://xmlsoft.org/sources/libxml2-2.8.0.tar.gz -O /home/libxml2-2.8.0.tar.gz

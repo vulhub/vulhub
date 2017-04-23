@@ -1,5 +1,7 @@
 FROM debian:jessie
 
+MAINTAINER phithon <root@leavesongs.com>
+
 ENV NGINX_VERSION 1.11.13
 
 ENV BUILD_TOOLS \

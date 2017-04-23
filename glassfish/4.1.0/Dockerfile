@@ -1,5 +1,7 @@
 FROM        java:8-jdk
 
+MAINTAINER  phithon <root@leavesongs.com>
+
 ENV         JAVA_HOME         /usr/lib/jvm/java-8-openjdk-amd64
 ENV         GLASSFISH_HOME    /usr/local/glassfish4
 ENV         PATH              $PATH:$JAVA_HOME/bin:$GLASSFISH_HOME/bin

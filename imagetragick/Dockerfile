@@ -1,5 +1,7 @@
 FROM php:apache
 
+MAINTAINER phithon <root@leavesongs.com>
+
 RUN apt-get update && apt-get install -y wget \
     && wget -qO- https://www.imagemagick.org/download/releases/ImageMagick-6.9.2-10.tar.xz \
      | tar xJ -C /tmp/ \

@@ -6,6 +6,8 @@
 
 FROM debian:jessie
 
+MAINTAINER phithon <root@leavesongs.com>
+
 COPY docker-php-source docker-php-entrypoint /usr/local/bin/
 
 # persistent / runtime deps

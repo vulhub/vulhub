@@ -1,5 +1,7 @@
 FROM httpd
 
+MAINTAINER phithon <root@leavesongs.com>
+
 WORKDIR /tmp
 
 ENV BUILD_TOOLS \
