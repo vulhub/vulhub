@@ -4,5 +4,6 @@ services:
    image: tomcat:8
    volumes:
     - ./tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+    - ./context.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml
    ports:
     - "8080:8080"
