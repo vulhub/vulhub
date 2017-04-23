@@ -1,0 +1,8 @@
+version: '2'
+services:
+ tomcat:
+   image: tomcat:8
+   volumes:
+    ./tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   ports:
+    - "8080:8080"
