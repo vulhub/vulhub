@@ -4,13 +4,13 @@ MAINTAINER phithon <root@leavesongs.com>
 
 RUN set -ex \
     && rm -rf $CATALINA_HOME/webapps/ROOT/* \
-    && echo '<% out.println("Hello World！"); %>' | tee $CATALINA_HOME/webapps/ROOT/index.jsp
+    && echo '<% out.println("Hello World! "); %>' | tee $CATALINA_HOME/webapps/ROOT/index.jsp
 
 RUN set -ex \
     && apt-get update \
     && apt-get install -y wget \
     && mkdir -p /usr/share/elasticsearch \
-    && wget -qO- https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.6.0.tar.gz \
+    && wget -qO- https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.5.1.tar.gz \
         | tar zx --strip-components 1 -C /usr/share/elasticsearch
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
