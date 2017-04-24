@@ -1,0 +1,7 @@
+version: '2'
+services:
+ es:
+   build: .
+   ports:
+    - "9200:9200"
+    - "8080:8080"
