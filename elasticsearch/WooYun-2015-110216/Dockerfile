@@ -4,7 +4,7 @@ MAINTAINER phithon <root@leavesongs.com>
 
 RUN set -ex \
     && rm -rf $CATALINA_HOME/webapps/ROOT/* \
-    && echo '<%%>' | tee $CATALINA_HOME/webapps/ROOT/index.jsp
+    && echo '<% out.println("Hello World！"); %>' | tee $CATALINA_HOME/webapps/ROOT/index.jsp
 
 RUN set -ex \
     && apt-get update \
@@ -25,5 +25,7 @@ RUN set -ex \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false wget
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["catalina.sh", "run"]
 
 EXPOSE 9200 8080
