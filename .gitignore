@@ -15,3 +15,6 @@ apache_parsing_vulnerability/www/uploadfiles/*
 
 httpoxy/www/vendor/
 httpoxy/www/composer.lock
+
+!gitlab/CVE-2016-9086/data
+gitlab/CVE-2016-9086/data/*
