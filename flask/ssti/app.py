@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    name = request.get.get('name')
+    name = request.args.get('name')
 
     t = Template("Hello {{ %s }} " % name)
     return t.render()
