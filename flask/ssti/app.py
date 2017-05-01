@@ -7,7 +7,7 @@ app = Flask(__name__)
 def index():
     name = request.args.get('name')
 
-    t = Template("Hello {{ %s }} " % name)
+    t = Template("Hello " + name)
     return t.render()
 
 if __name__ == "__main__":
