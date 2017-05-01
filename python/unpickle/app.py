@@ -1,4 +1,5 @@
 import pickle
+import base64
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -7,7 +8,7 @@ app = Flask(__name__)
 @app.route("/<int:version>")
 def index(version=3):
     try:
-        user = request.cookies.get('user')
+        user = base64.b64decode(request.cookies.get('user'))
         user = pickle.loads(user, protocol=version)
         username = user["username"]
     except:
