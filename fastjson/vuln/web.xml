@@ -1,0 +1,13 @@
+<filter>
+    <filter-name>SparkFilter</filter-name>
+    <filter-class>spark.servlet.SparkFilter</filter-class>
+    <init-param>
+        <param-name>applicationClass</param-name>
+        <param-value>IndexFilter</param-value>
+    </init-param>
+</filter>
+
+<filter-mapping>
+    <filter-name>SparkFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>

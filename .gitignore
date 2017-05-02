@@ -1,4 +1,5 @@
 .DS_Store
+.idea
 
 nginx_php5_mysql/mysql/data/
 !nginx_php5_mysql/www
