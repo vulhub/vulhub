@@ -13,13 +13,16 @@ public class IndexFilter implements SparkApplication {
 
         post("/", (request, response) -> {
             String data = request.body();
-            ParserConfig config = new ParserConfig();
 
-            Record obj = JSON.parseObject(data, Record.class, config, Feature.SupportNonPublicField);
+            JSONObject obj = JSON.parseObject(data, Feature.SupportNonPublicField);
+
+            JSONObject ret = new JSONObject();
+            ret.put("success", 200);
+            ret.put("data", "Hello " + obj.get("name") + ", Your age is " + obj.get("age"));
 
             response.status(200);
             response.type("application/json");
-            return "{\"status\": 200, \"info\": \"Hello " + obj.name + ", Your age is " + obj.age + "\"}";
+            return ret.toJSONString();
         });
     }
 
