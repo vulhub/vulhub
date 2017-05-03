@@ -34,7 +34,7 @@ docker-compose up -d
  - exploit.php 读取编译好的POC字节码，并转换成base64
  - fastjson-1.0.war 打包好的web环境，可以直接放到tomcat下运行
 
-### 步骤一、生成bytes
+### 步骤一、生成字节码
 
 第一步就是编写一个Java类，在这个类中执行命令。然后编译该类，获得.class文件，获得字节码。
 
