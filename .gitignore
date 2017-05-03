@@ -24,3 +24,6 @@ httpoxy/www/composer.lock
 gitlab/CVE-2016-9086/data/*
 
 fastjson/vuln/target
+
+jenkins/CVE-2017-1000353/payload/*.class
+jenkins/CVE-2017-1000353/payload/*.ser
