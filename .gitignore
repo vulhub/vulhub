@@ -1,5 +1,8 @@
 .DS_Store
 .idea
+.settings
+.classpath
+.project
 
 nginx_php5_mysql/mysql/data/
 !nginx_php5_mysql/www
@@ -19,3 +22,5 @@ httpoxy/www/composer.lock
 
 !gitlab/CVE-2016-9086/data
 gitlab/CVE-2016-9086/data/*
+
+fastjson/vuln/target

