@@ -1,6 +1,6 @@
 # Vulhub - Some Docker-Compose files for vulnerabilities environment
 
-使用docker-compose进行漏洞测试/环境一键搭建。
+Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单执行两条命令即可编译、运行一个完整的漏洞靶场镜像。
 
 安装docker-compose:
 
