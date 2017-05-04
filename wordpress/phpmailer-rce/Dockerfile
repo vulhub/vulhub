@@ -40,5 +40,9 @@ COPY docker-entrypoint.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
+RUN { \
+        echo 'display_errors=0'; \
+    } > /usr/local/etc/php/conf.d/errors.ini
+
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
