@@ -27,3 +27,4 @@ fastjson/vuln/target
 
 jenkins/CVE-2017-1000353/payload/*.class
 jenkins/CVE-2017-1000353/payload/*.ser
+jenkins/CVE-2017-1000353/*.7z
