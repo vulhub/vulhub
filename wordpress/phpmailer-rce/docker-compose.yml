@@ -9,6 +9,8 @@ services:
     - WORDPRESS_DB_USER=root
     - WORDPRESS_DB_PASSWORD=root
     - WORDPRESS_DB_NAME=wordpress
+   ports:
+    - "80:80"
  mysql:
    image: mysql:5
    environment: 
