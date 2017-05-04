@@ -13,8 +13,5 @@ services:
     - WORDPRESS_DB_NAME=wordpress
  mysql:
    image: mysql:5
-   volumes:
-    - ./mysql/data:/var/lib/mysql
-    - ./mysql/conf.d:/etc/mysql/conf.d
    environment: 
     - MYSQL_ROOT_PASSWORD=root
