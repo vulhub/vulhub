@@ -1,0 +1,20 @@
+version: '2'
+services:
+ web:
+   build: .
+   depends_on:
+    - mysql
+   volumes:
+    - ./wp-config-sample.php:/var/www/html/wp-config-sample.php
+   environment: 
+    - WORDPRESS_DB_HOST=mysql
+    - WORDPRESS_DB_USER=root
+    - WORDPRESS_DB_PASSWORD=root
+    - WORDPRESS_DB_NAME=wordpress
+ mysql:
+   image: mysql:5
+   volumes:
+    - ./mysql/data:/var/lib/mysql
+    - ./mysql/conf.d:/etc/mysql/conf.d
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root
