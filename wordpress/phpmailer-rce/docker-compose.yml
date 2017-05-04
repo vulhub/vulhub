@@ -4,8 +4,6 @@ services:
    build: .
    depends_on:
     - mysql
-   volumes:
-    - ./wp-config-sample.php:/var/www/html/wp-config-sample.php
    environment: 
     - WORDPRESS_DB_HOST=mysql
     - WORDPRESS_DB_USER=root
