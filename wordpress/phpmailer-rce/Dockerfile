@@ -7,6 +7,8 @@ RUN set -ex; \
 	apt-get install -y \
 		libjpeg-dev \
 		libpng12-dev \
+        sendmail \
+        exim4 \
         wget \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
