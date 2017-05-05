@@ -2,18 +2,23 @@
 
 Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单执行两条命令即可编译、运行一个完整的漏洞靶场镜像。
 
-安装docker-compose:
+在ubuntu16.04下安装docker/docker-compose:
 
 ```bash
 # 安装pip
 curl -s https://bootstrap.pypa.io/get-pip.py | python3
 
 # 安装docker
-apt-get install docker.io
+apt-get update && apt-get install docker.io
+
+# 启动docker服务
+service docker start
 
 # 安装compose
 pip install docker-compose 
 ```
+
+其他操作系统安装docker和docker-compose可能会有些许不同，如ubuntu14.04用默认源安装的docker可能是老版本，运行本项目会有不在预期中的BUG，所以最好参考docker官方推荐的安装方法（ https://docs.docker.com/engine/installation/linux/ubuntu/ ）使用官方源进行安装。
 
 启动
 
