@@ -1,5 +1,7 @@
 FROM ubuntu:trusty
 
+MAINTAINER phithon <root@leavesongs.com>
+
 # install the PHP extensions we need
 RUN set -ex; \
 	\
