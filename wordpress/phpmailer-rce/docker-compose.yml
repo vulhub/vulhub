@@ -5,7 +5,7 @@ services:
    depends_on:
     - mysql
    environment: 
-    - WORDPRESS_DB_HOST=mysql
+    - WORDPRESS_DB_HOST=mysql:3306
     - WORDPRESS_DB_USER=root
     - WORDPRESS_DB_PASSWORD=root
     - WORDPRESS_DB_NAME=wordpress
