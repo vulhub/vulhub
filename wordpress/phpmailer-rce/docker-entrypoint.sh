@@ -212,4 +212,6 @@ EOPHP
 	done
 fi
 
+service exim4 start
+
 exec "$@"
