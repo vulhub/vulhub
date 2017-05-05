@@ -10,7 +10,6 @@ RUN set -ex; \
 		php5-gd \
 		php5-curl \
 		php5-mysqlnd \
-        sendmail \
         exim4 \
         wget \
 	; \
