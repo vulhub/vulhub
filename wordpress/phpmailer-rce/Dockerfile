@@ -12,6 +12,7 @@ RUN set -ex; \
 		php5-mysqlnd \
         exim4 \
         wget \
+		curl \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
