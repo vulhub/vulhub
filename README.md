@@ -45,4 +45,6 @@ docker-compose up -d
 docker-compose down
 ```
 
+如果你在编译的时候出现错误，不要盲目开issue，请阅读[这篇文档](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0)，希望可以对你有所帮助。
+
 **本项目中所有环境仅用于测试，不可作为生成环境使用！**
