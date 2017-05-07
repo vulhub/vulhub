@@ -1,4 +1,4 @@
-FROM python:latest
+FROM vulhub/python:3.5
 
 MAINTAINER phithon <root@leavesongs.com>
 
