@@ -7,3 +7,5 @@
 /root/Oracle/Middleware/user_projects/domains/base_domain/security/SerializedSystemIni.dat
 
 /root/Oracle/Middleware/user_projects/domains/base_domain/config/config.xml
+
+http://stackoverflow.com/questions/19823016/weblogic-descriptor-descriptorexception-unmarshaller-failed
