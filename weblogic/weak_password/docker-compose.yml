@@ -1,0 +1,7 @@
+version: '2'
+services:
+ tomcat:
+   image: vulhub/weblogic
+   ports:
+    - "7001:7001"
+    - "5556:5556"
