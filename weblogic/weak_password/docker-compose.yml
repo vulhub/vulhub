@@ -1,7 +1,9 @@
 version: '2'
 services:
- tomcat:
+ weblogic:
    image: vulhub/weblogic
+   volumes:
+    - ./web:/root/Oracle/Middleware/user_projects/domains/base_domain/autodeploy
    ports:
     - "7001:7001"
     - "5556:5556"
