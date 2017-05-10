@@ -10,7 +10,7 @@ RUN mkdir -p "$HTTPD_PREFIX" \
 WORKDIR $HTTPD_PREFIX
 
 # library for mod_http2
-ENV NGHTTP2_VERSION 1.17.0-1
+ENV NGHTTP2_VERSION 1.18.1-1
 RUN { \
 		echo 'deb http://deb.debian.org/debian stretch main'; \
 	} > /etc/apt/sources.list.d/stretch.list \
@@ -37,7 +37,7 @@ RUN apt-get update \
 		libapr1-dev \
 		libaprutil1-dev \
 		liblua5.2-0 \
-		libnghttp2-14=$NGHTTP2_VERSION \
+		libnghttp2-14 \
 		libpcre++0 \
 		libssl1.0.0 \
 		libxml2 \
