@@ -1,7 +1,7 @@
 version: '2'
 services:
  web:
-   image: vulhub/wordpress-4.6-rce:20170507
+   build: .
    depends_on:
     - mysql
    environment: 
