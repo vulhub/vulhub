@@ -7,14 +7,14 @@ RUN set -ex \
     && yum install -y gcc-c++ tcl wget cronie
 
 RUN set -ex \
-    && mkdir -p /usr/bin/src \
-    && wget -qO- http://download.redis.io/releases/redis-2.8.24.tar.gz | tar xz -C /usr/src/wordpress --strip-components=1 \
-    && cd /usr/bin/src \
+    && mkdir -p /usr/src/redis \
+    && wget -qO- http://download.redis.io/releases/redis-2.8.24.tar.gz | tar xz -C /usr/src/redis --strip-components=1 \
+    && cd /usr/src/redis \
     && make MALLOC=libc \
     && make install \
     && make clean \
     && cd / \
-    && rm -rf /usr/bin/src
+    && rm -rf /usr/src/redis
 
 RUN yum -y remove gcc-c++ tcl
 
