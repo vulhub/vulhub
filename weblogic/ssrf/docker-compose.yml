@@ -8,3 +8,5 @@ services:
     - "7001:7001"
  redis:
    build: .
+ php:
+   image: php:fpm
