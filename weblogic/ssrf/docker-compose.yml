@@ -4,7 +4,6 @@ services:
    image: vulhub/weblogic
    depends_on:
     - redis
-    - php
    ports:
     - "7001:7001"
  redis:
