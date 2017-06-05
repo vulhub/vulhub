@@ -38,7 +38,7 @@ location /files {
 }
 ```
 
-Payload: `http://45.32.113.61:8081/files../` ，成功穿越到根目录：
+Payload: `http://your-ip:8081/files../` ，成功穿越到根目录：
 
 ![](2.png)
 
