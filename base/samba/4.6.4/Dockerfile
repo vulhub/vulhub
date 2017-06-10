@@ -5,7 +5,7 @@ MAINTAINER phithon <root@leavesongs.com>
 ENV BUILD_DEP wget build-essential autoconf 
 
 RUN set -ex \
-    && echo "krb5-config krb5-config/default_realm string 123456" | debconf-set-selections \
+    && echo "krb5-config krb5-config/default_realm string " | debconf-set-selections \
     && apt-get update \
     && apt-get install -y $BUILD_DEP acl attr bison  \
   debhelper dnsutils docbook-xml docbook-xsl flex gdb krb5-user \
