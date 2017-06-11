@@ -37,4 +37,4 @@ RUN mkdir /home/share \
 
 ADD smb.conf /usr/local/samba/etc/smb.conf
 
-CMD ['/usr/local/samba/sbin/smbd', '-FS']
+CMD ["/usr/local/samba/sbin/smbd", "-FS"]
