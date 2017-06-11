@@ -32,3 +32,9 @@ ENV PATH /usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
 
 EXPOSE 137/udp 138/udp 139 445
 
+RUN mkdir /home/share \
+    && chmod 777 /home/share
+
+ADD smb.conf /usr/local/samba/etc/smb.conf
+
+CMD ['smbd', '-FS']
