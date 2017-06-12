@@ -16,7 +16,7 @@ RUN set -ex \
   python-all-dev python-dev python-dnspython python-crypto \
   xsltproc zlib1g-dev libsystemd-dev libgpgme11-dev python-gpgme python-m2crypto \
     && mkdir -p /usr/src/samba \
-    && wget -qO- https://download.samba.org/pub/samba/stable/samba-4.6.4.tar.gz \
+    && wget -qO- https://download.samba.org/pub/samba/stable/samba-4.6.3.tar.gz \
         | tar zx -C /usr/src/samba --strip-components=1 \
     && cd /usr/src/samba \
     && ./configure \
@@ -37,4 +37,4 @@ RUN mkdir /home/share \
 
 ADD smb.conf /usr/local/samba/etc/smb.conf
 
-CMD ["exec", "smbd", "-FS"]
+CMD ["/usr/local/samba/sbin/smbd", "-FS"]
