@@ -16,9 +16,9 @@ RUN set -ex \
   python-all-dev python-dev python-dnspython python-crypto \
   xsltproc zlib1g-dev libsystemd-dev \
     && mkdir -p /usr/src/samba \
-    && wget -qO- https://download.samba.org/pub/samba/stable/samba-3.4.4.tar.gz \
+    && wget -qO- https://download.samba.org/pub/samba/stable/samba-3.3.10.tar.gz \
         | tar zx -C /usr/src/samba --strip-components=1 \
-    && cd /usr/src/samba \
+    && cd /usr/src/samba/source \
     && ./configure \
     && make \
     && make install \
