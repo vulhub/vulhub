@@ -14,7 +14,7 @@ ENV BUILD_TOOLS \
 RUN set -ex \
     && apt-get update \
     && apt-get install -y $BUILD_TOOLS \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
     && cd /tmp/ \
     && wget -qO- http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar zx -C /tmp/ \
     && wget -qO- https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz | tar zx -C /tmp/ \
