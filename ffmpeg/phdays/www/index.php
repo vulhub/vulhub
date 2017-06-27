@@ -1,7 +1,7 @@
 <?php
 if(!empty($_FILES)) {
     $filename = escapeshellarg($_FILES['file']['tmp_name']);
-    $newname = './upload/' . uniqid() . '.mp4';
+    $newname = './' . uniqid() . '.mp4';
     shell_exec("ffmpeg -i $filename $newname");
 }
 ?>
