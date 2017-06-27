@@ -10,6 +10,6 @@ COPY ./www /usr/local/src
 
 WORKDIR /usr/local/src
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT []
 
-CMD ["php", "-S", "0.0.0.0:8080"]
+CMD ["bash"]
