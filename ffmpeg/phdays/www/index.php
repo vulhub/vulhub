@@ -13,7 +13,7 @@ if(!empty($_FILES)) {
  <body>
      <?php if(!empty($_FILES)): ?>
      <div>
-        <video src="<?=$newname?>" controls="controls" width="320" height="240"></video>
+        <video src="<?=$newname?>" controls="controls" width="640" height="480"></video>
      </div>
      <?php endif; ?>
      <form method="post" enctype="multipart/form-data">
