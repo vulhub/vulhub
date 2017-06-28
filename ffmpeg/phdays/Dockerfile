@@ -1,4 +1,4 @@
-FROM vulhub/ffmpeg:3.0.8
+FROM vulhub/ffmpeg:3.2.4
 
 MAINTAINER phithon <root@leavesongs.com>
 
@@ -9,7 +9,3 @@ RUN set -ex \
 COPY ./www /usr/local/src
 
 WORKDIR /usr/local/src
-
-ENTRYPOINT []
-
-CMD ["bash"]
