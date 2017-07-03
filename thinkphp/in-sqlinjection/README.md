@@ -7,7 +7,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-启动后，访问`http://45.32.113.61/index.php?ids[]=1&ids[]=2`，即可看到用户名被显示了出来，说明环境运行成功。
+启动后，访问`http://your-ip/index.php?ids[]=1&ids[]=2`，即可看到用户名被显示了出来，说明环境运行成功。
 
 ## 漏洞原理
 
