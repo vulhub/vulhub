@@ -9,7 +9,12 @@ services:
    environment: 
     - DB_HOST=mysql
     - DB_PASS=root
+   volumes:
+    - ./www/controller:/var/www/application/index/controller
+    - ./www/model:/var/www/application/index/model
  mysql:
    image: mysql:5
    environment: 
     - MYSQL_ROOT_PASSWORD=root
+   volumes:
+    - ./www/init.sql:/docker-entrypoint-initdb.d/init.sql
