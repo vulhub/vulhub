@@ -4,6 +4,8 @@ services:
    build: .
    depends_on:
     - mysql
+   ports:
+    - "80:80"
    environment: 
     - DB_HOST=mysql
     - DB_PASS=root
