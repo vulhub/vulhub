@@ -19,6 +19,9 @@ RUN set -ex \
     && rm -rf * \
     && git clone https://github.com/top-think/think.git . \
     && git checkout v5.0.9 \
-    && mv public html
+    && mv public html \
+    && curl https://getcomposer.org/composer.phar -o composer.phar \
+    && php composer.phar install \
+    && chown www-data:www-data -R .
 
 WORKDIR /var/www/html
