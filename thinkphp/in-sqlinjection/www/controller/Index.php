@@ -10,5 +10,8 @@ class Index
         $ids = input('ids/a');
         $t = new User();
         $result = $t->where('id', 'in', $ids)->select();
+        foreach($result as $row) {
+            echo "<p>Hello, {$row['username']}</p>";
+        }
     }
 }
