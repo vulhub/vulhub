@@ -14,6 +14,8 @@ RUN set -ex \
         && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
         && docker-php-ext-install -j$(nproc) gd
 
+COPY composer.json /tmp/
+
 RUN set -ex \
     && cd /var/www \
     && rm -rf * \
@@ -21,6 +23,7 @@ RUN set -ex \
     && git checkout v5.0.9 \
     && mv public html \
     && curl -sSL https://getcomposer.org/composer.phar -o composer.phar \
+    && mv /tmp/composer.json ./ \
     && php composer.phar install \
     && chown www-data:www-data -R .
 
