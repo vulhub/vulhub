@@ -1,9 +1,8 @@
 # ThinkPHP5 SQL注入漏洞 && 敏感信息泄露
 
-编译及运行环境：
+运行环境：
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
