@@ -1,7 +1,7 @@
 version: '2'
 services:
  web:
-   build: .
+   image: vulhub/thinkphp:5.0.9
    depends_on:
     - mysql
    ports:
