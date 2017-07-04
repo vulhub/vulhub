@@ -4,8 +4,10 @@ MAINTAINER phithon <root@leavesongs.com>
 
 RUN set -ex \
         && apt-get update \
-        && apt-get install -y --no-install-recommends git \
+        && apt-get install -y --no-install-recommends git unzip \
         && docker-php-ext-install -j$(nproc) pdo_mysql
+
+COPY composer.json /tmp/
 
 RUN set -ex \
     && cd /var/www \
@@ -14,6 +16,7 @@ RUN set -ex \
     && git checkout v5.0.9 \
     && mv public html \
     && curl -sSL https://getcomposer.org/composer.phar -o composer.phar \
+    && mv -f /tmp/composer.json ./ \
     && php composer.phar install \
     && chown www-data:www-data -R .
 
