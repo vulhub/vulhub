@@ -18,7 +18,7 @@ docker-compose up -d
 
 原理详见参考文档，这里只说一下当前环境。
 
-这个环境是直接下载的struts-2.3.32的showcase，部署在tomcat-8.5下。环境启动后，访问`http://your-ip/showcase/`即可查看到struts2的测试页面。
+这个环境是直接下载的struts-2.3.32的showcase，部署在tomcat-8.5下。环境启动后，访问`http://your-ip:8080/showcase/`即可查看到struts2的测试页面。
 
 访问Integration/Struts 1 Integration：
 
