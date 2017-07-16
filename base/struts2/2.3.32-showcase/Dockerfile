@@ -11,7 +11,7 @@ RUN set -ex \
     && unzip /tmp/struts-2.3.32-apps.zip -d /tmp/ \
     && mv /tmp/struts-2.3.32/apps/struts2-showcase.war /usr/local/tomcat/webapps/ROOT.war \
     && apt-get purge -y --auto-remove unzip \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/struts*
 
 EXPOSE 8080
