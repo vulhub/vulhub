@@ -4,7 +4,7 @@ MAINTAINER phithon <root@leavesongs.com>
 
 RUN set -ex \
     && rm -rf /usr/local/tomcat/webapps/* \
-    && chmod a+x /usr/local/tomcat/bin/*.sh
+    && chmod a+x /usr/local/tomcat/bin/*.sh \
     && apt-get update \
     && apt-get install -y unzip \
     && wget http://archive.apache.org/dist/struts/2.3.32/struts-2.3.32-apps.zip -O /tmp/struts-2.3.32-apps.zip \
