@@ -3,8 +3,8 @@ FROM vulhub/cron
 MAINTAINER phithon <root@leavesongs.com>
 
 RUN set -ex \
-    && yum update \
-    && yum install -y gcc-c++ tcl wget
+    && yum -y update \
+    && yum -y install gcc-c++ tcl wget
 
 RUN set -ex \
     && mkdir -p /usr/src/redis \
