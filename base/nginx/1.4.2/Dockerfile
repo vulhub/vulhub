@@ -31,8 +31,8 @@ RUN set -ex \
     && rm -rf /tmp/nginx-${NGINX_VERSION} /tmp/pcre-8.40 /tmp/zlib-1.2.11 \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_TOOLS
 
-RUN ln -sf /dev/stdout /var/log/access.log \
-	&& ln -sf /dev/stderr /var/log/error.log \
+RUN ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
+	&& ln -sf /dev/stderr /usr/local/nginx/logs/error.log \
     && ln -sf /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 
 EXPOSE 80 443
