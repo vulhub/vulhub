@@ -2,7 +2,7 @@ FROM vulhub/debian:jessie
 
 MAINTAINER phithon <root@leavesongs.com>
 
-ENV NGINX_VERSION 1.5.6
+ENV NGINX_VERSION 1.4.2
 
 ENV BUILD_TOOLS \
     gcc \
@@ -19,16 +19,16 @@ RUN set -ex \
     && wget -qO- http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar zx -C /tmp/ \
     && wget -qO- https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz | tar zx -C /tmp/ \
     && wget -qO- http://zlib.net/zlib-1.2.11.tar.gz | tar zx -C /tmp/ \
-    && wget -qO- https://github.com/openssl/openssl/archive/OpenSSL_1_0_1l.tar.gz | tar zx -C /tmp/ \
+    && wget -qO- https://github.com/openssl/openssl/archive/OpenSSL_1_0_2k.tar.gz | tar zx -C /tmp/ \
     && cd /tmp/nginx-${NGINX_VERSION} \
     && ./configure \
         --with-http_ssl_module \
         --with-pcre=../pcre-8.40 \
         --with-zlib=../zlib-1.2.11 \
-        --with-openssl=../openssl-OpenSSL_1_0_1l \
+        --with-openssl=../openssl-OpenSSL_1_0_2k \
     && make \
     && make install \
     && make clean \
     && cd / \
-    && rm -rf /tmp/nginx-${NGINX_VERSION} /tmp/pcre-8.40 /tmp/zlib-1.2.11 /tmp/openssl-OpenSSL_1_0_1l \
+    && rm -rf /tmp/nginx-${NGINX_VERSION} /tmp/pcre-8.40 /tmp/zlib-1.2.11 /tmp/openssl-OpenSSL_1_0_2k \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_TOOLS
