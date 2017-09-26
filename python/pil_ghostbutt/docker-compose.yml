@@ -1,0 +1,6 @@
+version: '2'
+services:
+ image-rce:
+   build: .
+   ports:
+    - "8000:8000"
