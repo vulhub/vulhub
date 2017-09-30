@@ -4,6 +4,6 @@
 
 Avatar | ID | Blog
 ---- | ---- | ----
-![phith0n](https://github.com/phith0n.png?size=40) | [phith0n](https://github.com/phith0n) | http://www.leavesongs.com/
-![stayliv3](https://github.com/stayliv3.png?size=40) | [xd_xd](https://github.com/stayliv3) | http://xdxd.love/
-![neargle](https://github.com/neargle.png?size=40) | [Neargle](https://github.com/neargle) | http://blog.neargle.com/
+[![phith0n](https://github.com/phith0n.png?size=40)](https://github.com/phith0n) | [phith0n](https://github.com/phith0n) | http://www.leavesongs.com/
+[![stayliv3](https://github.com/stayliv3.png?size=40)](https://github.com/stayliv3) | [xd_xd](https://github.com/stayliv3) | http://xdxd.love/
+[![neargle](https://github.com/neargle.png?size=40)](https://github.com/neargle) | [Neargle](https://github.com/neargle) | http://blog.neargle.com/
