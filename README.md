@@ -60,5 +60,3 @@ docker-compose down
 ## License
 
 Vulhub is released under the [GPL-3.0 license](LICENSE).
-
-Copyright (c) 2016-present, phithon
