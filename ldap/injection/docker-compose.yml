@@ -1,0 +1,26 @@
+version: '2'
+services:
+ nginx:
+   image: nginx:1
+   volumes:
+    - ./www:/usr/share/nginx/html
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+   depends_on:
+    - php
+   ports:
+    - "80:80"
+    - "443:443"
+ php:
+   build: .
+   depends_on:
+    - mysql
+   volumes:
+    - ./www:/var/www/html
+   environment: 
+    - DB_HOST=mysql
+    - DB_PASS=root
+ ldap:
+   image: osixia/openldap
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root
