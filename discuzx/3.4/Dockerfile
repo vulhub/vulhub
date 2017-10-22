@@ -12,9 +12,9 @@ RUN cd /tmp/ \
 
 RUN cp -r /tmp/DiscuzX/upload/* /var/www/html \
     && cd /var/www/html \
-    && touch test.txt \ 
+    && touch target.txt \
     && chmod a+w -R ./* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/DiscuzX
 
-EXPOSE 9999
+EXPOSE 80
