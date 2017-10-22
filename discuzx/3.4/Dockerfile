@@ -12,8 +12,9 @@ RUN cd /tmp/ \
 
 RUN cp -r /tmp/DiscuzX/upload/* /var/www/html \
     && cd /var/www/html \
-    && touch target.txt \
-    && chmod a+w -R config data uc_server/data uc_client/data \
-    && rm -rf /var/lib/apt/lists/*
+    && touch test.txt \ 
+    && chmod a+w -R ./* \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/DiscuzX
 
 EXPOSE 9999
