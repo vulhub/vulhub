@@ -19,4 +19,4 @@ services:
     links:
     - discuzx_db: mysql
     ports:
-    - "9999:80"
+    - "80:80"
