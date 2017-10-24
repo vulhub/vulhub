@@ -1,6 +1,16 @@
 version: '2'
-
 services:
+  discuzx:
+    image: vulhub/discuzx:3.3
+    depends_on:
+      - discuzx_db
+    links:
+      - discuzx_db: mysql
+    volumes:
+      - ./target.txt:/var/www/html/target.txt
+    ports:
+      - "80:80"
+
   discuzx_db:
     image: mariadb
     restart: always
@@ -10,16 +20,4 @@ services:
       MYSQL_USER: DISCUZX
       MYSQL_PASSWORD: DISCUZX
     expose:
-    - "3306"
-  
-  discuzx:
-    depends_on:
-      - discuzx_db
-    image: vulhub/discuzx:3.3
-    links:
-      - discuzx_db: mysql
-    volumes:
-      - ./target.txt:/var/www/html/target.txt
-    ports:
-    - "80:80"
-
+      - "3306"
