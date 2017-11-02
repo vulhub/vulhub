@@ -13,8 +13,7 @@ RUN set -ex \
     && git checkout d7ec4030d5bcc2be9485a2543bab85b9757e3c14 \
     # d7ec4030d5bcc2be9485a2543bab85b9757e3c14 is discuzx(Release 20170801)
     && cp -r /tmp/DiscuzX/upload/* /var/www/html \
-    && cd /var/www/html \
-    && chmod a+w -R ./* \
+    && chown www-data:www-data -R /var/www/html/ \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/DiscuzX
 

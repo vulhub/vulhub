@@ -12,5 +12,3 @@ services:
     environment: 
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ultrax
-      MYSQL_USER: discuz
-      MYSQL_PASSWORD: discuz
