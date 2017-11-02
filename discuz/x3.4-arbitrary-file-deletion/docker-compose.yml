@@ -1,23 +1,16 @@
 version: '2'
 services:
-  discuzx:
-    image: vulhub/discuzx:3.3
+  discuz:
+    image: vulhub/discuz:x3.4
     depends_on:
-      - discuzx_db
-    links:
-      - discuzx_db: mysql
-    volumes:
-      - ./target.txt:/var/www/html/target.txt
+      - db
     ports:
       - "80:80"
-
-  discuzx_db:
+  db:
     image: mariadb
     restart: always
     environment: 
-      MYSQL_ROOT_PASSWORD: DISCUZX
-      MYSQL_DATABASE: DISCUZX
-      MYSQL_USER: DISCUZX
-      MYSQL_PASSWORD: DISCUZX
-    expose:
-      - "3306"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ultrax
+      MYSQL_USER: discuz
+      MYSQL_PASSWORD: discuz
