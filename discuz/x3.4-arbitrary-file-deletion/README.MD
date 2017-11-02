@@ -3,6 +3,7 @@
 影响版本：Discuz!X ≤3.4  漏洞详情：https://lorexxar.cn/2017/09/30/dz-delete/
 
 # 环境
+
 执行下列命令部署 Discuz!X 安装环境
 
     docker-compose build
