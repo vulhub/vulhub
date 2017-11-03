@@ -1,7 +1,7 @@
 version: '2'
 services:
  node:
-   image: vulhub/node:9.0.0
+   build: .
    depends_on:
     - db
    ports:

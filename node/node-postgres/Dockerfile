@@ -8,7 +8,6 @@ ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.s
 
 RUN set -ex \
     && cd /usr/src/ \
-    && npm install npm@latest -g \
     && npm install \
     && chmod +x /usr/local/bin/wait-for-it.sh
 
