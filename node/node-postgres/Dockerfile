@@ -1,0 +1,17 @@
+FROM vulhub/node:9.0.0
+
+MAINTAINER phithon <root@leavesongs.com>
+
+ADD package.json /usr/src/
+
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+
+RUN set -ex \
+    && cd /usr/src/ \
+    && npm install npm@latest -g \
+    && npm install \
+    && chmod +x /usr/local/bin/wait-for-it.sh
+
+WORKDIR /usr/src
+
+CMD [ "npm", "run", "start" ]
