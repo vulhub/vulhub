@@ -2,7 +2,7 @@ FROM vulhub/node:9.0.0
 
 MAINTAINER phithon <root@leavesongs.com>
 
-ADD package.json /usr/src/
+COPY package.json package-lock.json /usr/src/
 
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
 
