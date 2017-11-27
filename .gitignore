@@ -35,3 +35,5 @@ jenkins/CVE-2017-1000353/*.7z
 nginx/CVE-2013-4547/www/uploadfiles/*
 
 __pycache__
+
+.env
