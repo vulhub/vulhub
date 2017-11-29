@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 if [ -f /.jboss_admin_pass_configured ]; then
     echo "JBoss admin user's password has been configured!"
