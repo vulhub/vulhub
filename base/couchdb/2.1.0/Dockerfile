@@ -14,7 +14,8 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     haproxy \
     libicu52 \
     libmozjs185-1.0 \
-    openssl
+    openssl \
+    wget
 
 RUN buildDeps=' \
     apt-transport-https \
@@ -25,11 +26,9 @@ RUN buildDeps=' \
     libicu-dev \
     libmozjs185-dev \
     make \
-    git \
   ' \
     && apt-get update \
     && apt-get install -y --no-install-recommends $buildDeps \
-    && apt-get install -y wget \
     && rm -rf /var/lib/apt/lists/* \
     && cd /usr/src && mkdir couchdb \
     && wget -qO- https://github.com/apache/couchdb/archive/2.1.0.tar.gz | tar zx -C couchdb --strip-components=1 \
