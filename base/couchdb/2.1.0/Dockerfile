@@ -6,6 +6,16 @@ MAINTAINER phithon <root@leavesongs.com>
 COPY vm.args /opt/couchdb/etc/
 COPY ./docker-entrypoint.sh /
 
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    erlang-nox \
+    erlang-reltool \
+    haproxy \
+    libicu52 \
+    libmozjs185-1.0 \
+    openssl
+
 RUN buildDeps=' \
     apt-transport-https \
     gcc \
