@@ -2,8 +2,6 @@ FROM debian:jessie
 
 MAINTAINER phithon <root@leavesongs.com>
 
-# Add configuration
-COPY vm.args /opt/couchdb/etc/
 COPY ./docker-entrypoint.sh /
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
@@ -34,6 +32,7 @@ RUN buildDeps=' \
     && wget -qO- https://dist.apache.org/repos/dist/release/couchdb/source/2.1.0/apache-couchdb-2.1.0.tar.gz | tar zx -C couchdb --strip-components=1 \
     && cd couchdb \
     # Build the release and install into /opt
+    && mkdir -p /opt/couchdb \
     && ./configure --disable-docs \
     && make release \
     && mv /usr/src/couchdb/rel/couchdb /opt/ \
@@ -50,6 +49,9 @@ RUN buildDeps=' \
         echo ; \
     } | tee /opt/couchdb/etc/local.d/local.ini \
     && chmod +x /docker-entrypoint.sh
+
+# Add configuration
+COPY vm.args /opt/couchdb/etc/
 
 WORKDIR /opt/couchdb
 EXPOSE 5984 4369 9100
