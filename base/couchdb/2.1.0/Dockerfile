@@ -34,6 +34,7 @@ RUN buildDeps=' \
     && wget -qO- https://github.com/apache/couchdb/archive/2.1.0.tar.gz | tar zx -C couchdb --strip-components=1 \
     && cd couchdb \
     && wget https://github.com/erlang/rebar3/releases/download/3.4.7/rebar3 -O bin/rebar \
+    && chmod +x bin/rebar \
     # Build the release and install into /opt
     && ./configure --disable-docs \
     && make release \
