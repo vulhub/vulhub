@@ -15,6 +15,7 @@ RUN buildDeps=' \
     libicu-dev \
     libmozjs185-dev \
     make \
+    git \
   ' \
     && apt-get update \
     && apt-get install -y --no-install-recommends $buildDeps \
