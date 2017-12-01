@@ -15,9 +15,10 @@ RUN buildDeps=' \
     libicu-dev \
     libmozjs185-dev \
     make \
+    curl \
   ' \
     && apt-get update \
-    && apt-get install -y --no-install-recommends wget $buildDeps \
+    && apt-get install -y --no-install-recommends $buildDeps \
     && rm -rf /var/lib/apt/lists/* \
     && cd /usr/src && mkdir couchdb \
     && curl -fSL https://github.com/apache/couchdb/archive/2.1.0.tar.gz -o couchdb.tar.gz \
