@@ -29,10 +29,9 @@ RUN buildDeps=' \
     && apt-get install -y --no-install-recommends $buildDeps \
     && rm -rf /var/lib/apt/lists/* \
     && cd /usr/src && mkdir couchdb \
-    && wget -qO- https://dist.apache.org/repos/dist/release/couchdb/source/2.1.0/apache-couchdb-2.1.0.tar.gz | tar zx -C couchdb --strip-components=1 \
+    && wget -qO- https://archive.apache.org/dist/couchdb/source/2.1.0/apache-couchdb-2.1.0.tar.gz | tar zx -C couchdb --strip-components=1 \
     && cd couchdb \
     # Build the release and install into /opt
-    && mkdir -p /opt/couchdb \
     && ./configure --disable-docs \
     && make release \
     && mv /usr/src/couchdb/rel/couchdb /opt/ \
