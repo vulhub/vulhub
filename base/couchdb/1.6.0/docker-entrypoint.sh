@@ -14,12 +14,31 @@
 set -e
 
 if [ "$1" = 'couchdb' ]; then
+    chown -R couchdb:couchdb \
+		/usr/var/lib/couchdb \
+		/usr/var/log/couchdb \
+		/usr/var/run/couchdb \
+		/usr/etc/couchdb
+
+	chmod -R 0770 \
+		/usr/var/lib/couchdb \
+		/usr/var/log/couchdb \
+		/usr/var/run/couchdb \
+		/usr/etc/couchdb
+
+	chmod 664 /usr/etc/couchdb/*.ini
+	chmod 775 /usr/etc/couchdb/*.d
+
 	if [ "$COUCHDB_USER" ] && [ "$COUCHDB_PASSWORD" ]; then
 		# Create admin
 		printf "[admins]\n%s = %s\n" "$COUCHDB_USER" "$COUCHDB_PASSWORD" > /usr/etc/couchdb/local.d/docker.ini
+        chown couchdb:couchdb /usr/etc/couchdb/local.d/docker.ini
 	fi
 
 	printf "[httpd]\nport = %s\nbind_address = %s\n" ${COUCHDB_HTTP_PORT:=5984} ${COUCHDB_HTTP_BIND_ADDRESS:=0.0.0.0} > /usr/etc/couchdb/local.d/bind_address.ini
+    chown couchdb:couchdb /usr/etc/couchdb/local.d/bind_address.ini
+
+    exec gosu couchdb "$@"
 fi
 
 exec "$@"
