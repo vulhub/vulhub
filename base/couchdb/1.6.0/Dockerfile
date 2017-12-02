@@ -1,8 +1,22 @@
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
 FROM debian:jessie
 
 MAINTAINER phithon <root@leavesongs.com>
 
-COPY ./docker-entrypoint.sh /
+# Install instructions from https://cwiki.apache.org/confluence/display/COUCHDB/Debian
+
+RUN groupadd -r couchdb && useradd -d /var/lib/couchdb -g couchdb couchdb
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -12,14 +26,16 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libmozjs185-1.0 \
     libnspr4 \
     libnspr4-0d \
-    wget \
-  && curl -o /usr/bin/gosu -fSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-$(dpkg --print-architecture)" \
-  && chmod +x /usr/bin/gosu \
-  && curl -o /usr/bin/tini -fSL "https://github.com/krallin/tini/releases/download/v0.14.0/tini" \
-  && chmod +x /usr/bin/tini \
-  && rm -rf /var/lib/apt/lists/* \
-  && groupadd -r couchdb && useradd -d /var/lib/couchdb -g couchdb couchdb
+  && rm -rf /var/lib/apt/lists/*
 
+# grab gosu for easy step-down from root and tini for signal handling
+RUN curl -o /usr/local/bin/gosu -fSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-$(dpkg --print-architecture)" \
+  && chmod +x /usr/local/bin/gosu \
+  && curl -o /usr/local/bin/tini -fSL "https://github.com/krallin/tini/releases/download/v0.14.0/tini" \
+  && chmod +x /usr/local/bin/tini
+
+# download dependencies, compile and install couchdb,
+# set correct permissions, expose couchdb to the outside and disable logging to disk
 RUN buildDeps=' \
     gcc \
     g++ \
@@ -30,28 +46,30 @@ RUN buildDeps=' \
     libnspr4-dev \
     make \
   ' \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends $buildDeps \
-    && cd /usr/src && mkdir couchdb \
-    && wget -qO- https://archive.apache.org/dist/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz | tar zx -C couchdb --strip-components=1 \
-    && cd couchdb \
-    && ./configure --prefix=/usr --with-js-lib=/usr/lib --with-js-include=/usr/include/mozjs \
-    && make && make install \
-    && apt-get purge -y --auto-remove $buildDeps \
-    && rm -rf /var/lib/apt/lists/* /usr/src/couchdb \
-    && chown -R couchdb:couchdb \
-        /usr/lib/couchdb /usr/etc/couchdb \
-        /usr/var/lib/couchdb /usr/var/log/couchdb /usr/var/run/couchdb \
-    && chmod -R g+rw \
-        /usr/lib/couchdb /usr/etc/couchdb \
-        /usr/var/lib/couchdb /usr/var/log/couchdb /usr/var/run/couchdb \
-    && mkdir -p /var/lib/couchdb \
-    && sed -e 's/^bind_address = .*$/bind_address = 0.0.0.0/' -i /usr/etc/couchdb/default.ini \
-    && sed -e 's!/usr/var/log/couchdb/couch.log$!/dev/null!' -i /usr/etc/couchdb/default.ini \
-    && chmod +x /docker-entrypoint.sh
+  && apt-get update && apt-get install -y --no-install-recommends $buildDeps \
+  && curl -fSL https://archive.apache.org/dist/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz -o couchdb.tar.gz \
+  && mkdir -p /usr/src/couchdb \
+  && tar -xzf couchdb.tar.gz -C /usr/src/couchdb --strip-components=1 \
+  && cd /usr/src/couchdb \
+  && ./configure --with-js-lib=/usr/lib --with-js-include=/usr/include/mozjs \
+  && make && make install \
+  && apt-get purge -y --auto-remove $buildDeps \
+  && rm -rf /var/lib/apt/lists/* /usr/src/couchdb /couchdb.tar.gz* \
+  && chown -R couchdb:couchdb \
+    /usr/local/lib/couchdb /usr/local/etc/couchdb \
+    /usr/local/var/lib/couchdb /usr/local/var/log/couchdb /usr/local/var/run/couchdb \
+  && chmod -R g+rw \
+    /usr/local/lib/couchdb /usr/local/etc/couchdb \
+    /usr/local/var/lib/couchdb /usr/local/var/log/couchdb /usr/local/var/run/couchdb \
+  && mkdir -p /var/lib/couchdb \
+  && sed -e 's/^bind_address = .*$/bind_address = 0.0.0.0/' -i /usr/local/etc/couchdb/default.ini \
+  && sed -e 's!/usr/local/var/log/couchdb/couch.log$!/dev/null!' -i /usr/local/etc/couchdb/default.ini
 
-WORKDIR /var/lib/couchdb
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
 EXPOSE 5984
+WORKDIR /var/lib/couchdb
 
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 CMD ["couchdb"]
