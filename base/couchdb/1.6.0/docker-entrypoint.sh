@@ -16,10 +16,10 @@ set -e
 if [ "$1" = 'couchdb' ]; then
 	if [ "$COUCHDB_USER" ] && [ "$COUCHDB_PASSWORD" ]; then
 		# Create admin
-		printf "[admins]\n%s = %s\n" "$COUCHDB_USER" "$COUCHDB_PASSWORD" > /usr/local/etc/couchdb/local.d/docker.ini
+		printf "[admins]\n%s = %s\n" "$COUCHDB_USER" "$COUCHDB_PASSWORD" > /usr/etc/couchdb/local.d/docker.ini
 	fi
 
-	printf "[httpd]\nport = %s\nbind_address = %s\n" ${COUCHDB_HTTP_PORT:=5984} ${COUCHDB_HTTP_BIND_ADDRESS:=0.0.0.0} > /usr/local/etc/couchdb/local.d/bind_address.ini
+	printf "[httpd]\nport = %s\nbind_address = %s\n" ${COUCHDB_HTTP_PORT:=5984} ${COUCHDB_HTTP_BIND_ADDRESS:=0.0.0.0} > /usr/etc/couchdb/local.d/bind_address.ini
 fi
 
 exec "$@"
