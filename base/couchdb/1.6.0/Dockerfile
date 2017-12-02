@@ -43,4 +43,4 @@ WORKDIR /var/lib/couchdb
 EXPOSE 5984
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/opt/couchdb/bin/couchdb"]
+CMD ["couchdb"]
