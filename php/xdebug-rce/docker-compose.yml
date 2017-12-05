@@ -1,0 +1,7 @@
+version: '2'
+services:
+ php:
+   build: .
+   ports:
+    - "80:80"
+    - "9000:9000"
