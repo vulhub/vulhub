@@ -4,6 +4,5 @@ services:
    build: .
    ports:
     - "80:80"
-    - "9000:9000"
    volumes:
     - ./index.php:/var/www/html/index.php
