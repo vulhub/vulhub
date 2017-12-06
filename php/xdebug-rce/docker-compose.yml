@@ -3,6 +3,6 @@ services:
  php:
    build: .
    ports:
-    - "80:80"
+    - "8080:80"
    volumes:
     - ./index.php:/var/www/html/index.php

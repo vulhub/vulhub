@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import re
 import sys
 import time
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='XDebug remote debug code execution.')
     parser.add_argument('-c', '--code', required=True, help='the code you want to execute.')
     parser.add_argument('-t', '--target', required=True, help='target url.')
-    parser.add_argument('-l', '--listen', default=9000, help='local port')
+    parser.add_argument('-l', '--listen', default=9000, type=int, help='local port')
     args = parser.parse_args()
     
     ip_port = ('0.0.0.0', args.listen)
