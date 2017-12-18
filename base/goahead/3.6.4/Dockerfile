@@ -11,15 +11,6 @@ RUN set -ex \
     && cp src/self.key src/self.crt /etc/goahead/ \
     && cd / \
     && apt-get purge -y --auto-remove wget make gcc \
-    && rm -rf /usr/src/ /var/lib/apt/lists/* \
-    && mkdir -p /var/www/goahead/cgi-bin/ \
-    && { \
-        echo "#!/usr/bin/perl"; \
-        echo ; \
-        echo -e 'print "Content-type: text/plain\n", "\n";'; \
-        echo 'print "Hello, CGI!";'; \
-    } | tee /var/www/goahead/cgi-bin/index \
-    && chmod +x /var/www/goahead/cgi-bin/index \
-    && sed -e 's!^route uri=/cgi-bin dir=cgi-bin handler=cgi$!route uri=/cgi-bin dir=/var/www/goahead/cgi-bin handler=cgi!' -i /etc/goahead/route.txt
+    && rm -rf /usr/src/ /var/lib/apt/lists/*
 
 CMD ["goahead", "-v", "--home", "/etc/goahead", "/var/www/goahead"]
