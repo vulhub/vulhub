@@ -11,10 +11,10 @@ RUN set -ex \
     && cd /usr/src \
     && make && make install \
     && cp src/self.key src/self.crt /etc/goahead/ \
-    && cd / \
     && mkdir -p /var/www/goahead/cgi-bin/ \
-    && gcc /tmp/index.c -o /var/www/goahead/cgi-bin/index \
     && apt-get purge -y --auto-remove wget make gcc \
-    && rm -rf /usr/src/ /var/lib/apt/lists/* /tmp/index.c
+    && cd /var/www/goahead \
+    && rm -rf /usr/src/ /var/lib/apt/lists/* /tmp/index.c \
+    && sed -e 's!^route uri=/cgi-bin dir=cgi-bin handler=cgi$!route uri=/cgi-bin dir=/var/www/goahead handler=cgi!' -i /etc/goahead/route.txt
 
 CMD ["goahead", "-v", "--home", "/etc/goahead", "/var/www/goahead"]
