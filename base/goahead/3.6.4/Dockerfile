@@ -10,7 +10,7 @@ RUN set -ex \
     && make && make install \
     && cp src/self.key src/self.crt /etc/goahead/ \
     && cd / \
-    && apt-get autoremove --purge wget make gcc \
+    && apt-get purge -y --auto-remove wget make gcc \
     && rm -rf /usr/src/ /var/lib/apt/lists/*
 
 CMD ["goahead", "-v", "--home", "/etc/goahead", "/var/www/goahead"]
