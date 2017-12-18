@@ -2,8 +2,6 @@ FROM debian:jessie
 
 MAINTAINER phithon <root@leavesongs.com>
 
-COPY index.c /tmp/
-
 RUN set -ex \
     && apt-get update \
     && apt-get install wget make gcc -y \
