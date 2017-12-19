@@ -1,0 +1,6 @@
+version: '2'
+services:
+  flask:
+    build: .
+    ports:
+      - "1337:1337"
