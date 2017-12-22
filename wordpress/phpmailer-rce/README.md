@@ -1,4 +1,4 @@
-# Wordpress 4.6 任意命令执行漏洞（PwnScriptum）
+# Wordpress 4.6 任意命令执行漏洞（PHPMailer）
 
 ## 原理
 
