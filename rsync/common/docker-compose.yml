@@ -1,0 +1,9 @@
+version: '2'
+services:
+ rsync:
+   image: vulhub/rsync:3.1.2
+   command: rsync --daemon --config=/etc/rsyncd.conf && tail -f /var/log/rsyncd.log
+   volumes:
+    - rsyncd.conf:/etc/rsyncd.conf
+   ports:
+    - "873:873"
