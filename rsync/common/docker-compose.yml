@@ -2,7 +2,7 @@ version: '2'
 services:
  rsync:
    image: vulhub/rsync:3.1.2
-   command: rsync --daemon --config=/etc/rsyncd.conf && tail -f /var/log/rsyncd.log
+   command: rsync --no-detach --daemon --config /etc/rsyncd.conf
    volumes:
     - ./rsyncd.conf:/etc/rsyncd.conf
    ports:
