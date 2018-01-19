@@ -1,9 +1,6 @@
 version: '2'
 services:
  rsync:
-   image: vulhub/rsync:3.1.2
-   command: rsync --no-detach --daemon --config /etc/rsyncd.conf
-   volumes:
-    - ./rsyncd.conf:/etc/rsyncd.conf
+   build: .
    ports:
     - "873:873"
