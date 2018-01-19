@@ -1,0 +1,18 @@
+.left_nav{width:150px;overflow:hidden;}
+html{overflow-x:hidden;overflow-y:scroll;}
+body{overflow:hidden;background:#0f6abf;}
+.right_body{display:none;background:#fff;}
+
+/*头部*/
+.header .logo a.cms{background:url(img/logo.png) no-repeat center center; width:414px;height:50px; display:block;margin-left:5px;}
+
+/*左侧导航*/
+.left_nav{width:150px; float:left;z-index:8888; background:#fff; background:#056abf/*028ece*/ /*2ca9e1  2281ea*/;}
+.left_nav ul li{height:auto;line-height:36px; display:inline-block;width:150px;margin-top:10px;}
+.left_nav ul li a{display:block;color:#fff;}
+.left_nav ul li a.menu_1{text-indent:65px;font-weight:bold; background:url(img/menuIcons.png) no-repeat 25px 4px; }
+.left_nav ul li a.menu_1selected{text-indent:65px;font-weight:bold;background:url(img/menuIcons.png) no-repeat 25px -22px;}
+
+.left_nav ul li a.menu_2{text-indent:67px;height:30px;line-height:30px;/*background:url(img/dot.gif) 45px -22px no-repeat;*/}
+.left_nav ul li a.menu_2selected{text-indent:67px;color:yellow;height:30px;line-height:30px;/*background:url(img/dot.gif) 45px 14px no-repeat;*/}
+

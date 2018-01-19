@@ -1,0 +1,24 @@
+#
+# Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+# For licensing, see LICENSE.html or http://ckeditor.com/license
+#
+
+#
+# On some specific Linux installations you could face problems with Firefox.
+# It could give you errors when loading the editor saying that some illegal
+# characters were found (three strange chars in the beginning of the file).
+# This could happen if you map the .js or .css files to PHP, for example.
+#
+# Those characters are the Byte Order Mask (BOM) of the Unicode encoded files.
+# All FCKeditor files are Unicode encoded.
+#
+
+AddType application/x-javascript .js
+AddType text/css .css
+
+#
+# If PHP is mapped to handle XML files, you could have some issues. The
+# following will disable it.
+#
+
+AddType text/xml .xml

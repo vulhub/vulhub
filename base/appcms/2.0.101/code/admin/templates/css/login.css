@@ -1,0 +1,16 @@
+html{overflow:hidden;background:#215ab6;}
+body{margin:0; padding:0;background:none;background:#215ab6;}
+.warp{margin:0; padding:0;font-family:宋体;}
+.warp .hsize{font-size:20px; text-indent:40px; font-family:'微软雅黑'; color:#fff; display:block; padding:0;height:36px;font-weight:normal;}
+.warp .warpLogin{margin:0 auto 0 auto; width:460px; padding:20px 0; background:#0589e1}
+.warp .warpLogin .warpContent ul li{display:inline-block; height:30px; margin:10px 0; font-size:14px;}
+.warp .warpLogin .warpContent ul li.th{float:left; text-align:center; line-height:30px; width:130px; color:#ebebeb; }
+.warp .warpLogin .warpContent ul li.td{float:left; width:280px;}
+.warp .warpLogin .warpContent ul li.td input{background-color:transparent; width:240px;font-size:14px; border:1px solid #ace9fd;  line-height:36px;*text-indent:0px;height:36px;color:#bdedfd;}
+.warp .warpLogin .warpContent ul li.td .userName{background:url(img/login-icon.gif) 8px 8px no-repeat; text-indent:25px; padding-left:25px\9; width:262px; *text-indent:0px; text-indent:0px\9;  width:240px\9; }
+.warp .warpLogin .warpContent ul li.td .userPWD{background:url(img/login-icon.gif) 8px -42px no-repeat;text-indent:25px; padding-left:25px\9; width:262px;*text-indent:0px; text-indent:0px\9; width:240px\9; }
+.warp .warpLogin p.warpBtn{display:block; clear:both;}
+.warp .warpLogin p.warpBtn a{ background:#215ab6; font-size:14px; display:inline-block; width:100px; height:40px;  line-height:40px;  text-align:center; color:#ebebeb; margin:10px 0 0 130px;}
+.warp .warpLogin p.warpBtn a:hover{background:#114aa5;}
+.warp .warpLogin .warpContent ul li.td input.verificationCode{ padding-left:5px\9;width:170px;width:192px;_width:172px;}
+.warp .warpLogin .warpContent ul li.td input.safecode{ padding-left:5px\9;width:262px;_width:240px;}

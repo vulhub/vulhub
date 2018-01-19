@@ -1,0 +1,1 @@
+function cache(params){	if(!params) return false;	$.get("cache.php",{"act":params},function(data){		try{			json = $.evalJSON(data);			C.alert.tips({"content":"" + json.msg + ""});		} catch(e){			alert(data + ":e");		}	});	}

@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c> 
+RewriteEngine on
+ErrorDocument 403 /404.html
+ErrorDocument 404 /404.html
+RewriteRule ^app/list_(\d+)_(\d+)\.html$ index.php?tpl=list_app&cid=$1&p=$2
+RewriteRule ^app/list_(\d+)\.html$ index.php?tpl=list_app&cid=$1&p=1
+RewriteRule ^app/(\w+?)/(\d+)\.html$ index.php?tpl=list_app&cpy=$1&p=$2
+RewriteRule ^app/(\w+?)/$ index.php?tpl=list_app&cpy=$1&p=1
+RewriteRule ^sepcial/list_(\d+)\.html$ index.php?tpl=special_list&p=$1
+RewriteRule ^sepcial/$ index.php?tpl=special_list&p=1
+RewriteRule ^special/(\d+)\.html$ index.php?tpl=special_content&id=$1
+RewriteRule ^info/list_(\d+)_(\d+)\.html$ index.php?tpl=list_info&cid=$1&p=$2
+RewriteRule ^info/list_(\d+)\.html$ index.php?tpl=list_info&cid=$1&p=1
+RewriteRule ^info/(\w+?)/(\d+)\.html$ index.php?tpl=list_info&cpy=$1&p=$2
+RewriteRule ^info/(\w+?)/$ index.php?tpl=list_info&cpy=$1&p=1
+RewriteRule ^info/(\d+)\.html$ index.php?tpl=content_info&id=$1
+RewriteRule ^app/(\d+)\.html$ index.php?tpl=content_app&id=$1
+
+RewriteRule ^app/(\w+)\.html$ index.php?tpl=content_app&id=$1
+RewriteRule ^app/(\d+)_(\d+)\.html$ index.php?tpl=content_app_history&id=$1&hid=$2
+RewriteRule ^lastupdate/(\d+)\.html$ index.php?tpl=lastupdate&p=$1
+RewriteRule ^lastupdate/$ index.php?tpl=lastupdate&p=1
+RewriteRule ^image/(.*).(\w+)$ pic.php?url=$1&type=$2
+</IfModule>
