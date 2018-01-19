@@ -1,4 +1,4 @@
-FROM vulhub/rsync:3.1.2
+FROM vulhub/rsync:2.6.9
 
 ADD rsyncd.conf /etc/rsyncd.conf
 
