@@ -2,4 +2,6 @@
 
 set -ex
 
-service cron start && rsync --no-detach --daemon --config /etc/rsyncd.conf
+service cron start 
+
+exec rsync --no-detach --daemon --config /etc/rsyncd.conf
