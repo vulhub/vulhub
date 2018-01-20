@@ -1,0 +1,6 @@
+version: '2'
+services:
+ git:
+   build: .
+   ports:
+    - "3322:22"

@@ -1,0 +1,6 @@
+version: '2'
+services:
+ php:
+   image: php:fpm
+   ports:
+    - "9000:9000"

@@ -1,0 +1,20 @@
+version: '2'
+services:
+ tomcat:
+   build: .
+   depends_on:
+    - mysql
+   volumes:
+    - ./www:/var/www/html
+   environment: 
+    - DB_HOST=mysql
+    - DB_PASS=root
+   ports:
+    - "8080:8080"
+ mysql:
+   build: ./mysql
+   volumes:
+    - ./mysql/data:/var/lib/mysql
+    - ./mysql/conf.d:/etc/mysql/conf.d
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root

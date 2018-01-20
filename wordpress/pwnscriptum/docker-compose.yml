@@ -1,0 +1,17 @@
+version: '2'
+services:
+ web:
+   build: .
+   depends_on:
+    - mysql
+   environment: 
+    - WORDPRESS_DB_HOST=mysql:3306
+    - WORDPRESS_DB_USER=root
+    - WORDPRESS_DB_PASSWORD=root
+    - WORDPRESS_DB_NAME=wordpress
+   ports:
+    - "80:80"
+ mysql:
+   image: mysql:5
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root

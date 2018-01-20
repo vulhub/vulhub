@@ -1,4 +1,11 @@
 .DS_Store
+.idea
+.settings
+.classpath
+.project
+
+node_modules
+.vscode
 
 nginx_php5_mysql/mysql/data/
 !nginx_php5_mysql/www
@@ -15,3 +22,18 @@ apache_parsing_vulnerability/www/uploadfiles/*
 
 httpoxy/www/vendor/
 httpoxy/www/composer.lock
+
+!gitlab/CVE-2016-9086/data
+gitlab/CVE-2016-9086/data/*
+
+fastjson/vuln/target
+
+jenkins/CVE-2017-1000353/payload/*.class
+jenkins/CVE-2017-1000353/payload/*.ser
+jenkins/CVE-2017-1000353/*.7z
+
+nginx/CVE-2013-4547/www/uploadfiles/*
+
+__pycache__
+
+.env
