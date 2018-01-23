@@ -1,0 +1,23 @@
+/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+body
+{
+	/* Font */
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 12px;
+
+	/* Text color */
+	color: #222;
+
+	/* Remove the background color to make it transparent */
+	background-color: #fff;
+}
+
+/* preserved spaces for rtl list item bullets. (#6249)*/
+ol,ul,dl
+{
+    padding-right:40px;
+}

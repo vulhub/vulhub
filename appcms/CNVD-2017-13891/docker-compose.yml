@@ -1,0 +1,12 @@
+version: '3'
+services:
+        lnmp:
+                image: vulhub/appcms:2.0.101
+                ports:
+                        - "8080:80"
+                depends_on:
+                        - mysql
+        mysql:
+                image: wangxian/alpine-mysql
+                environment:
+                        - MYSQL_ROOT_PASSWORD=root

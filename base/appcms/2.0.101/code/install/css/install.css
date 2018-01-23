@@ -1,0 +1,72 @@
+
+/* 大区域 概括样式 */
+body{background:url(../img/bg.jpg) no-repeat center top;}
+.warp {margin:0;padding:0;width:100%;height:auto;}
+.warp .warp-top {height:auto; clear:both;}
+.warp .warp-content {clear:both; }
+.marauto ,.warp .warp-content {width:800px;margin:0 auto;}
+
+.l{ float:left;}
+.r{float:right;}
+.pr{position:relative;z-index:2000;}
+
+.line-t-30,.line-t-15, .line-t-10,.line-t-6{width:100%;clear:both;font-size:0;line-height:0;}
+.line-t-30{height:30px;}
+.line-t-15 { height:15px; }
+.line-t-10{height:10px;}
+.line-t-6{height:6px;}
+
+.col-6b{color:#6b6b6b;}
+.col-94{color:#949494;}
+.txt-overflw{overflow: hidden;white-space: nowrap;text-overflow: ellipsis; }
+.bor-sty{ border:2px solid #2788CF; border-width:2px 0 1px 0; border-bottom-color:#ccc; }
+
+
+/* 顶部 */
+.warp-top .top-head{height:90px; line-height:90px; }
+.warp-top .top-head .web-logo{background:url(../img/logo.png) no-repeat center left; height:90px; display:block;width:414px;}
+.warp-top .top-head a{color:#fff;}
+
+/* 主体内容 公共 */
+.warp-content .info{border:2px solid #56AED2; background:#BDE8F9; display:block; padding: 0 0 50px 0;}
+.warp-content .info .install-btn{padding:5px 20px; background:#3BD; margin:8px 10px 10px 0; float:right;color:#fff;}
+.warp-content .info .install-btn:hover{background:#47A2B8;}
+
+/* 主体内容 tmp-1 */
+.warp-content .info p.agreement{display:block;  color:#000; background:#fff; line-height:20px; padding:15px; margin:10px;border: 1px solid #56AED2;}
+
+/* 主体内容 tmp-2,主体内容 tmp-3 */
+.warp-content .info .bor{background:#fff; line-height:20px; ; margin:10px;}
+.warp-content .info table{ color:#333; background:#fff;border: 1px solid #56AED2;margin:8px 10px 10px 0;width:100%;}
+.warp-content .info table thead th{ background:#F5F5F5; text-align:center; }
+.warp-content .info table th{font-weight:500; line-height:35px; border:1px solid #56AED2; background:#F5F5F5;}
+.warp-content .info table tr td{text-align:left; padding-left:20px; border:1px solid #56AED2;}
+
+/* 主体内容 tmp-4 */
+.warp-content .info .bor .fld{padding:8px; margin:0 15px 0;}
+.warp-content .info .bor .fld table th{ text-align:left; text-indent:20px;}
+.warp-content .info .bor .fld table tr td input{border:1px solid #ccc; height:22px; line-height:22px; text-indent:10px;}
+
+/* 主体内容 tmp-5 */
+.warp-content .finish-info{padding:0; width:480px; height:280px;margin:0 auto; margin-top:100px;border:2px solid #56AED2; background:#BDE8F9;} 
+.warp-content .finish-info .finish{width:460px; height:260px; border:2px dashed #56AED2; margin: 0 0 0 10px;  background:#fff; font-size:16px; text-indent:40px;}
+.warp-content .finish-info .finish a,.warp-content .finish-info .finish a:hover{color:#4095AA;}
+fieldset{border:1px solid #D8D8D8;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

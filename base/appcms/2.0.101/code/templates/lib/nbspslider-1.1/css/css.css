@@ -1,0 +1,27 @@
+
+/*=================幻灯片样式===================*/
+.sliderBtn { background:url("../images/btnico/sprite.png") no-repeat; cursor: pointer; height: 100px; position:relative; top:30%; z-index:100; width:45px;}
+#prevBtn { left:0; float:left;}
+#nextBtn { background-position:right top; right:0; float:right;}
+#btnList { height:25px; position:absolute; bottom:5px; padding:0 10px 0 10px;}
+/*===============数字按钮默认样式================*/
+.num { width:16px; height:16px; line-height:16px; text-align:center; cursor:pointer; margin-left:10px; background:#ddd; float:right; border:0px solid #ccc; overflow:hidden;}
+.num_act { width:16px; height:16px; line-height:16px; text-align:center; cursor:pointer; margin-left:10px; background:#666;float:right; border:0px solid #ccc; overflow:hidden;color:#fff}
+.num_hover { width:16px; height:16px; line-height:16px; text-align:center; cursor:pointer; margin-left:10px; background:#FFAEB9;float:right; border:0px solid #ccc; overflow:hidden;}
+/*=====================↓↓↓幻灯片数字按钮扩展↓↓↓==================*/
+/* square */
+.square { width:11px; height:11px; float:right; background:#999; cursor:pointer; margin-right:5px; overflow:hidden;}
+.square_act { width:11px; height:11px; float:right; background:#ADD8E6; cursor:pointer; margin-right:5px; overflow:hidden;}
+.square_hover { width:11px; height:11px; float:right; background:blue; cursor:pointer; margin-right:5px; overflow:hidden;}
+/* circle */
+.circle { width:12px; height:13px; float:right; background:url(../images/btnico/circle.png) 0 0 no-repeat; cursor:pointer; margin-right:5px; overflow:hidden;}
+.circle_act { width:13px; height:13px; float:right; background:url(../images/btnico/circle.png) 0 -13px no-repeat; cursor:pointer; margin-right:5px; overflow:hidden;}
+.circle_hover { width:13px; height:13px; float:right; background:url(../images/btnico/circle.png) 0 -26px no-repeat; cursor:pointer; margin-right:5px; overflow:hidden;}
+/* roundness */
+.roundness { width:12px; height:12px; float:right; background:url(../images/btnico/roundness.png) no-repeat; cursor:pointer; margin-right:5px; overflow:hidden;}
+.roundness_act { width:13px; height:13px; float:right; background:url(../images/btnico/roundness.png) 0 -12px no-repeat; cursor:pointer; margin-right:5px; overflow:hidden;}
+.roundness_hover { width:13px; height:13px; float:right; background:url(../images/btnico/roundness.png) 0 -24px no-repeat; cursor:pointer; margin-right:5px; overflow:hidden;}
+/* rectangle */
+.rectangle { width:25px; height:10px; float:right; background:#D15FEE; cursor:pointer; margin-right:5px; opacity:0.7; overflow:hidden;}
+.rectangle_act { width:25px; height:10px; float:right; background:#CDCD00; cursor:pointer; margin-right:5px; overflow:hidden;}
+.rectangle_hover { width:25px; height:10px; float:right; background:blue; cursor:pointer; margin-right:5px; overflow:hidden;}
