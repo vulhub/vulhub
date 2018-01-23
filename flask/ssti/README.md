@@ -5,7 +5,7 @@
 参考文章：
 
  - https://www.blackhat.com/docs/us-15/materials/us-15-Kettle-Server-Side-Template-Injection-RCE-For-The-Modern-Web-App-wp.pdf
- - http://rickgray.me/2016/02/24/use-python-feature-to-execute-arbitrary-codes-in-jinja2-templates.html
+ - http://rickgray.me/use-python-features-to-execute-arbitrary-codes-in-jinja2-templates
 
 ## 测试
 

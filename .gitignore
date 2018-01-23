@@ -4,6 +4,9 @@
 .classpath
 .project
 
+node_modules
+.vscode
+
 nginx_php5_mysql/mysql/data/
 !nginx_php5_mysql/www
 nginx_php5_mysql/www/*
@@ -32,3 +35,5 @@ jenkins/CVE-2017-1000353/*.7z
 nginx/CVE-2013-4547/www/uploadfiles/*
 
 __pycache__
+
+.env
