@@ -1,3 +1,3 @@
-FROM electronuserland/electron-builder:wine
+FROM electronuserland/builder:wine
 
 MAINTAINER phithon <root@leavesongs.com>
