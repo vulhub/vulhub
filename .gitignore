@@ -39,4 +39,4 @@ __pycache__
 .env
 
 electron/CVE-2018-1000006/build/*
-!electron/CVE-2018-1000006/build/.gitkeep
+!electron/CVE-2018-1000006/build/index.html
