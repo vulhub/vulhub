@@ -6,4 +6,4 @@ WORKDIR /usr/src
 RUN cd /usr/src; \
     mvn clean install
 
-CMD ["java", "-jar", "./target/demo-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "./target/demo-0.0.1-SNAPSHOT.jar"]
