@@ -1,6 +1,9 @@
 FROM maven:3-jdk-8
 
+MAINTAINER phithon <root@leavesongs.com>
+
 COPY src/ /usr/src/
+
 WORKDIR /usr/src
 
 RUN cd /usr/src; \
