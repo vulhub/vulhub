@@ -2,7 +2,7 @@ FROM maven:3-jdk-8
 
 MAINTAINER phithon <root@leavesongs.com>
 
-COPY src/ /usr/src/
+COPY ./ /usr/src/
 
 WORKDIR /usr/src
 
