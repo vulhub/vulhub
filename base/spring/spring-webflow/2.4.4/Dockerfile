@@ -7,7 +7,7 @@ RUN set -ex \
     && wget https://github.com/spring-projects/spring-webflow-samples/archive/f2312608cb924666d5d068e8016c1727b006d372.zip -O spring-webflow-samples.zip \
     && unzip spring-webflow-samples.zip \
     && cd spring-webflow-samples-f2312608cb924666d5d068e8016c1727b006d372/booking-mvc \
-    && sed -i 's/factoryCreator\.setUseSpringBeanBinding.*;//g' src/main/java/org/springframework/webflow/samples/booking/config/WebFlowConfig.java
+    && sed -i 's/factoryCreator\.setUseSpringBeanBinding.*;//g' src/main/java/org/springframework/webflow/samples/booking/config/WebFlowConfig.java \
     && mvn clean install
 
 FROM vulhub/tomcat:8.0
