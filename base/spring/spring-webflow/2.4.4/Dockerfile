@@ -13,4 +13,6 @@ FROM vulhub/tomcat:8.0
 
 MAINTAINER phithon <root@leavesongs.com>
 
+RUN rm -rf /usr/local/tomcat/webapps/*
+
 COPY --from=build-env /usr/src/spring-webflow-samples-f2312608cb924666d5d068e8016c1727b006d372/booking-mvc/target/booking-mvc.war /usr/local/tomcat/webapps/ROOT.war
