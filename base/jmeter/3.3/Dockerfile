@@ -9,9 +9,11 @@ RUN apt-get update \
     && cd /usr/src \
     && wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.zip \
     && unzip apache-jmeter-${JMETER_VERSION}.zip \
+    && cd apache-jmeter-${JMETER_VERSION}/bin \
+    && chmod +x jmater jmeter-server \
     && apt-get purge --autoremove -y wget unzip \
     && rm -rf /usr/src/apache-jmeter-${JMETER_VERSION}.zip /var/lib/apt/lists/*
 
 EXPOSE 1099
 
-CMD ["/usr/src/apache-jmeter-3.3/bin/jmeter-server"]
+CMD /usr/src/apache-jmeter-${JMETER_VERSION}/bin/jmeter-server
