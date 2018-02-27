@@ -10,7 +10,7 @@ RUN apt-get update \
     && wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.zip \
     && unzip apache-jmeter-${JMETER_VERSION}.zip \
     && cd apache-jmeter-${JMETER_VERSION}/bin \
-    && chmod +x jmater jmeter-server \
+    && chmod +x jmeter jmeter-server \
     && apt-get purge --autoremove -y wget unzip \
     && rm -rf /usr/src/apache-jmeter-${JMETER_VERSION}.zip /var/lib/apt/lists/*
 
