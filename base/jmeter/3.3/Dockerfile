@@ -2,13 +2,15 @@ FROM openjdk:8-jre
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
+ENV JMETER_VERSION 3.3
+
 RUN apt-get update \
     && apt-get install -y wget unzip \
     && cd /usr/src \
-    && wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-3.3.zip \
-    && unzip apache-jmeter-3.3.zip \
+    && wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.zip \
+    && unzip apache-jmeter-${JMETER_VERSION}.zip \
     && apt-get purge --autoremove -y wget unzip \
-    && rm -rf /usr/src/apache-jmeter-3.3.zip /var/lib/apt/lists/*
+    && rm -rf /usr/src/apache-jmeter-${JMETER_VERSION}.zip /var/lib/apt/lists/*
 
 EXPOSE 1099
 
