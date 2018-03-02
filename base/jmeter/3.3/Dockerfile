@@ -1,4 +1,4 @@
-FROM vulhub/java:jdk-8u20
+FROM vulhub/java:8u20-jdk
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
