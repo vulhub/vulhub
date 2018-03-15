@@ -3,6 +3,7 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 
 ADD ./build/install/ /tmp/
 RUN set -ex \
+    && apt-get update && apt-get install --no-install-recommends -y procps \
     && bash /tmp/install-cf11.sh
 
 EXPOSE 8500
