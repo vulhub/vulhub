@@ -1,4 +1,4 @@
-# Imagetragick漏洞（CVE-2016–3714）测试环境
+# Imagetragick 命令执行漏洞（CVE-2016–3714）
 
 详情见 https://imagetragick.com/ 和 https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html ，不再描述原理。
 
