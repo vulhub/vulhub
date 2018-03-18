@@ -9,7 +9,7 @@ RUN set -ex \
     && cd /usr/src \
     && /opt/maven/bin/mvn package assembly:single
 
-FROM vulhub/java:8u162-jdk
+FROM openjdk:8-jre-slim
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
