@@ -1,4 +1,4 @@
-# Shellshock 破壳漏洞测试环境
+# Shellshock 破壳漏洞（CVE-2014-6271）
 
 编译运行：
 
