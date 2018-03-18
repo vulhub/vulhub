@@ -26,11 +26,11 @@ pip install docker-compose
 
 ```bash
 # 拉取项目
-git clone git@github.com:phith0n/vulhub.git
+git clone https://github.com/vulhub/vulhub.git
 cd vulhub
 
 # 进入某一个漏洞/环境的目录
-cd nginx_php5_mysql
+cd flask/ssti
 
 # 自动化编译环境
 docker-compose build
