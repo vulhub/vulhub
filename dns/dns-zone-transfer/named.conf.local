@@ -1,0 +1,4 @@
+zone "vulhub.org" IN {
+      type master;
+      file "vulhub.db";
+};

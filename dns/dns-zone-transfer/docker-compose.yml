@@ -1,0 +1,10 @@
+version: '2'
+services:
+ bind1:
+   image: vulhub/bind:latest
+   ports:
+    - "53:53/TCP"
+    - "53:53/UDP"
+   volumes:
+    - ./named.conf.local:/etc/bind/named.conf.local
+    - ./vulhub.db:/etc/bind/vulhub.db
