@@ -1,4 +1,4 @@
-zone "vulhub.org" IN {
+zone "vulhub.org" {
       type master;
-      file "vulhub.db";
+      file "/etc/bind/vulhub.db";
 };
