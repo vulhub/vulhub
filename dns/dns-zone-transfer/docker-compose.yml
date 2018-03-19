@@ -1,6 +1,6 @@
 version: '2'
 services:
- bind1:
+ dns:
    image: vulhub/bind:latest
    ports:
     - "53:53/tcp"
