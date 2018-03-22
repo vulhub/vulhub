@@ -7,9 +7,12 @@
 ## 测试环境
 
 运行测试环境
+
 ```
 docker-compose up -d
 ```
+
+环境启动后，访问`http://your-ip:8088`即可看到Hadoop YARN ResourceManager WebUI页面。
 
 ## 利用
 
