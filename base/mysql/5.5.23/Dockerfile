@@ -3,7 +3,7 @@ LABEL maintainer="sayantsing@gmail.com"
 
 WORKDIR /root/
 
-ENV MYSQL_VERSION 5.6.5
+ENV MYSQL_VERSION 5.5.23
 
 RUN wget -qO- https://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz | tar zx && \
     wget -qO- https://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz | tar zx && \
