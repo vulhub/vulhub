@@ -3,9 +3,11 @@ LABEL maintainer="sayantsing@gmail.com"
 
 WORKDIR /root/
 
+ENV MYSQL_VERSION 5.5.23
+
 RUN wget -qO- https://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz | tar zx && \
     wget -qO- https://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz | tar zx && \
-    wget -qO- https://github.com/mysql/mysql-server/archive/mysql-5.6.5.tar.gz | tar zx
+    wget -qO- https://github.com/mysql/mysql-server/archive/mysql-${MYSQL_VERSION}.tar.gz | tar zx
 
 RUN set -ex \
     && cd /root/m4-1.4.9 \
@@ -22,9 +24,9 @@ RUN set -ex \
     && rm -rf /root/bison-2.5.1
 
 RUN set -ex && \
-    cd /root/mysql-server-mysql-5.6.5 && \
+    cd /root/mysql-server-mysql-${MYSQL_VERSION} && \
     cmake . && make && make install && \
-    rm -rf /root/mysql-server-mysql-5.6.5
+    rm -rf /root/mysql-server-mysql-${MYSQL_VERSION}
 
 FROM debian:stretch
 LABEL maintainer="phithon <root@leavesongs.com>"
