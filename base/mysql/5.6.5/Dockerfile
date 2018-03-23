@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER sayantsing@gmail.com
+LABEL maintainer="sayantsing@gmail.com"
 
 WORKDIR /root/
 
