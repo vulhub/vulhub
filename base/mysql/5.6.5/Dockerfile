@@ -27,6 +27,7 @@ RUN set -ex && \
     rm -rf /root/mysql-server-mysql-5.6.5
 
 FROM debian:stretch
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 COPY --from=build-env /usr/local/mysql /usr/local/mysql
 
