@@ -24,6 +24,8 @@ RUN set -ex \
     && rm -rf /root/bison-2.5.1
 
 RUN set -ex && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends cmake && \
     cd /root/mysql-server-mysql-${MYSQL_VERSION} && \
     cmake . && make && make install && \
     rm -rf /root/mysql-server-mysql-${MYSQL_VERSION}
