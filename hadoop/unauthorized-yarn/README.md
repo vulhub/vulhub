@@ -1,4 +1,4 @@
-# Hadoop YARN resourcemanager 未授权访问
+# Hadoop YARN ResourceManager 未授权访问
 
 ## 原理
 
