@@ -14,6 +14,6 @@ FROM openjdk:8-jre
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-COPY --from=/usr/src/target/spring-rest-data-demo-2.0.0.BUILD.jar /spring-rest-data-demo-2.0.0.BUILD.jar
+COPY --from=builder /usr/src/target/spring-rest-data-demo-2.0.0.BUILD.jar /spring-rest-data-demo-2.0.0.BUILD.jar
 
 CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/spring-rest-data-demo-2.0.0.BUILD.jar"]
