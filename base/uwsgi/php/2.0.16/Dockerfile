@@ -21,4 +21,6 @@ COPY uwsgi.ini /etc/uwsgi.ini
 
 WORKDIR /
 
+EXPOSE 8080
+
 CMD ["/uwsgi", "/etc/uwsgi.ini"]
