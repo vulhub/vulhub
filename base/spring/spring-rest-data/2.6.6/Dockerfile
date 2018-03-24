@@ -1,4 +1,4 @@
-FROM maven:3-jdk-8
+FROM maven:3-jdk-8 AS builder
 
 MAINTAINER phithon <root@leavesongs.com>
 
@@ -9,4 +9,11 @@ WORKDIR /usr/src
 RUN cd /usr/src; \
     mvn clean install
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "./target/spring-rest-data-demo-2.0.0.BUILD.jar"]
+# production
+FROM openjdk:8-jre
+
+LABEL maintainer="phithon <root@leavesongs.com>"
+
+COPY --from=/usr/src/target/spring-rest-data-demo-2.0.0.BUILD.jar /spring-rest-data-demo-2.0.0.BUILD.jar
+
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/spring-rest-data-demo-2.0.0.BUILD.jar"]
