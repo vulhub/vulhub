@@ -1,8 +1,6 @@
 version: '2'
 services:
- dns:
-   image: vulhub/docker:18.03.0
+ docker:
+   build: .
    ports:
     - "2375:2375"
-   volumes:
-    - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
