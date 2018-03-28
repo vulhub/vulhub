@@ -1,4 +1,4 @@
-# JBoss JMXInvokerServlet 反序列化漏洞（CVE-2015-8103）
+# JBoss JMXInvokerServlet 反序列化漏洞
 
 这是经典的JBoss反序列化漏洞，JBoss在`/invoker/JMXInvokerServlet`请求中读取了用户传入的对象，然后我们利用Apache Commons Collections中的Gadget执行任意代码。
 
