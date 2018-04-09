@@ -26,11 +26,11 @@ pip install docker-compose
 
 ```bash
 # 拉取项目
-git clone git@github.com:phith0n/vulhub.git
+git clone https://github.com/vulhub/vulhub.git
 cd vulhub
 
 # 进入某一个漏洞/环境的目录
-cd nginx_php5_mysql
+cd flask/ssti
 
 # 自动化编译环境
 docker-compose build
@@ -51,9 +51,16 @@ docker-compose down
 
 **本项目中所有环境仅用于测试，不可作为生产环境使用！**
 
+## Notice
+
+注意事项：
+
+1. 为防止出现权限错误，最好使用root用户执行docker和docker-compose命令
+2. docker部分镜像不支持在ARM等架构的机器上运行
+
 ## Contribution
 
-如果你在编译的时候出现错误，不要盲目开issue，请阅读[这篇文档](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0)，希望可以对你有所帮助。
+本项目依赖于docker，在编译及运行过程中出现的任意异常都是docker以及相关程序抛出的，请先自行查找错误原因。如果确定是因为Dockerfile编写错误（或vulhub中代码错误）导致的，再提交issue。更多说明请[这篇文档文档](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0)，希望可以对你有所帮助。
 
 致谢列表：[Contributors List](contributors.md)
 

@@ -1,0 +1,10 @@
+version: '2'
+services:
+ postgres:
+   image: vulhub/postgres:9.6.7
+   ports:
+    - "5432:5432"
+   environment:
+    - POSTGRES_PASSWORD=vulhub_secret
+   volumes:
+    - ./init.sh:/docker-entrypoint-initdb.d/init.sh

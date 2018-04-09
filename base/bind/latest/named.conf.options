@@ -1,0 +1,9 @@
+options {
+	directory "/var/cache/bind";
+
+	dnssec-validation auto;
+
+	auth-nxdomain no;    # conform to RFC1035
+	listen-on-v6 port 53 { any; };
+	listen-on port 53 { any; };
+};
