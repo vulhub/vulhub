@@ -1,0 +1,28 @@
+body {
+	margin: auto;
+	width: 50%;
+}
+
+form.user-form {
+	padding: 9px 14px;
+	border: 1px solid #e1e1e8;
+	border-radius: 4px;	
+}
+
+.fieldError {
+	border: 1px solid #a94442;
+}
+
+.errors {
+	padding: 1em;
+	margin: 1em 0;
+	border: 1px solid #eee;
+	border-left-width: 5px;
+	border-left-color: #a94442; 
+	border-radius: 5px;
+}
+
+.errors li {
+	list-style-type: none;
+	margin: 0.5em 0.7em;
+}
