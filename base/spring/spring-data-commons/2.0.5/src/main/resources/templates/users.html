@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Users</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+		<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" />
+	</head>
+	<body>
+		<h1>Users</h1>
+
+		<nav>
+		  <ul class="pagination" th:with="total = ${users.totalPages}">
+		    <li th:if="${users.hasPrevious()}">
+		      <a th:href="@{/users(page=${users.previousPageable().pageNumber},size=${users.size})}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    <li th:each="page : ${#numbers.sequence(0, total - 1)}"><a th:href="@{/users(page=${page},size=${users.size})}" th:text="${page + 1}">1</a></li>
+		    <li th:if="${users.hasNext()}">
+		      <a th:href="@{/users(page=${users.nextPageable().pageNumber},size=${users.size})}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+
+		<ol>
+			<li th:each="user, it : ${users}" th:with="index = ${it.count}" th:text="${user.username + ' - ' + user.password}" th:value="${users.number * users.size + index}">Username</li>
+		</ol>
+
+		<form method="post" role="form" class="gb-form" id="form" th:action="@{/users(page=${page},size=${users.size})}" th:object="${userForm}">
+
+			<ul th:if="${#fields.hasErrors('*')}" class="errors" >
+				<li th:each="error : ${#fields.errors('*')}" th:text="${error}" class="text-danger">Input is incorrect</li>
+			</ul>
+
+			<div class="form-group">
+				<label for="username">Username</label><br />
+				<input type="text" th:field="*{username}" class="form-control" th:errorclass="fieldError" required="required" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label><br />
+				<input type="password" th:field="*{password}" class="form-control" th:errorclass="fieldError" required="required" />
+			</div>
+			<div class="form-group">
+				<label for="repeatedPassword">Password (repeated)</label><br />
+				<input type="password" th:field="*{repeatedPassword}" class="form-control" th:errorclass="fieldError" required="required" />
+			</div>
+			<input type="submit" class="btn btn-default" value="Register user" />
+		</form>
+	</body>
+</html>
