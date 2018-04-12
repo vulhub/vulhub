@@ -1,4 +1,4 @@
-FROM vulhub/java:8u162-jdk
+FROM maven:3-jdk-8 AS builder
 
 COPY ./ /usr/src
 
