@@ -1,4 +1,4 @@
-FROM vulhub/maven:3.5.2-jdk-8 AS build-env
+FROM maven:3-jdk-8 AS build-env
 
 RUN set -ex \
     && apt-get update \
