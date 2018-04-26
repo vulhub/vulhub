@@ -32,6 +32,7 @@ nginx/CVE-2013-4547/www/uploadfiles/*
 __pycache__
 
 .env
+.python-version
 
 electron/CVE-2018-1000006/build/*
 !electron/CVE-2018-1000006/build/index.html

