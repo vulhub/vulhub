@@ -43,7 +43,9 @@ public function searchTree($query, $branch)
 1. 开发者对于`escapeshellarg`函数的误解，造成参数注入
 2. `git grep`的参数`--open-files-in-pager`的值，将被直接执行
 
-理论上，在经过`$query = escapeshellarg($query);`处理后，`$query`将变成一个由单引号包裹的字符串。但不出漏洞的前提是，这个字符串应该出现在“参数值”的位置，而不是出现在参数列表中。我们可以试一下如下命令：
+理论上，在经过`$query = escapeshellarg($query);`处理后，`$query`将变成一个由单引号包裹的字符串。但不出漏洞的前提是，这个字符串应该出现在“参数值”的位置，而不是出现在参数选项（option）中。
+
+我们可以试一下如下命令：
 
 ```
 git grep -i --line-number -e '--open-files-in-pager=id;' master
@@ -55,7 +57,7 @@ git grep -i --line-number -e '--open-files-in-pager=id;' master
 
 这应该作为本漏洞的最佳修复方法，也是git官方对pattern可能是用户输入的情况的一种解决方案（以下说明来自man-page）：
 
-> -e \
+> -e 
 >   The next parameter is the pattern. This option has to be used for patterns starting with - and should be used in scripts passing user input to grep. Multiple patterns are combined by
 >   or.
 
