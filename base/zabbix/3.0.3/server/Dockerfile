@@ -4,7 +4,7 @@
 # docker run -d --name zabbix-server -h zabbix-server -p 10051:10051 zabbix-server
 #
 #
-FROM  alpine:latest
+FROM  alpine:3.5
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 ARG APK_FLAGS_COMMON="-q"
@@ -32,7 +32,7 @@ RUN apk update \
         && chown -R zabbix:root /var/lib/zabbix /var/run/zabbix /var/log/zabbix \
         && rm -rf /var/cache/apk/*
 
-RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata alpine-sdk coreutils automake autoconf postgresql-dev libxml2-dev unixodbc-dev net-snmp-dev libssh2-dev openipmi-dev openldap-dev curl-dev openssl-dev \
+RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata alpine-sdk coreutils automake autoconf mysql-dev libxml2-dev unixodbc-dev net-snmp-dev libssh2-dev openipmi-dev openldap-dev curl-dev openssl-dev \
         && rm -f /etc/localtime && ln -s /usr/share/zoneinfo/UTC /etc/localtime \
         && cd /tmp/ \
         && mkdir -p /tmp/zabbix \
