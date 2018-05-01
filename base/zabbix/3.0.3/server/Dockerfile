@@ -4,7 +4,7 @@
 # docker run -d --name zabbix-server -h zabbix-server -p 10051:10051 zabbix-server
 #
 #
-FROM  alpine:3.5
+FROM  alpine:3.4
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 ARG APK_FLAGS_COMMON="-q"
@@ -21,7 +21,8 @@ ENV LANG=en_US.UTF-8 \
         ZBX_AGT_NUM=3 \
         ZBX_AGT_PORT=10051 \
         MIBDIRS=/var/lib/zabbix/mibs \
-        MIBS=+ALL
+        MIBS=+ALL \
+        DB_TYPE=mysql
 
 RUN apk update \
         && apk add ${APK_FLAGS_PERSISTANT} bash mariadb-client-libs \
