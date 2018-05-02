@@ -25,15 +25,6 @@ sed -e "s/^\(Server=\).*/\1$ZBX_SRV_HOST/g" \
     -e "s/.*\(ListenPort=\).*/\1$ZBX_AGT_PORT/g" \
     -e "s/^\(Hostname=\).*/\1`hostname`/g" -i /etc/zabbix/zabbix_agentd.conf
 
-echo "> Starting: Server"
-/usr/sbin/zabbix_server -c /etc/zabbix/zabbix_server.conf
-tail -n100 /var/log/zabbix/zabbix_server.log
+su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_agentd --foreground -c /etc/zabbix/zabbix_agentd.conf"
 
-echo "> Starting: Agent"
-/usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf
-tail -n100 /var/log/zabbix/zabbix_agentd.log
-
-while true; do
- sleep 15s & wait $!;
- ps -o pid |egrep "^\s+$(cat /var/run/zabbix/zabbix_server.pid)\$" 1>/dev/null || exit 1;
-done
+exec su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_server --foreground -c /etc/zabbix/zabbix_server.conf"
