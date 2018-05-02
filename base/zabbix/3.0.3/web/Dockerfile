@@ -22,7 +22,7 @@ ENV LANG=en_US.UTF-8 \
     DB_TYPE=${DB_TYPE}
 
 RUN apk update \
-    && apk add ${APK_FLAGS_PERSISTANT} mariadb-client nginx php5-fpm php5-sockets php5-gd php5-gettext php5-bcmath php5-ctype php5-xmlreader php5-json php5-ldap php5-pgsql ttf-dejavu \
+    && apk add ${APK_FLAGS_PERSISTANT} mariadb-client php5-apache2 php5-sockets php5-gd php5-gettext php5-bcmath php5-ctype php5-xmlreader php5-json php5-ldap php5-mysqli ttf-dejavu \
     && rm -rf /var/cache/apk/*
 
 RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata bash curl tar coreutils gettext \
@@ -37,13 +37,14 @@ RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata bash curl tar coreutils
     && DATE=`date +%Y-%m-%d` \
     && sed -e "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 ($DATE)'/g" \
             -e "s/ZABBIX_API_VERSION.*'\(.*\)'/ZABBIX_API_VERSION', '\1 ($DATE)'/g" -i /usr/share/webapps/zabbix/include/defines.inc.php \
-    && sed -e "s/;\(pid =\).*/\1 \/var\/run\/php-fpm.pid/g" \
-            -e "s/;\(log_level =\).*/\1 warning/g" -i /etc/php5/php-fpm.conf \
     && cp /usr/share/webapps/zabbix/conf/zabbix.conf.php.example /usr/share/webapps/zabbix/conf/zabbix.conf.php \
     && apk del ${APK_FLAGS_COMMON} --purge build-deps \
-    && rm -rf /var/cache/apk/* /tmp/zabbix/
+    && rm -rf /var/cache/apk/* /tmp/zabbix/ \
+    && mkdir /run/apache2 && chown apache:apache -R /run/apache2
 
-ADD docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
+COPY conf/apache.conf /etc/apache2/conf.d/
+COPY conf/99-zabbix.ini /etc/php5/conf.d/
 
 EXPOSE     80/TCP
 CMD        ["/docker-entrypoint.sh"]
