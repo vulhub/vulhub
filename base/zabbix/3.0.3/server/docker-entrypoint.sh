@@ -25,6 +25,6 @@ sed -e "s/^\(Server=\).*/\1$ZBX_SRV_HOST/g" \
     -e "s/.*\(ListenPort=\).*/\1$ZBX_AGT_PORT/g" \
     -e "s/^\(Hostname=\).*/\1`hostname`/g" -i /etc/zabbix/zabbix_agentd.conf
 
-su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_agentd --foreground -c /etc/zabbix/zabbix_agentd.conf"
+su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf"
 
 exec su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_server --foreground -c /etc/zabbix/zabbix_server.conf"
