@@ -27,4 +27,6 @@ sed -e "s/^\(Server=\).*/\1$ZBX_SRV_HOST/g" \
 
 su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf"
 
-exec su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_server --foreground -c /etc/zabbix/zabbix_server.conf"
+su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_server -c /etc/zabbix/zabbix_server.conf"
+
+sleep infinity
