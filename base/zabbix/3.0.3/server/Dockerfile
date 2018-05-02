@@ -79,6 +79,6 @@ RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata alpine-sdk coreutils au
 ADD docker-entrypoint.sh /
 
 EXPOSE 10051/TCP 162/UDP
-CMD ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 HEALTHCHECK --interval=15s --timeout=3s --retries=3 CMD nc -vz localhost 10051 || exit 1
