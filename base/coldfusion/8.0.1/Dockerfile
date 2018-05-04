@@ -9,5 +9,6 @@ RUN set -ex \
     && rm -r /var/lib/apt/lists/*
 
 EXPOSE 8500
+WORKDIR /opt/coldfusion8
 
 CMD ["bash", "-c", "/opt/coldfusion8/bin/coldfusion start && tail -f /opt/coldfusion8/logs/cfserver.log"]
