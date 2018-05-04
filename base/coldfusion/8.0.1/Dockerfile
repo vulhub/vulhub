@@ -1,12 +1,12 @@
 FROM ubuntu:14.04
-
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ENV COLD_FUSION_URL = https://vulhub.oss-cn-shanghai.aliyuncs.com/download/coldfusion/coldfusion-801-lin64.bin
-ADD installer.properties /opt/installer.properties
+ADD install/ /opt/
 
-RUN apt-get update && apt-get install wget libstdc++5 -y \
-    && wget -O /opt/coldfusion-801-lin64.bin -q $COLD_FUSION_URL && chmod +x /opt/coldfusion-801-lin64.bin && /opt/./coldfusion-801-lin64.bin -i silent -f /opt/installer.properties
+RUN set -ex \
+    && apt-get update && apt-get install wget libstdc++5 -y \
+    && bash /opt/installer.sh \
+    && rm -r /var/lib/apt/lists/*
 
 EXPOSE 8500
 
