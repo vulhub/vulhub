@@ -10,4 +10,4 @@ RUN set -ex \
 
 EXPOSE 8500
 
-CMD ["bash", "-c", "/opt/coldfusion11/cfusion/bin/coldfusion start && tail -f /opt/coldfusion11/cfusion/logs/coldfusion-out.log"]
+CMD ["bash", "-c", "/opt/coldfusion8/bin/coldfusion start && tail -f /opt/coldfusion8/logs/cfserver.log"]
