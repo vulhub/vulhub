@@ -1,4 +1,4 @@
-# phpmyadmin 反序列化漏洞（WooYun-2016-199433）
+# phpmyadmin scripts/setup.php 反序列化漏洞（WooYun-2016-199433）
 
 phpmyadmin 2.x版本中存在一处反序列化漏洞，通过该漏洞，攻击者可以读取任意文件或执行任意代码。
 
