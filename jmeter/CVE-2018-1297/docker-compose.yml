@@ -1,0 +1,6 @@
+version: '2'
+services:
+ jmeter:
+   image: vulhub/jmeter:3.3
+   ports:
+    - "1099:1099"

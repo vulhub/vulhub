@@ -1,0 +1,6 @@
+version: '2'
+services:
+ mysql:
+   image: vulhub/mysql:5.5.23
+   ports:
+    - "3306:3306"
