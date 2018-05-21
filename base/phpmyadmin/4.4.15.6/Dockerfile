@@ -1,5 +1,7 @@
 FROM vulhub/php:5.3-apache
 
+LABEL maintainer="phithon <root@leavesongs.com>"
+
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends unzip \
