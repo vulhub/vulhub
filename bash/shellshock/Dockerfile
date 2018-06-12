@@ -10,7 +10,9 @@ ENV BUILD_TOOLS \
     bison \
     autoconf
 
-RUN apt-get update \
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
+    && sed -i 's|security.debian.org|mirrors.ustc.edu.cn/debian-security/|g' /etc/apt/sources.list \
+    && apt-get update \
     && apt-get -y install $BUILD_TOOLS \
     && rm -rf /var/lib/apt/lists/*
 
