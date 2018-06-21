@@ -61,10 +61,4 @@ RUN set -ex \
 		| sort -u \
 		| xargs -r apt-mark manual \
 	\
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-	\
-	&& php --version \
-	\
-# https://github.com/docker-library/php/issues/443
-	&& pecl update-channels \
-	&& rm -rf /tmp/pear ~/.pearrc
+	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
