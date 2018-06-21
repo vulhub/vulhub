@@ -18,7 +18,7 @@ RUN set -ex \
 		libssl-dev \
 		libxml2-dev \
 	" \
-	&& apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
 	\
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
