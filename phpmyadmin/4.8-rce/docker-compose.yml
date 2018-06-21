@@ -11,5 +11,7 @@ services:
  mysql:
    image: mysql:5.5
    environment: 
-    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_RANDOM_ROOT_PASSWORD=yes
     - MYSQL_DATABASE=test
+    - MYSQL_USER=test
+    - MYSQL_PASSWORD=test
