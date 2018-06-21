@@ -10,6 +10,7 @@ RUN set -ex \
     && cd / && rm -rf /tmp/libxml
 
 RUN set -ex \
+    && apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		libargon2-0-dev \
 		libcurl4-openssl-dev \
@@ -50,20 +51,20 @@ RUN set -ex \
 	&& docker-php-source delete \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
-	&& apt-mark auto '.*' > /dev/null; \
-	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
-	find /usr/local -type f -executable -exec ldd '{}' ';' \
+	&& apt-mark auto '.*' > /dev/null \
+	&& [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark \
+	&& find /usr/local -type f -executable -exec ldd '{}' ';' \
 		| awk '/=>/ { print $(NF-1) }' \
 		| sort -u \
 		| xargs -r dpkg-query --search \
 		| cut -d: -f1 \
 		| sort -u \
 		| xargs -r apt-mark manual \
-	; \
-	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
 	\
-	php --version; \
+	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+	\
+	&& php --version \
 	\
 # https://github.com/docker-library/php/issues/443
-	pecl update-channels; \
-	rm -rf /tmp/pear ~/.pearrc
+	&& pecl update-channels \
+	&& rm -rf /tmp/pear ~/.pearrc
