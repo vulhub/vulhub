@@ -19,8 +19,8 @@ RUN set -ex \
 		libxml2-dev \
 		zlib1g-dev \
 		${PHP_EXTRA_BUILD_DEPS:-} \
-	; \
-	rm -rf /var/lib/apt/lists/*; \
+	\
+	&& rm -rf /var/lib/apt/lists/* \
 	\
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
@@ -50,7 +50,7 @@ RUN set -ex \
 	&& docker-php-source delete \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
-	apt-mark auto '.*' > /dev/null; \
+	&& apt-mark auto '.*' > /dev/null; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
 	find /usr/local -type f -executable -exec ldd '{}' ';' \
 		| awk '/=>/ { print $(NF-1) }' \
