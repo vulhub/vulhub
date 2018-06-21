@@ -14,4 +14,5 @@ RUN set -ex \
     && curl -#SL ${SOURCE_URL} -o /tmp/phpmyadmin.zip \
     && unzip -q /tmp/phpmyadmin.zip \
     && cp -r phpMyAdmin-*/* /var/www/html/ \
+    && docker-php-ext-install mbstring mysqli \
     && rm -rf /tmp/*
