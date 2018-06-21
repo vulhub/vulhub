@@ -10,15 +10,17 @@ RUN set -ex \
     && cd / && rm -rf /tmp/libxml
 
 RUN set -ex \
-	&& buildDeps=" \
-		$PHP_EXTRA_BUILD_DEPS \
+	&& apt-get install -y --no-install-recommends \
+		libargon2-0-dev \
 		libcurl4-openssl-dev \
 		libedit-dev \
 		libsqlite3-dev \
 		libssl-dev \
 		libxml2-dev \
-	" \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+		zlib1g-dev \
+		${PHP_EXTRA_BUILD_DEPS:-} \
+	; \
+	rm -rf /var/lib/apt/lists/*; \
 	\
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
@@ -47,4 +49,21 @@ RUN set -ex \
 	&& make clean \
 	&& docker-php-source delete \
 	\
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps
+# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
+	apt-mark auto '.*' > /dev/null; \
+	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
+	find /usr/local -type f -executable -exec ldd '{}' ';' \
+		| awk '/=>/ { print $(NF-1) }' \
+		| sort -u \
+		| xargs -r dpkg-query --search \
+		| cut -d: -f1 \
+		| sort -u \
+		| xargs -r apt-mark manual \
+	; \
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+	\
+	php --version; \
+	\
+# https://github.com/docker-library/php/issues/443
+	pecl update-channels; \
+	rm -rf /tmp/pear ~/.pearrc
