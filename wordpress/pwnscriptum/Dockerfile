@@ -4,7 +4,7 @@ MAINTAINER phithon <root@leavesongs.com>
 
 RUN set -ex; \
     mkdir -p /usr/src/wordpress; \
-    wget -qO- https://github.com/WordPress/WordPress/archive/4.6.tar.gz | \
+    wget -qO- https://gitee.com/leehdsniper/vulhub-package/raw/master/WordPress.4.6.tar.gz | \
         tar zx -C /usr/src/wordpress --strip-components=1; \
 	chown -R www-data:www-data /usr/src/wordpress; \
 	rm -rf /usr/local/bin/docker-entrypoint.sh

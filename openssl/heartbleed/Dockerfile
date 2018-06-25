@@ -6,7 +6,9 @@ RUN ln -sf /dev/stdout /var/log/access.log \
 	&& ln -sf /dev/stderr /var/log/error.log \
     && ln -sf /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 
-RUN apt-get update \
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
+    && sed -i 's|security.debian.org|mirrors.ustc.edu.cn/debian-security/|g' /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -y openssl \
     && mkdir -p /etc/ssl/nginx/ \
     && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \

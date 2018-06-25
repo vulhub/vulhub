@@ -2,7 +2,9 @@ FROM vulhub/php:7.1-apache
 
 MAINTAINER phithon <root@leavesongs.com>
 
-RUN apt-get update && apt-get install -y gcc wget
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
+    && sed -i 's|security.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list \
+	&& apt-get update && apt-get install -y gcc wget
 
 RUN wget http://xmlsoft.org/sources/libxml2-2.8.0.tar.gz -O /home/libxml2-2.8.0.tar.gz
 
