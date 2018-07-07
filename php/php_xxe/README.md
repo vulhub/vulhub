@@ -2,8 +2,7 @@
 
 环境介绍：
 
-- PHP 7.x 最新版
-- Apache 2.x 稳定版
+- PHP 7.0.30
 - libxml 2.8.0
 
 libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡。为了演示PHP环境下的XXE漏洞，本例会将libxml2.8.0版本编译进PHP中。PHP版本并不影响XXE利用。
@@ -11,13 +10,10 @@ libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡。
 使用如下命令编译并启动环境：
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
-编译时间较长，请耐心等待。
-
-环境启动后，访问`http://your-ip/index.php`即可看到phpinfo，搜索libxml即可看到其版本为2.8.0。
+环境启动后，访问`http://your-ip:8080/index.php`即可看到phpinfo，搜索libxml即可看到其版本为2.8.0。
 
 Web目录为`./www`，其中包含4个文件：
 
