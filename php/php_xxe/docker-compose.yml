@@ -1,6 +1,6 @@
 version: '2'
 services:
- apache:
+ web:
    image: vulhub/php:xxe
    volumes:
     - ./www:/var/www/html

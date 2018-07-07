@@ -2,8 +2,7 @@
 
 环境介绍：
 
-- PHP 7.1
-- Apache 2 稳定版
+- PHP 7.0.30
 - libxml 2.8.0
 
 libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡。为了演示PHP环境下的XXE漏洞，本例会将libxml2.8.0版本编译进PHP中。PHP版本并不影响XXE利用。
