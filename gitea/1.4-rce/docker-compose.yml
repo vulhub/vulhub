@@ -3,5 +3,5 @@ services:
  web:
    image: vulhub/gitea:1.4.0
    ports:
-    - 3000:3000
-    - 20022:22
+    - "3000:3000"
+    - "20022:22"
