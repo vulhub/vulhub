@@ -11,5 +11,8 @@ RUN set -ex \
 
 WORKDIR $basedir
 EXPOSE 8080 7077 6066
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
-ENTRYPOINT ./sbin/start-master.sh && tail -f logs/*.out
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+
+CMD [ "master" ]
