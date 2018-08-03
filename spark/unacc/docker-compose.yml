@@ -11,3 +11,5 @@ services:
    image: vulhub/spark:2.3.1
    depends_on:
     - master
+   ports:
+    - "8081:8081"
