@@ -1,0 +1,8 @@
+version: '2'
+services:
+ web:
+   image: vulhub/php:xxe
+   volumes:
+    - ./www:/var/www/html
+   ports:
+    - "8080:80"

@@ -1,9 +1,8 @@
-FROM vulhub/php:7.1-apache
+FROM php:7.1-apache
 
 MAINTAINER phithon <root@leavesongs.com>
 
-RUN apt-get update && apt-get install -y wget \
-    && wget -qO- https://www.imagemagick.org/download/releases/ImageMagick-6.9.2-10.tar.xz \
+RUN curl -#SL https://www.imagemagick.org/download/releases/ImageMagick-6.9.2-10.tar.xz \
      | tar xJ -C /tmp/ \
     && cd /tmp/ImageMagick-6.9.2-10 \
     && ./configure && make \
@@ -13,6 +12,4 @@ RUN apt-get update && apt-get install -y wget \
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN rm -rf /var/lib/apt/lists/* \
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false wget \
-    && rm -rf /tmp/ImageMagick*
+RUN rm -rf /tmp/ImageMagick*

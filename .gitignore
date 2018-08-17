@@ -4,18 +4,16 @@
 .classpath
 .project
 
-nginx_php5_mysql/mysql/data/
-!nginx_php5_mysql/www
-nginx_php5_mysql/www/*
-!nginx_php5_mysql/www/index.php
+node_modules
+.vscode
 
-!nginx_parsing_vulnerability/www/uploadfiles
-nginx_parsing_vulnerability/www/uploadfiles/*
-!nginx_parsing_vulnerability/www/uploadfiles/nginx.png
+!nginx/nginx_parsing_vulnerability/www/uploadfiles
+nginx/nginx_parsing_vulnerability/www/uploadfiles/*
+!nginx/nginx_parsing_vulnerability/www/uploadfiles/nginx.png
 
-!apache_parsing_vulnerability/www/uploadfiles
-apache_parsing_vulnerability/www/uploadfiles/*
-!apache_parsing_vulnerability/www/uploadfiles/apache.php.jpeg
+!httpd/apache_parsing_vulnerability/www/uploadfiles
+httpd/apache_parsing_vulnerability/www/uploadfiles/*
+!httpd/apache_parsing_vulnerability/www/uploadfiles/apache.php.jpeg
 
 httpoxy/www/vendor/
 httpoxy/www/composer.lock
@@ -28,3 +26,13 @@ fastjson/vuln/target
 jenkins/CVE-2017-1000353/payload/*.class
 jenkins/CVE-2017-1000353/payload/*.ser
 jenkins/CVE-2017-1000353/*.7z
+
+nginx/CVE-2013-4547/www/uploadfiles/*
+
+__pycache__
+
+.env
+.python-version
+
+electron/CVE-2018-1000006/build/*
+!electron/CVE-2018-1000006/build/index.html

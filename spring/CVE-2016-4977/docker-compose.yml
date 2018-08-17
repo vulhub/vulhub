@@ -1,0 +1,6 @@
+version: '2'
+services:
+ spring:
+   image: vulhub/spring-security-oauth2:2.0.8
+   ports:
+    - "8080:8080"

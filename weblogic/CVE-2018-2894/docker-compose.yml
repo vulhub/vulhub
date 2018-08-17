@@ -1,0 +1,6 @@
+version: '2'
+services:
+ weblogic:
+   image: vulhub/weblogic:12.2.1.3
+   ports:
+    - "7001:7001"

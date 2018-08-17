@@ -1,0 +1,6 @@
+version: '2'
+services:
+ spring:
+   image: vulhub/spring-rest-data:2.6.6
+   ports:
+    - "8080:8080"
