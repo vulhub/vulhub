@@ -19,6 +19,7 @@ RUN set -ex; \
 	docker-php-ext-install -j "$(nproc)" \
 		gd \
 		zip \
+        pdo_mysql
 	; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
