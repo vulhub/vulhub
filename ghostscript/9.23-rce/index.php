@@ -7,7 +7,7 @@ if (!in_array($ext, ['gif', 'png', 'jpg', 'jpeg'])) {
     die('Unsupported filetype uploaded.');
 }
 
-$size = shell_exec("convert {$_FILES['file_upload']['tmp_name']} -print 'Size: %wx%h' /dev/null");
+$size = shell_exec("identify -format '%w x %h' {$_FILES['file_upload']['tmp_name']}");
 
 echo "Image size is: $size";
 
