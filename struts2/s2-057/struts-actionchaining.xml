@@ -9,7 +9,6 @@
                     <result type="redirectAction">
                         <param name = "actionName">register2</param>
                     </result>
-                    <result type="chain">actionChain2</result>
                 </action>
                 <action name="actionChain2" class="org.apache.struts2.showcase.actionchaining.ActionChain2">
                         <result type="chain">actionChain3</result>
