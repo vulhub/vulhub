@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+        <package name="actionchaining" extends="struts-default" namespace="/actionchaining">
+                <action name="actionChain1" class="org.apache.struts2.showcase.actionchaining.ActionChain1">
+                    <result type="redirectAction">
+                        <param name = "actionName">register2</param>
+                    </result>
+                    <result type="chain">actionChain2</result>
+                </action>
+                <action name="actionChain2" class="org.apache.struts2.showcase.actionchaining.ActionChain2">
+                        <result type="chain">actionChain3</result>
+                </action>
+                <action name="actionChain3" class="org.apache.struts2.showcase.actionchaining.ActionChain3">
+                        <result>/WEB-INF/actionchaining/actionChainingResult.jsp</result>
+                </action>
+        </package>
+</struts>
