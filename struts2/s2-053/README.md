@@ -1,6 +1,6 @@
 # S2-053 远程代码执行漏洞
 
-影响版本: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
+影响版本: Struts 2.0.1 - Struts 2.3.33, Struts 2.5 - Struts 2.5.10
 
 漏洞详情: 
 
