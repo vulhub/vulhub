@@ -15,17 +15,17 @@ RUN set -ex \
     && make install \
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies 
     && apt-mark auto '.*' > /dev/null \
-	&& apt-mark manual $savedAptMark \
-	&& ldd /usr/local/bin/* /usr/local/sbin/* \
-		| awk '/=>/ { print $3 }' \
-		| sort -u \
-		| xargs -r dpkg-query -S \
-		| cut -d: -f1 \
-		| sort -u \
-		| xargs -rt apt-mark manual \
-	\
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-	&& rm -rf /var/lib/apt/lists/* /usr/src/*
+    && apt-mark manual $savedAptMark \
+    && ldd /usr/local/bin/* /usr/local/sbin/* \
+        | awk '/=>/ { print $3 }' \
+        | sort -u \
+        | xargs -r dpkg-query -S \
+        | cut -d: -f1 \
+        | sort -u \
+        | xargs -rt apt-mark manual \
+    \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && rm -rf /var/lib/apt/lists/* /usr/src/*
 
 add --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
 
