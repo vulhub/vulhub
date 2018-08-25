@@ -37,4 +37,4 @@ EXPOSE 22
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["/usr/local/sbin/sshd", "-D"]
+CMD ["/usr/local/sbin/sshd", "-D", "-E", "/dev/stdout"]
