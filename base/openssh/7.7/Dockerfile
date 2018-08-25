@@ -31,11 +31,10 @@ add --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN set -ex \
     && echo "PermitRootLogin yes" >> /usr/local/etc/sshd_config \
-    && chmod +x /docker-entrypoint.sh \
-    && ln -sf /dev/stdout /var/log/sshd.log
+    && chmod +x /docker-entrypoint.sh
 
 EXPOSE 22
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["/usr/local/sbin/sshd", "-D", "-E", "/var/log/sshd.log"]
+CMD ["/usr/local/sbin/sshd", "-D"]
