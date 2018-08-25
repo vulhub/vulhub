@@ -27,6 +27,14 @@ RUN set -ex \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
 	&& rm -rf /var/lib/apt/lists/* /usr/src/*
 
+add --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN set -ex \
+    && echo "PermitRootLogin yes" >> /usr/local/etc/sshd_config \
+    && chmod +x /docker-entrypoint.sh
+
 EXPOSE 22
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/usr/local/sbin/sshd", "-D"]
