@@ -1,7 +1,7 @@
 version: '2'
 services:
  es:
-   build: .
+   image: vulhub/elasticsearch:1.5.1-with-tomcat
    ports:
     - "9200:9200"
     - "8080:8080"
