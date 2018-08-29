@@ -2,7 +2,7 @@ FROM vulhub/elasticsearch:1.5.1
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ENV CATALINA_HOME=/usr/share/tomcat8
+ENV CATALINA_HOME=/usr/local/tomcat
 
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 
