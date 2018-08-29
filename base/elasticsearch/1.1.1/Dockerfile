@@ -1,0 +1,29 @@
+FROM openjdk:8-jre
+
+MAINTAINER phithon <root@leavesongs.com>
+
+RUN set -ex \
+    && apt-get update \
+    && apt-get install -y wget \
+    && mkdir -p /usr/share/elasticsearch \
+    && wget -qO- https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.1.1.tar.gz | tar zx \
+        --strip-components 1 -C /usr/share/elasticsearch
+
+ENV PATH /usr/share/elasticsearch/bin:$PATH
+
+WORKDIR /usr/share/elasticsearch
+
+COPY logging.yml ./config/logging.yml
+
+COPY docker-entrypoint.sh /
+
+RUN set -ex \
+    && chmod +x /docker-entrypoint.sh \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false wget
+
+EXPOSE 9200 9300
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["elasticsearch"]
