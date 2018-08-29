@@ -1,6 +1,6 @@
 version: '2'
 services:
  web:
-   build: .
+   image: vulhub/bash:4.3.0-with-httpd
    ports:
-    - "80:80"
+    - "8080:80"

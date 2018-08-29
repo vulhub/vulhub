@@ -3,11 +3,10 @@
 编译运行：
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
-访问`http://your-ip/`，有两个文件：
+访问`http://your-ip:8080/`，可见有两个文件：
 
  - safe.cgi
  - victim.cgi
