@@ -8,7 +8,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y apache2 \
     && { \
         echo; \
-        echo "<Directory \"${HTTPD_WWW}\">"; \
+        echo "<Directory \"/var/www/html\">"; \
         echo '  AddHandler cgi-script .cgi'; \
         echo '  AllowOverride None'; \
         echo '  Options Indexes FollowSymLinks ExecCGI'; \
