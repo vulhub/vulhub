@@ -2,10 +2,12 @@ FROM vulhub/bash:4.3.0
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ARG HTTPD_CONF=/etc/apache2
-
 RUN apt-get update \
     && apt-get install --no-install-recommends -y apache2 \
+    && a2enmod cgi \
+    && a2enmod cgid
+
+RUN set -ex \
     && { \
         echo; \
         echo "<Directory \"/var/www/html\">"; \
@@ -15,8 +17,6 @@ RUN apt-get update \
         echo '  Require all granted'; \
         echo '</Directory>'; \
         echo; \
-    } >> ${HTTPD_CONF}/apache2.conf \
-    && a2enmod cgi \
-    && a2enmod cgid
+    } >> /etc/apache2/apache2.conf
 
 CMD ["apache2ctl", "-DFOREGROUND"]
