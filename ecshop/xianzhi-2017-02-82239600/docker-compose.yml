@@ -6,6 +6,12 @@ services:
     - mysql
    ports:
     - "8080:80"
+ ecshop36:
+   image: vulhub/ecshop:3.6.0
+   depends_on:
+    - mysql
+   ports:
+    - "8081:80"
  mysql:
    image: mysql:5.5
    environment: 
