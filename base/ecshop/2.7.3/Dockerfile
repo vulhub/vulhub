@@ -6,8 +6,9 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends unzip \
     && curl -#SL https://vulhub.oss-cn-shanghai.aliyuncs.com/download/ecshop/ecshop-2.7.3.zip -o /tmp/ecshop-2.7.3.zip \
-    && unzip /tmp/ecshop-2.7.3.zip \
+    && unzip /tmp/ecshop-2.7.3.zip -d /tmp/ \
     && cp -r /tmp/ECShop_2.7.3_UTF8_release1230/upload/* /var/www/html/ \
+    && chown www-data:www-data -R /var/www/html \
     && echo "date.timezone = Asia/Shanghai" > /usr/local/etc/php/conf.d/date.ini \
-    && apt-get purge --auto-remove unzip \
+    && apt-get purge --auto-remove -y unzip \
     && rm -rf /var/lib/apt/lists/* /tmp/ECShop* /tmp/ecshop*
