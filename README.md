@@ -93,6 +93,8 @@ docker-compose down -v
   <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
+更多[捐助途径](http://vulhub.org/#/docs/donate/)。
+
 ## License
 
 Vulhub is released under the [GPL-3.0 license](LICENSE).
