@@ -65,6 +65,11 @@ docker-compose down -v
 
 本项目依赖于docker，在编译及运行过程中出现的任意异常都是docker以及相关程序抛出的，请先自行查找错误原因。如果确定是因为Dockerfile编写错误（或vulhub中代码错误）导致的，再提交issue。更多说明请[这篇文档](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0)，希望可以对你有所帮助。
 
+更多问题，可以用如下方式和我们联系：
+
+- [Discord](https://discord.gg/GhMB3Z)
+- [Twitter](https://twitter.com/vulhub)
+
 感谢如下贡献者：
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
@@ -79,11 +84,14 @@ docker-compose down -v
 
 在patreon上赞助vulhub 🙏 
 
-[![](https://vulhub.org/img/sponsor/patreon.png)](https://www.patreon.com/bePatron?u=12677520)
+<a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/img/sponsor/patreon.png" width="150"></a>
 
 在opencollective上赞助vulhub 🙏 
 
-[![](https://opencollective.com/vulhub/backers.svg?width=890)](https://opencollective.com/vulhub#backer) [![](https://opencollective.com/vulhub/sponsors.svg?width=890)](https://opencollective.com/vulhub#sponsor)
+<p>
+  <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
+  <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
+</p>
 
 ## License
 
