@@ -28,9 +28,10 @@ pip install docker-compose
 ## Usage
 
 ```bash
-# 拉取项目
-git clone https://github.com/vulhub/vulhub.git
-cd vulhub
+# 下载项目
+wget https://github.com/vulhub/vulhub/archive/master.zip -O vulhub-master.zip
+unzip vulhub-master.zip
+cd vulhub-master
 
 # 进入某一个漏洞/环境的目录
 cd flask/ssti
@@ -100,4 +101,4 @@ docker-compose down -v
 
 ## License
 
-Vulhub is released under the [GPL-3.0 license](LICENSE).
+Vulhub is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
