@@ -6,7 +6,7 @@ about: 请按照模板填写错误报告，以帮助我们改进vulhub
 
 填写如下信息
 
- - Which environment: [e.g. python/ssti]
+ - Which environment: 哪个环境出现BUG [e.g. python/ssti]
  - Host OS: 操作系统 [e.g. Ubuntu]
  - OS Version: 操作系统版本 [e.g. 18.04]
  - Docker version: Docker 版本 [e.g. Docker version 18.04.0-ce, build 3d479c0]
