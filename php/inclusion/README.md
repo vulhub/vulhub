@@ -1,50 +1,50 @@
-# PHP文件包含漏洞（利用phpinfo）
+# PHP file contains vulnerabilities (using phpinfo)
 
-PHP文件包含漏洞中，如果找不到可以包含的文件，我们可以通过包含临时文件的方法来getshell。因为临时文件名是随机的，如果目标网站上存在phpinfo，则可以通过phpinfo来获取临时文件名，进而进行包含。
+The PHP file contains the vulnerability. If we can't find the file that can be included, we can get the shell by including the temporary file. Because the temporary file name is random, if phpinfo exists on the target website, you can use phpinfo to get the temporary file name and then include it.
 
-参考链接：
+Reference link:
 
 - https://dl.packetstormsecurity.net/papers/general/LFI_With_PHPInfo_Assitance.pdf
 
-## 漏洞环境
+## vulnerability environment
 
-执行如下命令启动环境：
+Run the following command to start the environment:
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-目标环境是官方最新版PHP7.2，说明该漏洞与PHP版本无关。
+The target environment is the official latest version of PHP 7.2, indicating that the vulnerability is not related to the PHP version.
 
-环境启动后，访问`http://your-ip:8080/phpinfo.php`即可看到一个PHPINFO页面，访问`http://your-ip:8080/lfi.php?file=/etc/passwd`，可见的确存在文件包含漏洞。
+After the environment starts, visit `http://your-ip:8080/phpinfo.php` to see a PHPINFO page, visit `http://your-ip:8080/lfi.php?file=/etc/passwd `, it is obvious that there are files containing vulnerabilities.
 
-## 利用方法简述
+## Brief description of the method of use
 
-在给PHP发送POST数据包时，如果数据包里包含文件区块，无论你访问的代码中有没有处理文件上传的逻辑，PHP都会将这个文件保存成一个临时文件（通常是`/tmp/php[6个随机字符]`），文件名可以在`$_FILES`变量中找到。这个临时文件，在请求结束后就会被删除。
+When sending a POST packet to PHP, if the packet contains a file block, PHP will save the file as a temporary file (usually `/tmp/php) regardless of whether the code you are accessing handles the file upload logic. [6 random characters]`), the file name can be found in the `$_FILES` variable. This temporary file will be deleted after the request ends.
 
-同时，因为phpinfo页面会将当前请求上下文中所有变量都打印出来，所以我们如果向phpinfo页面发送包含文件区块的数据包，则即可在返回包里找到`$_FILES`变量的内容，自然也包含临时文件名。
+At the same time, because the phpinfo page will print out all the variables in the current request context, if we send a packet containing the file block to the phpinfo page, we can find the contents of the `$_FILES` variable in the return package. Contains the temporary file name.
 
-在文件包含漏洞找不到可利用的文件时，即可利用这个方法，找到临时文件名，然后包含之。
+When the file contains a vulnerability and no files are available, you can use this method to find the temporary file name and include it.
 
-但文件包含漏洞和phpinfo页面通常是两个页面，理论上我们需要先发送数据包给phpinfo页面，然后从返回页面中匹配出临时文件名，再将这个文件名发送给文件包含漏洞页面，进行getshell。在第一个请求结束时，临时文件就被删除了，第二个请求自然也就无法进行包含。
+But the file contains the vulnerability and the phpinfo page is usually two pages. In theory, we need to send the packet to the phpinfo page first, then match the temporary file name from the return page, and then send the file name to the file containing the vulnerability page for getshell. . At the end of the first request, the temporary file is deleted and the second request naturally cannot be included.
 
-这个时候就需要用到条件竞争，具体流程如下：
+At this time, conditional competition is required. The specific process is as follows:
 
-1. 发送包含了webshell的上传数据包给phpinfo页面，这个数据包的header、get等位置需要塞满垃圾数据
-2. 因为phpinfo页面会将所有数据都打印出来，1中的垃圾数据会将整个phpinfo页面撑得非常大
-3. php默认的输出缓冲区大小为4096，可以理解为php每次返回4096个字节给socket连接
-4. 所以，我们直接操作原生socket，每次读取4096个字节。只要读取到的字符里包含临时文件名，就立即发送第二个数据包
-5. 此时，第一个数据包的socket连接实际上还没结束，因为php还在继续每次输出4096个字节，所以临时文件此时还没有删除
-6. 利用这个时间差，第二个数据包，也就是文件包含漏洞的利用，即可成功包含临时文件，最终getshell
+1. Send the upload data package containing webshell to the phpinfo page. The header, get, etc. of this data packet need to be filled with garbage data.
+2. Because the phpinfo page will print all the data, the junk data in 1 will make the entire phpinfo page very large.
+3. The default output buffer size of php is 4096, which can be understood as php returning 4096 bytes to the socket connection each time.
+4. So, we directly manipulate the native socket, reading 4096 bytes at a time. As soon as the read character contains a temporary file name, the second packet is sent immediately.
+5. At this point, the socket connection of the first packet is actually not finished, because php continues to output 4096 bytes each time, so the temporary file has not been deleted yet.
+6. Using this time difference, the second packet, that is, the file containing the exploit, can successfully contain the temporary file, and finally getshell
 
-## 漏洞复现
+## Vulnerability recurrence
 
-利用脚本[exp.py](exp.py)实现了上述过程，成功包含临时文件后，会执行`<?php file_put_contents('/tmp/g', '<?=eval($_REQUEST[1])?>')?>`，写入一个新的文件`/tmp/g`，这个文件就会永久留在目标机器上。
+The above process is implemented using the script [exp.py](exp.py). After the temporary file is successfully included, `<?php file_put_contents('/tmp/g', '<?=eval($_REQUEST[1]) is executed. ?>')?>`, write a new file `/tmp/g`, this file will remain on the target machine forever.
 
-用python2执行：`python exp.py your-ip 8080 100`：
+Execute with python2: `python exp.py your-ip 8080 100`:
 
 ![](1.png)
 
-可见，执行到第289个数据包的时候就写入成功。然后，利用lfi.php，即可执行任意命令：
+It can be seen that the write is successful when the 289th packet is executed. Then, with lfi.php, you can execute arbitrary commands:
 
 ![](2.png)

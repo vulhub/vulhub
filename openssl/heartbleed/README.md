@@ -1,16 +1,16 @@
-# 心脏出血漏洞（CVE-2014-0160）
+#心 bleeding loophole (CVE-2014-0160)
 
-编译运行：
+Compile and run:
 
 ```
-docker-compose build
-docker-compose up -d
+Docker-compose build
+Docker-compose up -d
 ```
 
-访问`https://filippo.io/Heartbleed`进行在线检测：
+Visit `https://filippo.io/Heartbleed` for online testing:
 
 ![](1.png)
 
-Python2运行[ssltest.py](ssltest.py)，拿到敏感数据（Cookie）：
+Python2 runs [ssltest.py](ssltest.py) and gets sensitive data (cookies):
 
 ![](2.png)

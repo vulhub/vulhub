@@ -1,35 +1,35 @@
-# ECShop 2.x/3.x SQL注入/任意代码执行漏洞
+# ECShop 2.x/3.x SQL Injection / Arbitrary Code Execution Vulnerability
 
-ECShop是一款B2C独立网店系统，适合企业及个人快速构建个性化网上商店。系统是基于PHP语言及MYSQL数据库构架开发的跨平台开源程序。
+ECShop is a B2C independent online store system that is suitable for companies and individuals to quickly build personalized online stores. The system is a cross-platform open source program based on PHP language and MYSQL database architecture.
 
-其2017年及以前的版本中，存在一处SQL注入漏洞，通过该漏洞可注入恶意数据，最终导致任意代码执行漏洞。其3.6.0最新版已修复该漏洞，vulhub中使用其2.7.3最新版与3.6.0次新版进行漏洞复现。
+In its 2017 and previous versions, there was a SQL injection vulnerability that could inject malicious data and eventually lead to arbitrary code execution vulnerabilities. The latest version of 3.6.0 has fixed the vulnerability, and vulhub uses its latest version 2.7.3 and 3.6.0 new versions to reproduce the vulnerability.
 
-参考链接：
+Reference link:
 
-- http://ringk3y.com/2018/08/31/ecshop2-x代码执行/
+- http://ringk3y.com/2018/08/31/ecshop2-x code execution /
 
-## 环境搭建
+## Environment Building
 
-执行如下命令启动ecshop 2.7.3与3.6.0：
+Run the following command to start ecshop 2.7.3 and 3.6.0:
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`将看到2.7.3的安装页面，访问`http://your-ip:8081`将看到3.6.0的安装页面。
+After the environment is started, visit `http://your-ip:8080` and you will see the 2.7.3 installation page. Visit `http://your-ip:8081` and you will see the 3.6.0 installation page.
 
-依次安装二者，mysql地址填写`mysql`，mysql账户与密码均为`root`，数据库名随意填写，但2.7.3与3.6.0的数据库名不能相同。如图：
+Install both in turn, mysql address fill in `mysql`, mysql account and password are `root`, the database name is free to fill in, but the database names of 2.7.3 and 3.6.0 can not be the same. Figure:
 
 ![](0.png)
 
-## 漏洞复现
+## Vulnerability recurrence
 
-参考链接中给出了ecshop 2.x版本的复现POC，我对其稍加修改，使之可以直接返回`phpinfo()`：
+The reference link gives the recurring POC for the ecshop 2.x version, which I modified slightly so that it can return `phpinfo()` directly:
 
 ![](1.png)
 
-参考链接未提到的ecshop 3.x也受这个漏洞影响，其POC稍有不同，且需要绕过WAF：
+Ecshop 3.x, which is not mentioned in the reference link, is also affected by this vulnerability. Its POC is slightly different and needs to bypass WAF:
 
 ![](2.png)
 
-考虑到影响，暂时不公开POC。漏洞原理已经在参考链接中公布，请大家自行构造利用方法。
+In view of the impact, the POC will not be disclosed for the time being. The principle of vulnerability has been announced in the reference link, please construct your own method.

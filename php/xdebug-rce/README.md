@@ -1,41 +1,41 @@
-# XDebug 远程调试漏洞（代码执行）
+# XDebug Remote Debugging Vulnerability (Code Execution)
 
-XDebug是PHP的一个扩展，用于调试PHP代码。如果目标开启了远程调试模式，并设置`remote_connect_back = 1`：
+XDebug is an extension to PHP for debugging PHP code. If the target has remote debug mode turned on, and set `remote_connect_back = 1`:
 
 ```
-xdebug.remote_connect_back = 1
-xdebug.remote_enable = 1
+Xdebug.remote_connect_back = 1
+Xdebug.remote_enable = 1
 ```
 
-这个配置下，我们访问`http://target/index.php?XDEBUG_SESSION_START=phpstorm`，目标服务器的XDebug将会连接访问者的IP（或`X-Forwarded-For`头指定的地址）并通过dbgp协议与其通信，我们通过dbgp中提供的eval方法即可在目标服务器上执行任意PHP代码。
+In this configuration, we access `http://target/index.php?XDEBUG_SESSION_START=phpstorm`, the XDebug of the target server will connect to the visitor's IP (or the address specified by the `X-Forwarded-For` header) and pass dbgp The protocol communicates with it, and we can execute arbitrary PHP code on the target server through the eval method provided in dbgp.
 
-更多说明可参考：
+More instructions can be found at:
 
  - https://ricterz.me/posts/Xdebug%3A%20A%20Tiny%20Attack%20Surface
  - https://xdebug.org
 
-## 测试环境
+## test environment
 
-编译及启动测试环境
-
-```
-docker-compose build
-docker-compose up -d
-```
-
-启动完成后，访问`http://your-ip:8080/`即可发现主页是一个简单的phpinfo，在其中可以找到xdebug的配置，可见开启了远程调试。
-
-## 漏洞利用
-
-因为需要使用dbgp协议与目标服务器通信，所以无法用http协议复现漏洞。
-
-我编写了一个[漏洞复现脚本](exp.py)，指定目标web地址、待执行的php代码即可：
+Compile and start the test environment
 
 ```
-# 要求用python3并安装requests库
-python3 exp.py -t http://127.0.0.1:8080/index.php -c 'shell_exec('id');'
+Docker-compose build
+Docker-compose up -d
+```
+
+After the startup is complete, visit `http://your-ip:8080/` to find that the home page is a simple phpinfo, where you can find the xdebug configuration, visible remote debugging.
+
+## Vulnerability
+
+Because the dbgp protocol needs to communicate with the target server, the vulnerability cannot be reproduced with the http protocol.
+
+I wrote a [vulnerability replay script] (exp.py), specifying the target web address, the PHP code to be executed:
+
+```
+#Request to use python3 and install the requests library
+Python3 exp.py -t http://127.0.0.1:8080/index.php -c 'shell_exec('id');'
 ```
 
 ![](1.png)
 
-**重要说明：因为该通信是一个反向连接的过程，exp.py启动后其实是会监听本地的9000端口（可通过-l参数指定）并等待XDebug前来连接，所以执行该脚本的服务器必须有外网IP（或者与目标服务器处于同一内网）。**
+**Important note: Because the communication is a reverse connection process, after exp.py starts, it will listen to the local 9000 port (can be specified by the -l parameter) and wait for XDebug to connect, so the server executing the script There must be an external network IP (or the same intranet as the target server). **

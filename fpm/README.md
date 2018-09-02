@@ -1,17 +1,17 @@
-# PHP-FPM Fastcgi 未授权访问漏洞
+# PHP-FPM Fastcgi Unauthorized Access Vulnerability
 
-## 原理
+## Principle
 
-详见 https://www.leavesongs.com/PENETRATION/fastcgi-and-php-fpm.html 
+See https://www.leavesongs.com/PENETRATION/fastcgi-and-php-fpm.html for details.
 
-## 测试环境搭建
+## Test environment construction
 
-直接执行`docker-compose up -d`即可运行测试环境，环境监听9000端口。
+Run the test environment directly by executing `docker-compose up -d`, and the environment listens to 9000 ports.
 
 ## EXP
 
-Exp见 https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75
+Exp See https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75
 
-执行结果：
+Results of the:
 
 ![](1.jpg)

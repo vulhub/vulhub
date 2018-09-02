@@ -1,45 +1,45 @@
-# S2-052 远程代码执行漏洞
+# S2-052 Remote Code Execution Vulnerability
 
-影响版本: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
+Impact version: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
 
-漏洞详情: 
+Vulnerability details:
 
  - http://struts.apache.org/docs/s2-052.html
  - https://yq.aliyun.com/articles/197926
 
-## 测试环境搭建
+## Test environment construction
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-## 漏洞说明
+## Vulnerability Description
 
-Struts2-Rest-Plugin是让Struts2能够实现Restful API的一个插件，其根据Content-Type或URI扩展名来判断用户传入的数据包类型，有如下映射表：
+Struts2-Rest-Plugin is a plugin that enables Struts2 to implement the Restful API. It determines the type of packet passed by the user based on the Content-Type or URI extension. It has the following mapping table:
 
-扩展名 | Content-Type | 解析方法
+Extension | Content-Type | Resolution Method
 ---- | ---- | ----
-xml | application/xml | xstream
-json | application/json | jsonlib或jackson(可选)
-xhtml | application/xhtml+xml | 无
-无 | application/x-www-form-urlencoded | 无
-无 | multipart/form-data | 无
+Xml | application/xml | xstream
+Json | application/json | jsonlib or jackson (optional)
+Xhtml | application/xhtml+xml | None
+None | application/x-www-form-urlencoded | None
+None | multipart/form-data | None
 
-jsonlib无法引入任意对象，而xstream在默认情况下是可以引入任意对象的（针对1.5.x以前的版本），方法就是直接通过xml的tag name指定需要实例化的类名：
+Jsonlib can't introduce arbitrary objects, and xstream can introduce any object by default (for versions prior to 1.5.x). The method is to specify the class name to be instantiated directly through the tag name of xml:
 
 ```
 <classname></classname>
-//或者
+//or
 <paramname class="classname"></paramname>
 ```
 
-所以，我们可以通过反序列化引入任意类造成远程命令执行漏洞，只需要找到一个在Struts2库中适用的gedget。
+Therefore, we can introduce any class to cause remote command execution vulnerabilities by deserialization. We only need to find a geget that is applicable in the Struts2 library.
 
-## 漏洞复现
+## Vulnerability recurrence
 
-启动环境后，访问`http://your-ip:8080/orders.xhtml`即可看到showcase页面。由于rest-plugin会根据URI扩展名或Content-Type来判断解析方法，所以我们只需要修改orders.xhtml为orders.xml或修改Content-Type头为application/xml，即可在Body中传递XML数据。
+After launching the environment, visit `http://your-ip:8080/orders.xhtml` to see the showcase page. Since the rest-plugin will determine the parsing method based on the URI extension or Content-Type, we only need to modify the orders.xhtml to order.xml or modify the Content-Type header to application/xml to pass the XML data in the Body.
 
-所以，最后发送的数据包为：
+So, the last packet sent is:
 
 ```
 POST /orders/3/edit HTTP/1.1
@@ -108,22 +108,22 @@ Content-Length: 2415
 </map>
 ```
 
-以上数据包成功执行的话，会在docker容器内创建文件`/tmp/success`，执行`docker-compose exec struts2 ls /tmp/`即可看到。
+If the above packet is successfully executed, the file `/tmp/success` will be created in the docker container, and `docker-compose exec struts2 ls /tmp/` can be executed.
 
-此外，我们还可以下载一个jspx的webshell：
+In addition, we can also download a jspx webshell:
 
 ![](01.png)
 
-还有一些更简单的利用方法，就不在此赘述了。
+There are some simpler ways to use them, so I won't go into details here.
 
-## 漏洞修复
+## Vulnerability Fix
 
-struts2.5.13中，按照xstream给出的缓解措施（ http://x-stream.github.io/security.html ），增加了反序列化时的白名单：
+In struts2.5.13, according to the mitigation measures (http://x-stream.github.io/security.html) given by xstream, the whitelist for deserialization is added:
 
 ```java
-protected void addDefaultPermissions(ActionInvocation invocation, XStream stream) {
+Protected void addDefaultPermissions(ActionInvocation invocation, XStream stream) {
     stream.addPermission(new ExplicitTypePermission(new Class[]{invocation.getAction().getClass()}));
-    if (invocation.getAction() instanceof ModelDriven) {
+    If (invocation.getAction() instanceof ModelDriven) {
         stream.addPermission(new ExplicitTypePermission(new Class[]{((ModelDriven) invocation.getAction()).getModel().getClass()}));
     }
     stream.addPermission(NullPermission.NULL);
@@ -134,4 +134,4 @@ protected void addDefaultPermissions(ActionInvocation invocation, XStream stream
 }
 ```
 
-但此时可能会影响以前代码的业务逻辑，所以谨慎升级，也没有特别好的办法，就是逐一排除老代码，去掉不在白名单中的类。
+However, at this time, the business logic of the previous code may be affected. Therefore, there is no particularly good way to carefully upgrade, that is, to exclude the old code one by one and remove the classes that are not in the whitelist.

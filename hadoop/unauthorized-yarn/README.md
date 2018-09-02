@@ -1,28 +1,28 @@
-# Hadoop YARN ResourceManager 未授权访问
+# Hadoop YARN ResourceManager Unauthorized Access
 
-## 原理
+## Principle
 
-参考 http://archive.hack.lu/2016/Wavestone%20-%20Hack.lu%202016%20-%20Hadoop%20safari%20-%20Hunting%20for%20vulnerabilities%20-%20v1.0.pdf
+Reference http://archive.hack.lu/2016/Wavestone%20-%20Hack.lu%202016%20-%20Hadoop%20safari%20-%20Hunting%20for%20vulnerabilities%20-%20v1.0.pdf
 
-## 测试环境
+## test environment
 
-运行测试环境
+Running the test environment
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8088`即可看到Hadoop YARN ResourceManager WebUI页面。
+After the environment is started, you can see the Hadoop YARN ResourceManager WebUI page by visiting `http://your-ip:8088`.
 
-## 利用
+## Utilization
 
-利用方法和原理中有一些不同。在没有 hadoop client 的情况下，直接通过 REST API
- (https://hadoop.apache.org/docs/r2.7.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html) 也可以提交任务执行。
+There are some differences in the methods and principles of use. Directly through the REST API without the hadoop client
+  (https://hadoop.apache.org/docs/r2.7.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html) You can also submit task execution.
 
-利用过程如下：
+The utilization process is as follows:
 
-1. 在本地监听等待反弹 shell 连接
-1. 调用 New Application API 创建 Application
-1. 调用 Submit Application API 提交
+1. Listening locally to wait for a bounce shell connection
+1. Call the New Application API to create an Application
+1. Call the Submit Application API to submit
 
-参考 [exp 脚本](exploit.py)
+Reference [exp script] (exploit.py)

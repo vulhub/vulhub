@@ -1,71 +1,71 @@
-# Nginx 配置错误导致漏洞
+# Nginx Configuration Error Causes Vulnerability
 
-## 运行测试环境
-
-```
-docker-compose up -d
-```
-
-运行成功后，Nginx将会监听8080/8081/8082三个端口，分别对应三种漏洞。
-
-## Mistake 1. CRLF注入漏洞
-
-Nginx会将`$uri`进行解码，导致传入%0a%0d即可引入换行符，造成CRLF注入漏洞。
-
-错误的配置文件示例（原本的目的是为了让http的请求跳转到https上）：
+## Running the test environment
 
 ```
-location / {
-	return 302 https://$host$uri;
+Docker-compose up -d
+```
+
+After running successfully, Nginx will listen to the three ports 8080/8081/8082, corresponding to three vulnerabilities.
+
+## Mistake 1. CRLF Injection Vulnerability
+
+Nginx will decode `$uri`, which will cause a newline character to be introduced by passing %0a%0d, causing a CRLF injection vulnerability.
+
+Wrong configuration file example (original purpose is to make http request jump to https):
+
+```
+Location / {
+Return 302 https://$host$uri;
 }
 ```
 
-Payload: `http://your-ip:8080/%0a%0dSet-Cookie:%20a=1`，可注入Set-Cookie头。
+Payload: `http://your-ip:8080/%0a%0dSet-Cookie:%20a=1`, can be injected into the Set-Cookie header.
 
-利用《[Bottle HTTP 头注入漏洞探究](https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html)》中的技巧，即可构造一个XSS漏洞：
+An XSS vulnerability can be constructed using the techniques in [Bottle HTTP Header Injection Exploitation] (https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html):
 
 ![](1.png)
 
-## Mistake 2. 目录穿越漏洞
+## Mistake 2. Directory Traversal Vulnerability
 
-Nginx在配置别名（Alias）的时候，如果忘记加`/`，将造成一个目录穿越漏洞。
+When Nginx configures an alias (Alias), if you forget to add `/`, it will cause a directory traversal vulnerability.
 
-错误的配置文件示例（原本的目的是为了让用户访问到/home/目录下的文件）：
+Wrong configuration file example (originally intended to give users access to files in the /home/ directory):
 
 ```
-location /files {
-	alias /home/;
+Location /files {
+Alias ​​/home/;
 }
 ```
 
-Payload: `http://your-ip:8081/files../` ，成功穿越到根目录：
+Payload: `http://your-ip:8081/files../` , successfully traversed to the root directory:
 
 ![](2.png)
 
-## Mistake 3. add_header被覆盖
+## Mistake 3. add_header is overwritten
 
-Nginx配置文件子块（server、location、if）中的`add_header`，将会覆盖父块中的`add_header`添加的HTTP头，造成一些安全隐患。
+The `add_header` in the Nginx configuration file sub-block (server, location, if) will overwrite the HTTP header added by `add_header` in the parent block, causing some security risks.
 
-如下列代码，整站（父块中）添加了CSP头：
+As the following code, the entire station (in the parent block) has added a CSP header:
 
 ```
-add_header Content-Security-Policy "default-src 'self'";
-add_header X-Frame-Options DENY;
+Add_header Content-Security-Policy "default-src 'self'";
+Add_header X-Frame-Options DENY;
 
-location = /test1 {
-    rewrite ^(.*)$ /xss.html break;
+Location = /test1 {
+    Rewrite ^(.*)$ /xss.html break;
 }
 
-location = /test2 {
-    add_header X-Content-Type-Options nosniff;
-    rewrite ^(.*)$ /xss.html break;
+Location = /test2 {
+    Add_header X-Content-Type-Options nosniff;
+    Rewrite ^(.*)$ /xss.html break;
 }
 ```
 
-但`/test2`的location中又添加了`X-Content-Type-Options`头，导致父块中的`add_header`全部失效：
+However, the `X-Content-Type-Options` header has been added to the location of `/test2`, causing all the `add_header`s in the parent block to be invalid:
 
 ![](3.png)
 
-XSS可被触发：
+XSS can be triggered:
 
 ![](4.png)
