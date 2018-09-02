@@ -80,7 +80,10 @@ docker-compose down -v
 
 赞助商：
 
-<a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/chaitin.png" width="200"></a>
+<p>
+  <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/chaitin.png" width="200"></a>
+  <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.png" width="200"></a>
+</p>
 
 在patreon上赞助vulhub 🙏 
 
