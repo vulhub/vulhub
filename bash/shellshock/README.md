@@ -1,5 +1,7 @@
 # Shellshock Remote Command Injection (CVE-2014-6271)
 
+[中文版本(Chinese version)](README.zh-cn.md)
+
 Build and run the vulnerable environment：
 
 ```
