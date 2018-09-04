@@ -1,4 +1,4 @@
-# docker daemon api exploit
+# docker daemon api unauthorized access exploit
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
@@ -21,7 +21,7 @@ after the service started, the 2375 port was published to the host
 
 Start a container, and mount the host `/etc` folder to the container, then we have read/write access to any files.
 
-We can put the commands in crontab configure file to reverse shell
+We can put the commands in crontab configuration file to reverse shell
 
 ```python
 import docker
