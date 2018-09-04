@@ -9,7 +9,7 @@ Vulhub is an open source vulnerability lab for public. You don't need any docker
 
 ## Installation
 
-Install the docker/docker-compose under ubuntu16.04:
+Install the docker/docker-compose on ubuntu16.04:
 
 ```bash
 # Install pip
@@ -25,7 +25,7 @@ service docker start
 pip install docker-compose 
 ```
 
-The installation steps of docker and docker-compose under others operating system may be slightly different, please read the docker documentation for installation.
+The installation steps of docker and docker-compose for others operating system might be slightly different, please refer to the docker documentation for details.
 
 ## Usage
 
@@ -52,7 +52,7 @@ After the test, delete the entire environment with the following command.
 docker-compose down -v
 ```
 
-It is recommended to use VPS with 1G or above memory to build a vulnerability environment.It is recommended to use vps with 1G or above memory to build a vulnerability environment.The `your-ip` mentioned in the document refers to the IP address of your vps. If you are using a virtual machine to build a test environment, it refers to your virtual machine IP, not the IP inside the docker container, please don't confuse it.
+It is recommended to use a VPS of at least 1G memory to build a vulnerability environment.It is recommended to use vps with 1G or above memory to build a vulnerability environment.The `your-ip` mentioned in the document refers to the IP address of your vps. If you are using a virtual machine, it refers to your virtual machine IP, not the IP inside the docker container, please don't confuse it.
 
 **All environments in this project are for testing only, don't use it as production environment！**
 
