@@ -1,15 +1,16 @@
 # Vulhub - Docker-Compose files for vulnerabilities environment
 
-[中文版本(Chinese version)](README.zh-cn.md)
 
 [![Docker Stars](https://img.shields.io/badge/docker%20stars-20k-blue.svg)](https://hub.docker.com/u/vulhub/) [![GitHub](https://img.shields.io/github/license/vulhub/vulhub.svg)](https://github.com/vulhub/vulhub/blob/master/LICENSE)
  [![Chat on Discord](https://img.shields.io/discord/485505185167179778.svg)](https://discord.gg/GhMB3Z) [![Backers and sponors on Patreon](https://img.shields.io/badge/sponsor-patreon-73d6a1.svg)](https://www.patreon.com/phith0n) [![Backers and sponors on Opencollective](https://img.shields.io/badge/backer-opencollective-f89a76.svg)](https://www.patreon.com/phith0n)
+
+[中文版本(Chinese version)](README.zh-cn.md)
 
 Vulhub is an open-source hack lab. No docker knowledge is required, just execute two simple commands and you have a vulnerable environment.
 
 ## Installation
 
-Install the docker/docker-compose on ubuntu16.04:
+Install the docker/docker-compose on Ubuntu 16.04:
 
 ```bash
 # Install pip
