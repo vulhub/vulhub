@@ -12,16 +12,16 @@ Vulhub is an open source vulnerability lab for public. You don't need any docker
 Install the docker/docker-compose under ubuntu16.04:
 
 ```bash
-# install pip
+# Install pip
 curl -s https://bootstrap.pypa.io/get-pip.py | python3
 
 # Install the latest version docker
 curl -s https://get.docker.com/ | sh
 
-# run docker service
+# Run docker service
 service docker start
 
-# install docker compose
+# Install docker compose
 pip install docker-compose 
 ```
 
