@@ -10,7 +10,7 @@ Reference link:
 
 - http://ringk3y.com/2018/08/31/ecshop2-x代码执行/
 
-## Environment construction
+## Environment setup
 
 Run the following commands to start environment
 
