@@ -1,16 +1,18 @@
-# 心脏出血漏洞（CVE-2014-0160）
+# OpenSSL Heartbleed Vulnerability (CVE-2014-0160)
 
-编译运行：
+[中文版本(Chinese version)](README.zh-cn.md)
+
+Build and run:
 
 ```
 docker-compose build
 docker-compose up -d
 ```
 
-访问`https://filippo.io/Heartbleed`进行在线检测：
+Visit `https://filippo.io/Heartbleed` to check：
 
 ![](1.png)
 
-Python2运行[ssltest.py](ssltest.py)，拿到敏感数据（Cookie）：
+Run [ssltest.py](ssltest.py) with Python 2 to obtain sensitive data (Cookie)：
 
 ![](2.png)

