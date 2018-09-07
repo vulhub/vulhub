@@ -7,7 +7,7 @@ RUN set -ex \
     && gem install rails -v 5.0.7 --no-document \
     && rails new blog --skip-bundle
 
-ADD Gemfile.lock /usr/src/blog/Gemfile.lock
+COPY Gemfile.lock Gemfile /usr/src/blog/
 
 WORKDIR /usr/src/blog
 
