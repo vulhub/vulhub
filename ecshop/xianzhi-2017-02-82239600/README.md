@@ -12,7 +12,7 @@ Reference link:
 
 ## Environment construction
 
-Run the following command to start environment
+Run the following commands to start environment
 
 ```
 docker-compose up -d
