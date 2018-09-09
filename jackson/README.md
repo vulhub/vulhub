@@ -21,7 +21,7 @@ Jackson-databind 支持 [Polymorphic Deserialization](https://github.com/FasterX
 运行
 
 ```shell
-cd jackson-vul
+cd jackson
 docker-compose up -d
 ```
 
@@ -143,11 +143,11 @@ docker-compose exec web ls -lh /tmp/prove2.txt
 # 本地构建
 
 ```shell
-cd jackson-vul
+cd jackson
 # build from source code
 mvn -U clean package -Dmaven.test.skip=true
 # build docker image
-docker build -t vulhub/jackson-vul:latest .
+docker build -t vulhub/jackson:latest .
 # start
 docker-compose up -d
 ```
