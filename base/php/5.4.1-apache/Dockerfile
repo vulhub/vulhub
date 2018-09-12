@@ -118,10 +118,8 @@ RUN buildDeps=" \
       " \
       && set -x \
       && apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-      && curl -SL "http://php.net/get/php-$PHP_VERSION.tar.xz/from/this/mirror" -o php.tar.xz \
       && mkdir -p /usr/src/php \
-      && tar -xof php.tar.xz -C /usr/src/php --strip-components=1 \
-      && rm php.tar.xz* \
+      && curl -#SL "http://museum.php.net/php5/php-${PHP_VERSION}.tar.gz" | tar zx -C /usr/src/php --strip-components=1 \
       && cd /usr/src/php \
       && ./configure \
             --with-config-file-path="$PHP_INI_DIR" \
