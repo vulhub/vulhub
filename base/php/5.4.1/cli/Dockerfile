@@ -48,7 +48,7 @@ RUN set -ex \
 
 ENV PHP_VERSION 5.4.1
 
-# php 5.3 needs older autoconf
+# php 5.4.1 needs older autoconf
 # --enable-mysqlnd is included below because it's harder to compile after the fact the extensions are (since it's a plugin for several extensions, not an extension in itself)
 RUN buildDeps=" \
                 autoconf2.13 \
@@ -58,7 +58,6 @@ RUN buildDeps=" \
                 libsqlite3-dev \
                 libssl-dev \
                 xz-utils \
-                apache2-dev \
       " \
       && set -x \
       && apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
@@ -76,7 +75,6 @@ RUN buildDeps=" \
             --with-readline \
             --with-recode \
             --with-zlib \
-            --with-apxs2 \
       && make -j"$(nproc)" \
       && make install \
       && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
