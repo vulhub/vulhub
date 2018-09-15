@@ -2,21 +2,21 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Version: 2.0.0 - 2.3.14.1
+Affected Version: 2.0.0 - 2.3.14.1
 
 Details:
 
  - http://struts.apache.org/docs/s2-013.html
  - http://struts.apache.org/docs/s2-014.html
 
-## setup
+## Setup
 
 ```
 docker-compose build
 docker-compose up -d
 ```
 
-## Refer
+## Reference
 
 The Struts2's tag, `<s:a>` and `<s:url>`, provide an includeParams attribute.The main scope of that attribute is to understand whether includes http request parameter or not.
 
