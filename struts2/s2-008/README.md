@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Version: 2.1.0 - 2.3.1
+Affected Version: 2.1.0 - 2.3.1
 
 Details: http://struts.apache.org/docs/s2-008.html
 
