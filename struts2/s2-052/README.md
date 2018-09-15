@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Version: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
+Affected Version: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
 
 Details:
 
