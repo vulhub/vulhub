@@ -1,6 +1,6 @@
 # Struts2 S2-057 Remote Code Execution Vulnerablity(CVE-2018-11776)
 
-Version: <= Struts 2.3.34, Struts 2.5.16
+Affected Version: <= Struts 2.3.34, Struts 2.5.16
 
 Details:
 
