@@ -6,7 +6,7 @@ Affected Version: 2.1.0 - 2.3.13
 
 Details: http://struts.apache.org/docs/s2-012.html
 
-## Refer
+## Reference
 
 If the redirect type is used when configuring `result` in the `action`, and ${param_name} is also used as the redirect variable, for example:
 
@@ -29,7 +29,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-## Exp
+## Expliot
 
 We can use s2-001's POC directly:
 
