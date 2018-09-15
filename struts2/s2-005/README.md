@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Version: 2.0.0 - 2.1.8.1
+Affected Version: 2.0.0 - 2.1.8.1
 
 Details: http://struts.apache.org/docs/s2-005.html
 
@@ -16,7 +16,7 @@ XWork will parse the keys and values of the GET parameter into Java statements u
 
 ```
 user.address.city=Bishkek&user['favoriteDrink']=kumys 
-//convert to
+//It will be converted to
 action.getUser().getAddress().setCity("Bishkek")  
 action.getUser().setFavoriteDrink("kumys")
 ```
