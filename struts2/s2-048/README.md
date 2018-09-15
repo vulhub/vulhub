@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Version: 2.0.0 - 2.3.32
+Affected Version: 2.0.0 - 2.3.32
 
 Details:
 
