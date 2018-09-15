@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Version: 2.0.0 - 2.3.14.2
+Affected Version: 2.0.0 - 2.3.14.2
 
 Details: http://struts.apache.org/docs/s2-015.html
 
@@ -13,7 +13,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-## Refer
+## Reference
 
 Struts 2 allows define action mapping base on wildcards, like in example below:
 
