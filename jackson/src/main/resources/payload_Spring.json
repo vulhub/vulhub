@@ -1,6 +1,0 @@
-{
-  "param": [
-    "org.springframework.context.support.FileSystemXmlApplicationContext",
-    "http://127.0.0.1:8080/spel.xml"
-  ]
-}
