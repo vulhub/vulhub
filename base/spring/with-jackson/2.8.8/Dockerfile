@@ -1,6 +1,6 @@
 FROM maven:3-jdk-7 AS builder
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL MAINTAINER="phithon <root@leavesongs.com>"
 
 COPY ./ /usr/src/
 
