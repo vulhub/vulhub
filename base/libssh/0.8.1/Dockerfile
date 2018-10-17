@@ -10,7 +10,6 @@ RUN set -ex \
         wget \
         libc6-dev \
         zlib1g-dev \
-        libssl-dev \
         libgcrypt20-dev \
         libgpg-error-dev \
         $BUILDDEP \
