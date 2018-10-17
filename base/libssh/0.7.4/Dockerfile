@@ -14,7 +14,7 @@ RUN set -ex \
         libgcrypt20-dev \
         libgpg-error-dev \
         $BUILDDEP \
-    && wget -qO- https://www.libssh.org/files/0.8/libssh-0.8.1.tar.xz \
+    && wget -qO- https://www.libssh.org/files/0.7/libssh-0.7.4.tar.xz \
         | xz -c -d | tar x -C /usr/src --strip-components=1 \
     && mkdir -p /usr/src/build \
     && cd /usr/src/build \
@@ -30,9 +30,4 @@ RUN set -ex \
     && make && make install \
     && apt-get purge -y --auto-remove $BUILDDEP
 
-RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -q -N "" \
-    && ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -q -N "" \
-    && ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -q -N ""
-
-# /usr/src/build/examples/ssh_server_fork --hostkey=/etc/ssh/ssh_host_rsa_key --ecdsakey=/etc/ssh/ssh_host_ecdsa_key --dsakey=/etc/ssh/ssh_host_dsa_key --rsakey=/etc/ssh/ssh_host_rsa_key -p 22 0.0.0.0
-CMD [ "/usr/src/build/examples/ssh_server_fork", "--usage" ]
+CMD [ "samplesshd-cb" ]
