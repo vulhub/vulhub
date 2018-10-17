@@ -6,7 +6,6 @@ RUN set -ex \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
         build-essential \
-        wget \
         cmake \
         libssl-dev \
     \
@@ -15,4 +14,4 @@ RUN set -ex \
     && cd /usr/src/build \
     && cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release -DWITH_SERVER=ON \
     && make && make install \
-    && apt-get purge -y --auto-remove build-essential wget cmake gcc
+    && apt-get purge -y --auto-remove build-essential cmake gcc
