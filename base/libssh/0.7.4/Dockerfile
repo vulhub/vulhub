@@ -30,4 +30,4 @@ RUN set -ex \
     && make && make install \
     && apt-get purge -y --auto-remove $BUILDDEP
 
-CMD [ "samplesshd-cb" ]
+CMD [ "/usr/src/build/examples/samplesshd-cb" ]
