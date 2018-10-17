@@ -1,4 +1,4 @@
-FROM buildpack-deps:stretch
+FROM buildpack-deps:stretch-scm
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
