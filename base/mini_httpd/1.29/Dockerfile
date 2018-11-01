@@ -18,4 +18,4 @@ RUN set -ex \
 WORKDIR /var/www/html
 EXPOSE 8080
 
-CMD ["mini_httpd", "-p", "8080", "-u", "www-data", "-h", "0.0.0.0", "-D", "-c", "**.cgi"]
+CMD ["mini_httpd", "-p", "8080", "-u", "www-data", "-h", "0.0.0.0", "-d", "/var/www/html", "-D", "-c", "**.cgi", "-l", "/dev/stdout"]
