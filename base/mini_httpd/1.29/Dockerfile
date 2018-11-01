@@ -12,9 +12,10 @@ RUN set -ex \
     && make \
     && make install \
     && mkdir -p /var/www/html \
+    && chown www-data:www-data /var/www/html \
     && rm -rf /usr/src/* /var/lib/apt/lists/* /debian.patch
 
 WORKDIR /var/www/html
 EXPOSE 8080
 
-CMD ["mini_httpd", "-p", "8080", "-u", "www-data"]
+CMD ["mini_httpd", "-p", "8080", "-u", "www-data", "-h", "0.0.0.0", "-D", "-c", "**.cgi"]
