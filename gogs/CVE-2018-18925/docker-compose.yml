@@ -1,0 +1,7 @@
+version: '2'
+services:
+ web:
+   image: vulhub/gogs:0.11.66
+   ports:
+    - "10022:22"
+    - "3000:3000"
