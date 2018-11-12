@@ -4,6 +4,8 @@ about: 请按照模板填写错误报告，以帮助我们改进vulhub
 
 ---
 
+提交issue前，请检查你本地的vulhub是否是最新版，否则可能存在一些由于时间问题导致而今已经修复的bug。
+
 填写如下信息
 
  - Which environment: 哪个环境出现BUG [e.g. python/ssti]
