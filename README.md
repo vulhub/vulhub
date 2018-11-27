@@ -84,6 +84,7 @@ Sponsor:
   <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/chaitin.png" width="200"></a>
   <a href="https://bysec.io/" target="_blank"><img src="https://vulhub.org/img/sponsor/bysec.png" width="200"></a>
   <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.svg" width="200"></a>
+  <a href="https://www.didiyun.com/?channel=14196" target="_blank"><img src="https://vulhub.org/img/sponsor/didi.png" width="200"></a>
 </p>
 
 Sponsor vulhub on patreon 🙏
