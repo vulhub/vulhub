@@ -25,7 +25,7 @@ docker-compose up -d
 
 ![](1.png)
 
-再访问`http://your-ip/demo.php`测试，上传POC文件，数据包如下（**注意，我换了一个POC**）：
+再访问`http://your-ip/upload.php`测试，上传POC文件，数据包如下（**注意，我换了一个POC**）：
 
 ```
 POST /upload.php HTTP/1.1
