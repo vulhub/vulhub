@@ -13,3 +13,5 @@ RUN set -ex \
     && pip install -i $PIP_MIRROR_URL "uwsgi==2.0.17" \
     && apt-get purge --autoremove -y build-essential \
     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src
