@@ -1,7 +1,7 @@
 version: '2'
 services:
  nginx:
-   image: nginx:1
+   image: nginx:1-alpine
    volumes:
     - ./files/default.conf:/etc/nginx/conf.d/default.conf
    depends_on:
