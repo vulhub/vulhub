@@ -6,7 +6,7 @@ ARG DEBIAN_MIRROR_URL=https://github.com/vulhub/mirrors/raw/master/debian/stretc
 ARG PIP_MIRROR_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 
 RUN set -ex \
-    && wget $DEBIAN_MIRROR_URL -O /etc/apt/source.list \
+    && wget $DEBIAN_MIRROR_URL -O /etc/apt/sources.list \
     && apt-get update \
     && apt-get install --no-install-recommends -y build-essential python3 python3-dev python3-pip \
     && pip3 install -i $PIP_MIRROR_URL -U pip setuptools \
