@@ -10,7 +10,7 @@ services:
     - "8080:80"
  web:
    image: vulhub/uwsgi-python:2.0.17
-   command: uwsgi --socket 0.0.0.0:8000 --chdir /usr/src --module server:app --uid www-data --gid www-data -p 2
+   command: uwsgi --socket 0.0.0.0:8000 --chdir /usr/src --module server --uid www-data --gid www-data -p 2
    volumes:
     - ./files/server.py:/usr/src/server.py
    ports:
