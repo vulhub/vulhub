@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "topthink/framework": "==5.1.20"
+        "topthink/framework": "==5.0.20"
     },
     "autoload": {
         "psr-4": {
