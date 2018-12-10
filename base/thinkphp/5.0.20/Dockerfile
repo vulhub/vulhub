@@ -2,7 +2,10 @@ FROM php:7.2-apache
 
 MAINTAINER phithon <root@leavesongs.com>
 
+ARG MIRROR_URL=https://github.com/vulhub/mirrors/raw/master/debian/stretch/aliyun.list
+
 RUN set -ex \
+        && curl -#sL $MIRROR_URL -o /etc/apt/sources.list \
         && apt-get update \
         && apt-get install -y --no-install-recommends unzip \
         && rm -rf /var/lib/apt/lists/*
