@@ -19,8 +19,8 @@ docker-compose up -d
 Visit `http://your-ip/` and you'll see three files:
 
 ```bash
-├── demo.php # use vul.jpg+identify command to test 
-├── upload.php # Support users to upload a file，deliver it to PHP's imagick extension, and then the vulnerability will be triggered .
+├── demo.php # use vul.jpg + identify command to test 
+├── upload.php # Support users to upload a file，deliver it to PHP's imagick extension, and then the vulnerability will be triggered
 └── vul.jpg # a simple POC
 ```
 
@@ -28,7 +28,7 @@ Visit `http://your-ip/` and you'll see three files:
 
 Some POCs used: https://github.com/ImageTragick/PoCs
 
-You can take a test by visiting `http://your-ip/demo.php`. Even though the command   executed (`cat /etc/passwd > /tmp/success`) has no echo reply, we successfully obtain the `/tmp/success` file in the docker container:
+You can take a test by visiting `http://your-ip/demo.php`. Even though the command executed (`cat /etc/passwd > /tmp/success`) has no echo reply, we successfully obtain the `/tmp/success` file in the docker container:
 
 ![](1.png)
 
@@ -58,7 +58,7 @@ pop graphic-context
 
 ```
 
-As shown，`www.leavesongs.com:8889` has received the http request，proving that the curl command is executed successfully：
+As shown, `www.leavesongs.com:8889` has received the http request, proving that the curl command is executed successfully：
 
 ![](2.png)
 
