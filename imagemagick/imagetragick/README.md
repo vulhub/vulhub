@@ -32,7 +32,7 @@ You can take a test by visiting `http://your-ip/demo.php`. Even though the comma
 
 ![](1.png)
 
-Also you can visit `http://your-ip/upload.php` to test another POC. Upload the POC file and packets are as follows（**Attention，this is another POC**）：
+Also you can visit `http://your-ip/upload.php` to test another POC. Upload the POC file and packets are as follows（**Attention: this is another POC**）：
 
 ```
 POST /upload.php HTTP/1.1
