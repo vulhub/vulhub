@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-The principle and details are as follows:
+Referers:
 
 - https://imagetragick.com/
 - https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html
