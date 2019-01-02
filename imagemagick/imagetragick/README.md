@@ -28,7 +28,7 @@ Visit `http://your-ip/` and you'll see three files:
 
 Some POCs used: https://github.com/ImageTragick/PoCs
 
-You can take a test by visiting `http://your-ip/demo.php`. Even though the command executed (`cat /etc/passwd > /tmp/success`) has no echo reply, we successfully obtain the `/tmp/success` file in the docker container:
+You can take a test by visiting `http://your-ip/demo.php`. Even though the command executed (`cat /etc/passwd > /tmp/success`) doesn't have a specific character in the response, the `/tmp/success` file is successfully created in the docker container:
 
 ![](1.png)
 
