@@ -2,6 +2,12 @@ FROM php:7.2-apache
 
 LABEL MAINTAINER="phithon <root@leavesongs.com>"
 
+RUN set -ex \
+        && curl -#sL $MIRROR_URL -o /etc/apt/sources.list \
+        && apt-get update \
+        && apt-get install -y --no-install-recommends unzip \
+        && rm -rf /var/lib/apt/lists/*
+
 ENV APACHE_DOCUMENT_ROOT /var/www/public
 
 RUN set -ex \
