@@ -1,23 +1,25 @@
-# ThinkPHP5 5.0.23 远程代码执行漏洞
+# ThinkPHP5 5.0.23 Remote Code Execution Vulnerability
 
-ThinkPHP是一款运用极广的PHP开发框架。其5.0.23以前的版本中，获取method的方法中没有正确处理方法名，导致攻击者可以调用Request类任意方法并构造利用链，从而导致远程代码执行漏洞。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+ThinkPHP is an extremely widely used PHP development framework in China. In its version 5.0(<5.0.24), while obtaining the request method, the framework processes it incorrectly, which allows an attacker to call any method of the Request class, resulting in a RCE vulnerability through a specific exploit chain.
+
+References：
 
 - https://github.com/top-think/framework/commit/4a4b5e64fa4c46f851b4004005bff5f3196de003
 
-## 漏洞环境
+## Environment Setup
 
-执行如下命令启动一个默认的thinkphp 5.0.23环境：
+Enter the following command：(ThinkPHP version: 5.0.23)
 
 ```
 docker-compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`即可看到默认的ThinkPHP启动页面。
+Visit `http://your-ip:8080` and you'll see the default page of ThinkPHP.
 
-## 漏洞复现
+## POC
 
-发送数据包`****`（考虑影响，暂不公开，知道Payload的同学可以自己测试）：
+Send the packets `****` (the payload will be updated in the future considering the impact. You can test if you know)：
 
 ![](1.png)
