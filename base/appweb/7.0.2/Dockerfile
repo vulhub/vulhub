@@ -20,6 +20,6 @@ RUN { \
     } | tee /etc/appweb/install.conf \
     && sed -i 's|ErrorLog "error.log"|ErrorLog "/dev/stdout"|g' /etc/appweb/appweb.conf
 
-WORKDIR /var/www/appweb
+WORKDIR /etc/appweb
 
 CMD ["appweb"]
