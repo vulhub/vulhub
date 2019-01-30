@@ -1,4 +1,4 @@
-FROM 
+FROM buildpack-deps:stretch-curl
 
 RUN set -ex \
     && apt-get update \
