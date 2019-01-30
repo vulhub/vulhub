@@ -18,6 +18,8 @@ RUN { \
         echo "  ListenSecure 8443"; \
         echo "</if>"; \
     } | tee /etc/appweb/install.conf \
-    && sed -i 's|ErrorLog "error.log"|ErrorLog "/dev/stdout"|g' appweb.conf
+    && sed -i 's|ErrorLog "error.log"|ErrorLog "/dev/stdout"|g' /etc/appweb/appweb.conf
+
+WORKDIR /var/www/appweb
 
 CMD ["appweb"]
