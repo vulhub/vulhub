@@ -1,4 +1,4 @@
-FROM vulhub/imagemagick:7.0.8-27-php
+FROM vulhub/imagemagick:7.0.8-27
 
 LABEL maintainer="phith0n <root@leavesongs.com>"
 
