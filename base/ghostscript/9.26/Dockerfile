@@ -7,5 +7,5 @@ ADD https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs92
 RUN set -ex \
     && tar zxf /tmp/ghostscript.tgz --strip-components 1 -C /tmp/ \
     && mkdir -p /opt/ghostscript \
-    && mv /tmp/gs-* /usr/local/bin/gs \
+    && mv /tmp/gpcl6-* /usr/local/bin/gs \
     && rm -rf /tmp/*
