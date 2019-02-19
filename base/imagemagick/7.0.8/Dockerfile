@@ -5,7 +5,7 @@ LABEL maintainer="phith0n <root@leavesongs.com>"
 RUN apt-get update \
     && savedAptMark="$(apt-mark showmanual)" \
     && apt-get install -y wget gcc make \
-    && wget -qO- https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-10.tar.gz \
+    && wget -qO- https://github.com/ImageMagick/ImageMagick/archive/7.0.8-10.tar.gz \
      | tar xz -C /tmp/ \
     && cd /tmp/ImageMagick-7.0.8-10 \
     && ./configure && make \
