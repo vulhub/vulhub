@@ -15,7 +15,7 @@ Details:
 docker-compose up -d
 ```
 
-## Expliot
+## Exploit
 
 After launching the environment, visit `http://your-ip:8080/orders.xhtml` to see the showcase page. We need modify the `orders.xhtml` to `order.xml` or modify the `Content-Type` header to `application/xml` to pass the XML data in the body.
 

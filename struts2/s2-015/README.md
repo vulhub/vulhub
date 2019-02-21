@@ -30,7 +30,7 @@ If a request doesn't match any other defined action, it will be matched by * and
 1. requested action name isn't escaped or checked agains whitelist
 2. double evaluation of an OGNL expression in TextParseUtil.translateVariables when combination of $ and % open chars is used.
 
-## Expliot
+## Exploit
 
 Payload as follows：
 

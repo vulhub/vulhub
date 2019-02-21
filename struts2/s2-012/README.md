@@ -29,7 +29,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-## Expliot
+## Exploit
 
 We can use s2-001's POC directly:
 

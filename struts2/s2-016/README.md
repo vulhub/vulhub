@@ -16,7 +16,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-## Expliot
+## Exploit
 
 Visit `http://your-ip:8080/index.action?redirect:OGNL expression` to execute an OGNL expression.
 
