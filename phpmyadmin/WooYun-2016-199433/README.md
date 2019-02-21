@@ -14,7 +14,7 @@ docker-compose up -d
 
 Visit `http://your-ip:8080` and you will see the phpmyadmin home page. Because there is no connection to the database, we will get an error. But this vulnerability is not related to the database, so just ignore.
 
-## Expliot
+## Exploit
 
 Send the following package to read `/etc/passwd`:
 

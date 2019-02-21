@@ -26,7 +26,7 @@ As the picture shows:
 
 ![](0.png)
 
-## Expliot
+## Exploit
 
 There is a script that can generate POC for 2.x and 3.x:
 

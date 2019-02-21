@@ -17,7 +17,7 @@ docker-compose up -d
 
 After the environment run, you can see a submission page by visiting `http://your-ip:8080/hello.action`.
 
-## Expliot
+## Exploit
 
 Struts2 allows parsing OGNL expressions when using the Freemarker template engine. The data is not parsed by OGNL itself, but after being parsed once by Freemarker. It becomes an expression and is parsed by OGNL second time.And remote code execution vulnerablity.
 

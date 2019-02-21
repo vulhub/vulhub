@@ -15,7 +15,7 @@ docker-compose up -d
 
 Because Mysql initialization needs a little time, so please wait. After initialization succeeds, visit the site, set the administrator username and password to use it (the database is configured and not automatically updated).
 
-## Expliot
+## Exploit
 
 Send the following packet, and you can see that `/tmp/success` has been successfully created:
 

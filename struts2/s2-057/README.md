@@ -19,7 +19,7 @@ docker-compose up -d
 
 After the environment is started, visit `http://your-ip:8080/showcase/` and you will see the Struts2 test page.
 
-## Expliot
+## Exploit
 
 S2-057 requires the following conditions:
 

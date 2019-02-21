@@ -16,7 +16,7 @@ Details:
 docker-compose up -d
 ```
 
-## Expliot
+## Exploit
 
 This environment is a struts-2.3.32 showcase, in tomcat-8.5. After the environment run, visit the `http://your-ip:8080/showcase/` to view struts2 showcase.
 
