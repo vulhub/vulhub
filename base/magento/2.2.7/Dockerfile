@@ -21,4 +21,5 @@ RUN set -ex \
     && curl -sSL https://github.com/magento/magento2/archive/2.2.7.tar.gz | tar xvz --strip-components=1 \
     && curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename composer \
     && composer install \
-    && chown www-data:www-data -R .
+    && chown www-data:www-data -R . \
+    && a2enmod rewrite
