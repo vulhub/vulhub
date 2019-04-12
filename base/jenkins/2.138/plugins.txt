@@ -1,0 +1,1 @@
+workflow-aggregator:2.6
