@@ -1,1 +1,2 @@
+workflow-cps:2.56
 workflow-aggregator:2.6
