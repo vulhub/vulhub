@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:8-jdk
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
