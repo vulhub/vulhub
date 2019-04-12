@@ -1,6 +1,6 @@
 workflow-aggregator:2.6
-workflow-cps-global-lib:2.12
-pipeline-model-declarative-agent:1.3.2
+workflow-cps-global-lib:2.11
+pipeline-model-declarative-agent:1.1.1
 script-security:1.48
 ace-editor:1.1
 plain-credentials:1.5
@@ -12,7 +12,7 @@ workflow-cps:2.56
 branch-api:2.4.0
 pipeline-model-api:1.3.7
 workflow-step-api:2.19
-matrix-project:1.14
+matrix-project:1.12
 pipeline-rest-api:2.10
 workflow-job:2.32
 workflow-scm-step:2.7
@@ -20,7 +20,7 @@ jsch:0.1.55
 ssh-credentials:1.15
 scm-api:2.4.1
 git-client:2.7.7
-pipeline-build-step:2.8
+pipeline-build-step:2.7
 handlebars:1.1.1
 pipeline-input-step:2.10
 pipeline-milestone-step:1.3.1
