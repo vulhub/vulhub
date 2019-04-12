@@ -16,7 +16,7 @@ ENV JENKINS_VERSION 2.46.1
 RUN set -ex \
     && [ -e /usr/share/jenkins ] || mkdir -p /usr/share/jenkins \
     && [ -e /usr/share/jenkins/ref ] || mkdir -p /usr/share/jenkins/ref \
-    && curl -#SL http://mirrors.jenkins.io/war-stable/${JENKINS_VERSION}/jenkins.war -O /usr/share/jenkins/jenkins.war \
+    && curl -#SL http://mirrors.jenkins.io/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war \
     && chown -R jenkins "$JENKINS_HOME" /usr/share/jenkins/ref
 
 EXPOSE 8080
