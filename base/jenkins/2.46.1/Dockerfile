@@ -20,7 +20,7 @@ RUN set -ex \
     && [ -e /usr/share/jenkins/ref ] || mkdir -p /usr/share/jenkins/ref \
     && mkdir -p /usr/share/jenkins/ref/init.groovy.d \
     && chown -R jenkins "$JENKINS_HOME" /usr/share/jenkins/ref \
-    && curl -#SL http://mirrors.jenkins.io/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war \
+    && curl -#SL http://mirrors.jenkins.io/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
 
 EXPOSE 8080
 EXPOSE 50000
