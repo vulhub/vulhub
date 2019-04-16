@@ -28,6 +28,7 @@ EXPOSE 50000
 COPY jenkins-support /usr/local/bin/jenkins-support
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
+COPY init.groovy /usr/share/jenkins/ref/init.groovy.d
 
 RUN chmod +x /usr/local/bin/jenkins.sh /usr/local/bin/install-plugins.sh
 
