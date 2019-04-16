@@ -8,9 +8,14 @@ RUN apt-get update \
 
 ENV JENKINS_HOME /var/jenkins_home
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
+ENV JENKINS_UC https://updates.jenkins.io
+ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
+ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
 
 RUN groupadd -g 1000 jenkins \
-    && useradd -d "$JENKINS_HOME" -u 1000 -g 1000 -m -s /bin/bash jenkins
+    && useradd -d "$JENKINS_HOME" -u 1000 -g 1000 -m -s /bin/bash jenkins \
+    && mkdir -p /usr/share/jenkins/ref/init.groovy.d \
+    && chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref
 
 ENV JENKINS_VERSION 2.46.1
 RUN set -ex \
@@ -22,9 +27,11 @@ RUN set -ex \
 EXPOSE 8080
 EXPOSE 50000
 
+COPY jenkins-support /usr/local/bin/jenkins-support
 COPY jenkins.sh /usr/local/bin/jenkins.sh
+COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 
-RUN chmod +x /usr/local/bin/jenkins.sh
+RUN chmod +x /usr/local/bin/jenkins.sh /usr/local/bin/install-plugins.sh
 
 USER jenkins
 
