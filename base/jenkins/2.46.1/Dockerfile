@@ -33,5 +33,6 @@ COPY init.groovy /usr/share/jenkins/ref/init.groovy.d
 RUN chmod +x /usr/local/bin/jenkins.sh /usr/local/bin/install-plugins.sh
 
 USER jenkins
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
 CMD ["/usr/local/bin/jenkins.sh"]
