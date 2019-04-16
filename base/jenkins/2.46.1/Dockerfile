@@ -12,17 +12,15 @@ ENV JENKINS_UC https://updates.jenkins.io
 ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
 ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
 
-RUN groupadd -g 1000 jenkins \
-    && useradd -d "$JENKINS_HOME" -u 1000 -g 1000 -m -s /bin/bash jenkins \
-    && mkdir -p /usr/share/jenkins/ref/init.groovy.d \
-    && chown -R ${jenkins} "$JENKINS_HOME" /usr/share/jenkins/ref
-
 ENV JENKINS_VERSION 2.46.1
 RUN set -ex \
+    && groupadd -g 1000 jenkins \
+    && useradd -d "$JENKINS_HOME" -u 1000 -g 1000 -m -s /bin/bash jenkins \
     && [ -e /usr/share/jenkins ] || mkdir -p /usr/share/jenkins \
     && [ -e /usr/share/jenkins/ref ] || mkdir -p /usr/share/jenkins/ref \
+    && mkdir -p /usr/share/jenkins/ref/init.groovy.d \
+    && chown -R jenkins "$JENKINS_HOME" /usr/share/jenkins/ref \
     && curl -#SL http://mirrors.jenkins.io/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war \
-    && chown -R jenkins "$JENKINS_HOME" /usr/share/jenkins/ref
 
 EXPOSE 8080
 EXPOSE 50000
