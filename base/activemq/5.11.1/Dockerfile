@@ -1,4 +1,4 @@
-FROM vulhub/openjdk:7-jre
+FROM vulhub/java:7u21-jdk
 
 ENV ACTIVEMQ_VERSION 5.11.1
 ENV ACTIVEMQ apache-activemq-$ACTIVEMQ_VERSION
