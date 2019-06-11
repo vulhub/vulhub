@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: drupal:7.57
+   ports:
+    - "8081:80"
