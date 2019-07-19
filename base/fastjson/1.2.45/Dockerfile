@@ -2,7 +2,7 @@ FROM maven:3-jdk-8 AS builder
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-COPY ./src pom.xml /usr/src/
+COPY ./* /usr/src/
 WORKDIR /usr/src
 
 RUN set -ex \
