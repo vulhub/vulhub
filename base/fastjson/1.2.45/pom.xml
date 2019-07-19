@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.vulhub</groupId>
 	<artifactId>fastjsondemo</artifactId>
-	<version>SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>fastjsondemo</name>
 	<description>Fastjson 1.2.45 demo</description>
 

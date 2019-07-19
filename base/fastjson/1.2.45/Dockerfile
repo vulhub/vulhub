@@ -10,6 +10,7 @@ RUN set -ex \
 
 FROM openjdk:8u222-jre
 
-COPY --from=builder /usr/src/target/fastjsondemo-SNAPSHOT.jar /usr/src/fastjsondemo-SNAPSHOT.jar
+COPY --from=builder /usr/src/target/fastjsondemo-1.0.0-SNAPSHOT.jar /usr/src/fastjsondemo.jar
+EXPOSE 8090
 
-CMD [ "java", "-Dserver.address=0.0.0.0", "-Dserver.port=8090", "-jar", "/usr/src/fastjsondemo-SNAPSHOT.jar" ]
+CMD [ "java", "-Dserver.address=0.0.0.0", "-Dserver.port=8090", "-jar", "/usr/src/fastjsondemo.jar" ]
