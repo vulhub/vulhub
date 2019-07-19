@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>org.vulhub</groupId>
 	<artifactId>fastjsondemo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>SNAPSHOT</version>
 	<name>fastjsondemo</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Fastjson 1.2.45 demo</description>
 
 	<properties>
 		<java.version>1.8</java.version>
