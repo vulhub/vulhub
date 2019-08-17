@@ -1,4 +1,4 @@
-# Wordpress 4.6 Remote Code Execution Vulnerability（PwnScriptum）
+# Wordpress 4.6 Remote Code Execution Vulnerability (PwnScriptum)
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
