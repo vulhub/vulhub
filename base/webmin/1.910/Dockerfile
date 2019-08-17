@@ -15,6 +15,7 @@ EXPOSE 10000
 
 RUN set -ex \
     && sed -i 's/passwd_mode=.*/passwd_mode=2/' /etc/webmin/miniserv.conf \
-    && chmod +x /docker-entrypoint.sh
+    && chmod +x /docker-entrypoint.sh \
+    && echo 'root:vulhub' | chpasswd
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
