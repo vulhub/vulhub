@@ -1,0 +1,6 @@
+version: '2'
+services:
+  scrapyd: 
+    image: vulhub/scrapyd:1.2.1
+    ports:
+      - "6800:6800"
