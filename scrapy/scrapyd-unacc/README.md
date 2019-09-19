@@ -1,6 +1,6 @@
 # Scrapyd Unauthenticated Remote Code Execution
 
-Scrapyd is an application for deploying and running Scrapy spiders. It enables user to deploy (upload) your projects and control their spiders using a JSON API.
+Scrapyd is an application for deploying and running Scrapy spiders. It enables users to deploy (upload) projects and control their spiders using a JSON API.
 
 References: <https://www.leavesongs.com/PENETRATION/attack-scrapy.html>
 
@@ -12,7 +12,7 @@ Execution the following command to start a scrapyd server:
 docker-compose up -d
 ```
 
-After scrapy is deployed, the server is listening on `http://your-ip:6800`.
+After scrapyd is deployed, the server is listening on `http://your-ip:6800`.
 
 ## Reproduce
 
