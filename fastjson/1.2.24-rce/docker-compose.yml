@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/fastjson:1.2.24
+   ports:
+    - "8090:8090"
