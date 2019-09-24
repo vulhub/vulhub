@@ -10,3 +10,5 @@ RUN set -ex \
     && cp -r ThinkPHP Examples/Hello/* /var/www/html/ \
     && chown www-data:www-data -R /var/www/html \
     && rm -rf /tmp/*
+
+ADD index.php /var/www/html/index.php
