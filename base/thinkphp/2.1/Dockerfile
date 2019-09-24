@@ -9,8 +9,5 @@ RUN set -ex \
     && cd thinkphp-2.1-master \
     && cp -r ThinkPHP Examples/Hello/* /var/www/html/ \
     && cd /var/www/html \
-    && mv Tpl/default/* Tpl/ \
     && chown www-data:www-data -R . \
     && rm -rf /tmp/*
-
-ADD index.php /var/www/html/index.php
