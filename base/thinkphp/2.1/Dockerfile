@@ -8,7 +8,9 @@ RUN set -ex \
     && tar -zxvf thinkphp-2.1.tar.gz \
     && cd thinkphp-2.1-master \
     && cp -r ThinkPHP Examples/Hello/* /var/www/html/ \
-    && chown www-data:www-data -R /var/www/html \
+    && cd /var/www/html \
+    && mv Tpl/default/* Tpl/ \
+    && chown www-data:www-data -R . \
     && rm -rf /tmp/*
 
 ADD index.php /var/www/html/index.php
