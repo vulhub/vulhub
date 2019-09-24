@@ -11,3 +11,5 @@ RUN set -ex \
     && cd /var/www/html \
     && chown www-data:www-data -R . \
     && rm -rf /tmp/*
+
+ADD index.php /var/www/html/index.php
