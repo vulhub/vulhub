@@ -1,1 +1,1 @@
-1.2.24-rce/README.md
+This file is move to [Here](../1.2.24-rce/)
