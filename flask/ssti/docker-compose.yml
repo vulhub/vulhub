@@ -2,6 +2,7 @@ version: '2'
 services:
  flask:
    build: .
+   image: vulhub/flask_ssti:latest
    command: -w 4 -b :8000 -u www-data -g www-data --access-logfile - app:app
    volumes:
     - .:/app
