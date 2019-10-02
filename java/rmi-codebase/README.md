@@ -13,6 +13,8 @@ docker-compose run -e RMIIP=your-ip -p 1099:1099 -p 64000:64000 rmi
 
 其中，`your-ip`是服务器IP，客户端会根据这个IP来连接服务器。
 
+环境启动后，RMI Registry监听在1099端口。
+
 ## 漏洞复现
 
 待完善。
