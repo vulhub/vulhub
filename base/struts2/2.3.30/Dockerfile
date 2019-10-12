@@ -1,4 +1,4 @@
-FROM maven:3-jdk-8 AS builder
+FROM maven:3-jdk-8
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
