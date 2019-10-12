@@ -5,13 +5,13 @@
  
 <struts>
 
- 	<constant name="struts.devMode" value="true" />
+ 	<constant name="struts.devMode" value="false" />
     <constant name="struts.custom.i18n.resources" value="global" />
-    <constant name="struts.multipart.parser" value="jakarta-stream" />
+    <!-- <constant name="struts.multipart.parser" value="jakarta-stream" /> -->
     <!--constant name="struts.multipart.maxSize" value="1" /-->
 
 	<package name="default" namespace="/" extends="struts-default">
-
+        <default-action-ref name="doUpload" />
         <action name="upload" class="org.pwntester.action.FileUploadAction" method="input">
             <result>pages/upload.jsp</result>
         </action>
@@ -20,7 +20,6 @@
             <result name="input">pages/upload.jsp</result>
             <result>pages/upload-success.jsp</result>
         </action>
-
 	</package>
 	
 </struts>

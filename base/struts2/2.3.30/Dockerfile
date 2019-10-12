@@ -6,6 +6,7 @@ COPY ./ /usr/src/
 WORKDIR /usr/src
 
 RUN set -ex \
-    && mvn compile
+    && mvn compile jetty:help
 
+EXPOSE 8080
 CMD ["mvn", "jetty:run"]
