@@ -25,7 +25,7 @@ service docker start
 pip install docker-compose
 ```
 
-The installation steps of docker and docker-compose for others operating system might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
+The installation steps of docker and docker-compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
 
 ## Usage
 
