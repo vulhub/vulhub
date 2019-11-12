@@ -14,9 +14,6 @@ about: 请按照模板填写错误报告，以帮助我们改进vulhub
  - Docker version: Docker 版本 [e.g. Docker version 18.04.0-ce, build 3d479c0]
  - Compose version: Docker-Compose 版本 [e.g. docker-compose version 1.22.0, build f46880f]
  - Describe your bug: 描述你的Bug，什么情况下出现这个bug
-
-一些关键信息：
-
  - [ ] 主机是否在中国大陆
  - [ ] 是否重试过仍然出现这个错误
 
@@ -26,6 +23,8 @@ about: 请按照模板填写错误报告，以帮助我们改进vulhub
 - 运行后，环境无法访问
 - 环境运行后，按照README中的操作，无法复现漏洞
 - README中出现的错误，如错别字、参考链接失效等
+
+注意：关于环境搭建成功，但复现漏洞不成功的情况，我可能不会测试并回复issue，因为我在搭建环境的时候均已测试成功。建议此类issue作者自行测试并寻找错误原因，如果找到原因的确是vulhub的问题（比如某种情况没考虑到），则再创建issue。
 
 不接受：
 
