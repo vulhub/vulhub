@@ -1,7 +1,7 @@
 version: '2'
 services:
  web:
-   build: .
+   image: vulhub/wordpress:4.6
    depends_on:
     - mysql
    environment: 
@@ -10,7 +10,7 @@ services:
     - WORDPRESS_DB_PASSWORD=root
     - WORDPRESS_DB_NAME=wordpress
    ports:
-    - "80:80"
+    - "8080:80"
  mysql:
    image: mysql:5
    environment: 
