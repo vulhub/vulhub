@@ -1,29 +1,27 @@
-# S2-046 Remote Code Execution Vulnerablity（CVE-2017-5638）
+# S2-046 远程代码执行漏洞（CVE-2017-5638）
 
-[中文版本(Chinese version)](README.zh-cn.md)
+影响版本: Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10
 
-Affected Version: Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10
-
-References:
+漏洞详情: 
 
  - https://cwiki.apache.org/confluence/display/WW/S2-046
  - https://xz.aliyun.com/t/221
 
-## Setup
+## 漏洞环境
 
-Execute the following command to start the Struts2 2.3.30：
+执行如下命令启动struts2 2.3.30：
 
 ```
 docker-compose up -d
 ```
 
-After the container is running, visit `http://your-ip:8080` that you can see an example of the upload page.
+环境启动后，访问`http://your-ip:8080`即可看到上传页面。
 
-## Exploitation
+## 漏洞复现
 
-As same as S2-045, S2-046 is also the OGNL injection but occurs at filename field of the upload request, and a NUL byte is needed to split payload and the remaining strings.
+与s2-045类似，但是输入点在文件上传的filename值位置，并需要使用`\x00`截断。
 
-A simple Python POC for Verifying the vulnerability:
+由于需要发送畸形数据包，我们简单使用原生socket编写payload：
 
 ```python
 import socket
@@ -52,6 +50,6 @@ with socket.create_connection(('your-ip', '8080'), timeout=5) as conn:
 
 ```
 
-`233*233` has been successfully executed:
+`233*233`已成功执行：
 
 ![](1.png)
