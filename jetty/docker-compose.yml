@@ -1,0 +1,11 @@
+version: '3'
+services:
+  jetty9_4_9:
+    image: jetty9_4_9
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    ports:
+      - "9014:8080"
