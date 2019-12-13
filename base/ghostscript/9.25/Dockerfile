@@ -2,7 +2,7 @@ FROM debian:jessie
 
 LABEL maintainer="phith0n <root@leavesongs.com>"
 
-ADD https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs925/ghostpcl-9.25-linux-x86_64.tgz /tmp/ghostscript.tgz
+ADD https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs925/ghostscript-9.25-linux-x86_64.tgz /tmp/ghostscript.tgz
 
 RUN set -ex \
     && tar zxf /tmp/ghostscript.tgz --strip-components 1 -C /tmp/ \
