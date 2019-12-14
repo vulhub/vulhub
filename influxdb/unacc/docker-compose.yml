@@ -1,7 +1,7 @@
 version: '2'
 services:
  web:
-   image: vulhub/influxdb:1.7.9
+   image: vulhub/influxdb:1.6.6
    environment: 
     - INFLUXDB_HTTP_AUTH_ENABLED=true
     - INFLUXDB_ADMIN_USER=admin
