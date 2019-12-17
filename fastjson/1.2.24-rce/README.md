@@ -15,7 +15,7 @@ fastjson在解析json的过程中，支持使用autoType来实例化某一个具
 docker-compose up -d
 ```
 
-环境运行后，访问`http://your-ip:8080`即可看到JSON格式的输出。
+环境运行后，访问`http://your-ip:8090`即可看到JSON格式的输出。
 
 我们向这个地址POST一个JSON对象，即可更新服务端的信息：
 
