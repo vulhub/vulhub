@@ -6,7 +6,7 @@ ECShop是一款B2C独立网店系统，适合企业及个人快速构建个性�
 
 参考链接：
 
-- http://ringk3y.com/2018/08/31/ecshop2-x代码执行/
+- https://paper.seebug.org/691/
 
 ## 环境搭建
 
