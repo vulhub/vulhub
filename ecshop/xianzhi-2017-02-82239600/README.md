@@ -8,7 +8,7 @@ In 2017 and previous versions, there was a SQL injection vulnerability that coul
 
 Reference link:
 
-- http://ringk3y.com/2018/08/31/ecshop2-x代码执行/
+- https://paper.seebug.org/691/
 
 ## Environment setup
 
