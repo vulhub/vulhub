@@ -7,7 +7,7 @@
 Details to read the references：
 
 - https://www.leavesongs.com/PENETRATION/thinkphp5-in-sqlinjection.html
-- https://xianzhi.aliyun.com/forum/read/1813.html
+- https://xz.aliyun.com/t/125
 
 ## Environment Setup
 

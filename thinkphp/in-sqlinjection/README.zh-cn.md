@@ -13,7 +13,7 @@ docker-compose up -d
 漏洞原理说明：
 
 - https://www.leavesongs.com/PENETRATION/thinkphp5-in-sqlinjection.html
-- https://xianzhi.aliyun.com/forum/read/1813.html
+- https://xz.aliyun.com/t/125
 
 不再赘述。
 
