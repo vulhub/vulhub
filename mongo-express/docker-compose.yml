@@ -2,9 +2,9 @@ version: '2'
 services:
  web:
   image: vulhub/mongo-express:0.53.0
-   depends_on:
+  depends_on:
     - mongo
-   ports:
+  ports:
     - "8081:8081"
- mongo:
-   image: mongo:3.4
+mongo:
+  image: mongo:3.4
