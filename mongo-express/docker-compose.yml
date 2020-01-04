@@ -7,4 +7,4 @@ services:
    ports:
     - "8081:8081"
  mongo:
-   image: mongo
+   image: mongo:3.4
