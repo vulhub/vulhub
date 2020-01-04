@@ -18,5 +18,5 @@ RUN npm install mongo-express@$MONGO_EXPRESS
 WORKDIR /node_modules/mongo-express
 
 ADD docker-entrypoint.sh /
-ENTRYPOINT [ "bash", "/docker-entrypoint.sh" ]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD ["mongo-express"]
