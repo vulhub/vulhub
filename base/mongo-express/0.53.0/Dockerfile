@@ -13,7 +13,8 @@ ENV ME_CONFIG_EDITORTHEME="default" \
     VCAP_APP_HOST="0.0.0.0" \
     MONGO_EXPRESS="0.53.0"
 
-RUN npm install mongo-express@$MONGO_EXPRESS
+RUN npm install mongo-express@$MONGO_EXPRESS \
+    && chmod +x /usr/local/bin/wait-for-it.sh
 
 WORKDIR /node_modules/mongo-express
 
