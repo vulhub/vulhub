@@ -15,4 +15,4 @@ WORKDIR /usr/share/elasticsearch
 EXPOSE 9200 9300
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["elasticsearch"]
+CMD ["elasticsearch", "-Des.insecure.allow.root=true"]
