@@ -11,8 +11,9 @@ RUN set -ex \
     && chmod +x /docker-entrypoint.sh
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
+ENV ES_JAVA_OPTS "-Des.insecure.allow.root=true"
 WORKDIR /usr/share/elasticsearch
 EXPOSE 9200 9300
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["elasticsearch", "-Des.insecure.allow.root=true"]
+CMD ["elasticsearch"]
