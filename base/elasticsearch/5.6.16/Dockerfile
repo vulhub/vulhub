@@ -17,7 +17,8 @@ EXPOSE 9200 9300
 
 ADD elasticsearch.yml ./config/
 RUN sed -ex \
-    && chown nobody:nogroup -R ${ESHOME}
+    && chown nobody:nogroup -R ${ESHOME} \
+    && sed -i 's/\-Xms2g/-Xms512m/g' ${ESHOME}/config/jvm.options
 
 USER nobody:nogroup
 ENTRYPOINT ["/docker-entrypoint.sh"]
