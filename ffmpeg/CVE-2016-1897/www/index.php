@@ -15,7 +15,7 @@ if(!empty($_FILES)) {
  <body>
      <?php if(!empty($_FILES)): ?>
      <div>
-        <video src="data:video/mp4;base64,<?=$newname?>" controls="controls" width="640" height="480"></video>
+        <video src="data:video/mp4;base64,<?=$data?>" controls="controls" width="640" height="480"></video>
      </div>
      <?php endif; ?>
      <form method="post" enctype="multipart/form-data">
