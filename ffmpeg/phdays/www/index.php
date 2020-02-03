@@ -8,7 +8,7 @@ if(!empty($_FILES)) {
 <html>
  <head>
   <meta charset="utf-8">
-  <title>视频播放器</title>
+  <title>Video Player</title>
  </head>
  <body>
      <?php if(!empty($_FILES)): ?>
@@ -18,7 +18,7 @@ if(!empty($_FILES)) {
      <?php endif; ?>
      <form method="post" enctype="multipart/form-data">
        <input type="file" name="file">
-       <input type="submit" value="提交">
+       <input type="submit" value="Submit">
      </form>
  </body>
 </html>
