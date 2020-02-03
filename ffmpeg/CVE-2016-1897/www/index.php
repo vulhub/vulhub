@@ -1,8 +1,10 @@
 <?php
 if(!empty($_FILES)) {
     $filename = escapeshellarg($_FILES['file']['tmp_name']);
-    $newname = './' . uniqid() . '.mp4';
+    $newname = '/tmp/' . uniqid() . '.mp4';
     shell_exec("ffmpeg -i $filename $newname");
+
+    $data = base64_encode(readfile($newname));
 }
 ?>
 <html>
@@ -13,7 +15,7 @@ if(!empty($_FILES)) {
  <body>
      <?php if(!empty($_FILES)): ?>
      <div>
-        <video src="<?=$newname?>" controls="controls" width="640" height="480"></video>
+        <video src="data:video/mp4;base64,<?=$newname?>" controls="controls" width="640" height="480"></video>
      </div>
      <?php endif; ?>
      <form method="post" enctype="multipart/form-data">
