@@ -4,7 +4,7 @@ if(!empty($_FILES)) {
     $newname = '/tmp/' . uniqid() . '.mp4';
     shell_exec("ffmpeg -i $filename $newname");
 
-    $data = base64_encode(file_get_contents($filename));
+    $data = base64_encode(file_get_contents($newname));
 }
 ?>
 <html>
