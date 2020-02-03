@@ -1,7 +1,7 @@
 version: '2'
 services:
  web:
-   image: vulhub/ffmpeg:3.2.4
+   image: vulhub/ffmpeg:3.2.4-with-php
    command: php -S 0.0.0.0:8080 -t /var/www/html
    volumes:
     - ./web:/var/www/html
