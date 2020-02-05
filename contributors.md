@@ -1,6 +1,6 @@
 # Additional Contributors and Thanks
 
-[中文版本(Chinese version)](README.zh-cn.md)
+[中文版本(Chinese version)](contributors.zh-cn.md)
 
 Some students have privately contributed to this project. Private contributions cannot be displayed on the [github contributors page](https://github.com/vulhub/vulhub/graphs/contributors), so we thank them here:
 
