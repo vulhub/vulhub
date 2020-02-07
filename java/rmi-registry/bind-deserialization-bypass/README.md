@@ -20,7 +20,8 @@ if (String.class == clazz
 }
 ```
 
-我们需要在上面的几个白名单里面找到相应的可利用的类，具体见
+我们需要在上面的几个白名单里面找到相应的可利用的类
+具体原理见[浅谈RMI Registry反序列化问题](http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/)
 
 ## 漏洞环境
 
