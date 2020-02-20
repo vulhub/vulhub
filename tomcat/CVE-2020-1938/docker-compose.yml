@@ -1,0 +1,7 @@
+version: '2'
+services:
+ tomcat:
+   image: vulhub/tomcat:9.0.30
+   ports:
+    - "8080:8080"
+    - "8009:8009"
