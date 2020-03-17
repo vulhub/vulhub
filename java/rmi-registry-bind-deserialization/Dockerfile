@@ -7,7 +7,7 @@ COPY ./src/code/ /usr/src/
 WORKDIR /usr/src
 
 RUN cd /usr/src; \
-    mvn -U clean package -Dmaven.test.skip=true
+    mvn -U clean package -Dmaven.test.skip=true --settings settings.xml
 
 FROM openjdk:8u111-jre
 
