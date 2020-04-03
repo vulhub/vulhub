@@ -1,0 +1,14 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+    - "8000:8000"
+    depends_on:
+    - db
+    restart: always
+  db:
+   image: vulhub/oracle:12c-ee
+   restart: always
+
+
