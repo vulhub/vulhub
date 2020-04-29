@@ -64,7 +64,7 @@ public class EvilRMIServerNew {
 
 其中，`javax.naming.InitialContext`是JNDI的工厂类，URL `rmi://evil:23456/BypassByEL`是运行JNDI工具监听的RMI地址。
 
-成功接收到RMI请求：
+点击连接后，恶意RMI成功接收到请求：
 
 ![](2.png)
 
