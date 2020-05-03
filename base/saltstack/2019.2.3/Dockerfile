@@ -7,7 +7,7 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/* 
 
 RUN set -ex \
-    && mkdir -p /etc/pki /etc/salt/pki /etc/salt/minion.d/ /etc/salt/master.d /etc/salt/proxy.d /var/cache/salt /var/log/salt /var/run/salt /run/sshd
+    && mkdir -p /etc/pki /etc/salt/pki /etc/salt/minion.d/ /etc/salt/master.d /etc/salt/proxy.d /var/cache/salt /var/log/salt /var/run/salt /run/sshd /root/.ssh
 
 ADD saltinit.py /usr/local/bin/saltinit
 ENTRYPOINT ["/usr/bin/dumb-init"]
