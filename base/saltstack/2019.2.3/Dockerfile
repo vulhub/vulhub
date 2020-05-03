@@ -14,4 +14,4 @@ CMD ["/usr/local/bin/saltinit"]
 EXPOSE 4505 4506 8000
 
 RUN pip3 install --no-cache-dir salt==2019.2.3 pycryptodomex CherryPy pyOpenSSL
-RUN salt -c 'salt-run salt.cmd tls.create_self_signed_cert'
+RUN salt-run salt.cmd tls.create_self_signed_cert
