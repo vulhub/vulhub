@@ -12,6 +12,6 @@ RUN set -ex \
 ADD saltinit.py /usr/local/bin/saltinit
 ENTRYPOINT ["/usr/bin/dumb-init"]
 CMD ["/usr/local/bin/saltinit"]
-EXPOSE 4505 4506 8000
+EXPOSE 22 4505 4506 8000
 
 RUN salt-run salt.cmd tls.create_self_signed_cert
