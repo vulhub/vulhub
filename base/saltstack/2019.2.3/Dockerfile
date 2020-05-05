@@ -3,7 +3,7 @@ FROM python:3.7
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends dumb-init openssh-server cron \
-    && pip3 install --no-cache-dir salt==2019.2.3 pycryptodomex CherryPy pyOpenSSL \
+    && pip3 install --no-cache-dir salt==2019.2.3 pycryptodomex CherryPy pyOpenSSL msgpack==0.6.2 \
     && rm -rf /var/lib/apt/lists/* 
 
 RUN set -ex \
