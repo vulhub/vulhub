@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
  weblogic:
    image: vulhub/weblogic
@@ -7,4 +7,5 @@ services:
    ports:
     - "7001:7001"
  redis:
-   build: .
+   image: vulhub/baselinux:centos-6
+   init: true
