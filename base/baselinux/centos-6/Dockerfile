@@ -1,6 +1,6 @@
 FROM centos:6
 
-LABEO maintainer="phithon <root@leavesongs.com>"
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN set -ex \
     && yum install -y wget cronie
