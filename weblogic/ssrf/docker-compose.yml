@@ -8,4 +8,3 @@ services:
     - "7001:7001"
  redis:
    image: vulhub/baselinux:centos-6
-   init: true
