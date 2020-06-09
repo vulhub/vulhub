@@ -15,5 +15,15 @@ RUN set -ex \
     && chown www-data:www-data -R . \
     && a2enmod rewrite
 
+RUN set -ex \
+    && rm -f /var/www/html/index.html \
+    && { \
+        echo '<Directory /var/www/>'; \
+        echo '    Options -Indexes'; \
+        echo '    AllowOverride All'; \
+        echo '</Directory>'; \
+    } | tee "/etc/apache2/conf-available/override.conf" \
+    && a2enconf override
+
 EXPOSE 80
 CMD [ "apache2ctl", "-DFOREGROUND" ]
