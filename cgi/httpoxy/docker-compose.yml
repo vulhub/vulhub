@@ -3,7 +3,7 @@ services:
  nginx:
    image: nginx:1
    volumes:
-    - ./www:/usr/share/nginx/html
+    - ./www/index.php:/usr/share/nginx/html/index.php
     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
    depends_on:
     - php
@@ -11,4 +11,6 @@ services:
     - "80:80"
     - "443:443"
  php:
-   build: .
+   image: vulhub/php:httpoxy
+   volumes: 
+    - ./www/index.php:/var/www/html/index.php
