@@ -9,11 +9,11 @@ RUN set -ex \
     && chmod +x /usr/local/bin/composer
 
 RUN set -ex \
-    && mkdir /var/www/html \
     && cd /var/www/html \
     && wget -qO- https://github.com/magento/magento2/archive/2.2.7.tar.gz | tar xvz --strip-components=1 \
     && composer install \
     && chown www-data:www-data -R . \
     && a2enmod rewrite
 
+EXPOSE 80
 CMD [ "apache2ctl", "-DFOREGROUND" ]
