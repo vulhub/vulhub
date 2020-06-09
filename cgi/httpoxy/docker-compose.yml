@@ -8,8 +8,7 @@ services:
    depends_on:
     - php
    ports:
-    - "80:80"
-    - "443:443"
+    - "8080:80"
  php:
    image: vulhub/php:httpoxy
    volumes: 
