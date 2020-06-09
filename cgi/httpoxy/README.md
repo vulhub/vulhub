@@ -15,17 +15,16 @@ PHP5.6.24版本修复了该漏洞，不会再将`Proxy`放入环境变量中。�
 编译、运行本环境：
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
-正常请求`http://your-ip/index.php`，可见其Origin为当前请求的服务器，二者IP相等：
+正常请求`http://your-ip:8080/index.php`，可见其Origin为当前请求的服务器，二者IP相等：
 
 ![](1.png)
 
 在其他地方找到一个可以正常运行的http代理，如`http://x.x.122.65:8888/`。
 
-附带`Proxy: http://x.x.122.65:8888/`头，再次访问`http://your-ip/index.php`：
+附带`Proxy: http://x.x.122.65:8888/`头，再次访问`http://your-ip:8080/index.php`：
 
 ![](2.png)
 
