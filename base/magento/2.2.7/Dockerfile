@@ -10,7 +10,7 @@ RUN set -ex \
 
 RUN set -ex \
     && cd /var/www/html \
-    && wget -qO- https://github.com/magento/magento2/archive/2.2.7.tar.gz | tar xvz --strip-components=1 \
+    && wget -qO- https://github.com/magento/magento2/archive/2.2.7.tar.gz | tar xz --strip-components=1 \
     && composer install \
     && chown www-data:www-data -R . \
     && a2enmod rewrite
