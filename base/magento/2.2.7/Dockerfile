@@ -1,25 +1,19 @@
-FROM php:7.1-apache
+FROM debian:stretch
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN set -ex \
-    && apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libmcrypt-dev \
-        libicu-dev \
-        libxml2-dev \
-        libxslt1-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt bcmath intl zip pdo_mysql soap xsl \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
-    && rm -rf /usr/src/* /var/lib/apt/lists/*
+    && apt-get update \
+    && apt-get install -y --no-install-recommends apache2 libapache2-mod-php php-common php-gd php-soap php-xml php-intl php-bcmath php-mcrypt php-mysql wget unzip git ca-certificates \
+    && wget -qO /usr/local/bin/composer https://github.com/composer/composer/releases/download/1.10.7/composer.phar \
+    && chmod +x /usr/local/bin/composer
 
 RUN set -ex \
+    && mkdir /var/www/html \
     && cd /var/www/html \
-    && curl -sSL https://github.com/magento/magento2/archive/2.2.7.tar.gz | tar xvz --strip-components=1 \
-    && curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename composer \
+    && wget -qO- https://github.com/magento/magento2/archive/2.2.7.tar.gz | tar xvz --strip-components=1 \
     && composer install \
     && chown www-data:www-data -R . \
     && a2enmod rewrite
+
+CMD [ "apache2ctl", "-DFOREGROUND" ]
