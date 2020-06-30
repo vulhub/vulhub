@@ -6,7 +6,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install --no-install-recommends -y procps \
     && mkdir $basedir \
-    && wget -qO- http://www-us.apache.org/dist/spark/spark-2.3.1/spark-2.3.1-bin-hadoop2.7.tgz | tar zx -C $basedir --strip-components=1 \
+    && wget -qO- https://archive.apache.org/dist/spark/spark-2.3.1/spark-2.3.1-bin-hadoop2.7.tgz | tar zx -C $basedir --strip-components=1 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR $basedir
