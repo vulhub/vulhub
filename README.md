@@ -66,6 +66,7 @@ This project relies on docker. So any error during compilation and running are t
 
 For more question, please contact:
 
+- [Chinese Community](https://www.wangan.com/vulhub)
 - [Discord](https://discord.gg/GhMB3Z)
 - [Twitter](https://twitter.com/vulhub)
 
