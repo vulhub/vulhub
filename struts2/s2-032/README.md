@@ -7,7 +7,7 @@ Affected Version: Struts 2.3.20 - Struts Struts 2.3.28 (except 2.3.20.3 and 2.3.
 References:
 
  - https://cwiki.apache.org/confluence/display/WW/S2-032
- - http://blog.nsfocus.net/apache-struts-2-remote-code-execution-vulnerability-s2-046-technical-analysis-solution/
+ - https://www.cnblogs.com/mrchang/p/6501428.html
 
 ## Setup
 
