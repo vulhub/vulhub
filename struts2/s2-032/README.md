@@ -21,11 +21,11 @@ After the container is running, visit `http://your-ip:8080` that you can see an 
 
 ## Exploitation
 
-There’s a feature embedded in Struts 2 that lets the "!" (bang) character invoke a method other than execute . It is called “Dynamic Method Invocation” aka DMI.
+There’s a feature embedded in Struts 2 that lets the "!" (bang) character invoke a method other than execute. It is called “Dynamic Method Invocation” aka DMI.
 
-A simple way to use DMI is to provide HTTP parameters prefixed with method:. For example in the URL it could be Category.action?method:create=foo, the parameter value is ignored.
+A simple way to use DMI is to provide HTTP parameters prefixed with `method:`. For example in the URL it could be `/category.action?method:create=foo`, the parameter value is ignored.
 
-The name of DMI will be evaluated OGNL expression engine, which would cause the RCE vulnerability.
+The method name of DMI will be evaluated by OGNL expression engine, which would cause the RCE vulnerability.
 
 Visit following URL to trigger the `id` command:
 
