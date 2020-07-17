@@ -4,4 +4,3 @@ services:
    image: vulhub/apereo-cas:4.1.5
    ports:
     - "8080:8080"
-    - "8443:8443"
