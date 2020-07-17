@@ -1,5 +1,7 @@
 # Apereo CAS 4.1 Deserialization RCE Vulnerability
 
+[中文版本(Chinese version)](README.zh-cn.md)
+
 Apereo CAS is a enterprise single sign-on system. There is an issue in CAS’s attempts to deserialize objects via the Apache Commons Collections library, which cased a RCE vulnerability.
 
 Reference:
