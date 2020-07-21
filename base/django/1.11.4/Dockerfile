@@ -1,15 +1,13 @@
-FROM vulhub/python:3.5
+FROM python:3.5
 
 MAINTAINER phithon <root@leavesongs.com>
-
-ADD requirements.txt /tmp/requirements.txt
 
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /bin/wait-for-it.sh
 
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN mkdir /app \
-    && pip install -U -r /tmp/requirements.txt \
+    && pip install -U "django==1.11.4" "dj-database-url==0.5.0" "psycopg2==2.8.5" \
     && chmod +x /docker-entrypoint.sh /bin/wait-for-it.sh
 
 EXPOSE 8000
