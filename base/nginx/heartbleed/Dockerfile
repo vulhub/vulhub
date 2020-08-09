@@ -38,4 +38,4 @@ RUN set -ex \
 
 ADD local.crt local.key /etc/ssl/nginx/
 ADD nginx.conf /etc/nginx/
-CMD ["nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
+CMD ["/usr/local/nginx/sbin/nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
