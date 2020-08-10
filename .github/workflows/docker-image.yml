@@ -1,0 +1,18 @@
+name: Vulhub Docker Image CI
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+jobs:
+
+  images-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: active-mq
+      run: |
+        bash tests/images-build.sh base/activemq/5.11.1 base/activemq/5.11.1/with-cron base/activemq/5.13.2 
