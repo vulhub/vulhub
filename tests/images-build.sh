@@ -13,6 +13,7 @@ runTest() {
     tag=$(date +%s)
     cd "$image_path"
     docker build -t "$image_name:$tag" .
+    cd "$OLDPWD"
 }
 
 for path in "$@"; do
