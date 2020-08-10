@@ -48,3 +48,14 @@ jobs:
     - name: django
       run: |
         bash tests/images-build.sh base/django/1.11.4 base/django/2.2.3 base/django/3.0.3 
+    # missed
+    - name: drupal
+      run: |
+        bash tests/images-build.sh base/drupal/7.31 base/drupal/8.5.0
+    - name: ecshop
+      run: |
+        bash tests/images-build.sh base/ecshop/2.7.3 base/ecshop/3.6.0
+    - name: cleanup
+      run: |
+        docker image prune -a -f
+    

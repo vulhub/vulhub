@@ -1,4 +1,4 @@
-FROM vulhub/php:5.5-apache
+FROM php:5.5-apache
 
 LABEL maintainer=<mengbulang@Live.com>
 
