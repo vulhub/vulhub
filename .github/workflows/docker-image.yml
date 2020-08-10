@@ -21,7 +21,7 @@ jobs:
         bash tests/images-build.sh base/apereo-cas/4.1.5
     - name: appweb
       run: |
-        bash tests/images-build.sh base/appweb/7.0.2
+        bash tests/images-build.sh base/appweb/7.0.1
     - name: aria2
       run: |
         bash tests/images-build.sh base/aria2/1.18.8
