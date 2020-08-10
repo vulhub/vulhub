@@ -1,4 +1,4 @@
-FROM vulhub/debian:jessie
+FROM debian:jessie
 
 MAINTAINER phithon <root@leavesongs.com>
 

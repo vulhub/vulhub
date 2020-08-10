@@ -32,3 +32,19 @@ jobs:
       run: |
         bash tests/image-build.sh base/bash/4.3.0 "vulhub/bash:4.3.0"
         bash tests/images-build.sh base/bash/4.3.0/with-httpd
+    - name: bind
+      run: |
+        bash tests/images-build.sh base/bind/latest
+    # missed: coldfusion
+    - name: confluence
+      run: |
+        bash tests/images-build.sh base/confluence/6.10.2 base/confluence/6.11.2
+    - name: couchdb
+      run: |
+        bash tests/images-build.sh base/couchdb/1.6.0 base/couchdb/2.1.0
+    - name: discuz
+      run: |
+        bash tests/images-build.sh base/discuzx/3.4-20170801 base/discuzx/7.2
+    - name: django
+      run: |
+        bash tests/images-build.sh base/django/1.11.4 base/django/2.2.3 base/django/3.0.3 
