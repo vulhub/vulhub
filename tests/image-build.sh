@@ -10,4 +10,4 @@ fi
 echo "Preparing test image $image_name"
 
 cd "$image_path"
-build -t "$image_name" .
+docker build -t "$image_name" .
