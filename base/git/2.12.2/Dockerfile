@@ -1,4 +1,4 @@
-FROM vulhub/ubuntu:trusty
+FROM ubuntu:trusty
 
 MAINTAINER phithon <root@leavesongs.com>
 

@@ -48,7 +48,7 @@ jobs:
     - name: django
       run: |
         bash tests/images-build.sh base/django/1.11.4 base/django/2.2.3 base/django/3.0.3 
-    # missed
+    # missed: docker
     - name: drupal
       run: |
         bash tests/images-build.sh base/drupal/7.31 base/drupal/8.5.0
@@ -58,4 +58,41 @@ jobs:
     - name: cleanup
       run: |
         docker image prune -a -f
-    
+    - name: elasticsearch
+      run: |
+        bash tests/images-build.sh base/elasticsearch/1.1.1 base/elasticsearch/1.4.2 base/elasticsearch/1.4.4 base/elasticsearch/1.5.1 base/elasticsearch/1.6.0 base/elasticsearch/5.6.16 base/elasticsearch/6.8.6
+    # missed: electron
+    - name: fastjson
+      run: |
+        bash tests/images-build.sh base/fastjson/1.2.24 base/fastjson/1.2.45
+    - name: ffmpeg
+      run: |
+        bash tests/image-build.sh base/ffmpeg/2.8.4 "vulhub/ffmpeg:2.8.4"
+        bash tests/image-build.sh base/ffmpeg/3.2.4 "vulhub/ffmpeg:3.2.4"
+        bash tests/images-build.sh base/ffmpeg/2.8.4-php base/ffmpeg/3.2.4-php
+    - name: flask
+      run: |
+        bash tests/images-build.sh base/flask/1.1.1
+    - name: ghostscript
+      run: |
+        bash tests/image-build.sh base/ghostscript/9.21 "vulhub/ghostscript:9.21"
+        bash tests/image-build.sh base/ghostscript/9.23 "vulhub/ghostscript:9.23"
+        bash tests/images-build.sh base/ghostscript/9.21-python base/ghostscript/9.23-python base/ghostscript/9.25 base/ghostscript/9.26
+    - name: git
+      run: |
+        bash tests/images-build.sh base/git/2.12.2
+    - name: gitea
+      run: |
+        bash tests/images-build.sh base/gitea/1.4.0
+    - name: gitlist
+      run: |
+        bash tests/images-build.sh base/gitlist/0.6.0
+    - name: glassfish
+      run: |
+        bash tests/images-build.sh base/glassfish/4.1
+    - name: goahead
+      run: |
+        bash tests/images-build.sh base/goahead/3.6.4
+    - name: gogs
+      run: |
+        bash tests/images-build.sh base/gogs/0.11.66
