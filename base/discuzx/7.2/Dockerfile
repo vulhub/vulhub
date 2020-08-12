@@ -6,9 +6,9 @@ RUN set -ex \
     && docker-php-ext-install mysql \
     && rm -rf /var/www/html/* \
     && cd /tmp \
-    && curl -#SL https://github.com/vulhub/discuz7/archive/2009.11.26.tar.gz -o Discuz_7.2_FULL_SC_UTF8.tar.gz \
-    && tar -zxvf Discuz_7.2_FULL_SC_UTF8.tar.gz \
-    && cp -r Discuz_7.2_FULL_SC_UTF8/upload/* /var/www/html/ \
+    && curl -#SL https://github.com/vulhub/discuz7/archive/2009.11.26.tar.gz -o discuz7-2009.11.26.tar.gz \
+    && tar -zxvf discuz7-2009.11.26.tar.gz \
+    && cp -r discuz7-2009.11.26/upload/* /var/www/html/ \
     && { \
         echo "request_order=GP"; \
         echo "date.timezone=Asia/Shanghai"; \
