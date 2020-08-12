@@ -10,7 +10,7 @@ runTest() {
         exit 1
     fi
 
-    tag=$(date +%s)
+    tag="auto-$(date +%s)"
     cd "$image_path"
     docker build -t "$image_name:$tag" .
     cd "$OLDPWD"
@@ -22,4 +22,3 @@ for path in "$@"; do
     runTest "$image_path" "$image_name"
     #echo "Image Name $image_name"
 done
-

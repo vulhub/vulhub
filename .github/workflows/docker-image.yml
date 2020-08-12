@@ -63,6 +63,9 @@ jobs:
     - name: aria2
       run: |
         bash tests/images-build.sh base/aria2/1.18.8
+    - name: cleanup
+      run: |
+        bash tests/cleanup.sh
     - name: baselinux
       run: |
         bash tests/images-build.sh base/baselinux/centos-6
@@ -88,9 +91,6 @@ jobs:
     - name: ecshop
       run: |
         bash tests/images-build.sh base/ecshop/2.7.3 base/ecshop/3.6.0
-    - name: cleanup
-      run: |
-        docker image prune -a -f
     - name: elasticsearch
       run: |
         bash tests/images-build.sh base/elasticsearch/1.1.1 base/elasticsearch/1.4.2 base/elasticsearch/1.4.4 base/elasticsearch/1.5.1 base/elasticsearch/1.6.0 base/elasticsearch/5.6.16 base/elasticsearch/6.8.6
