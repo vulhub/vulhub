@@ -77,7 +77,7 @@ jobs:
       run: |
         bash tests/image-build.sh base/ghostscript/9.21 "vulhub/ghostscript:9.21"
         bash tests/image-build.sh base/ghostscript/9.23 "vulhub/ghostscript:9.23"
-        bash tests/images-build.sh base/ghostscript/9.21-python base/ghostscript/9.23-python base/ghostscript/9.25 base/ghostscript/9.26
+        bash tests/images-build.sh base/ghostscript/9.21/with-flask base/ghostscript/9.23/with-flask base/ghostscript/9.25 base/ghostscript/9.26
     - name: git
       run: |
         bash tests/images-build.sh base/git/2.12.2
