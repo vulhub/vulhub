@@ -9,7 +9,7 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -ex \
-    && python3 -m pip install -U pip \
+    && python3 -m pip install "pip==19.3.1" \
     && python3 -m pip install "flask==1.0.2" "Pillow==5.3.0"
 
 WORKDIR /usr/src
