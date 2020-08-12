@@ -6,6 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  longtime-images-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: couchdb
+      run: |
+        bash tests/images-build.sh base/couchdb/1.6.0 base/couchdb/2.1.0
+    - name: ffmpeg
+      run: |
+        bash tests/image-build.sh base/ffmpeg/2.8.4 "vulhub/ffmpeg:2.8.4"
+        bash tests/image-build.sh base/ffmpeg/3.2.4 "vulhub/ffmpeg:3.2.4"
+        bash tests/images-build.sh base/ffmpeg/2.8.4-php base/ffmpeg/3.2.4-php
 
   images-test:
 
@@ -39,9 +51,7 @@ jobs:
     - name: confluence
       run: |
         bash tests/images-build.sh base/confluence/6.10.2 base/confluence/6.11.2
-    - name: couchdb
-      run: |
-        bash tests/images-build.sh base/couchdb/1.6.0 base/couchdb/2.1.0
+    # longtime: couchdb
     - name: discuz
       run: |
         bash tests/images-build.sh base/discuzx/3.4-20170801 base/discuzx/7.2
@@ -65,11 +75,7 @@ jobs:
     - name: fastjson
       run: |
         bash tests/images-build.sh base/fastjson/1.2.24 base/fastjson/1.2.45
-    - name: ffmpeg
-      run: |
-        bash tests/image-build.sh base/ffmpeg/2.8.4 "vulhub/ffmpeg:2.8.4"
-        bash tests/image-build.sh base/ffmpeg/3.2.4 "vulhub/ffmpeg:3.2.4"
-        bash tests/images-build.sh base/ffmpeg/2.8.4-php base/ffmpeg/3.2.4-php
+    # longtime: ffmpeg
     - name: flask
       run: |
         bash tests/images-build.sh base/flask/1.1.1
