@@ -25,6 +25,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: discuz
+      run: |
+        bash tests/images-build.sh base/discuzx/3.4-20170801 base/discuzx/7.2
+    - name: ghostscript
+      run: |
+        bash tests/image-build.sh base/ghostscript/9.21 "vulhub/ghostscript:9.21"
+        bash tests/image-build.sh base/ghostscript/9.23 "vulhub/ghostscript:9.23"
+        bash tests/images-build.sh base/ghostscript/9.21/with-flask base/ghostscript/9.23/with-flask base/ghostscript/9.25 base/ghostscript/9.26
+    - name: git
+      run: |
+        bash tests/images-build.sh base/git/2.12.2
+    - name: gitea
+      run: |
+        bash tests/images-build.sh base/gitea/1.4.0
+    - name: gitlist
+      run: |
+        bash tests/images-build.sh base/gitlist/0.6.0
+    - name: glassfish
+      run: |
+        bash tests/images-build.sh base/glassfish/4.1
+    - name: goahead
+      run: |
+        bash tests/images-build.sh base/goahead/3.6.4
+    - name: gogs
+      run: |
+        bash tests/images-build.sh base/gogs/0.11.66
     - name: active-mq
       run: |
         bash tests/images-build.sh base/activemq/5.11.1 base/activemq/5.11.1/with-cron base/activemq/5.13.2
@@ -52,9 +78,6 @@ jobs:
       run: |
         bash tests/images-build.sh base/confluence/6.10.2 base/confluence/6.11.2
     # longtime: couchdb
-    - name: discuz
-      run: |
-        bash tests/images-build.sh base/discuzx/3.4-20170801 base/discuzx/7.2
     - name: django
       run: |
         bash tests/images-build.sh base/django/1.11.4 base/django/2.2.3 base/django/3.0.3 
@@ -79,26 +102,3 @@ jobs:
     - name: flask
       run: |
         bash tests/images-build.sh base/flask/1.1.1
-    - name: ghostscript
-      run: |
-        bash tests/image-build.sh base/ghostscript/9.21 "vulhub/ghostscript:9.21"
-        bash tests/image-build.sh base/ghostscript/9.23 "vulhub/ghostscript:9.23"
-        bash tests/images-build.sh base/ghostscript/9.21/with-flask base/ghostscript/9.23/with-flask base/ghostscript/9.25 base/ghostscript/9.26
-    - name: git
-      run: |
-        bash tests/images-build.sh base/git/2.12.2
-    - name: gitea
-      run: |
-        bash tests/images-build.sh base/gitea/1.4.0
-    - name: gitlist
-      run: |
-        bash tests/images-build.sh base/gitlist/0.6.0
-    - name: glassfish
-      run: |
-        bash tests/images-build.sh base/glassfish/4.1
-    - name: goahead
-      run: |
-        bash tests/images-build.sh base/goahead/3.6.4
-    - name: gogs
-      run: |
-        bash tests/images-build.sh base/gogs/0.11.66
