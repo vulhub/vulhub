@@ -13,7 +13,7 @@ on:
 jobs:
   longtime-images-test:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.scope == "all" || github.event.inputs.scope == "longtime" }}
+    if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'longtime' }}
     steps:
     - uses: actions/checkout@v2
     - name: couchdb
@@ -28,7 +28,7 @@ jobs:
   images-test:
 
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.scope == "all" || github.event.inputs.scope == "normal" }}
+    if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'normal' }}
 
     steps:
     - uses: actions/checkout@v2
