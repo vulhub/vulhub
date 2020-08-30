@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="S2-059" extends="struts-default">
+        <action name="index" class="org.test.IndexAction">
+            <result name="success">index.jsp</result>
+        </action>
+    </package>
+</struts>

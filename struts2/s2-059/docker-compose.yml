@@ -1,6 +1,6 @@
 version: '2'
 services:
  struts2:
-   build: .
+   image: vulhub/struts2:s2-059
    ports:
     - "8080:8080"
