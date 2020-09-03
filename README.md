@@ -76,9 +76,9 @@ Thanks for the following contributors:
 
 More contributors：[Contributors List](contributors.md)
 
-## Backer and Sponsor
+## Partner
 
-Sponsor:
+Our Partners and users:
 
 <p>
   <a href="https://www.wangan.com/vulhub" target="_blank"><img src="https://vulhub.org/img/sponsor/wangan.png" width="200"></a>
