@@ -5,6 +5,8 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite
 
+RUN printf "deb http://deb.debian.org/debian/ jessie main\ndeb-src http://deb.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+
 # Install PHP extensions
 RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libmcrypt-dev zip unzip && rm -rf /var/lib/apt/lists/* \
 	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
