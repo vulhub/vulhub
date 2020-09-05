@@ -55,5 +55,13 @@ RUN set -ex \
     && echo "${panelPort}" > ${setup_path}/server/panel/data/port.pl \
     && echo "/admin" > /www/server/panel/data/admin_path.pl
 
+ADD docker-entrypoint.sh /docker-entrypoint.sh
+RUN set -ex \
+    && cd /www/server/panel \
+    && python tools.py panel vulhub \
+    && chmod +x /docker-entrypoint.sh \
+    && pip install "Cython==0.29.21" "libinjection-python==1.1.4"
+
 WORKDIR /www/server/panel
-CMD ["python", "BT-Panel"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["tail", "-f", "logs/error.log"]
