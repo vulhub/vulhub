@@ -98,7 +98,7 @@ Sponsor vulhub on opencollective 🙏
   <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
-More [Donate](http://vulhub.org/#/docs/donate/).
+More [Donate](http://vulhub.org/#/docs/donate/)
 
 ## License
 
