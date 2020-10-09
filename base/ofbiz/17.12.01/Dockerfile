@@ -1,4 +1,3 @@
-# FROM gradle:6.6.1-jdk8
 FROM openjdk:8-jdk
 
 LABEL maintainer="phith0n <root@leavesongs.com>"
