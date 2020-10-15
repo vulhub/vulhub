@@ -19,7 +19,7 @@ docker-compose up -d
 
 [Struts2 vulnerability analysis](https://www.t00ls.net/viewthread.php?tid=21197), as mentioned in the article, the method of introducing OGNL may not only appear in this vulnerability, but may also appear in other Java applications.
 
-Struts2's repair for s2-003 is prohibit `#`, so s2-005 is using the code `\u0023` or `\43` bypass the prohibition; then s2-005's repair is forbidden `\` and others special symbols that prevent users submit backslashes.
+Struts2's repair method for s2-003 is to prohibit static method calls. In s2-005, this restriction can be bypassed directly through OGNL. For the `#` number, use the code `\u0023` or `\43` to bypass; then s2-005's repair is forbidden \ and others special symbols that prevent users submit backslashes.
 
 However, if a parameter `example` is accepted in the current action, this parameter will be sent to the OGNL expression. So, we can put the OGNL expression code in the `example` parameter and then execute it by `/helloword.acton?example=<OGNL statement>&(example)('xxx')=1`, then bypass defense of special characters such as `#`, `\`.
 
