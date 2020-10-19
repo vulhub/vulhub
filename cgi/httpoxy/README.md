@@ -34,17 +34,19 @@ Execute following command to start a Web application depending on PHP 5.6.23 and
 docker-compose up -d
 ```
 
-This [Web page](www/index.php) request for `http://httpbin.org/get` and get the origin IP address, host ip is equal to original IP:
+This [Web page](www/index.php) get its origin IP address at `http://httpbin.org/get`:
 
 ![](1.png)
 
+At this moment, hostname IP is equal to original IP, no HTTP proxy.
+
 ## Exploit
 
-Send a request with a Proxy header and a available HTTP proxy address: `Proxy: http://*.*.122.65:8888/`:
+Send a request with a craft HTTP header that contains a available HTTP proxy address: `Proxy: http://*.*.122.65:8888/`:
 
 ![](2.png)
 
-It is obvious that the original address in the response has become the address of the proxy server.
+It is obvious that the original address in the response has become the IP address of the proxy server.
 
 Start a Netcat server at the `*.*.122.65` instead of HTTP proxy, we can capture the original request:
 
