@@ -42,7 +42,7 @@ At this moment, hostname IP is equal to original IP, no HTTP proxy.
 
 ## Exploit
 
-Send a request with a craft HTTP header that contains a available HTTP proxy address: `Proxy: http://*.*.122.65:8888/`:
+Send a request with a crafted HTTP header that contains a available HTTP proxy address: `Proxy: http://*.*.122.65:8888/`:
 
 ![](2.png)
 
