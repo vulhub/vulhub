@@ -24,5 +24,5 @@ COPY --from=builder /usr/src/xxl-job-executor-samples/xxl-job-executor-sample-sp
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /usr/src
-ENTRYPOINT /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["java", "-jar", "/usr/src/xxl-job-executor-sample-springboot-2.2.0.jar"]
