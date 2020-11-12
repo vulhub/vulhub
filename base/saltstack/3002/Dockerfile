@@ -3,8 +3,8 @@ FROM python:3.7
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends dumb-init openssh-server cron \
-    && pip3 install --no-cache-dir salt==2019.2.3 pycryptodomex==3.9.7 CherryPy==18.6.0 pyOpenSSL==19.1.0 msgpack==0.6.2 \
-    && rm -rf /var/lib/apt/lists/* 
+    && pip3 install --no-cache-dir salt==3002 pycryptodomex==3.9.9 CherryPy==18.6.0 pyOpenSSL==19.1.0 msgpack==0.6.2 \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN set -ex \
     && mkdir -p /etc/pki /etc/salt/pki /etc/salt/minion.d/ /etc/salt/master.d /etc/salt/proxy.d /var/cache/salt /var/log/salt /var/run/salt /run/sshd /root/.ssh

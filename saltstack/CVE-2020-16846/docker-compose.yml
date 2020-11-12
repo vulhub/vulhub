@@ -1,0 +1,9 @@
+version: '2'
+services:
+ saltstack:
+   image: vulhub/saltstack:3002
+   ports:
+    - "8000:8000"
+    - "4505:4505"
+    - "4506:4506"
+    - "2222:22"
