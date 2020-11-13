@@ -7,7 +7,7 @@ Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单�
 
 ## Installation
 
-在ubuntu16.04下安装docker/docker-compose:
+在Ubuntu 20.04下安装docker/docker-compose:
 
 ```bash
 # 安装pip
@@ -17,7 +17,7 @@ curl -s https://bootstrap.pypa.io/get-pip.py | python3
 curl -s https://get.docker.com/ | sh
 
 # 启动docker服务
-service docker start
+systemctl start docker
 
 # 安装compose
 pip install docker-compose 
@@ -84,9 +84,9 @@ docker-compose down -v
 
 <p>
   <a href="https://www.wangan.com/vulhub" target="_blank"><img src="https://vulhub.org/img/sponsor/wangan.png" width="200"></a>
+  <a href="https://www.cvebase.com" target="_blank"><img src="https://vulhub.org/img/sponsor/cvebase.png" width="200"></a>
   <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/chaitin.png" width="200"></a>
-  <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.svg" width="200"></a>
-  <a href="https://www.didiyun.com/?channel=14196" target="_blank"><img src="https://vulhub.org/img/sponsor/didi.png" width="200"></a>
+  <a href="https://xz.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.svg" width="200"></a>
 </p>
 
 在patreon上赞助vulhub 🙏 

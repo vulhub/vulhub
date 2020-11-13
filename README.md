@@ -8,7 +8,7 @@
 
 ## Installation
 
-Install the docker/docker-compose on Ubuntu 16.04:
+Install the docker/docker-compose on Ubuntu 20.04:
 
 ```bash
 # Install pip
@@ -18,7 +18,7 @@ curl -s https://bootstrap.pypa.io/get-pip.py | python3
 curl -s https://get.docker.com/ | sh
 
 # Run docker service
-service docker start
+systemctl start docker
 
 # Install docker compose
 pip install docker-compose
@@ -82,9 +82,9 @@ Our Partners and users:
 
 <p>
   <a href="https://www.wangan.com/vulhub" target="_blank"><img src="https://vulhub.org/img/sponsor/wangan.png" width="200"></a>
+  <a href="https://www.cvebase.com" target="_blank"><img src="https://vulhub.org/img/sponsor/cvebase.png" width="200"></a>
   <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/chaitin.png" width="200"></a>
   <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.svg" width="200"></a>
-  <a href="https://www.didiyun.com/?channel=14196" target="_blank"><img src="https://vulhub.org/img/sponsor/didi.png" width="200"></a>
 </p>
 
 Sponsor vulhub on patreon 🙏
