@@ -1,0 +1,18 @@
+version: '2'
+services:
+ web:
+   image: vulhub/unomi:1.5.1
+   ports:
+    - "9443:9443"
+    - "8181:8181"
+   environment:
+    - UNOMI_ELASTICSEARCH_ADDRESSES=elasticsearch:9200
+   depends_on:
+    - elasticsearch
+ elasticsearch:
+   image: elasticsearch:7.9.3
+   environment:
+    - cluster.name=contextElasticSearch
+    - discovery.type=single-node
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - bootstrap.memory_lock=true
