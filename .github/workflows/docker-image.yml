@@ -72,13 +72,16 @@ jobs:
         bash tests/image-build.sh base/ghostscript/9.23 "vulhub/ghostscript:9.23"
         bash tests/image-build.sh base/ghostscript/9.25 "vulhub/ghostscript:9.25"
         bash tests/image-build.sh base/ghostscript/9.26 "vulhub/ghostscript:9.26"
+        bash tests/image-build.sh base/ghostscript/9.53.3 "vulhub/ghostscript:9.53.3"
         bash tests/images-build.sh base/ghostscript/9.21/with-flask base/ghostscript/9.23/with-flask
     - name: imagemagick
       run: |
+        bash tests/image-build.sh base/imagemagick/6.9.2-10 "vulhub/imagemagick:6.9.2-10"
         bash tests/image-build.sh base/imagemagick/7.0.8-10 "vulhub/imagemagick:7.0.8-10"
         bash tests/image-build.sh base/imagemagick/7.0.8-20 "vulhub/imagemagick:7.0.8-20"
         bash tests/image-build.sh base/imagemagick/7.0.8-27 "vulhub/imagemagick:7.0.8-27"
-        bash tests/images-build.sh base/imagemagick/6.9.2 base/imagemagick/7.0.8-10-php base/imagemagick/7.0.8-20-php base/imagemagick/7.0.8-27-php
+        bash tests/image-build.sh base/imagemagick/7.0.10-36 "vulhub/imagemagick:7.0.10-36"
+        bash tests/images-build.sh base/imagemagick/6.9.2-10/php base/imagemagick/7.0.8-10/php base/imagemagick/7.0.8-20/php base/imagemagick/7.0.8-27/php base/imagemagick/7.0.10-36/php
     - name: gitea
       run: |
         bash tests/images-build.sh base/gitea/1.4.0
