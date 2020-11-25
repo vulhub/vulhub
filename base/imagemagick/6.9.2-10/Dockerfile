@@ -5,6 +5,7 @@ LABEL maintainer="phith0n <root@leavesongs.com>"
 ARG IM_VERSION=6.9.2-10
 RUN set -ex \
     && apt-get update \
+    && apt-get install -y --no-install-recommends curl \
     && savedAptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends automake autoconf libtool libltdl-dev wget ca-certificates xz-utils gcc make libpng-dev libjpeg62-turbo-dev \
         libfontconfig1-dev libfreetype6-dev librsvg2-dev libxml2-dev zlib1g-dev libgif-dev \

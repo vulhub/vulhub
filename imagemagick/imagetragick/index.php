@@ -7,11 +7,9 @@ if (!in_array($ext, ['gif', 'png', 'jpg', 'jpeg'])) {
     die('Unsupported filetype uploaded.');
 }
 
-$i = new Imagick($_FILES['file_upload']['tmp_name']);
-$size = $i->getSize();
+$size = shell_exec("identify -format '%w x %h' {$_FILES['file_upload']['tmp_name']}");
 
-echo "Image size is: ";
-print_r($size);
+echo "Image size is: $size";
 
 else:
 ?>
