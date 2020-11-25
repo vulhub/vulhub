@@ -4,7 +4,7 @@ LABEL maintainer="phith0n <root@leavesongs.com>"
 
 RUN set -ex \
     && apt-get update \
-    && apt-get install --no-install-recommends -y python3 python3-pip \
+    && apt-get install --no-install-recommends -y python3 python3-pip python3-setuptools \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
     && rm -rf /var/lib/apt/lists/*
 

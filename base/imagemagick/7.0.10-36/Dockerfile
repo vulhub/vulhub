@@ -1,8 +1,8 @@
-FROM vulhub/ghostscript:9.26
+FROM vulhub/ghostscript:9.53.3
 
 LABEL maintainer="phith0n <root@leavesongs.com>"
 
-ARG IM_VERSION=7.0.8-27
+ARG IM_VERSION=7.0.10-36
 RUN set -ex \
     && apt-get update \
     && savedAptMark="$(apt-mark showmanual)" \
