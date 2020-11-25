@@ -1,0 +1,6 @@
+version: '2'
+services:
+ im:
+   image: vulhub/imagemagick:7.0.10-36
+   volumes:
+    - ./poc.svg:/tmp/poc.svg

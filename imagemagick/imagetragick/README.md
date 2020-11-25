@@ -1,8 +1,8 @@
 # Imagemagick Command Injection Vulnerability (CVE-2016–3714)
 
-ImageMagick is a free and open-source[3] cross-platform software suite for displaying, creating, converting, modifying, and editing raster images.
-
 [中文版本(Chinese version)](README.zh-cn.md)
+
+ImageMagick is a free and open-source cross-platform software suite for displaying, creating, converting, modifying, and editing raster images.
 
 Referers:
 
