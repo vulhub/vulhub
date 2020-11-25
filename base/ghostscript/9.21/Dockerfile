@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 LABEL maintainer="phith0n <root@leavesongs.com>"
 
