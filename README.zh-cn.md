@@ -1,9 +1,25 @@
-# Vulhub - Docker-Compose files for vulnerabilities environment
+<p align="center">
+  <img src=".github/assets/logo.svg" alt="Vulhub" height="300" />
+  <p align="center">
+    <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub">
+    </a> 
+    <a href="https://www.wangan.com/vulhub">
+      <img src="https://img.shields.io/badge/Official-Community-blue.svg" alt="Official Community">
+    </a>
+    <a href="https://discord.gg/GhMB3Z">
+      <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
+    </a>
+    <a href="https://www.patreon.com/phith0n">
+      <img src="https://img.shields.io/badge/sponsor-patreon-73d6a1.svg" alt="Backers and sponors on Patreon">
+    </a>
+    <a href="https://opencollective.com/vulhub#backer">
+      <img src="https://img.shields.io/badge/backer-opencollective-f89a76.svg" alt="Backers and sponors on Opencollective">
+    </a>
+  </p>
+</p>
 
-[![GitHub](https://img.shields.io/github/license/vulhub/vulhub.svg)](https://github.com/vulhub/vulhub/blob/master/LICENSE)
- [![讨论社区](https://img.shields.io/badge/%E8%AE%A8%E8%AE%BA-%E7%A4%BE%E5%8C%BA-blue.svg)](https://www.wangan.com/vulhub) [![Chat on Discord](https://img.shields.io/discord/485505185167179778.svg)](https://discord.gg/GhMB3Z) [![Backers and sponors on Patreon](https://img.shields.io/badge/sponsor-patreon-73d6a1.svg)](https://www.patreon.com/phith0n) [![Backers and sponors on Opencollective](https://img.shields.io/badge/backer-opencollective-f89a76.svg)](https://opencollective.com/vulhub#backer)
-
-Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单执行两条命令即可编译、运行一个完整的漏洞靶场镜像。
+Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单执行一条命令即可编译、运行一个完整的漏洞靶场镜像。
 
 ## Installation
 
