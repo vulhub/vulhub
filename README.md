@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".github/assets/logo@1.png" alt="Vulhub" height="140" />
+</p>
+
 # Vulhub - Pre-Built Vulnerable Environments Based on Docker-Compose
 
 [![GitHub](https://img.shields.io/github/license/vulhub/vulhub.svg)](https://github.com/vulhub/vulhub/blob/master/LICENSE) [![Official Community](https://img.shields.io/badge/Official-Community-blue.svg)](https://www.wangan.com/vulhub) [![Chat on Discord](https://img.shields.io/discord/485505185167179778.svg)](https://discord.gg/GhMB3Z) [![Backers and sponors on Patreon](https://img.shields.io/badge/sponsor-patreon-73d6a1.svg)](https://www.patreon.com/phith0n) [![Backers and sponors on Opencollective](https://img.shields.io/badge/backer-opencollective-f89a76.svg)](https://opencollective.com/vulhub#backer)
