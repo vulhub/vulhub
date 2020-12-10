@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/assets/logo@1.png" alt="Vulhub" height="140" />
+  <img src=".github/assets/logo.svg" alt="Vulhub" height="300" />
 </p>
 
 # Vulhub - Pre-Built Vulnerable Environments Based on Docker-Compose
