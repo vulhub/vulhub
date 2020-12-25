@@ -1,12 +1,14 @@
 FROM vulhub/git:2.12.2
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
-RUN apt-get update \
-    && apt-get install -y man less openssh-server --no-install-recommends \
+RUN set -ex \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y man less openssh-server \
     && rm -r /var/lib/apt/lists/*
 
-RUN mkdir /var/run/sshd \
+RUN set -ex \
+    && mkdir /var/run/sshd \
 	&& chmod 0755 /var/run/sshd \
 	&& echo 'git:x:33:33:git:/home/git:/bin/bash' >> /etc/passwd \
 	&& echo 'git:*:16462:0:99999:7:::' >> /etc/shadow \

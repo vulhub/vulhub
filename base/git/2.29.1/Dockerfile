@@ -6,14 +6,14 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
     && savedAptMark="$(apt-mark showmanual)" \
-    && apt-get install -y --no-install-recommends gcc make wget dh-autoreconf libcurl4-gnutls-dev libexpat1-dev gettext zlib1g-dev libssl-dev asciidoc xmlto docbook2x \
+    && apt-get install -y --no-install-recommends gcc make wget dh-autoreconf libcurl4-gnutls-dev libexpat1-dev gettext zlib1g-dev libssl-dev \
     && mkdir -p /usr/src/git \
-    && wget -qO- https://github.com/git/git/archive/v2.12.2.tar.gz | tar zx -C /usr/src/git --strip-components=1 \
+    && wget -qO- https://github.com/git/git/archive/v2.29.1.tar.gz | tar zx -C /usr/src/git --strip-components=1 \
     && cd /usr/src/git \
     && make configure \
     && ./configure --prefix=/usr/local \
-    && make all doc info \
-    && make install install-doc \
+    && make all \
+    && make install \
     # remove unused libraries
     && apt-mark auto '.*' > /dev/null \
     && apt-mark manual $savedAptMark \
