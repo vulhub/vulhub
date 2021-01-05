@@ -1,4 +1,4 @@
-FROM vulhub/java:6u20-jdk
+FROM openjdk:7-jre
 LABEL maintainer="root <root@leavesongs.com>"
 
 # JBoss version
