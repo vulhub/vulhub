@@ -1,0 +1,8 @@
+version: '2'
+services:
+ flink:
+   image: vulhub/flink:1.11.2
+   command: jobmanager
+   ports:
+    - "8081:8081"
+    - "6123:6123"
