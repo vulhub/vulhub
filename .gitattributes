@@ -1,0 +1,3 @@
+zabbix/CVE-2016-10134/database/* linguist-vendored
+zabbix/CVE-2017-2824/database/* linguist-vendored
+zabbix/CVE-2020-11800/database/* linguist-vendored
