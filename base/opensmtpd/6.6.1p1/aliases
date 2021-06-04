@@ -1,0 +1,13 @@
+abuse:      root
+noc:        root
+security:   root
+
+# RFC 2142 SUPPORT MAILBOX NAMES FOR SPECIFIC INTERNET SERVICES
+postmaster: root
+hostmaster: root
+# usenet:   root
+# news:     usenet
+webmaster:  root
+www:        webmaster
+# uucp:     root
+ftp:        root
