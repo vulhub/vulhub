@@ -1,0 +1,20 @@
+name: Vulhub Format Check and Lint
+
+on: [push, pull_request]
+
+jobs:
+  format-check: 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: "3.8"
+    - name: Install dependencies
+      run: |
+        python -m pip install -U pytest
+        sudo wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.4.1/hadolint-Linux-x86_64
+        sudo chmod +x /usr/local/bin/hadolint
+    - name: Check
+      run: |
+        python -m pytest tests/check
