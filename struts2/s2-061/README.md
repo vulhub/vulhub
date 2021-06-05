@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-In the versions prior to Struts 2.5.25, when evaluated on raw user input in tag attributes, may lead to remote code execution. 
+In the versions prior to Struts 2.5.25, when evaluated on raw user input in tag attributes, may lead to remote code execution.
 
 This vulnerability is the bypass of the OGNL sandbox, which enhance after S2-059.
 

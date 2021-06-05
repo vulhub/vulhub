@@ -19,9 +19,9 @@ docker-compose up -d
 ```java
 (...)
 public class UserAction extends ActionSupport {
-	private Integer age;
-	private String name;
-	private String email;
+    private Integer age;
+    private String name;
+    private String email;
 
 (...)
 ```
@@ -31,15 +31,15 @@ public class UserAction extends ActionSupport {
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE validators PUBLIC
-	"-//OpenSymphony Group//XWork Validator 1.0//EN"
-	"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+    "-//OpenSymphony Group//XWork Validator 1.0//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
 <validators>
-	<field name="age">
-		<field-validator type="int">
-			<param name="min">1</param>
-			<param name="max">150</param>
-		</field-validator>
-	</field>
+    <field name="age">
+        <field-validator type="int">
+            <param name="min">1</param>
+            <param name="max">150</param>
+        </field-validator>
+    </field>
 </validators>
 ```
 

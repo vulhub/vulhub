@@ -16,7 +16,7 @@ Nginx会将`$uri`进行解码，导致传入%0a%0d即可引入换行符，造成
 
 ```
 location / {
-	return 302 https://$host$uri;
+    return 302 https://$host$uri;
 }
 ```
 
@@ -34,7 +34,7 @@ Nginx在配置别名（Alias）的时候，如果忘记加`/`，将造成一个�
 
 ```
 location /files {
-	alias /home/;
+    alias /home/;
 }
 ```
 

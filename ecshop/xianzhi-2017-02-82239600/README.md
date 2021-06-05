@@ -20,7 +20,7 @@ docker-compose up -d
 
 After the environment start, visit `http://your-ip:8080`, you will see the 2.7.3 installation page. Visit `http://your-ip:8081`, you will see the 3.6.0 installation page.
 
-Install both of them, mysql address is `mysql`, mysql account and password are `root`, the database name is free to fill in, but the database names of 2.7.3 and 3.6.0 can not be the same. 
+Install both of them, mysql address is `mysql`, mysql account and password are `root`, the database name is free to fill in, but the database names of 2.7.3 and 3.6.0 can not be the same.
 
 As the picture shows:
 

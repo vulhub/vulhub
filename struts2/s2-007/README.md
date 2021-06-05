@@ -10,16 +10,16 @@ Details: http://struts.apache.org/docs/s2-007.html
 
 http://rickgray.me/2016/05/06/review-struts2-remote-command-execution-vulnerabilities.html
 
-When `<ActionName> -validation.xml` configured validation rules. If the type validation conversion fails, the server will splice the user-submitted form value strings, then performing an OGNL expression parsing and returning. 
+When `<ActionName> -validation.xml` configured validation rules. If the type validation conversion fails, the server will splice the user-submitted form value strings, then performing an OGNL expression parsing and returning.
 
 For example here is a `UserAction`:
 
 ```java
 (...)
 public class UserAction extends ActionSupport {
-	private Integer age;
-	private String name;
-	private String email;
+    private Integer age;
+    private String name;
+    private String email;
 
 (...)
 ```
@@ -29,15 +29,15 @@ And `UserAction-validation.xml` configuration:
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE validators PUBLIC
-	"-//OpenSymphony Group//XWork Validator 1.0//EN"
-	"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+    "-//OpenSymphony Group//XWork Validator 1.0//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
 <validators>
-	<field name="age">
-		<field-validator type="int">
-			<param name="min">1</param>
-			<param name="max">150</param>
-		</field-validator>
-	</field>
+    <field name="age">
+        <field-validator type="int">
+            <param name="min">1</param>
+            <param name="max">150</param>
+        </field-validator>
+    </field>
 </validators>
 ```
 
@@ -55,7 +55,6 @@ Payload which bypass the securely configured:
 docker-compose build
 docker-compose up -d
 ```
-
 
 ## Exploit
 

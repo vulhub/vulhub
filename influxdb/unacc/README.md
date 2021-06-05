@@ -23,7 +23,6 @@ docker-compose up -d
 
 我们借助<https://jwt.io/>来生成jwt token：
 
-
 ```
 {
   "alg": "HS256",

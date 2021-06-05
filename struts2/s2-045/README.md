@@ -4,7 +4,7 @@
 
 Affected Version: Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10
 
-References: 
+References:
 
  - http://struts.apache.org/docs/s2-045.html
  - https://nsfocusglobal.com/apache-struts2-remote-code-execution-vulnerability-s2-045/

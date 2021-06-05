@@ -2,7 +2,7 @@
 
 影响版本: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
 
-漏洞详情: 
+漏洞详情:
 
  - http://struts.apache.org/docs/s2-052.html
  - https://yq.aliyun.com/articles/197926

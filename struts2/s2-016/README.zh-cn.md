@@ -2,7 +2,7 @@
 
 影响版本: 2.0.0 - 2.3.15
 
-漏洞详情: 
+漏洞详情:
 
  - http://struts.apache.org/docs/s2-016.html
  - http://www.freebuf.com/articles/web/25337.html

@@ -81,11 +81,9 @@ Connection: close
 
 ![](5.png)
 
-
 最后补充一下，可进行利用的cron有如下几个地方：
 
  - /etc/crontab 这个是肯定的
  - /etc/cron.d/* 将任意文件写到该目录下，效果和crontab相同，格式也要和/etc/crontab相同。漏洞利用这个目录，可以做到不覆盖任何其他文件的情况进行弹shell。
  - /var/spool/cron/root centos系统下root用户的cron文件
  - /var/spool/cron/crontabs/root debian系统下root用户的cron文件
-
