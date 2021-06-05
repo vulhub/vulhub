@@ -4,7 +4,7 @@
 
 漏洞详情：https://lorexxar.cn/2017/09/30/dz-delete/
 
-# 启动环境
+## 启动环境
 
 执行下列命令部署 Discuz!X 安装环境
 
@@ -16,7 +16,7 @@ docker-compose up -d
 
 ![](1.png)
 
-# 漏洞复现
+## 漏洞复现
 
 访问`http://your-ip/robots.txt`可见robots.txt是存在的：
 

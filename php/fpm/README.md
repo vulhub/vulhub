@@ -2,7 +2,7 @@
 
 ## 原理
 
-详见 https://www.leavesongs.com/PENETRATION/fastcgi-and-php-fpm.html 
+详见<https://www.leavesongs.com/PENETRATION/fastcgi-and-php-fpm.html>。
 
 ## 测试环境搭建
 

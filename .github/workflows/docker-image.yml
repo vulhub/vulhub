@@ -16,6 +16,9 @@ jobs:
     if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'longtime' }}
     steps:
     - uses: actions/checkout@v2
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
     - name: couchdb
       run: |
         bash tests/images-build.sh base/couchdb/1.6.0 base/couchdb/2.1.0
@@ -35,6 +38,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
     - name: influxdb
       run: |
         bash tests/images-build.sh base/influxdb/1.6.6 base/influxdb/1.7.9

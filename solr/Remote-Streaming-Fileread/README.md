@@ -4,7 +4,7 @@
 
 Apache Solr is an open source search server. When Apache Solr does not enable authentication, an attacker can directly craft a request to enable a specific configuration, and eventually cause SSRF or arbitrary file reading.
 
-References: 
+References:
 
 - https://mp.weixin.qq.com/s/3WuWUGO61gM0dBpwqTfenQ
 

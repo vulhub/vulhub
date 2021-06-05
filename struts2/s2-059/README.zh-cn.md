@@ -45,6 +45,6 @@ res2 = requests.post(url, data=data2)
 # print(res2.text)
 ```
 
-执行poc之后，进入容器发现`touch /tmp/success`已成功执行。 
+执行poc之后，进入容器发现`touch /tmp/success`已成功执行。
 
 ![2.png](2.png)

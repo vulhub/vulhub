@@ -2,7 +2,7 @@
 
 影响版本: 2.0.0 - 2.3.32
 
-漏洞详情: 
+漏洞详情:
 
  - http://struts.apache.org/docs/s2-048.html
  - http://bobao.360.cn/learning/detail/4078.html

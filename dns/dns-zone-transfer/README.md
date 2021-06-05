@@ -11,7 +11,7 @@ References:
 
 ## Vulnerable Environment
 
-Vulhub uses [Bind9](https://wiki.debian.org/Bind9) to build the dns server, but that does not mean that only Bind9 supports AXFR records. 
+Vulhub uses [Bind9](https://wiki.debian.org/Bind9) to build the dns server, but that does not mean that only Bind9 supports AXFR records.
 
 To run the DNS server.
 
@@ -29,6 +29,6 @@ Under Linux, we can use the **dig** command to send AXFR record requests: `dig @
 
 As you can see, I got all the subdomain records of `vulhub.org`, and there is a DNS zone transfers vulnerability here.
 
-We can also use the Nmap script to scan for this vulnerability: `nmap --script dns-zone-transfer.nse --script-args "dns-zone-transfer.domain=vulhub.org" -Pn -p 53 your-ip `
+We can also use the Nmap script to scan for this vulnerability: `nmap --script dns-zone-transfer.nse --script-args "dns-zone-transfer.domain=vulhub.org" -Pn -p 53 your-ip`
 
 ![](3.png)

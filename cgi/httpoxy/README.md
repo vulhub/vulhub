@@ -26,7 +26,7 @@ CVE-2016-5385 is one of CVEs that assign for HTTPoxy, here are the full CVEs lis
 - CVE-2016-1000111: Python Twisted
 - CVE-2016-1000212: lighttpd
 
-## Vulnerable environment:
+## Vulnerable environment
 
 Execute following command to start a Web application depending on PHP 5.6.23 and GuzzleHttp 6.2.0.
 

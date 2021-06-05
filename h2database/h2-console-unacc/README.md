@@ -11,7 +11,7 @@ spring.h2.console.settings.web-allow-others=true
 
 This management page supports using JNDI to load the JDBC driver, which can lead to remote code execution via remote class loading.
 
-References: 
+References:
 
 - <https://mp.weixin.qq.com/s?__biz=MzI2NTM1MjQ3OA==&mid=2247483658&idx=1&sn=584710da0fbe56c1246755147bcec48e>
 
@@ -23,7 +23,7 @@ Start a spring-boot with h2 database and embedded tomcat:
 docker-compose up -d
 ```
 
-After started the container, the spring-boot is listening on `http://your-ip:8080`, the management page is `http://your-ip:8080/h2-console/` by default. 
+After started the container, the spring-boot is listening on `http://your-ip:8080`, the management page is `http://your-ip:8080/h2-console/` by default.
 
 ## Vulnerability Reproduce
 

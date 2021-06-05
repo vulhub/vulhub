@@ -2,7 +2,7 @@
 
 影响版本: Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10
 
-漏洞详情: 
+漏洞详情:
 
  - https://cwiki.apache.org/confluence/display/WW/S2-046
  - https://xz.aliyun.com/t/221

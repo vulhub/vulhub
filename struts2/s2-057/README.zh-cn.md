@@ -9,7 +9,7 @@ namespace将由用户从uri传入，并作为OGNL表达式计算，最终造成�
 
 影响版本: 小于等于 Struts 2.3.34 与 Struts 2.5.16
 
-漏洞详情: 
+漏洞详情:
 
  - https://cwiki.apache.org/confluence/display/WW/S2-057
  - https://lgtm.com/blog/apache_struts_CVE-2018-11776

