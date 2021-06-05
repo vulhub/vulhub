@@ -1,4 +1,9 @@
 import os
+import re
+
+
+ARCHIVE_FILE_PATTERN = re.compile(r'^.*\.(tar\.gz|zip|7z|rar|exe|jar|xz|gz|tar|war)$', re.I)
+ARCHIVE_EXCEPTED = re.compile(r'[/\\](struts2|CVE-2016-9086|weblogic[/\\]weak_password)[/\\]?')
 
 
 def test_filename():
@@ -16,4 +21,7 @@ def test_filename():
     for (now_dir, dirs, files) in os.walk(basedir):
         for name in files:
             if name.lower() == 'readme.md' or name.lower() == 'readme.zh-cn.md':
-                assert name == 'README.md' or name == 'README.zh-cn.md', f"README filename must be 'README.md' or 'README.zh-cn.md', not {now_dir} / {name}"
+                assert name == 'README.md' or name == 'README.zh-cn.md', "README filename must be 'README.md' or 'README.zh-cn.md', not %r %r" % (now_dir, name)
+
+            if ARCHIVE_EXCEPTED.search(now_dir) is None:
+                assert ARCHIVE_FILE_PATTERN.match(name) is None, "You should not upload a archive file like %r %r" % (now_dir, name)
