@@ -2,7 +2,7 @@ FROM buildpack-deps:stretch-scm
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ADD ssh_server_fork.patch /ssh_server_fork.patch
+COPY ssh_server_fork.patch /ssh_server_fork.patch
 
 RUN set -ex \
     && BUILDDEP="gcc g++ make pkg-config cmake xz-utils patch" \

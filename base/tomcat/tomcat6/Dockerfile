@@ -1,3 +1,3 @@
 FROM tomcat:6
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"

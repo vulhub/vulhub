@@ -1,3 +1,3 @@
 FROM python:2.7
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"

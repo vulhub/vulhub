@@ -76,7 +76,7 @@ RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata alpine-sdk coreutils au
         && apk del ${APK_FLAGS_COMMON} --purge build-deps \
         && rm -rf /var/cache/apk/* /tmp/zabbix/
 
-ADD docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
 
 EXPOSE 10051/TCP 162/UDP
 ENTRYPOINT ["/docker-entrypoint.sh"]

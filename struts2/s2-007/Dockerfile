@@ -1,6 +1,6 @@
 FROM vulhub/tomcat:8.5
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN set -ex \
     && rm -rf /usr/local/tomcat/webapps/* \

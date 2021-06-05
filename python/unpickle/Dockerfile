@@ -1,8 +1,8 @@
 FROM python:latest
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
-ADD requirements.txt /tmp/requirements.txt
+COPY requirements.txt /tmp/requirements.txt
 
 RUN mkdir /app \
     && pip install -U -r /tmp/requirements.txt

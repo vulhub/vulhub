@@ -10,7 +10,7 @@ RUN set -ex \
     && apt-get purge -y --auto-remove gdebi-core \
     && rm -rf /var/lib/apt/lists/* /tmp/webmin.deb
 
-ADD docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
 EXPOSE 10000
 
 RUN set -ex \

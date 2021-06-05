@@ -1,6 +1,6 @@
 FROM vulhub/activemq:5.11.1
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN apt-get update \
     && apt-get install -y cron rsyslog --no-install-recommends \

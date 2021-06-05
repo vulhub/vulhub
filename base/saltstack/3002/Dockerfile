@@ -9,7 +9,7 @@ RUN set -ex \
 RUN set -ex \
     && mkdir -p /etc/pki /etc/salt/pki /etc/salt/minion.d/ /etc/salt/master.d /etc/salt/proxy.d /var/cache/salt /var/log/salt /var/run/salt /run/sshd /root/.ssh
 
-ADD saltinit.py /usr/local/bin/saltinit
+COPY saltinit.py /usr/local/bin/saltinit
 ENTRYPOINT ["/usr/bin/dumb-init"]
 CMD ["/usr/local/bin/saltinit"]
 EXPOSE 22 4505 4506 8000

@@ -10,7 +10,7 @@ RUN set -ex \
 WORKDIR /usr/local/unomi
 ENV KARAF_OPTS "-Dunomi.autoStart=true"
 ENV UNOMI_ELASTICSEARCH_ADDRESSES "localhost:9200"
-ADD docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["bin/karaf", "server"]

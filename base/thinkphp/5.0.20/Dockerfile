@@ -1,6 +1,6 @@
 FROM php:7.2-apache
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 ARG MIRROR_URL=https://github.com/vulhub/mirrors/raw/master/debian/stretch/aliyun.list
 

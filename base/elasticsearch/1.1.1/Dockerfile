@@ -2,8 +2,8 @@ FROM openjdk:8-jre
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ADD logging.yml ./config/logging.yml
-ADD docker-entrypoint.sh /
+COPY logging.yml ./config/logging.yml
+COPY docker-entrypoint.sh /
 
 RUN set -ex \
     && mkdir -p /usr/share/elasticsearch \

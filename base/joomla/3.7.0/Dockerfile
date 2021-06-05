@@ -1,6 +1,6 @@
 FROM php:5.6.40-apache
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite

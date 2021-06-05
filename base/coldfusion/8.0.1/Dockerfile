@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ADD install/ /opt/
+COPY install/ /opt/
 
 RUN set -ex \
     && apt-get update && apt-get install wget libstdc++5 -y \

@@ -4,7 +4,7 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 
 ENV CATALINA_HOME=/usr/local/tomcat
 
-ADD docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN set -ex \
     && mkdir -p $CATALINA_HOME \

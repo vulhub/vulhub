@@ -7,7 +7,7 @@ RUN set -ex \
     && mkdir -p /opt/scrapyd/eggs /opt/scrapyd/dbs \
     && chown -R nobody:nogroup /opt/scrapyd
 
-ADD scrapyd.conf /opt/scrapyd/scrapyd.conf
+COPY scrapyd.conf /opt/scrapyd/scrapyd.conf
 WORKDIR /opt/scrapyd
 EXPOSE 6800
 
