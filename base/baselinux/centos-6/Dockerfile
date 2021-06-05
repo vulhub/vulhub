@@ -5,7 +5,6 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 COPY ./repo.list /etc/yum.repos.d/CentOS-Base.repo
 
 RUN set -ex \
-    && yum -y update \
     && yum -y install wget cronie gcc-c++ tcl \
     && mkdir -p /usr/src/redis \
     && wget -qO- http://download.redis.io/releases/redis-2.8.24.tar.gz | tar xz -C /usr/src/redis --strip-components=1 \
