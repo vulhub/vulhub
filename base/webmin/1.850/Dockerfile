@@ -1,6 +1,6 @@
 FROM buildpack-deps:jessie-curl
 
-ADD docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get -o Acquire::GzipIndexes=false update \
     && apt-get install -y perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl python apt-show-versions \

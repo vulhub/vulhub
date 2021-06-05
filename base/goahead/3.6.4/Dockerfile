@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN set -ex \
     && apt-get update \

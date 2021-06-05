@@ -12,4 +12,4 @@ RUN set -ex \
     && chown www-data:www-data -R . \
     && rm -rf /tmp/*
 
-ADD index.php /var/www/html/index.php
+COPY index.php /var/www/html/index.php

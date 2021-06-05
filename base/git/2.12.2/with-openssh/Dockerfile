@@ -16,7 +16,7 @@ RUN set -ex \
 	&& mkdir -p /home/git/.ssh \
 	&& chown 33.33 -R /home/git
 
-ADD authorized_keys /home/git/.ssh/authorized_keys
+COPY authorized_keys /home/git/.ssh/authorized_keys
 
 RUN chown 33.33 /home/git/.ssh/authorized_keys \
     && chmod 0600 /home/git/.ssh/authorized_keys

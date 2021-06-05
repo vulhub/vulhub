@@ -36,6 +36,6 @@ RUN set -ex \
 RUN set -ex \
     && mkdir -p /etc/ssl/nginx/ /etc/nginx/
 
-ADD local.crt local.key /etc/ssl/nginx/
-ADD nginx.conf /etc/nginx/
+COPY local.crt local.key /etc/ssl/nginx/
+COPY nginx.conf /etc/nginx/
 CMD ["/usr/local/nginx/sbin/nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]

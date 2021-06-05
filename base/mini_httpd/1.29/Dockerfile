@@ -1,6 +1,6 @@
 FROM buildpack-deps:jessie-curl
 
-ADD debian.patch /debian.patch
+COPY debian.patch /debian.patch
 
 RUN set -ex \
     && apt-get update \

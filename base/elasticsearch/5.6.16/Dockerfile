@@ -3,7 +3,7 @@ FROM openjdk:8-jre
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 ARG ESHOME=/usr/share/elasticsearch
-ADD docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
 
 RUN set -ex \
     && mkdir -p ${ESHOME} \
@@ -15,7 +15,7 @@ ENV PATH ${ESHOME}/bin:$PATH
 WORKDIR ${ESHOME}
 EXPOSE 9200 9300
 
-ADD elasticsearch.yml ./config/
+COPY elasticsearch.yml ./config/
 RUN sed -ex \
     && chown nobody:nogroup -R ${ESHOME} \
     && sed -i 's/\-Xms2g/-Xms512m/g' ${ESHOME}/config/jvm.options \
