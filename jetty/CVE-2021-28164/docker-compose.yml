@@ -1,0 +1,8 @@
+version: '2.2'
+services:
+  web:
+    image: vulhub/jetty:9.4.37
+    ports:
+      - "8080:8080"
+    volumes: 
+      - ./src:/opt/jetty/webapps/ROOT
