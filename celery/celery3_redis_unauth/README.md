@@ -4,7 +4,7 @@ Celery is a simple, flexible, and reliable distributed system that processes a l
 
 In Celery <4.0 version, Pickle is used by default for serialized task messages. When the queue service（e.g. Redis/RabbitMQ/RocketMQ ） used has an unauthorized access problem, the Pickle deserialization vulnerability can be used to execute arbitrary code.
 
-## 漏洞环境
+## Vulnerability Environment
 
 Execute the following command to start Celery 3.1.23 + Redis:
 
@@ -12,7 +12,7 @@ Execute the following command to start Celery 3.1.23 + Redis:
 docker-compose up -d
 ```
 
-## 漏洞复现
+## Exploit
 
 The exploit script `exploit.py` only supports use under python3
 
