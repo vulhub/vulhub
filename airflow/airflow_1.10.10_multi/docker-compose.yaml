@@ -42,7 +42,7 @@
 version: '3'
 x-airflow-common:
   &airflow-common
-  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:1.10.10}
+  image: ${AIRFLOW_IMAGE_NAME:-vulhub/airflow:1.10.10}
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
@@ -67,7 +67,7 @@ x-airflow-common:
 
 services:
   postgres:
-    image: postgres:13
+    image: vulhub/postgres:13
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -81,7 +81,7 @@ services:
     restart: always
 
   redis:
-    image: redis:latest
+    image: redis
     ports:
       - 6379:6379
     healthcheck:
