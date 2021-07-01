@@ -38,7 +38,7 @@ docker-compsoe up -d
 到CeleryWorker容器中进行查看：
 
 ```bash
-docker exec -it [celeryworker容器名] ls -l /tmp
+docker-compose exec airflow-worker ls -l /tmp
 ```
 
 可以看到成功创建了airflow_dag_success文件
@@ -61,20 +61,20 @@ python exploit_airflow_celery.py [主机IP]
 查看结果：
 
 ```bash
-docker logs [celeryworker容器名]
+docker-compose logs airflow-worker
 ```
 
 可以看到如下任务消息：
 
-![image-20210701143950658](README.assets/image-20210701143950658.png)
+![image-20210701153205499](README.assets/image-20210701153205499.png)
 
 ```bash
-docker exec -it [celeryworker容器名] ls -l /tmp
+docker-compose exec airflow-worker ls -l /tmp
 ```
 
 可以看到成功创建了文件`airflow_celery_success`
 
-![image-20210701144043792](README.assets/image-20210701144043792.png)
+![image-20210701153237894](README.assets/image-20210701153237894.png)
 
 ## 参考
 

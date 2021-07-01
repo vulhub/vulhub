@@ -18,7 +18,7 @@ Execute the following commands to start airflow 1.10.10
 #Initialize the database
 docker-compose run airflow-init initdb
 #Start service
-docker-compsoe up -d
+docker-compose up -d
 ```
 
 ## Exploits
@@ -40,7 +40,7 @@ Wait a few seconds to see the execution of `success`
 Go to the CeleryWorker container to view:
 
 ```
-docker exec -it [celeryworker container name] ls -l /tmp
+docker-compose exec airflow-worker ls -l /tmp
 ```
 
 You can see that the airflow_dag_success file was successfully created:
@@ -61,20 +61,20 @@ python exploit_airflow_celery.py [HostIP]
 View Results:
 
 ```bash
-docker logs [celeryworker container name]
+docker-compose logs airflow-worker
 ```
 
 You can see the following task messages:
 
-![image-20210701143950658](README.assets/image-20210701143950658.png)
+![image-20210701153205499](README.assets/image-20210701153205499.png)
 
 ```
-docker exec -it [celeryworker container name] ls -l /tmp
+docker-compose exec airflow-worker ls -l /tmp
 ```
 
 You can see that the file `airflow_celery_success` was successfully created
 
-![image-20210701144043792](README.assets/image-20210701144043792.png)
+![image-20210701153237894](README.assets/image-20210701153237894.png)
 
 ## Reference
 
