@@ -45,7 +45,7 @@ docker-compose exec airflow-worker ls -l /tmp
 
 You can see that the airflow_dag_success file was successfully created:
 
-![image-20210701143152868](README.assets/image-20210701143152868-1625122787851.png)
+![image-20210701154024308](README.assets/image-20210701154024308.png)
 
 ### CVE-2020-11981 - Command injection via Celery broker
 

@@ -43,7 +43,7 @@ docker-compose exec airflow-worker ls -l /tmp
 
 可以看到成功创建了airflow_dag_success文件
 
-![image-20210701143152868](README.assets/image-20210701143152868.png)
+![image-20210701154024308](README.assets/image-20210701154024308.png)
 
 ### CVE-2020-11981 利用Celery进行命令执行
 
