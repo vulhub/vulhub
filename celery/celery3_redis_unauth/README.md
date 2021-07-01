@@ -33,7 +33,7 @@ docker logs celery3redisunauth_celery_1
 
 You can see the following task message error：
 
-![](1.png)
+![](1.PNG)
 
 ```bash
 docker exec -it celery3redisunauth_celery_1 ls -l /tmp
@@ -41,7 +41,7 @@ docker exec -it celery3redisunauth_celery_1 ls -l /tmp
 
 You can see that the file `celery_success` was successfully created
 
-![](2.png)
+![](2.PNG)
 
 ## Reference
 

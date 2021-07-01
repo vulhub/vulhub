@@ -31,7 +31,7 @@ docker logs celery3redisunauth_celery_1
 
 可以看到如下任务消息报错：
 
-![](1.png)
+![](1.PNG)
 
 ```bash
 docker exec -it celery3redisunauth_celery_1 ls -l /tmp
@@ -39,7 +39,7 @@ docker exec -it celery3redisunauth_celery_1 ls -l /tmp
 
 可以看到成功创建了文件`celery_success`
 
-![](2.png)
+![](2.PNG)
 
 ## 参考
 
