@@ -1,5 +1,7 @@
 # Celery <4.0 Redis unauthorized access + Pickle deserialization exploit
 
+[中文版本(Chinese version)](./README.zh-cn.md)
+
 Celery is a simple, flexible, and reliable distributed system that processes a large number of messages while providing the tools needed to operate and maintain such a system. It is a task queue focused on real-time processing and also supports task scheduling.
 
 In Celery <4.0 version, Pickle is used by default for serialized task messages. When the queue service（e.g. Redis/RabbitMQ/RocketMQ ） used has an unauthorized access problem, the Pickle deserialization vulnerability can be used to execute arbitrary code.
