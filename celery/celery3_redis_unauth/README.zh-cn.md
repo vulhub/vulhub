@@ -18,15 +18,13 @@ docker-compose up -d
 
 ```bash
 pip install redis
-#查看redis服务的IP，请自行将容器名修改正确
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' celery3redisunauth_redis_1
-python exploit.py [redis容器IP]
+python exploit.py [主机IP]
 ```
 
 查看结果：
 
 ```
-docker logs celery3redisunauth_celery_1
+docker-compose logs celery
 ```
 
 可以看到如下任务消息报错：
@@ -34,7 +32,7 @@ docker logs celery3redisunauth_celery_1
 ![](1.PNG)
 
 ```bash
-docker exec -it celery3redisunauth_celery_1 ls -l /tmp
+docker-compose exec celery ls -l /tmp
 ```
 
 可以看到成功创建了文件`celery_success`

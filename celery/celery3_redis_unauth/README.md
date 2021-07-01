@@ -20,28 +20,26 @@ The exploit script `exploit.py` only supports use under python3
 
 ```bash
 pip install redis
-#Check the IP of the redis service, please correct the container name by yourself
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' celery3redisunauth_redis_1
-python exploit.py [redis Contianer IP]
+python exploit.py [Host IP]
 ```
 
 View Results：
 
 ```
-docker logs celery3redisunauth_celery_1
+docker-compose logs celery
 ```
 
 You can see the following task message error：
 
-![](1.PNG)
+![](1.png)
 
 ```bash
-docker exec -it celery3redisunauth_celery_1 ls -l /tmp
+docker-compose exec celery ls -l /tmp
 ```
 
 You can see that the file `celery_success` was successfully created
 
-![](2.PNG)
+![](2.png)
 
 ## Reference
 
