@@ -37,7 +37,7 @@ docker-compose exec celery ls -l /tmp
 
 可以看到成功创建了文件`celery_success`
 
-![](a.png)
+![](b.png)
 
 ## 参考
 
