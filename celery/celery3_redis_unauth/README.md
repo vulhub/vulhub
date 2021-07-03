@@ -31,7 +31,7 @@ docker-compose logs celery
 
 You can see the following task message error：
 
-![](1.png)
+![](a.png)
 
 ```bash
 docker-compose exec celery ls -l /tmp
@@ -39,7 +39,7 @@ docker-compose exec celery ls -l /tmp
 
 You can see that the file `celery_success` was successfully created
 
-![](2.png)
+![](b.png)
 
 ## Reference
 

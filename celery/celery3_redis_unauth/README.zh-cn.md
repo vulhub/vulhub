@@ -29,7 +29,7 @@ docker-compose logs celery
 
 可以看到如下任务消息报错：
 
-![](1.PNG)
+![](a.png)
 
 ```bash
 docker-compose exec celery ls -l /tmp
@@ -37,7 +37,7 @@ docker-compose exec celery ls -l /tmp
 
 可以看到成功创建了文件`celery_success`
 
-![](2.PNG)
+![](a.png)
 
 ## 参考
 
