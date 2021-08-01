@@ -4,7 +4,7 @@ import re
 
 ARCHIVE_FILE_PATTERN = re.compile(r'^.*\.(tar\.gz|zip|7z|rar|exe|jar|xz|gz|tar|war)$', re.I)
 ARCHIVE_EXCEPTED = re.compile(r'[/\\](struts2|CVE-2016-9086|weblogic[/\\]weak_password)[/\\]')
-LOWERCASE_EXT_EXCEPTED = re.compile(r'[/\\].pytest_cache[/\\]')
+LOWERCASE_EXT_EXCEPTED = re.compile(r'[/\\]\.pytest_cache[/\\]')
 
 
 def test_filename():
