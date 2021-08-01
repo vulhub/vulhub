@@ -1,7 +1,7 @@
 import re
 import os
 
-FILE_EXCLUDE_PATTERN = re.compile(r'^[/\\]\.(git|idea|vscode|pytest_cache)[/\\]')
+FILE_EXCLUDE_PATTERN = re.compile(r'[/\\]\.(git|idea|vscode|pytest_cache)[/\\]')
 
 
 def is_textplain(data: bytes):
