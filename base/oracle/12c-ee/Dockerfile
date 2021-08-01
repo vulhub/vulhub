@@ -1,1 +1,1 @@
-FROM absolutapps/oracle-12c-ee
+FROM absolutapps/oracle-12c-ee:latest

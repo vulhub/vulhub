@@ -15,4 +15,4 @@ def test_dockerfile_lint():
                 dockerfiles.append(os.path.join(now_dir, name))
 
     config = os.path.join(basedir, 'tests', 'hadolint.yaml')
-    subprocess.run(['hadolint', '--config', config, '--failure-threshold', 'warning'] + dockerfiles, check=True)
+    subprocess.run(['hadolint', '--config', config, '--failure-threshold', 'error'] + dockerfiles, check=True)
