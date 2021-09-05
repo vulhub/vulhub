@@ -4,7 +4,7 @@ set -e
 
 if [[ "$1" == "" ]]; then
     cd /opt/hbase/bin
-    ./bin/start-hbase.sh
+    ./start-hbase.sh
 
     cd /usr/share/opentsdb
     HBASE_HOME=/opt/hbase ./tools/create_table.sh

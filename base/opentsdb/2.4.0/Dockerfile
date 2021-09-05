@@ -13,6 +13,7 @@ RUN set -ex \
     && dpkg -i opentsdb-2.4.0_all.deb \
     && mkdir /usr/share/opentsdb/cache
 
+COPY hbase-site.xml /opt/hbase/conf/hbase-site.xml
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN set -ex \
     && chmod +x /docker-entrypoint.sh
