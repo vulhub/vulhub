@@ -1,0 +1,12 @@
+version: '3'
+services:
+ web:
+   image: vulhub/neo4j:3.4.18
+   ports:
+    - "7474:7474"
+    - "7687:7687"
+    - "1337:1337"
+    - "34444:34444"
+   environment:
+    NEO4J_AUTH: "neo4j/vulhub"
+    JAVA_OPTS: "-Djava.rmi.server.hostname=${TARGET_IP:-127.0.0.1}"
