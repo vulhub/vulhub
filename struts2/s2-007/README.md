@@ -8,9 +8,7 @@ Details: http://struts.apache.org/docs/s2-007.html
 
 ## Reference
 
-http://rickgray.me/2016/05/06/review-struts2-remote-command-execution-vulnerabilities.html
-
-When `<ActionName> -validation.xml` configured validation rules. If the type validation conversion fails, the server will splice the user-submitted form value strings, then performing an OGNL expression parsing and returning.
+When dealing with the type conversion error, the error will be stored in the memory, and the OGNL expression injection will be triggered in the subsequent call flow. **There is no need to write `<ActionName> -validation.xml`**.
 
 For example here is a `UserAction`:
 
@@ -24,24 +22,58 @@ public class UserAction extends ActionSupport {
 (...)
 ```
 
-And `UserAction-validation.xml` configuration:
+```java
+import com.opensymphony.xwork2.ActionSupport;
 
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE validators PUBLIC
-    "-//OpenSymphony Group//XWork Validator 1.0//EN"
-    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
-<validators>
-    <field name="age">
-        <field-validator type="int">
-            <param name="min">1</param>
-            <param name="max">150</param>
-        </field-validator>
-    </field>
-</validators>
+public class LoginAction extends ActionSupport {
+    private String username;
+    private String password;
+    private int age;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String execute() throws Exception{
+        if (this.username == null || this.password == null) {
+            return "failed";
+        }
+
+        if (this.username.equals("admin") && this.password.equals("admin")) {
+            return "success";
+        }
+
+        return "failed";
+    }
+}
 ```
 
-When the user submits `age` as a `str` instead of an `int`, the server splices `"'" + value + "'"` with the code and then use the OGNL expression parse it. To make a successful expliot, we need find a form field configured with similar validation rules to make a conversion error. And then you can inject any OGNL expression code by the way just like SQL single quotes injected.
+When the user submits age as a string instead of an integer value, the backend uses code to splice `"'" + value + "'"` and then perform OGNL expression analysis on it.
+
+Test POC：
+```
+'+(#application)+'
+```
 
 Payload which bypass the securely configured:
 
@@ -55,6 +87,8 @@ Payload which bypass the securely configured:
 docker-compose build
 docker-compose up -d
 ```
+
+Visit `<host>:8080/login.action` and setup your payload.
 
 ## Exploit
 
