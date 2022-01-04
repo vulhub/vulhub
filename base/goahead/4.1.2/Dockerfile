@@ -14,7 +14,7 @@ RUN set -ex \
     && apt-get purge -y --auto-remove wget make gcc \
     && cd /var/www/goahead \
     && rm -rf /usr/src/ /var/lib/apt/lists/* /tmp/index.c \
-    && sed -e 's!^# route uri=/cgi-bin dir=cgi-bin handler=cgi$!route uri=/cgi-bin dir=/var/www/goahead handler=cgi!' -i /etc/goahead/route.txt
+    && sed -e 's!^route uri=/cgi-bin dir=cgi-bin handler=cgi$!route uri=/cgi-bin dir=/var/www/goahead handler=cgi!' -i /etc/goahead/route.txt
 
 EXPOSE 80
 CMD ["goahead", "-v", "--home", "/etc/goahead", "/var/www/goahead"]
