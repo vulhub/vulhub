@@ -7,7 +7,7 @@ RUN set -ex \
     && apt-get install wget make gcc -y \
     && wget -qO- https://github.com/embedthis/goahead/archive/refs/tags/v4.1.2.tar.gz | tar zx --strip-components 1 -C /usr/src/ \
     && cd /usr/src \
-    && ME_GOAHEAD_UPLOAD_DIR=/tmp make \
+    && make SHOW=1 ME_GOAHEAD_UPLOAD_DIR="'\"/tmp\"'" \
     && make install \
     && cp src/self.key src/self.crt /etc/goahead/ \
     && mkdir -p /var/www/goahead/cgi-bin/ \
