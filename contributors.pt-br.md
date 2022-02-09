@@ -1,9 +1,9 @@
-# Additional Contributors and Thanks
+# Contribuidores Adicionais e Agradecimentos
 
 [中文版本(Chinese version)](contributors.zh-cn.md)
 [PT-BR(Portuguese version)](./README.pt-br.md)
 
-Some people have privately contributed to this project. Private contributions cannot be displayed on the [github contributors page](https://github.com/vulhub/vulhub/graphs/contributors), so we thank them here:
+Algumas pessoas contribuíram privadamente para este projeto. As contribuições privadas não podem ser exibidas na [página de contribuidores do github](https://github.com/vulhub/vulhub/graphs/contributors), por isso agradecemos aqui:
 
 | Avatar                                                                              | ID                                      | Blog                        |
 | ----------------------------------------------------------------------------------- | --------------------------------------- | --------------------------- |

@@ -20,85 +20,85 @@
   </p>
 </p>
 
-Vulhub is an open-source collection of pre-built vulnerable docker environments. No pre-existing knowledge of docker is required, just execute two simple commands and you have a vulnerable environment.
+Vulhub é uma coleção de código aberto de ambientes docker vulneráveis pré-criados. Nenhum conhecimento pré-existente do docker é necessário, basta executar dois comandos simples e você terá um ambiente vulnerável.
 
 [中文版本(Chinese version)](README.zh-cn.md)
 [PT-BR(Portuguese version)](./README.pt-br.md)
 
-## Installation
+## Instalação
 
-Install the docker/docker-compose on Ubuntu 20.04:
+Instale o docker/docker-compose no Ubuntu 20.04:
 
 ```bash
-# Install pip
+# Instalar pip
 curl -s https://bootstrap.pypa.io/get-pip.py | python3
 
-# Install the latest version docker
+# Instale a janela de encaixe da versão mais recente
 curl -s https://get.docker.com/ | sh
 
-# Run docker service
+# Executa o serviço docker
 systemctl start docker
 
-# Install docker compose
+# Instala a composição do docker
 pip install docker-compose
 ```
 
-The installation steps of docker and docker-compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
+As etapas de instalação do docker e do docker-compose para outros sistemas operacionais podem ser ligeiramente diferentes, consulte a [documentação do docker](https://docs.docker.com/) para obter detalhes.
 
-## Usage
+## Uso
 
 ```bash
-# Download project
+# Baixar projeto
 wget https://github.com/vulhub/vulhub/archive/master.zip -O vulhub-master.zip
 unzip vulhub-master.zip
 cd vulhub-master
 
-# Enter the directory of vulnerability/environment
+# Entre no diretório de vulnerabilidade/ambiente
 cd flask/ssti
 
-# Compile environment
+# Compilar ambiente
 docker-compose build
 
-# Run environment
+# Executar ambiente
 docker-compose up -d
 ```
 
-There is a **README** document in each environment directory, please read this file for vulnerability/environment testing and usage.
+Existe um documento **README** em cada diretório de ambiente, por favor leia este arquivo para teste e uso de vulnerabilidade/ambiente.
 
-After the test, delete the environment with the following command.
+Após o teste, exclua o ambiente com o seguinte comando.
 
 ```
 docker-compose down -v
 ```
 
-It is recommended to use a VPS of at least 1GB memory to build a vulnerability environment. The `your-ip` mentioned in the documentation refers to the IP address of your VPS. If you are using a virtual machine, it refers to your virtual machine IP, not the IP inside the docker container.
+Recomenda-se usar um VPS de pelo menos 1 GB de memória para criar um ambiente de vulnerabilidade. O `your-ip` mencionado na documentação refere-se ao endereço IP do seu VPS. Se você estiver usando uma máquina virtual, ele se refere ao IP da máquina virtual, não ao IP dentro do contêiner docker.
 
-**All environments in this project are for testing purposes only and should not be used as a production environment!**
+**Todos os ambientes neste projeto são apenas para fins de teste e não devem ser usados como ambiente de produção!**
 
-## Notice
+## Aviso prévio
 
-1. To prevent permission errors, it is best to use the root user to execute the docker and docker-compose commands.
-2. Some docker images do not support running on ARM machines.
+1. Para evitar erros de permissão, é melhor usar o usuário root para executar os comandos docker e docker-compose.
+2. Algumas imagens docker não suportam execução em máquinas ARM.
 
-## Contribution
+## Contribuição
 
-This project relies on docker. So any error during compilation and running are thrown by docker and related programs. Please find the cause of the error by yourself first. If it is determined that the dockerfile is written incorrectly (or the code is wrong in vulhub), then submit the issue. More details please 👉[Common reasons for compilation failure](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0), hope it can help you.
+Este projeto depende do docker. Portanto, qualquer erro durante a compilação e execução é gerado pelo docker e programas relacionados. Por favor, encontre a causa do erro por si mesmo primeiro. Se for determinado que o dockerfile está escrito incorretamente (ou o código está errado no vulhub), envie o problema. Mais detalhes por favor 👉[Motivos comuns para falha de compilação](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0), espero que possa ajudá-lo.
 
-For more question, please contact:
+Para mais perguntas, entre em contato:
 
-- [Chinese Community](https://www.wangan.com/vulhub)
+- [Comunidade chinesa](https://www.wangan.com/vulhub)
 - [Discord](https://discord.gg/GhMB3Z)
 - [Twitter](https://twitter.com/vulhub)
 
-Thanks for the following contributors:
+Obrigado aos seguintes colaboradores:
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
 
-More contributors：[Contributors List](contributors.md)
+Mais contribuidores：[Lista de contribuidores](contributors.md)
 
-## Partner
+## Parceiros
 
-Our Partners and users:
+Nossos Parceiros e Usuários:
 
 <p>
   <a href="https://www.wangan.com/vulhub" target="_blank"><img src="https://vulhub.org/img/sponsor/wangan.png" width="200"></a>
@@ -108,19 +108,19 @@ Our Partners and users:
   <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.svg" width="200"></a>
 </p>
 
-Sponsor vulhub on patreon 🙏
+Patrocine vulhub no patreon 🙏
 
 <a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/img/sponsor/patreon.png" width="150"></a>
 
-Sponsor vulhub on opencollective 🙏
+Patrocine vulhub no opencollective 🙏
 
 <p>
   <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
   <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
-More [Donate](http://vulhub.org/#/docs/donate/).
+Mais [doações](http://vulhub.org/#/docs/donate/).
 
-## License
+## Licença
 
-Vulhub is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
+Vulhub é licenciado sob a Licença MIT. Consulte [LICENSE](LICENSE) para obter o texto completo da licença.
