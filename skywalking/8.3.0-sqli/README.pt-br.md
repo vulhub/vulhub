@@ -1,36 +1,33 @@
 # Apache Skywalking 8.3.0 SQL Injection Vulnerability
 
-[中文版本(Chinese version)](README.zh-cn.md)
-[PT-BR(Portuguese version)](./README.pt-br.md)
+Ferramenta de monitoramento de desempenho de aplicativos para sistemas distribuídos, especialmente projetada para microsserviços, arquiteturas nativas de nuvem e baseadas em contêiner (Docker, Kubernetes, Mesos).
 
-Application performance monitor tool for distributed systems, especially designed for microservices, cloud native and container-based (Docker, Kubernetes, Mesos) architectures.
+Nas interfaces GraphQL do Apache Skywalking 8.3.0 e anteriores, há uma vulnerabilidade de injeção SQL do banco de dados H2.
 
-In GraphQL interfaces of Apache Skywalking 8.3.0 and previous, there is a H2 Database SQL injection vulnerability.
-
-Reference link:
+Links de referência:
 
 - https://mp.weixin.qq.com/s/hB-r523_4cM0jZMBOt6Vhw
 - https://github.com/apache/skywalking/commit/0bd81495965d801315dd7417bb17333ae0eccf3b#diff-ec87a1cdf66cdb37574d9eafd4d72d99ed94a38c4a8ff2aa9c7b8daeff502a2c
 
-## Vulnerability environment
+## Ambiente de vulnerabilidade
 
-Execute the following command to start an Apache Skywalking 8.3.0:
+Execute o seguinte comando para iniciar um Apache Skywalking 8.3.0:
 
 ```
 docker-compose up -d
 ```
 
-After the environment is started, visit `http://your-ip:8080` to view the Skywalking page.
+Depois que o ambiente for iniciado, visite `http://your-ip:8080` para ver a página Skywalking.
 
-## POC
+## Prova de Conceito
 
-I use GraphiQL's desktop app to send the following GraphQL query:
+Eu uso o aplicativo de desktop do GraphiQL para enviar a seguinte consulta do GraphQL:
 
 ![](1.png)
 
-It can be seen that the SQL statement has raised error, and the value of the `metricName` parameter has been injected ​​after `from`.
+Pode-se ver que a instrução SQL gerou erro, e o valor do parâmetro `metricName` foi injetado após `from`.
 
-The HTTP request of this GraphQL query is:
+A solicitação HTTP desta consulta do GraphQL é:
 
 ```
 POST /graphql HTTP/1.1
@@ -68,4 +65,4 @@ Content-Length: 336
 }
 ```
 
-For more in-depth exploit, you can research by yourself, and welcome to submit PR to us.
+Para exploração mais aprofundada, você pode pesquisar por si mesmo e enviar PR para nós.

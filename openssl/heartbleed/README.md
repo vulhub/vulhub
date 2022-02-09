@@ -1,6 +1,7 @@
 # OpenSSL Heartbleed Vulnerability (CVE-2014-0160)
 
 [中文版本(Chinese version)](README.zh-cn.md)
+[PT-BR(Portuguese version)](./README.pt-br.md)
 
 The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. This weakness allows stealing the information protected, under normal conditions, by the SSL/TLS encryption used to secure the Internet. SSL/TLS provides communication security and privacy over the Internet for applications such as web, email, instant messaging (IM) and some virtual private networks (VPNs).
 

