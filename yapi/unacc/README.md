@@ -1,4 +1,4 @@
-# YApi Unauthenticated Registration and Mock Remote Code Execution
+# YApi Registration and Mock Remote Code Execution
 
 [中文版本(Chinese version)](README.zh-cn.md)
 

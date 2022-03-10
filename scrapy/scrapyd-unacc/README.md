@@ -1,4 +1,4 @@
-# Scrapyd Unauthenticated Remote Code Execution
+# Scrapyd Pre-Auth Remote Code Execution
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
