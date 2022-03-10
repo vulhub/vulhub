@@ -1,23 +1,31 @@
-# Redis 4.x/5.x 未授权访问漏洞
+# Redis Post Exploitation Due to Master and Slave Synchronisation
 
-Redis未授权访问在4.x/5.0.5以前版本下，我们可以使用master/slave模式加载远程模块，通过动态链接库的方式执行任意命令。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache, and message broker.
 
-- https://2018.zeronights.ru/wp-content/uploads/materials/15-redis-post-exploitation.pdf
+Redis which version starts from 4.0, prior to 5.0.5, can be exploit through the synchronisation between master and slave by an authenticated visitor.
 
-## 环境搭建
+Reference:
 
-执行如下命令启动redis 4.0.14：
+- <https://2018.zeronights.ru/wp-content/uploads/materials/15-redis-post-exploitation.pdf>
+
+## Vulnerability Environment
+
+Execute following command to start a Redis server 4.0.14:
 
 ```
 docker-compose up -d
 ```
 
-环境启动后，通过`redis-cli -h your-ip`即可进行连接，可见存在未授权访问漏洞。
+After server is started, you can connect to this server without credentials by `redis-cli`:
 
-## 漏洞复现
+```
+redis-cli -h your-ip
+```
 
-使用如下POC即可直接执行命令<https://github.com/vulhub/redis-rogue-getshell>：
+## Exploit
+
+Use [this script](https://github.com/vulhub/redis-rogue-getshell) to execute arbitrary commands:
 
 ![](1.png)
