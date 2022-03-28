@@ -1,5 +1,7 @@
 # Spring Cloud Function SpEL Code Injection
 
+[中文版本(Chinese version)](README.zh-cn.md)
+
 Spring Cloud Function provides a common model for deploying function-based software on a variety of platforms, including FaaS (function as a service) platforms like Amazon AWS Lambda.
 
 References:
