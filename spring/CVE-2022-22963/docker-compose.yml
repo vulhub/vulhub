@@ -1,0 +1,6 @@
+version: '2'
+services:
+ spring:
+   image: vulhub/spring-cloud-function:3.2.2
+   ports:
+    - "8080:8080"
