@@ -1,6 +1,7 @@
 # DNS Zone Transfers (AXFR)
 
 [中文版本(Chinese version)](README.zh-cn.md)
+[PT-BR(Portuguese version)](./README.pt-br.md)
 
 DNS zone transfers using the AXFR protocol are the simplest mechanism to replicate DNS records across DNS servers. To avoid the need to edit information on multiple DNS servers, you can edit information on one server and use AXFR to copy information to other servers. However, if you do not protect your servers, malicious parties may use AXFR to get information about all your hosts.
 

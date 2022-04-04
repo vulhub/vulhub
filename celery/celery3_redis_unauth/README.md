@@ -1,6 +1,7 @@
 # Celery <4.0 Redis unauthorized access + Pickle deserialization exploit
 
 [中文版本(Chinese version)](./README.zh-cn.md)
+[PT-BR(Portuguese version)](./README.pt-br.md)
 
 Celery is a simple, flexible, and reliable distributed system that processes a large number of messages while providing the tools needed to operate and maintain such a system. It is a task queue focused on real-time processing and also supports task scheduling.
 

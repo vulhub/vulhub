@@ -1,6 +1,7 @@
 # HTTPoxy CGI application vulnerability (CVE-2016-5385)
 
 [中文版本(Chinese version)](README.zh-cn.md)
+[PT-BR(Portuguese version)](./README.pt-br.md)
 
 httpoxy is a set of vulnerabilities that affect application code running in CGI, or CGI-like environments. It comes down to a simple namespace conflict:
 

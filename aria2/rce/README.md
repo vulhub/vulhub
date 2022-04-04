@@ -1,6 +1,7 @@
 # Aria2 Arbitrary File Write Vulnerability
 
 [中文版本(Chinese version)](README.zh-cn.md)
+[PT-BR(Portuguese version)](README.pt-br.md)
 
 Aria2 is a lightweight, multi-protocol, multi-source download tool (supports HTTP/HTTPS, FTP, BitTorrent, Metalink) with built-in XML-RPC and JSON-RPC interfaces.
 
@@ -8,7 +9,7 @@ We can use the RPC interface to operate aria2 and download files to any director
 
 Reference article:
 
- - https://paper.seebug.org/120/
+- https://paper.seebug.org/120/
 
 ## Vulnerable Environment
 
