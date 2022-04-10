@@ -1,0 +1,5 @@
+version: '2'
+services:
+  curl:
+    image: vulhub/openssl:1.1.1m-with-curl
+    command: sleep infinity
