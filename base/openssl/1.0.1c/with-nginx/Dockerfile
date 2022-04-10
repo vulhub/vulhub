@@ -15,4 +15,12 @@ RUN set -ex \
     && ./configure --with-http_ssl_module --with-pcre=../pcre-8.45 --with-zlib=../zlib-1.2.11 --with-cc-opt="-I /usr/local/include" --with-ld-opt="-L/usr/local/lib -ldl -Wl,-rpath,/usr/local/lib" \
     && make \
     && make install \
+    && apt-get purge -y --auto-remove gcc make g++ wget ca-certificates \
     && rm -rf /usr/src/* /var/lib/apt/lists/*
+
+RUN set -ex \
+    && mkdir -p /etc/ssl/nginx/ /etc/nginx/
+
+COPY local.crt local.key /etc/ssl/nginx/
+COPY nginx.conf /etc/nginx/
+CMD ["/usr/local/nginx/sbin/nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
