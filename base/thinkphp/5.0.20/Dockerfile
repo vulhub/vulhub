@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.2.31-apache
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
@@ -23,7 +23,7 @@ COPY composer.json /var/www/
 
 RUN set -ex \
     && cd /var/www \
-    && curl -#sSL https://getcomposer.org/composer.phar -o composer.phar \
+    && curl -#sSL https://github.com/composer/composer/releases/download/1.10.7/composer.phar -o composer.phar \
     && php composer.phar install \
     && chown www-data:www-data -R .
 
