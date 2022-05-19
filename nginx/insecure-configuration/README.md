@@ -10,7 +10,7 @@ docker-compose up -d
 
 ## Mistake 1. CRLF注入漏洞
 
-Nginx会将`$uri`进行解码，导致传入%0a%0d即可引入换行符，造成CRLF注入漏洞。
+Nginx会将`$uri`进行解码，导致传入%0d%0a即可引入换行符，造成CRLF注入漏洞。
 
 错误的配置文件示例（原本的目的是为了让http的请求跳转到https上）：
 
@@ -20,7 +20,9 @@ location / {
 }
 ```
 
-Payload: `http://your-ip:8080/%0a%0dSet-Cookie:%20a=1`，可注入Set-Cookie头。
+Payload: `http://your-ip:8080/%0d%0aSet-Cookie:%20a=1`，可注入Set-Cookie头。
+
+![](5.png)  
 
 利用《[Bottle HTTP 头注入漏洞探究](https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html)》中的技巧，即可构造一个XSS漏洞：
 
