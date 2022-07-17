@@ -20,7 +20,7 @@ COPY composer.json /var/www/
 
 RUN set -ex \
     && cd /var/www \
-    && curl -#sSL https://getcomposer.org/composer.phar -o composer.phar \
+    && curl -#sSL https://getcomposer.org/download/2.3.10/composer.phar -o composer.phar \
     && php composer.phar install \
     && php composer.phar require "topthink/think-captcha:^1.0" \
     && chown www-data:www-data -R .
