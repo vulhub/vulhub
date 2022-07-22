@@ -1,0 +1,4 @@
+com/vulhub/authzvuln/App.class
+com/vulhub/authzvuln/SpringSecurityConfig.class
+com/vulhub/authzvuln/DemoController.class
+com/vulhub/authzvuln/ServletInit.class
