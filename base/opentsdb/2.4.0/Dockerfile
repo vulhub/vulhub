@@ -5,7 +5,7 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 # install hbase
 RUN set -ex \
     && mkdir /opt/hbase \
-    && wget -qO- http://www.apache.org/dist/hbase/2.4.5/hbase-2.4.5-bin.tar.gz | tar xz --strip-components 1 -C /opt/hbase
+    && wget -qO- https://archive.apache.org/dist/hbase/2.4.5/hbase-2.4.5-bin.tar.gz | tar xz --strip-components 1 -C /opt/hbase
 
 # install opentsdb
 RUN set -ex \
