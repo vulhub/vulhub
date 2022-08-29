@@ -7,6 +7,8 @@ if [[ "$1" == "" ]]; then
 
     cd /usr/share/opentsdb
     COMPRESSION=NONE HBASE_HOME=/opt/hbase ./tools/create_table.sh
+    # Creating some dummy metrics to test against
+    ./bin/tsdb mkmetric sys.cpu.user sys.cpu.nice sys.cpu.idle
     ./bin/tsdb tsd --config /etc/opentsdb/opentsdb.conf
 fi
 
