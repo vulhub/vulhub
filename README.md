@@ -8,7 +8,7 @@
     <a href="https://www.wangan.com/vulhub">
       <img src="https://img.shields.io/badge/Official-Community-blue.svg" alt="Official Community">
     </a>
-    <a href="https://discord.gg/GhMB3Z">
+    <a href="https://discord.gg/bQCpZEK">
       <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
     </a>
     <a href="https://www.patreon.com/phith0n">
@@ -86,7 +86,7 @@ This project relies on docker. So any error during compilation and running are t
 For more question, please contact:
 
 - [Chinese Community](https://www.wangan.com/vulhub)
-- [Discord](https://discord.gg/GhMB3Z)
+- [Discord](https://discord.gg/bQCpZEK)
 - [Twitter](https://twitter.com/vulhub)
 
 Thanks for the following contributors:
