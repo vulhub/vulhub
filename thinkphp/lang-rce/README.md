@@ -2,7 +2,7 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-ThinkPHP is an extremely widely used PHP development framework in China. In the version prior to 6.0.13, a local restricted file inclusion issue exists in `lang` parameter if the developer enable multiple language pack. 
+ThinkPHP is an extremely widely used PHP development framework in China. In the version prior to 6.0.13, a local restricted file inclusion issue exists in `lang` parameter if the developer enable multiple language pack.
 
 Although this issue is only allowed to include ".php" file, the attacker is still able to use the "pearcmd.php" to write arbitrary file and execute code in the server.
 
