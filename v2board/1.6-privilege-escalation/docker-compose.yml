@@ -20,5 +20,3 @@ services:
     - MYSQL_DATABASE=v2board
   redis:
    image: redis:7-alpine
-   ports:
-    - "127.0.0.1:6379:6379"
