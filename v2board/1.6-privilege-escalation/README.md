@@ -1,6 +1,6 @@
 # V2board 1.6.1 Privilege Escalation
 
-V2board is a multiple proxy protocol manage panel application interface. In the version of 1.6.1, it is introduced a redis cache mechanism to save the user session. 
+V2board is a multiple proxy protocol manage panel application interface. In the version of 1.6.1, it is introduced a redis cache mechanism to save the user session.
 
 Since there is no distinction between administrator and normal user in the cache layer, resulting in normal users being able to use their token to access the administrator interface.
 
