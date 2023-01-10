@@ -1,23 +1,44 @@
-FROM ubuntu:focal
+FROM ubuntu:20.04
 
-LABEL maintainer="phithon <root@leavesongs.com>"
+#RUN sed -i "s/http:\/\/archive.ubuntu.com/http:\/\/mirrors.aliyun.com/g" /etc/apt/sources.list && \
+#         sed -i "s/http:\/\/security.ubuntu.com/http:\/\/mirrors.aliyun.com/g" /etc/apt/sources.list
 
-RUN set -ex \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends wget ca-certificates make gcc libc-dev \
-        # dependencies for policykit
-        libglib2.0-0 libpam-systemd dbus
+RUN  apt-get update && \
+        apt-get -y dist-upgrade
 
-RUN set -ex \
-    && cd /tmp \
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/p/policykit-1/libpolkit-backend-1-0_0.105-14.1ubuntu0.5_amd64.deb \
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/p/policykit-1/policykit-1_0.105-14.1ubuntu0.5_amd64.deb \
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/p/policykit-1/libpolkit-gobject-1-0_0.105-14.1ubuntu0.5_amd64.deb \
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/p/policykit-1/libpolkit-agent-1-0_0.105-14.1ubuntu0.5_amd64.deb \
-    && dpkg -i libpolkit-gobject-1-0_0.105-14.1ubuntu0.5_amd64.deb \
-    && dpkg -i libpolkit-backend-1-0_0.105-14.1ubuntu0.5_amd64.deb \
-    && dpkg -i libpolkit-agent-1-0_0.105-14.1ubuntu0.5_amd64.deb \
-    && dpkg -i policykit-1_0.105-14.1ubuntu0.5_amd64.deb \
-    && rm -rf /tmp/*.deb
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata ca-certificates wget qemu-system cloud-image-utils python3
 
-USER nobody
+RUN mkdir /home/chall
+
+WORKDIR /home/chall
+
+# old version ubuntu
+RUN wget http://cloud-images-archive.ubuntu.com/releases/focal/release-20200423/ubuntu-20.04-server-cloudimg-amd64.img
+	
+COPY ./user-data /home/chall/
+# COPY ./check.py /home/chall/
+
+RUN cloud-localds user-data.img user-data && \
+    qemu-img resize ubuntu-20.04-server-cloudimg-amd64.img +20G
+
+#apply cloud-init
+
+RUN qemu-system-x86_64 \
+  -drive "file=ubuntu-20.04-server-cloudimg-amd64.img,format=qcow2" \
+  -drive "file=user-data.img,format=raw" \
+  -nic user,model=virtio \
+  -m 8G \
+  -smp 8 \
+  -nographic 
+
+EXPOSE 5555
+
+CMD qemu-system-x86_64 \
+  -drive "file=ubuntu-20.04-server-cloudimg-amd64.img,format=qcow2" \
+  -m 1G \
+  -nic user,model=virtio,hostfwd=tcp:0.0.0.0:5555-:22 \
+  -smp 2 \
+  -nographic \
+  -monitor null
+
+

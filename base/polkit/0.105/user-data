@@ -1,0 +1,4 @@
+#cloud-config
+password: vulhub
+chpasswd: { expire: False }
+ssh_pwauth: True
