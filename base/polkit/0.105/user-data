@@ -2,3 +2,7 @@
 password: vulhub
 chpasswd: { expire: False }
 ssh_pwauth: True
+package_upgrade: false
+packages:
+  - make
+  - gcc

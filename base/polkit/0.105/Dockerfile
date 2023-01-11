@@ -28,8 +28,8 @@ EXPOSE 2222
 CMD qemu-system-x86_64 \
   -drive "file=ubuntu-20.04-server-cloudimg-amd64.img,format=qcow2" \
   -drive "file=user-data.img,format=raw" \
-  -m 1G \
+  -m 2G \
   -nic user,model=virtio,hostfwd=tcp:0.0.0.0:2222-:22 \
-  -smp 1 \
+  -smp $(nproc) \
   -nographic \
   -monitor null
