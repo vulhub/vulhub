@@ -3,7 +3,9 @@ FROM ubuntu:20.04
 #RUN sed -i "s/http:\/\/archive.ubuntu.com/http:\/\/mirrors.aliyun.com/g" /etc/apt/sources.list && \
 #         sed -i "s/http:\/\/security.ubuntu.com/http:\/\/mirrors.aliyun.com/g" /etc/apt/sources.list
 
-RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata ca-certificates wget qemu-system cloud-image-utils python3
+RUN set -ex \
+    && apt-get update \
+    && DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata ca-certificates wget qemu-system cloud-image-utils
 
 RUN mkdir /home/chall
 
@@ -13,12 +15,9 @@ WORKDIR /home/chall
 RUN wget http://cloud-images-archive.ubuntu.com/releases/focal/release-20200423/ubuntu-20.04-server-cloudimg-amd64.img
 	
 COPY ./user-data /home/chall/
-# COPY ./check.py /home/chall/
 
 RUN cloud-localds user-data.img user-data && \
     qemu-img resize ubuntu-20.04-server-cloudimg-amd64.img +20G
-
-#apply cloud-init
 
 EXPOSE 2222
 
