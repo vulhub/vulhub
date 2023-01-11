@@ -3,9 +3,6 @@ FROM ubuntu:20.04
 #RUN sed -i "s/http:\/\/archive.ubuntu.com/http:\/\/mirrors.aliyun.com/g" /etc/apt/sources.list && \
 #         sed -i "s/http:\/\/security.ubuntu.com/http:\/\/mirrors.aliyun.com/g" /etc/apt/sources.list
 
-RUN  apt-get update && \
-        apt-get -y dist-upgrade
-
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata ca-certificates wget qemu-system cloud-image-utils python3
 
 RUN mkdir /home/chall
