@@ -6,7 +6,7 @@ ARG IM_VERSION=7.1.0-49
 RUN set -ex \
     && apt-get update \
     && savedAptMark="$(apt-mark showmanual)" \
-    && apt-get install -y --no-install-recommends automake autoconf libtool libltdl-dev wget ca-certificates xz-utils gcc make libpng-dev libjpeg62-turbo-dev \
+    && apt-get install -y --no-install-recommends automake autoconf libtool libltdl-dev wget ca-certificates xz-utils gcc g++ make libpng-dev libjpeg62-turbo-dev \
         libfontconfig1-dev libfreetype6-dev librsvg2-dev libxml2-dev zlib1g-dev libgif-dev \
     && wget -qO- https://github.com/ImageMagick/ImageMagick/archive/${IM_VERSION}.tar.gz \
         | tar xz --strip-components=1 -C /usr/src \
