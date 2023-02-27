@@ -39,7 +39,7 @@ public class ShiroConfig {
         bean.setUnauthorizedUrl("/unauth");
         Map<String, String> map = new LinkedHashMap<>();
         map.put("/doLogin", "anon");
-        map.put("/hello", "user");
+        map.put("/admin/**", "user");
         map.put("/**", "anon");
         bean.setFilterChainDefinitionMap(map);
         return bean;

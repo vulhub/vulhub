@@ -21,9 +21,9 @@ public class UserController {
         return "forward:/";
     }
 
-    @RequestMapping("/hello")
+    @RequestMapping("/admin")
     public String helloPage() {
-        return "hello";
+        return "admin";
     }
 
     @RequestMapping("/unauth")
@@ -33,6 +33,11 @@ public class UserController {
 
     @RequestMapping("/login")
     public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/")
+    public String index() {
         return "login";
     }
 }
