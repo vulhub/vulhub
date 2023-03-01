@@ -21,8 +21,8 @@ public class UserController {
         return "forward:/";
     }
 
-    @RequestMapping("/admin")
-    public String helloPage() {
+    @RequestMapping("/admin/{id}")
+    public String helloPage(@PathVariable String id) {
         return "admin";
     }
 
