@@ -25,5 +25,6 @@ RUN a2enmod rewrite
 
 ENV PATH /root/.composer/vendor/bin:${PATH}
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY .htaccess /var/www/html/.htaccess
 ENTRYPOINT [ "bash", "/docker-entrypoint.sh" ]
 CMD ["apache2-foreground"]

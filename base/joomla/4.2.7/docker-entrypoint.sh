@@ -2,11 +2,12 @@
 
 set -ex
 
-wait-for-it "${JOOMLA_DB_HOST:-localhost}:${JOOMLA_DB_PORT:-3306}" -- echo "database is available"
+wait-for-it -t 0 "${JOOMLA_DB_HOST:-localhost}:${JOOMLA_DB_PORT:-3306}" -- echo "database is available"
 
 if [[ ! -e "/var/www/html/configuration.php" ]]; then
-    cd /var/www/html || exit 1
-    /root/.composer/vendor/bin/joomla site:install --www /var/www/html -L "${JOOMLA_DB_USER:-root}:${JOOMLA_DB_PASSWORD:-root}" -H "${JOOMLA_DB_HOST:-localhost}" -P "${JOOMLA_DB_PORT:-3306}" --mysql-db-prefix joomla_ --mysql-database "${JOOMLA_DB_NAME:-joomla}" --mysql-driver mysqli -- ./
+    joomla site:install --www /var/www -L "${JOOMLA_DB_USER:-root}:${JOOMLA_DB_PASSWORD:-root}" -H "${JOOMLA_DB_HOST:-localhost}" -P "${JOOMLA_DB_PORT:-3306}" --mysql-database "${JOOMLA_DB_NAME:-joomla}" --mysql-driver mysqli --sample-data=default -- html
+    sed -i "s/public \$debug = 1;/public \$debug = 0;/" /var/www/html/configuration.php
+    chown -R www-data:www-data /var/www/html
 fi
 
 exec "$@"
