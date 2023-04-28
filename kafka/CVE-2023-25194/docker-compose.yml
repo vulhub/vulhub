@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/apache-druid:25.0.0
+   ports:
+    - "8888:8888"
