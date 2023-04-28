@@ -4,4 +4,5 @@ services:
    build: .
    ports:
     - "2375:2375"
+   platform: linux/amd64
    privileged: true
