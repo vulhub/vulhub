@@ -1,29 +1,34 @@
-# DNS域传送漏洞
+# DNS Zone Transfers (AXFR)
 
-DNS协议支持使用axfr类型的记录进行区域传送，用来解决主从同步的问题。如果管理员在配置DNS服务器的时候没有限制允许获取记录的来源，将会导致DNS域传送漏洞。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 环境搭建
+DNS zone transfers using the AXFR protocol are the simplest mechanism to replicate DNS records across DNS servers. To avoid the need to edit information on multiple DNS servers, you can edit information on one server and use AXFR to copy information to other servers. However, if you do not protect your servers, malicious parties may use AXFR to get information about all your hosts.
 
-vulhub使用bind9来搭建dns服务器，但不代表只有bind9支持axfr记录。运行DNS服务器：
+References:
+
+- https://www.acunetix.com/blog/articles/dns-zone-transfers-axfr/
+- https://nmap.org/nsedoc/scripts/dns-zone-transfer.html
+
+## Vulnerable Environment
+
+Vulhub uses [Bind9](https://wiki.debian.org/Bind9) to build the dns server, but that does not mean that only Bind9 supports AXFR records.
+
+To run the DNS server.
 
 ```
 docker-compose up -d
 ```
 
-环境运行后，将会监听TCP和UDP的53端口，DNS协议同时支持从这两个端口进行数据传输。因为涉及到1024以下的端口号，所以运行上述命令可能需要root权限。
+Once the environment is running, it will listen on port 53 of TCP and UDP, and the DNS protocol supports data transfer from both ports.
 
-## 漏洞复现
+## POC
 
-在Linux下，我们可以使用dig命令来发送dns请求。比如，我们可以用`dig @your-ip www.vulhub.org`获取域名`www.vulhub.org`在目标dns服务器上的A记录：
-
-![](1.png)
-
-发送axfr类型的dns请求：`dig @your-ip -t axfr vulhub.org`
+Under Linux, we can use the **dig** command to send AXFR record requests: `dig @your-ip -t axfr vulhub.org`
 
 ![](2.png)
 
-可见，我获取到了`vulhub.org`的所有子域名记录，这里存在DNS域传送漏洞。
+As you can see, I got all the subdomain records of `vulhub.org`, and there is a DNS zone transfers vulnerability here.
 
-我们也可以用nmap script来扫描该漏洞：`nmap --script dns-zone-transfer.nse --script-args "dns-zone-transfer.domain=vulhub.org" -Pn -p 53 your-ip`
+We can also use the Nmap script to scan for this vulnerability: `nmap --script dns-zone-transfer.nse --script-args "dns-zone-transfer.domain=vulhub.org" -Pn -p 53 your-ip`
 
 ![](3.png)

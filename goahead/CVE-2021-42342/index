@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo -ne "Content-Type: text/html\n\n";
+echo "<title>example</title><h1>Example</h1>";

@@ -7,8 +7,7 @@ services:
     ports:
       - "80:80"
   db:
-    image: mariadb
-    restart: always
+    image: mysql:5.5
     environment: 
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ultrax

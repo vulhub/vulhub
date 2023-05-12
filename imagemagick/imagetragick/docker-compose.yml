@@ -1,8 +1,9 @@
 version: '2'
 services:
- apache:
-   build: .
+ web:
+   image: vulhub/imagemagick:6.9.2-10-php
+   command: php -t /var/www/html -S 0.0.0.0:8080
    volumes:
-    - ./www:/var/www/html
+    - ./index.php:/var/www/html/index.php
    ports:
-    - "80:80"
+    - "8080:8080"

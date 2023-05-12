@@ -1,69 +1,121 @@
-# Vulhub - Some Docker-Compose files for vulnerabilities environment
+<!-- markdownlint-disable first-line-heading -->
+<p align="center">
+  <img src=".github/assets/logo.svg" alt="Vulhub" height="300" />
+  <p align="center">
+    <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub">
+    </a>
+    <a href="https://www.wangan.com/vulhub">
+      <img src="https://img.shields.io/badge/Official-Community-blue.svg" alt="Official Community">
+    </a>
+    <a href="https://discord.gg/bQCpZEK">
+      <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
+    </a>
+    <a href="https://www.patreon.com/phith0n">
+      <img src="https://img.shields.io/badge/sponsor-patreon-73d6a1.svg" alt="Backers and sponors on Patreon">
+    </a>
+    <a href="https://opencollective.com/vulhub#backer">
+      <img src="https://img.shields.io/badge/backer-opencollective-f89a76.svg" alt="Backers and sponors on Opencollective">
+    </a>
+  </p>
+</p>
 
-Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单执行两条命令即可编译、运行一个完整的漏洞靶场镜像。
+Vulhub is an open-source collection of pre-built vulnerable docker environments. No pre-existing knowledge of docker is required, just execute two simple commands and you have a vulnerable environment.
 
-在ubuntu16.04下安装docker/docker-compose:
+[中文版本(Chinese version)](README.zh-cn.md)
 
 ## Installation
 
-```bash
-# 安装pip
-curl -s https://bootstrap.pypa.io/get-pip.py | python3
+Install Docker on Ubuntu 20.04:
 
-# 安装最新版docker
+```bash
+# Install the latest version docker
 curl -s https://get.docker.com/ | sh
 
-# 启动docker服务
-service docker start
-
-# 安装compose
-pip install docker-compose 
+# Run docker service
+systemctl start docker
 ```
 
-其他操作系统安装docker和docker-compose可能会有些许不同，请阅读Docker文档进行安装。
+Note: if you already have (deprecated) Docker Compose v1 installed (aka `docker-compose`) you should upgrade to Compose v2.
+
+The installation steps of Docker and Docker Compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
 
 ## Usage
 
 ```bash
-# 拉取项目
-git clone https://github.com/vulhub/vulhub.git
-cd vulhub
+# Download project
+wget https://github.com/vulhub/vulhub/archive/master.zip -O vulhub-master.zip
+unzip vulhub-master.zip
+cd vulhub-master
 
-# 进入某一个漏洞/环境的目录
+# Enter the directory of vulnerability/environment
 cd flask/ssti
 
-# 自动化编译环境
-docker-compose build
+# Compile environment
+docker compose build
 
-# 启动整个环境
-docker-compose up -d
+# Run environment
+docker compose up -d
 ```
 
-每个环境目录下都有相应的说明文件，请阅读该文件，进行漏洞/环境测试。
+There is a **README** document in each environment directory, please read this file for vulnerability/environment testing and usage.
 
-测试完成后，删除整个环境
+After the test, delete the environment with the following command.
 
 ```
-docker-compose down
+docker compose down -v
 ```
 
-本项目每个漏洞环境均附带文档，建议你购买1G内存的vps搭建漏洞测试环境，文档中所说的`your-ip`均指你的vps的ip地址，如果你是用虚拟机搭建测试环境，是指你的虚拟机IP，而不是docker容器内部的IP，请不要混淆。
+It is recommended to use a VPS of at least 1GB memory to build a vulnerability environment. The `your-ip` mentioned in the documentation refers to the IP address of your VPS. If you are using a virtual machine, it refers to your virtual machine IP, not the IP inside the docker container.
 
-**本项目中所有环境仅用于测试，不可作为生产环境使用！**
+**All environments in this project are for testing purposes only and should not be used as a production environment!**
 
 ## Notice
 
-注意事项：
-
-1. 为防止出现权限错误，最好使用root用户执行docker和docker-compose命令
-2. docker部分镜像不支持在ARM等架构的机器上运行
+1. To prevent permission errors, it is best to use the root user to execute the `docker` command.
+2. Some docker images do not support running on ARM machines.
 
 ## Contribution
 
-本项目依赖于docker，在编译及运行过程中出现的任意异常都是docker以及相关程序抛出的，请先自行查找错误原因。如果确定是因为Dockerfile编写错误（或vulhub中代码错误）导致的，再提交issue。更多说明请[这篇文档文档](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0)，希望可以对你有所帮助。
+This project relies on docker. So any error during compilation and running are thrown by docker and related programs. Please find the cause of the error by yourself first. If it is determined that the dockerfile is written incorrectly (or the code is wrong in vulhub), then submit the issue. More details please 👉[Common reasons for compilation failure](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0), hope it can help you.
 
-致谢列表：[Contributors List](contributors.md)
+For more question, please contact:
+
+- [Chinese Community](https://www.wangan.com/vulhub)
+- [Discord](https://discord.gg/bQCpZEK)
+- [Twitter](https://twitter.com/vulhub)
+
+Thanks for the following contributors:
+
+[![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
+
+More contributors：[Contributors List](contributors.md)
+
+## Partner
+
+Our Partners and users:
+
+<p>
+  <a href="https://www.wangan.com/vulhub" target="_blank"><img src="https://vulhub.org/img/sponsor/wangan.png" width="200"></a>
+  <a href="https://www.cvebase.com" target="_blank"><img src="https://vulhub.org/img/sponsor/cvebase.png" width="200"></a>
+  <a href="https://www.huoxian.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/huoxian.png" width="200"></a>
+  <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/img/sponsor/chaitin.png" width="200"></a>
+  <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/img/sponsor/aliyun.svg" width="200"></a>
+</p>
+
+Sponsor vulhub on patreon 🙏
+
+<a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/img/sponsor/patreon.png" width="150"></a>
+
+Sponsor vulhub on opencollective 🙏
+
+<p>
+  <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
+  <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
+</p>
+
+More [Donate](http://vulhub.org/#/docs/donate/).
 
 ## License
 
-Vulhub is released under the [GPL-3.0 license](LICENSE).
+Vulhub is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.

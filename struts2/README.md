@@ -1,2 +1,1 @@
-# Struts2 诸多命令执行漏洞测试环境
-
+# Struts2 Series Command Execution Vulnerable Environments

@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/laravel:8.4.2
+   ports:
+    - "8080:80"

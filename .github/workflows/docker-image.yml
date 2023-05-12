@@ -1,0 +1,156 @@
+name: Vulhub Docker Image CI
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Job scope'
+        required: true
+        default: 'all'
+
+jobs:
+  longtime-images-test:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'longtime' }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
+    - name: couchdb
+      run: |
+        bash tests/images-build.sh base/couchdb/1.6.0 base/couchdb/2.1.0
+    - name: ffmpeg
+      run: |
+        bash tests/image-build.sh base/ffmpeg/2.8.4 "vulhub/ffmpeg:2.8.4"
+        bash tests/image-build.sh base/ffmpeg/3.2.4 "vulhub/ffmpeg:3.2.4"
+        bash tests/images-build.sh base/ffmpeg/2.8.4-php base/ffmpeg/3.2.4-php
+    - name: git
+      run: |
+        bash tests/images-build.sh base/git/2.12.2
+
+  images-test:
+
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'normal' }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
+    - name: influxdb
+      run: |
+        bash tests/images-build.sh base/influxdb/1.6.6 base/influxdb/1.7.9
+    - name: jboss
+      run: |
+        bash tests/images-build.sh base/jboss/as-4.0.5 base/jboss/as-6.1.0
+    - name: jenkins
+      run: |
+        bash tests/images-build.sh base/jenkins/2.138 base/jenkins/2.46.1
+    - name: jira
+      run: |
+        bash tests/images-build.sh base/jira/8.1.0
+    - name: jmeter
+      run: |
+        bash tests/images-build.sh base/jmeter/3.3
+    - name: joomla
+      run: |
+        bash tests/images-build.sh base/joomla/3.4.5 base/joomla/3.7.0
+    - name: jupyter-notebook
+      run: |
+        bash tests/images-build.sh base/jupyter-notebook/5.2.2
+    - name: kibana
+      run: |
+        bash tests/images-build.sh base/kibana/5.6.12 base/kibana/6.5.4
+    # missed: httpd
+    - name: hadoop
+      run: |
+        bash tests/images-build.sh base/hadoop/2.8.1
+    - name: discuz
+      run: |
+        bash tests/images-build.sh base/discuzx/3.4-20170801 base/discuzx/7.2
+    - name: ghostscript
+      run: |
+        bash tests/image-build.sh base/ghostscript/9.21 "vulhub/ghostscript:9.21"
+        bash tests/image-build.sh base/ghostscript/9.23 "vulhub/ghostscript:9.23"
+        bash tests/image-build.sh base/ghostscript/9.25 "vulhub/ghostscript:9.25"
+        bash tests/image-build.sh base/ghostscript/9.26 "vulhub/ghostscript:9.26"
+        bash tests/image-build.sh base/ghostscript/9.53.3 "vulhub/ghostscript:9.53.3"
+        bash tests/images-build.sh base/ghostscript/9.21/with-flask base/ghostscript/9.23/with-flask
+    - name: imagemagick
+      run: |
+        bash tests/image-build.sh base/imagemagick/6.9.2-10 "vulhub/imagemagick:6.9.2-10"
+        bash tests/image-build.sh base/imagemagick/7.0.8-10 "vulhub/imagemagick:7.0.8-10"
+        bash tests/image-build.sh base/imagemagick/7.0.8-20 "vulhub/imagemagick:7.0.8-20"
+        bash tests/image-build.sh base/imagemagick/7.0.8-27 "vulhub/imagemagick:7.0.8-27"
+        bash tests/image-build.sh base/imagemagick/7.0.10-36 "vulhub/imagemagick:7.0.10-36"
+        bash tests/images-build.sh base/imagemagick/6.9.2-10/php base/imagemagick/7.0.8-10/php base/imagemagick/7.0.8-20/php base/imagemagick/7.0.8-27/php base/imagemagick/7.0.10-36/php
+    - name: gitea
+      run: |
+        bash tests/images-build.sh base/gitea/1.4.0
+    - name: gitlist
+      run: |
+        bash tests/images-build.sh base/gitlist/0.6.0
+    - name: glassfish
+      run: |
+        bash tests/images-build.sh base/glassfish/4.1
+    - name: cleanup
+      run: |
+        bash tests/cleanup.sh
+    - name: goahead
+      run: |
+        bash tests/images-build.sh base/goahead/3.6.4
+    - name: gogs
+      run: |
+        bash tests/images-build.sh base/gogs/0.11.66
+    - name: active-mq
+      run: |
+        bash tests/images-build.sh base/activemq/5.11.1 base/activemq/5.11.1/with-cron base/activemq/5.13.2
+    - name: apereo-cas
+      run: |
+        bash tests/images-build.sh base/apereo-cas/4.1.5
+    - name: appweb
+      run: |
+        bash tests/images-build.sh base/appweb/7.0.1
+    - name: aria2
+      run: |
+        bash tests/images-build.sh base/aria2/1.18.8
+    - name: baselinux
+      run: |
+        bash tests/images-build.sh base/baselinux/centos-6
+    - name: bash
+      run: |
+        bash tests/image-build.sh base/bash/4.3.0 "vulhub/bash:4.3.0"
+        bash tests/images-build.sh base/bash/4.3.0/with-httpd
+    - name: bind
+      run: |
+        bash tests/images-build.sh base/bind/latest
+    # missed: coldfusion
+    - name: confluence
+      run: |
+        bash tests/images-build.sh base/confluence/6.10.2 base/confluence/6.11.2
+    # longtime: couchdb
+    - name: django
+      run: |
+        bash tests/images-build.sh base/django/1.11.4 base/django/2.2.3 base/django/3.0.3 
+    # missed: docker
+    - name: drupal
+      run: |
+        bash tests/images-build.sh base/drupal/7.31 base/drupal/8.5.0
+    - name: ecshop
+      run: |
+        bash tests/images-build.sh base/ecshop/2.7.3 base/ecshop/3.6.0
+    - name: elasticsearch
+      run: |
+        bash tests/images-build.sh base/elasticsearch/1.1.1 base/elasticsearch/1.4.2 base/elasticsearch/1.4.4 base/elasticsearch/1.5.1 base/elasticsearch/1.6.0 base/elasticsearch/5.6.16 base/elasticsearch/6.8.6
+    # missed: electron
+    - name: fastjson
+      run: |
+        bash tests/images-build.sh base/fastjson/1.2.24 base/fastjson/1.2.45
+    # longtime: ffmpeg
+    - name: flask
+      run: |
+        bash tests/images-build.sh base/flask/1.1.1

@@ -1,0 +1,6 @@
+version: '2'
+services:
+ cmd:
+   image: vulhub/polkit:0.105
+   ports:
+     - 2222:2222

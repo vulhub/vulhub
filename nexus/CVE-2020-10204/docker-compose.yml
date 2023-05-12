@@ -1,0 +1,8 @@
+version: '3'
+services:
+ web:
+   image: vulhub/nexus:3.21.1
+   ports:
+    - "8081:8081"
+   volumes: 
+    - ./admin.password:/nexus-data/admin.password

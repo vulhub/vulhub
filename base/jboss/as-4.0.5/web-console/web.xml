@@ -1,0 +1,361 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC
+   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+   <description>Web Admin Console</description>
+   <servlet>
+      <servlet-name>J2EEFolder</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>ScriptName</param-name>
+         <param-value>J2EEFolder.bsh</param-value>
+      </init-param>
+      <init-param>
+         <param-name>IsRootNode</param-name>
+         <param-value>true</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>SystemFolder</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>ScriptName</param-name>
+         <param-value>SystemFolder.bsh</param-value>
+      </init-param>
+      <init-param>
+         <param-name>IsRootNode</param-name>
+         <param-value>true</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>MonitorsFolder</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>WrapperClass</param-name>
+         <param-value>org.jboss.console.plugins.MonitorLister</param-value>
+      </init-param>
+      <init-param>
+         <param-name>IsRootNode</param-name>
+         <param-value>true</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>AOPFolder</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>WrapperClass</param-name>
+         <param-value>org.jboss.console.plugins.AOPLister</param-value>
+      </init-param>
+      <init-param>
+         <param-name>IsRootNode</param-name>
+         <param-value>true</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+    <servlet>
+        <servlet-name>JMS Message</servlet-name>
+        <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+        <init-param>
+            <param-name>WrapperClass</param-name>
+            <param-value>org.jboss.console.plugins.JMSLister</param-value>
+        </init-param>
+        <init-param>
+            <param-name>MBeanClass</param-name>
+            <param-value>org.jboss.management.j2ee.JMSResource</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContextName</param-name>
+            <param-value>/web-console</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+   <!--servlet>
+   <servlet-name>UCLs</servlet-name>
+   <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+   <init-param>
+   <param-name>ScriptName</param-name>
+   <param-value>Classloaders.bsh</param-value>
+   </init-param>
+   <init-param>
+   <param-name>FolderName</param-name>
+   <param-value>ROOT/System</param-value>
+   </init-param>
+   <init-param>
+   <param-name>ContextName</param-name>
+   <param-value>/web-console</param-value>
+   </init-param>
+   <load-on-startup>1</load-on-startup>
+   </servlet-->
+
+   <servlet>
+      <servlet-name>UCLs</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>WrapperClass</param-name>
+         <param-value>org.jboss.console.plugins.UCLLister</param-value>
+      </init-param>
+      <init-param>
+         <param-name>FolderName</param-name>
+         <param-value>ROOT/System</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>MBeans</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>WrapperClass</param-name>
+         <param-value>org.jboss.console.plugins.MBeansLister</param-value>
+      </init-param>
+      <init-param>
+         <param-name>FolderName</param-name>
+         <param-value>ROOT/System</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>JSR77 Domains and Servers</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>WrapperClass</param-name>
+         <param-value>org.jboss.console.plugins.JSR77Lister</param-value>
+      </init-param>
+      <init-param>
+         <param-name>FolderName</param-name>
+         <param-value>ROOT/J2EE</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>JSR77 EJBModules and EJBs</servlet-name>
+      <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+      <init-param>
+         <param-name>WrapperClass</param-name>
+         <param-value>org.jboss.console.plugins.EJBModuleLister</param-value>
+      </init-param>
+      <init-param>
+         <param-name>MBeanClass</param-name>
+         <param-value>org.jboss.management.j2ee.EJBModule</param-value>
+      </init-param>
+      <init-param>
+         <param-name>ContextName</param-name>
+         <param-value>/web-console</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+    <servlet>
+        <servlet-name>JSR77 J2EE Apps</servlet-name>
+        <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+        <init-param>
+            <param-name>WrapperClass</param-name>
+            <param-value>org.jboss.console.plugins.J2EEAppLister</param-value>
+        </init-param>
+        <init-param>
+            <param-name>MBeanClass</param-name>
+            <param-value>org.jboss.management.j2ee.J2EEApplication</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContextName</param-name>
+            <param-value>/web-console</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>JSR77 WebModule</servlet-name>
+        <servlet-class>org.jboss.console.plugins.helpers.ServletPluginHelper</servlet-class>
+        <init-param>
+            <param-name>WrapperClass</param-name>
+            <param-value>org.jboss.console.plugins.WebModuleLister</param-value>
+        </init-param>
+        <init-param>
+            <param-name>MBeanClass</param-name>
+            <param-value>org.jboss.management.j2ee.WebModule</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContextName</param-name>
+            <param-value>/web-console</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+   <servlet>
+      <servlet-name>HTTP Invocation</servlet-name>
+      <servlet-class>org.jboss.console.remote.InvokerServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Create Snapshot</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.CreateSnapshotServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Manage Snapshot</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.ManageSnapshotServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Create Threshold Monitor</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.CreateThresholdMonitorServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Manage Threshold Monitor</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.ManageThresholdMonitorServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Create String Threshold Monitor</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.CreateStringThresholdMonitorServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Manage String Threshold Monitor</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.ManageStringThresholdMonitorServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Clear Monitor Alerts</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.ClearMonitorAlertsServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>Acknowledge Active Alarms</servlet-name>
+      <servlet-class>org.jboss.console.plugins.monitor.AcknowledgeActiveAlarmsServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+   
+  <servlet>
+    <servlet-name>Status Servlet</servlet-name>
+    <servlet-class>org.jboss.web.tomcat.tc5.StatusServlet</servlet-class>
+  </servlet>
+    
+  <servlet-mapping>
+    <servlet-name>Status Servlet</servlet-name>
+    <url-pattern>/status</url-pattern>
+  </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>HTTP Invocation</servlet-name>
+      <url-pattern>/Invoker/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Create Snapshot</servlet-name>
+      <url-pattern>/CreateSnapshot</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Manage Snapshot</servlet-name>
+      <url-pattern>/ManageSnapshot</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Create Threshold Monitor</servlet-name>
+      <url-pattern>/CreateThresholdMonitor</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Manage Threshold Monitor</servlet-name>
+      <url-pattern>/ManageThresholdMonitor</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Create String Threshold Monitor</servlet-name>
+      <url-pattern>/CreateStringThresholdMonitor</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Manage String Threshold Monitor</servlet-name>
+      <url-pattern>/ManageStringThresholdMonitor</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>Clear Monitor Alerts</servlet-name>
+      <url-pattern>/ClearMonitorAlerts</url-pattern>
+   </servlet-mapping>
+
+  <servlet-mapping>
+      <servlet-name>Acknowledge Active Alarms</servlet-name>
+      <url-pattern>/AcknowledgeActiveAlarms</url-pattern>
+   </servlet-mapping>
+   
+   <taglib>
+      <taglib-uri>/webconsole</taglib-uri>
+      <taglib-location>/WEB-INF/tlds/webconsole.tld</taglib-location>
+   </taglib>
+
+   <security-constraint>
+   <web-resource-collection>
+   <web-resource-name>HtmlAdaptor</web-resource-name>
+   <description>An example security config that only allows users with the
+   role JBossAdmin to access the HTML JMX console web application
+   </description>
+   <url-pattern>/*</url-pattern>
+   <http-method>GET</http-method>
+   <http-method>POST</http-method>
+   </web-resource-collection>
+   <auth-constraint>
+   <role-name>JBossAdmin</role-name>
+   </auth-constraint>
+   </security-constraint>
+
+   <login-config>
+      <auth-method>BASIC</auth-method>
+      <realm-name>JBoss WEB Console</realm-name>
+   </login-config>
+
+   <security-role>
+      <role-name>JBossAdmin</role-name>
+   </security-role>
+</web-app>

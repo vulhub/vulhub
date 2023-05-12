@@ -12,7 +12,7 @@ RUN set -ex \
 
 FROM vulhub/tomcat:8.0
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN rm -rf /usr/local/tomcat/webapps/* \
     && sed -i 's/securerandom.source=file:\/dev\/urandom/securerandom.source=file:\/dev\/.\/urandom/g' $JAVA_HOME/lib/security/java.security

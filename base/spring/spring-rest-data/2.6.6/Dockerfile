@@ -1,6 +1,6 @@
 FROM maven:3-jdk-8 AS builder
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 COPY ./ /usr/src/
 

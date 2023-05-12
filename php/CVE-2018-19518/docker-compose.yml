@@ -1,0 +1,8 @@
+version: '3'
+services:
+ web:
+   image: vulhub/php:5.6-with-imap
+   volumes:
+    - ./www:/var/www/html
+   ports:
+    - "8080:80"

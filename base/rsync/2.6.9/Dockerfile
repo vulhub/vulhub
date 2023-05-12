@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN apt-get update \
     && apt-get install -y build-essential wget autoconf \

@@ -1,37 +1,43 @@
-# Aria2 任意文件写入漏洞
+# Aria2 Arbitrary File Write Vulnerability
 
-Aria2是一个命令行下轻量级、多协议、多来源的下载工具（支持 HTTP/HTTPS、FTP、BitTorrent、Metalink），内建XML-RPC和JSON-RPC接口。在有权限的情况下，我们可以使用RPC接口来操作aria2来下载文件，将文件下载至任意目录，造成一个任意文件写入漏洞。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考文章：[https://paper.seebug.org/120/][1]
+Aria2 is a lightweight, multi-protocol, multi-source download tool (supports HTTP/HTTPS, FTP, BitTorrent, Metalink) with built-in XML-RPC and JSON-RPC interfaces.
 
-## 环境搭建
+We can use the RPC interface to operate aria2 and download files to any directory, causing an arbitrary file write vulnerability.
 
-启动漏洞环境：
+Reference article:
+
+ - https://paper.seebug.org/120/
+
+## Vulnerable Environment
+
+Start the vulnerable environment：
 
 ```
 docker-compose up -d
 ```
 
-6800是aria2的rpc服务的默认端口，环境启动后，访问`http://your-ip:6800/`，发现服务已启动并且返回404页面。
+6800 is the default port of aria2's rpc service. After the environment is started, access `http://your-ip:6800/`, and the service should return a 404 page.
 
-## 漏洞复现
+## Exploit
 
-因为rpc通信需要使用json或者xml，不太方便，所以我们可以借助第三方UI来和目标通信，如 http://binux.github.io/yaaw/demo/ 。
+Because rpc communication requires json or xml, it is not convenient, so we can use a third-party UI to communicate with the target, such as http://binux.github.io/yaaw/demo/
 
-打开yaaw，点击配置按钮，填入运行aria2的目标域名：`http://your-ip:6800/jsonrpc`:
+Open yaaw, click the configure button and fill in the target domain name running aria2: `http://your-ip:6800/jsonrpc`:
 
 ![](1.png)
 
-然后点击Add，增加一个新的下载任务。在Dir的位置填写下载至的目录，File Name处填写文件名。比如，我们通过写入一个crond任务来反弹shell：
+Then click "Add +" to add a new download task. Fill in the "Dir" field with directory you want your file to be downloaded to and fill in the "File Name" field with the desired file name . For example, we will download a reverse shell by writing a crond task:
 
 ![](2.png)
 
-这时候，arai2会将恶意文件（我指定的URL）下载到/etc/cron.d/目录下，文件名为shell。而在debian中，/etc/cron.d目录下的所有文件将被作为计划任务配置文件（类似crontab）读取，等待一分钟不到即成功反弹shell：
+At this time, arai2 will download the malicious file (the URL you specified) to the /etc/cron.d/ directory, with the file name "shell". In debian, all files in the /etc/cron.d directory will be read as a scheduled task configuration file (like crontab). Once written we can must wait for upto a minute before the reverse shell script is executed:
 
 ![](3.png)
 
-> 如果反弹不成功，注意crontab文件的格式，以及换行符必须是`\n`，且文件结尾需要有一个换行符。
+> If the reverse shell is unsuccessful, note the format of the crontab file, and the newline must be `\n`, and a newline is required at the end of the file.
 
-当然，我们也可以尝试写入其他文件，更多利用方法可以参考[这篇文章][1]
+Of course, we can also try to write other files, for more ways to exploit this vulnerability please refer to [this article][1]
 
 [1]: https://paper.seebug.org/120/

@@ -1,0 +1,45 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+    <display-name>Servlet 3.0 Web Application</display-name>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- Map these files with JSF -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>resources.application</param-value>
+    </context-param>
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+</web-app>

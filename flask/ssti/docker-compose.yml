@@ -1,9 +1,8 @@
 version: '2'
 services:
- flask:
-   build: .
-   command: -w 4 -b :8000 -u www-data -g www-data --access-logfile - app:app
+ web:
+   image: vulhub/flask:1.1.1
    volumes:
-    - .:/app
+    - ./src:/app
    ports:
     - "8000:8000"

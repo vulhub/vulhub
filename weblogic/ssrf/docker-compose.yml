@@ -1,10 +1,10 @@
 version: '2'
 services:
  weblogic:
-   image: vulhub/weblogic
+   image: vulhub/weblogic:10.3.6.0-2017
    depends_on:
     - redis
    ports:
     - "7001:7001"
  redis:
-   build: .
+   image: vulhub/baselinux:centos-6

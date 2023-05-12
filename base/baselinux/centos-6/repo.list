@@ -1,0 +1,5 @@
+[base]
+name=CentOS-$releasever - Basevault
+baseurl=http://vault.centos.org/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6

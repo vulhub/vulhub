@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/ofbiz:17.12.01
+   ports:
+    - "8443:8443"

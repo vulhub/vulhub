@@ -1,0 +1,28 @@
+[
+    {
+      "model": "vuln.Collection",
+      "pk": 1,
+      "fields": {
+        "name": "Example 1",
+        "detail": {
+            "title": "title 1",
+            "author": "vulhub",
+            "tags": ["python", "django"],
+            "content": "..."
+        }
+      }
+    },
+    {
+      "model": "vuln.Collection",
+      "pk": 2,
+      "fields": {
+        "name": "Example 2",
+        "detail": {
+            "title": "title 2",
+            "author": "vulhub",
+            "tags": ["python"],
+            "content": "..."
+        }
+      }
+    }
+  ]

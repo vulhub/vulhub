@@ -1,0 +1,18 @@
+div {
+    width: 600px;
+    margin: 5em auto;
+    padding: 2em;
+    background-color: #fdfdff;
+    border-radius: 0.5em;
+    box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+}
+a:link, a:visited {
+    color: #38488f;
+    text-decoration: none;
+}
+@media (max-width: 700px) {
+    div {
+        margin: 0 auto;
+        width: auto;
+    }
+}

@@ -1,0 +1,12 @@
+version: '2'
+services:
+ ntopng:
+   image: vulhub/ntopng:4.2
+   depends_on:
+    - redis
+   ports:
+    - "3000:3000"
+   environment:
+    REDIS_SERVER: redis:6379
+ redis:
+   image: redis:6.2-alpine

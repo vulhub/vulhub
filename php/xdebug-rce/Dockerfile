@@ -1,6 +1,6 @@
 FROM vulhub/php:7.1.12-apache
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN a2enmod rewrite && \
     pecl install xdebug-2.5.5 && \

@@ -1,0 +1,17 @@
+version: '2'
+services:
+ nginx:
+   image: nginx:1-alpine
+   volumes:
+    - ./files/default.conf:/etc/nginx/conf.d/default.conf
+   depends_on:
+    - web
+   ports:
+    - "8080:80"
+ web:
+   image: vulhub/uwsgi-python:2.0.17
+   command: uwsgi --socket 0.0.0.0:8000 --chdir /usr/src --module server --uid www-data --gid www-data -p 2
+   volumes:
+    - ./files/server.py:/usr/src/server.py
+   ports:
+    - "8000:8000"

@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.vulhub.jsf2</groupId>
+	<artifactId>JSF2Demo</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>JSF Demo Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Faces Implementation -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.1.28</version>
+		</dependency>
+		<!-- Faces Library -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1.28</version>
+		</dependency>
+		<!-- JSP Library -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<!-- JSTL Library -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>vulhub-jsf2-demo</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.30.v20200428</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/</contextPath>
+					</webApp>
+					<httpConnector>
+						<port>8080</port>
+					</httpConnector>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

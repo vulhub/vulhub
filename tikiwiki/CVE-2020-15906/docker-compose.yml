@@ -1,0 +1,26 @@
+version: '3'
+services:
+ web:
+   image: vulhub/tikiwiki:21.1
+   entrypoint: 
+    - bash
+    - /docker-entrypoint.sh
+   depends_on:
+    - db
+   ports:
+    - "8080:80"
+   environment: 
+    - TIKI_DB_DRIVER=pdo
+    - TIKI_DB_HOST=db
+    - TIKI_DB_USER=root
+    - TIKI_DB_PASS=root
+    - TIKI_DB_NAME=tikiwiki
+   volumes:
+    - "./docker-entrypoint.sh:/docker-entrypoint.sh"
+ db:
+   image: mysql:5.7
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=tikiwiki
+   ports:
+    - "3306:3306"

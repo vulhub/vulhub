@@ -1,0 +1,30 @@
+[
+  {
+    "model": "vuln.collection",
+    "pk": 1,
+    "fields": {
+      "name": "Example 1"
+    }
+  },
+  {
+    "model": "vuln.collection",
+    "pk": 2,
+    "fields": {
+      "name": "Example 2"
+    }
+  },
+  {
+    "model": "vuln.collection",
+    "pk": 3,
+    "fields": {
+      "name": "Example 3"
+    }
+  },
+  {
+    "model": "vuln.collection",
+    "pk": 4,
+    "fields": {
+      "name": "Example 4"
+    }
+  }
+]

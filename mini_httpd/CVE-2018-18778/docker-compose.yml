@@ -1,0 +1,7 @@
+version: '2'
+services:
+ web:
+   image: vulhub/mini_httpd:1.29
+   command:  mini_httpd -p 8080 -u www-data -h 0.0.0.0 -D -l /dev/stdout -v -T utf-8
+   ports:
+    - "8080:8080"

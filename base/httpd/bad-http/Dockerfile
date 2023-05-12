@@ -1,6 +1,6 @@
 FROM ubuntu:trusty
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 # install the PHP extensions we need
 RUN set -ex; \
@@ -20,7 +20,7 @@ RUN set -ex; \
 
 RUN a2enmod rewrite expires
 
-ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
 	&& rm -rf /var/www/html/*

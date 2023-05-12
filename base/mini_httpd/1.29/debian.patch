@@ -1,0 +1,14 @@
+--- mini_httpd.c        2018-11-01 13:07:56.856000000 +0000
++++ mini_httpd.patch.c  2018-11-01 13:07:27.148000000 +0000
+@@ -98,9 +98,11 @@
+ #define SIZE_T_MAX 2147483647L
+ #endif
+
++/*
+ #ifndef HAVE_INT64T
+ typedef long long int64_t;
+ #endif
++*/
+
+ #ifdef __CYGWIN__
+ #define timezone  _timezone

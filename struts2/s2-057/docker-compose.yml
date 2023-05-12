@@ -1,0 +1,8 @@
+version: '2'
+services:
+ struts2:
+   image: vulhub/struts2:2.3.34-showcase
+   volumes:
+    - ./struts-actionchaining.xml:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/struts-actionchaining.xml
+   ports:
+    - "8080:8080"

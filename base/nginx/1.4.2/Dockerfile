@@ -1,6 +1,6 @@
-FROM vulhub/debian:jessie
+FROM debian:jessie
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 ENV NGINX_VERSION 1.4.2
 

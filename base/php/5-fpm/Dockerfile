@@ -1,3 +1,3 @@
 FROM php:5-fpm
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"

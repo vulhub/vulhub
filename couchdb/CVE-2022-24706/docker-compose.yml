@@ -1,0 +1,11 @@
+version: '2'
+services:
+  couchdb:
+    image: vulhub/couchdb:3.2.1
+    ports:
+      - "5984:5984"
+      - "4369:4369"
+      - "9100:9100"
+    environment:
+      COUCHDB_USER: vulhub
+      COUCHDB_PASSWORD: vulhub

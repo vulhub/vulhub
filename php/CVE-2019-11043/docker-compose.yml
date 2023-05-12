@@ -1,0 +1,15 @@
+version: '2'
+services:
+ nginx:
+   image: nginx:1
+   volumes:
+    - ./www:/usr/share/nginx/html
+    - ./default.conf:/etc/nginx/conf.d/default.conf
+   depends_on:
+    - php
+   ports:
+    - "8080:80"
+ php:
+   image: php:7.2.10-fpm
+   volumes:
+    - ./www:/var/www/html

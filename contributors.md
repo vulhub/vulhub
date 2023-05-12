@@ -1,6 +1,8 @@
-# 参与者 && 致谢
+# Additional Contributors and Thanks
 
-有的同学向本项目提交过PR，也有私下提交代码的，这些人无法在contributors页面显示，所以在这里进行致谢：
+[中文版本(Chinese version)](contributors.zh-cn.md)
+
+Some people have privately contributed to this project. Private contributions cannot be displayed on the [github contributors page](https://github.com/vulhub/vulhub/graphs/contributors), so we thank them here:
 
 Avatar | ID | Blog
 ---- | ---- | ----

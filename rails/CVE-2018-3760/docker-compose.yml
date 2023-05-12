@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/rails:5.0.7
+   ports:
+    - "3000:3000"

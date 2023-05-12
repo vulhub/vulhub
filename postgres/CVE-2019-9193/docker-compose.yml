@@ -1,0 +1,8 @@
+version: '2'
+services:
+ postgres:
+   image: vulhub/postgres:10.7
+   ports:
+    - "5432:5432"
+   environment:
+    - POSTGRES_PASSWORD=postgres

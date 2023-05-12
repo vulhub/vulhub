@@ -1,0 +1,48 @@
+version: '2'
+services:
+  rocketchat:
+    image: vulhub/rocketchat:3.12.1
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          node main.js &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    restart: unless-stopped
+    environment:
+      - PORT=3000
+      - ROOT_URL=http://localhost:3000
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+      - MAIL_URL=smtp://smtp.email
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
+
+  mongo:
+    image: mongo:4.0
+    restart: unless-stopped
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+    labels:
+      - "traefik.enable=false"
+
+  # this container's job is just run the command to initialize the replica set.
+  # it will run the command and remove himself (it will not stay running)
+  mongo-init-replica:
+    image: mongo:4.0
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo

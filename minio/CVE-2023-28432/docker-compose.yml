@@ -1,0 +1,49 @@
+version: '3'
+services:
+  node1:
+    image: vulhub/minio:2023-02-27T18-10-45Z
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin-vulhub
+    command:
+      - minio
+      - server
+      - --console-address
+      - :9001
+      - http://node1:9000/mnt/data1
+      - http://node2:9000/mnt/data2
+      - http://node3:9000/mnt/data3
+    ports:
+      - 9000:9000
+      - 9001:9001
+    hostname: node1
+    volumes:
+      - ./mnt/data1:/mnt/data1
+  node2:
+    image: vulhub/minio:2023-02-27T18-10-45Z
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin-vulhub
+    command:
+      - minio
+      - server
+      - http://node1:9000/mnt/data1
+      - http://node2:9000/mnt/data2
+      - http://node3:9000/mnt/data3
+    hostname: node2
+    volumes:
+      - ./mnt/data2:/mnt/data2
+  node3:
+    image: vulhub/minio:2023-02-27T18-10-45Z
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin-vulhub
+    command:
+      - minio
+      - server
+      - http://node1:9000/mnt/data1
+      - http://node2:9000/mnt/data2
+      - http://node3:9000/mnt/data3
+    hostname: node3
+    volumes:
+      - ./mnt/data3:/mnt/data3

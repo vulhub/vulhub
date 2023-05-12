@@ -1,0 +1,9 @@
+version: '2'
+services:
+  rmi:
+    build: .
+    ports:
+      - "1099:1099"
+      - "64000:64000"
+    environment:
+      - RMIIP=127.0.0.1

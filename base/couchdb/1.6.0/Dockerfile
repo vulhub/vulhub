@@ -12,7 +12,7 @@
 
 FROM debian:jessie
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 # Install instructions from https://cwiki.apache.org/confluence/display/COUCHDB/Debian
 

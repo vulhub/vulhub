@@ -1,6 +1,6 @@
-FROM vulhub/debian:jessie
+FROM debian:stretch
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 ENV NGINX_VERSION 1.11.13
 
@@ -32,3 +32,10 @@ RUN set -ex \
     && cd / \
     && rm -rf /tmp/nginx-${NGINX_VERSION} /tmp/pcre-8.40 /tmp/zlib-1.2.11 /tmp/openssl-OpenSSL_1_0_1c \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_TOOLS
+
+RUN set -ex \
+    && mkdir -p /etc/ssl/nginx/ /etc/nginx/
+
+COPY local.crt local.key /etc/ssl/nginx/
+COPY nginx.conf /etc/nginx/
+CMD ["/usr/local/nginx/sbin/nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]

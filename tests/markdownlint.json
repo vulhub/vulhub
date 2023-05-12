@@ -1,0 +1,9 @@
+{
+    "default": true,
+    "ul-indent": false,
+    "line_length": false,
+    "no-bare-urls": false,
+    "no-alt-text": false,
+    "fenced-code-language": false,
+    "no-inline-html": false
+  }

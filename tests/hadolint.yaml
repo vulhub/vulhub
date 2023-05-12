@@ -1,0 +1,13 @@
+ignored:
+  - DL3002
+  - DL3007
+  - DL3008
+override:
+  error: 
+    - DL3006
+    - DL3027
+    - DL3030
+    - DL3014
+    - DL3017
+    - DL3021
+    - DL3022

@@ -1,0 +1,14 @@
+version: '2'
+services:
+ provider:
+   image: vulhub/dubbo:2.7.3
+   depends_on:
+    - zookeeper
+   ports:
+    - "8080:8080"
+   environment: 
+    - DUBBO_REGISTRY=zookeeper://zookeeper:2181
+ zookeeper:
+   image: zookeeper:3.7.0
+   ports: 
+    - "2181:2181"

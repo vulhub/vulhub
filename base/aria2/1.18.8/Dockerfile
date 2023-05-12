@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN set -ex \
     && apt-get update \
@@ -8,7 +8,7 @@ RUN set -ex \
     && apt-get install -y --no-install-recommends cron \
     && mkdir -p /usr/aria2/data/
 
-ADD aria2.conf /usr/aria2/aria2.conf
+COPY aria2.conf /usr/aria2/aria2.conf
 
 CMD set -ex \
     && cron \

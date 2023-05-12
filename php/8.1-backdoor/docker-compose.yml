@@ -1,0 +1,8 @@
+version: '2'
+services:
+ web:
+   image: vulhub/php:8.1-backdoor
+   volumes:
+    - ./index.php:/var/www/html/index.php
+   ports:
+    - "8080:80"

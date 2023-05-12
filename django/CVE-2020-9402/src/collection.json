@@ -1,0 +1,46 @@
+[
+  {
+    "model": "vuln.names",
+    "pk": 1,
+    "fields": {"name": "Example 1"}
+  },
+  {
+    "model": "vuln.names",
+    "pk": 21,
+    "fields": {"name": "Example 2"}
+  },
+  {
+    "model": "vuln.names",
+    "pk": 41,
+    "fields": {"name": "Example 3"}
+  },
+  {
+    "model": "vuln.names",
+    "pk": 61,
+    "fields": {"name": "Example 4"}
+  },
+  {
+    "model": "vuln.collection",
+    "pk": 1,
+    "fields": {
+      "path": "SRID=4326;LINESTRING (-0.0348982214927673 0.00552803277111328, 0.0315910577774048 0.00638097523323931)"}
+  },
+  {
+    "model": "vuln.collection",
+    "pk": 21,
+    "fields": {
+      "path": "SRID=4326;LINESTRING (-0.00787362456321716 0.0426149328995521, -0.00715211033821105 -0.0137838719945693)"}
+  },
+  {
+    "model": "vuln.collection2",
+    "pk": 41,
+    "fields": {
+      "point": "SRID=4326;POINT (-0.008518695831298819 0.00583514570181413)"}
+  },
+  {
+    "model": "vuln.collection2",
+    "pk": 61,
+    "fields": {
+      "point": "SRID=4326;POINT (0.0153462588787079 0.00642254947271488)"}
+  }
+]

@@ -1,3 +1,3 @@
 FROM php:7.0-apache
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"

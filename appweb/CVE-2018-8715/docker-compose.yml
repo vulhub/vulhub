@@ -1,0 +1,8 @@
+version: '2'
+services:
+ web:
+   image: vulhub/appweb:7.0.1
+   volumes:
+    - ./appweb.conf:/etc/appweb/appweb.conf
+   ports:
+    - "8080:8080"

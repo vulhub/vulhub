@@ -11,7 +11,7 @@ services:
     - ./www/model:/var/www/application/index/model
     - ./www/database.php:/var/www/application/database.php
  mysql:
-   image: mysql:5
+   image: mysql:5.5
    environment: 
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_DATABASE=cat

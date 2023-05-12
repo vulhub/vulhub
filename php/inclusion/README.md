@@ -1,50 +1,52 @@
-# PHP文件包含漏洞（利用phpinfo）
+# PHP Local File Inclusion RCE with PHPINFO
 
-PHP文件包含漏洞中，如果找不到可以包含的文件，我们可以通过包含临时文件的方法来getshell。因为临时文件名是随机的，如果目标网站上存在phpinfo，则可以通过phpinfo来获取临时文件名，进而进行包含。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+In PHP file inclusion vulnerabilities, when we cannot find a valid file to include for triggering RCE, we might be able to include a temporary file to exploit it if there exists PHPINFO which can tell us the randomly generated filename of the temporary file and its location.
+
+Reference:
 
 - https://dl.packetstormsecurity.net/papers/general/LFI_With_PHPInfo_Assitance.pdf
 
-## 漏洞环境
+## Vulnerable Environment
 
-执行如下命令启动环境：
+To start the vulnerable environment:
 
 ```
 docker-compose up -d
 ```
 
-目标环境是官方最新版PHP7.2，说明该漏洞与PHP版本无关。
+The target environment is the latest PHP 7.2, which tell us this vulnerability exists regardless of the version.
 
-环境启动后，访问`http://your-ip:8080/phpinfo.php`即可看到一个PHPINFO页面，访问`http://your-ip:8080/lfi.php?file=/etc/passwd`，可见的确存在文件包含漏洞。
+After the environment is started, access `http://your-ip:8080/phpinfo.php` to get a PHPINFO page and `http://your-ip:8080/lfi.php?file=/etc/passwd` shows there is an LFI vulnerability.
 
-## 利用方法简述
+## Exploit Details
 
-在给PHP发送POST数据包时，如果数据包里包含文件区块，无论你访问的代码中有没有处理文件上传的逻辑，PHP都会将这个文件保存成一个临时文件（通常是`/tmp/php[6个随机字符]`），文件名可以在`$_FILES`变量中找到。这个临时文件，在请求结束后就会被删除。
+When sending a POST request to PHP and the request contains a FILE block, PHP will save the file posted into a temporary file (usually `/tmp/php[6 random digits]`), the filename can be found at `$_FILES` variable. This temp file will be deleted after the request is over.
 
-同时，因为phpinfo页面会将当前请求上下文中所有变量都打印出来，所以我们如果向phpinfo页面发送包含文件区块的数据包，则即可在返回包里找到`$_FILES`变量的内容，自然也包含临时文件名。
+In the meantime, PHPINFO page prints all the variables in the context, including `$_FILES`. So, the temp file's name can be found in the response if we send the POST request to the PHPINFO page.
 
-在文件包含漏洞找不到可利用的文件时，即可利用这个方法，找到临时文件名，然后包含之。
+In this way, an LFI vulnerability can be promoted into an RCE without an existed useable local file.
 
-但文件包含漏洞和phpinfo页面通常是两个页面，理论上我们需要先发送数据包给phpinfo页面，然后从返回页面中匹配出临时文件名，再将这个文件名发送给文件包含漏洞页面，进行getshell。在第一个请求结束时，临时文件就被删除了，第二个请求自然也就无法进行包含。
+File inclusion and PHPINFO are usually in different web pages. In theory, we need to send the filename to the file inclusion page after retrieving the it in the response of the file uploading request to the PHPINFO page. However, after the first request finishes, the file would be removed from the disk, so we need to win the race.
 
-这个时候就需要用到条件竞争，具体流程如下：
+Steps:
 
-1. 发送包含了webshell的上传数据包给phpinfo页面，这个数据包的header、get等位置需要塞满垃圾数据
-2. 因为phpinfo页面会将所有数据都打印出来，1中的垃圾数据会将整个phpinfo页面撑得非常大
-3. php默认的输出缓冲区大小为4096，可以理解为php每次返回4096个字节给socket连接
-4. 所以，我们直接操作原生socket，每次读取4096个字节。只要读取到的字符里包含临时文件名，就立即发送第二个数据包
-5. 此时，第一个数据包的socket连接实际上还没结束，因为php还在继续每次输出4096个字节，所以临时文件此时还没有删除
-6. 利用这个时间差，第二个数据包，也就是文件包含漏洞的利用，即可成功包含临时文件，最终getshell
+1. Send the file upload request to PHPINFO page with the HEADER and GET fields filled with large chunks of junk data.
+2. The response content would be huge because PHPINFO will print out all the data.
+3. PHP's default output buffer size is 4096 bytes. It can be understood as PHP return 4096 bytes each time during a socket connection.
+4. So we use raw socket to achieve our goal. Each time we read 4096 bytes and send the filename to the LFI page once we get it.
+5. By the time we got the filename, the first socket connection has not ended, which means the temp file still exists at that time.
+6. By taking advantage of the time gap, the temp file can be included and executed.
 
-## 漏洞复现
+## Exploit
 
-利用脚本[exp.py](exp.py)实现了上述过程，成功包含临时文件后，会执行`<?php file_put_contents('/tmp/g', '<?=eval($_REQUEST[1])?>')?>`，写入一个新的文件`/tmp/g`，这个文件就会永久留在目标机器上。
+The python script [exp.py](exp.py) implements the above process. After successfully include the temp file, `<?php file_put_contents('/tmp/g', '<?=eval($_REQUEST[1])?>')?>` will be executed to generate a permanent file `/tmp/g` for further use.
 
-用python2执行：`python exp.py your-ip 8080 100`：
+use python2：`python exp.py your-ip 8080 100`:
 
 ![](1.png)
 
-可见，执行到第289个数据包的时候就写入成功。然后，利用lfi.php，即可执行任意命令：
+The script success at the 189th packet, after that arbitrary code can be executed:
 
 ![](2.png)

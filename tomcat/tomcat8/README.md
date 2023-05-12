@@ -1,25 +1,27 @@
-# Tomcat7+ 弱口令 && 后台getshell漏洞
+# Tomcat7+ Weak Password && Backend Getshell Vulnerability
 
-Tomcat版本：8.0
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 环境说明
+Tomcat version: 8.0
 
-Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。其中，欲访问后台，需要对应用户有相应权限。
+## Introduction
 
-Tomcat7+权限分为：
+Tomcat supports deploying the war files through backend, so we can directly place the webshell into the web directory. In order to access the backend, permissions are needed.
 
- - manager（后台管理）
-   - manager-gui 拥有html页面权限
-   - manager-status 拥有查看status的权限
-   - manager-script 拥有text接口的权限，和status权限
-   - manager-jmx 拥有jmx权限，和status权限
- - host-manager（虚拟主机管理）
-   - admin-gui 拥有html页面权限
-   - admin-script 拥有text接口权限
+Permissions of Tomcat7+ are as follows:
 
-这些权限的究竟有什么作用，详情阅读 http://tomcat.apache.org/tomcat-8.5-doc/manager-howto.html
+ - manager（backend management）
+   - manager-gui (permission of html pages)
+   - manager-status (permission to view status)
+   - manager-script (permission of text interface and the status permission)
+   - manager-jmx (jmx permissions, and status permissions)
+ - host-manager (virtual host management)
+   - admin-gui (permission of html pages)
+   - admin-script (permission of text interface)
 
-在`conf/tomcat-users.xml`文件中配置用户的权限：
+To know more about the permissions, please read: http://tomcat.apache.org/tomcat-8.5-doc/manager-howto.html
+
+Permissions of users are configured in the ` conf/tomcat-users.xml ` file:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -39,20 +41,20 @@ Tomcat7+权限分为：
 </tomcat-users>
 ```
 
-可见，用户tomcat拥有上述所有权限，密码是`tomcat`。
+As can be seen, user tomcat has all of the permissions mentioned above, and the password is `tomcat`.
 
-正常安装的情况下，tomcat8中默认没有任何用户，且manager页面只允许本地IP访问。只有管理员手工修改了这些属性的情况下，才可以进行攻击。
+There are no users by default in Tomcat8 through normal installation, and the manager page only allows local IP to visit. Only if the administrator has manually modified these properties can we make an attack.
 
-## 漏洞测试
+## Environment and Test
 
-无需编译，直接启动整个环境：
+Just run：
 
 ```
 docker-compose up -d
 ```
 
-打开tomcat管理页面`http://your-ip:8080/manager/html`，输入弱密码`tomcat:tomcat`，即可访问后台：
+Open the tomcat management page `http://your-ip:8080/manager/html`，enter the weak password `tomcat:tomcat`，then access the backend：
 
 ![](1.png)
 
-上传war包即可直接getshell。
+Upload war package and then get shell directly.

@@ -1,6 +1,6 @@
-FROM vulhub/ubuntu:16.04
+FROM ubuntu:16.04
 
-MAINTAINER phithon <root@leavesongs.com>
+LABEL maintainer="phithon <root@leavesongs.com>"
 
 ENV BUILD_DEP wget build-essential autoconf 
 
@@ -35,6 +35,6 @@ EXPOSE 137/udp 138/udp 139 445
 RUN mkdir /home/share \
     && chmod 777 /home/share
 
-ADD smb.conf /usr/local/samba/etc/smb.conf
+COPY smb.conf /usr/local/samba/etc/smb.conf
 
 CMD ["/usr/local/samba/sbin/smbd", "-FS"]

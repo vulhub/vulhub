@@ -18,5 +18,5 @@ if [ "$1" = 'dockerd' ]; then
 fi
 
 # Start crond process
-crond -b
+crond -b -L /var/log/crond.log
 exec "$@"

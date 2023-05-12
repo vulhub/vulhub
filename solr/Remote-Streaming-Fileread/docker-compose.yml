@@ -1,0 +1,7 @@
+version: '2'
+services:
+ solr:
+   command: solr-demo
+   image: vulhub/solr:8.8.1
+   ports:
+    - "8983:8983"
