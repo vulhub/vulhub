@@ -26,23 +26,19 @@ Vulhub is an open-source collection of pre-built vulnerable docker environments.
 
 ## Installation
 
-Install the docker/docker-compose on Ubuntu 20.04:
+Install Docker on Ubuntu 20.04:
 
 ```bash
-# Install pip
-curl -s https://bootstrap.pypa.io/get-pip.py | python3
-
 # Install the latest version docker
 curl -s https://get.docker.com/ | sh
 
 # Run docker service
 systemctl start docker
-
-# Install docker compose
-pip install docker-compose
 ```
 
-The installation steps of docker and docker-compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
+Note: if you already have (deprecated) Docker Compose v1 installed (aka `docker-compose`) you should upgrade to Compose v2.
+
+The installation steps of Docker and Docker Compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
 
 ## Usage
 
@@ -56,10 +52,10 @@ cd vulhub-master
 cd flask/ssti
 
 # Compile environment
-docker-compose build
+docker compose build
 
 # Run environment
-docker-compose up -d
+docker compose up -d
 ```
 
 There is a **README** document in each environment directory, please read this file for vulnerability/environment testing and usage.
@@ -67,7 +63,7 @@ There is a **README** document in each environment directory, please read this f
 After the test, delete the environment with the following command.
 
 ```
-docker-compose down -v
+docker compose down -v
 ```
 
 It is recommended to use a VPS of at least 1GB memory to build a vulnerability environment. The `your-ip` mentioned in the documentation refers to the IP address of your VPS. If you are using a virtual machine, it refers to your virtual machine IP, not the IP inside the docker container.
@@ -76,7 +72,7 @@ It is recommended to use a VPS of at least 1GB memory to build a vulnerability e
 
 ## Notice
 
-1. To prevent permission errors, it is best to use the root user to execute the docker and docker-compose commands.
+1. To prevent permission errors, it is best to use the root user to execute the `docker` command.
 2. Some docker images do not support running on ARM machines.
 
 ## Contribution
