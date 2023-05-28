@@ -13,7 +13,7 @@ Reference:
 To start the vulnerable environment:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 The target environment is the latest PHP 7.2, which tell us this vulnerability exists regardless of the version.

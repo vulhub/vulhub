@@ -11,7 +11,7 @@
 ## 测试环境搭建
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## 漏洞复现

@@ -5,9 +5,6 @@
     <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub">
     </a>
-    <a href="https://www.wangan.com/vulhub">
-      <img src="https://img.shields.io/badge/Official-Community-blue.svg" alt="Official Community">
-    </a>
     <a href="https://discord.gg/bQCpZEK">
       <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
     </a>
@@ -24,7 +21,7 @@ Vulhub是一个面向大众的开源漏洞靶场，无需docker知识，简单�
 
 ## Installation
 
-在Ubuntu 20.04下安装docker/docker-compose:
+在Ubuntu 22.04下安装docker:
 
 ```bash
 # 安装pip
@@ -35,12 +32,11 @@ curl -s https://get.docker.com/ | sh
 
 # 启动docker服务
 systemctl start docker
-
-# 安装compose
-pip install docker-compose 
 ```
 
-其他操作系统安装docker和docker-compose可能会有些许不同，请阅读Docker文档进行安装。
+注意，从2022年4月起，`docker compose`作为一个子命令被并入Docker中，成为[Docker Compose V2](https://www.docker.com/blog/announcing-compose-v2-general-availability/)，Python版本的docker-compose将在2023年6月以后被弃用，故后续Vulhub的使用不再需要安装额外的docker-compose，所有文档也会修改为使用`docker compose`子命令。
+
+其他操作系统安装docker可能会有些许不同，请阅读Docker文档进行安装。
 
 ## Usage
 
@@ -54,10 +50,10 @@ cd vulhub-master
 cd flask/ssti
 
 # 自动化编译环境
-docker-compose build
+docker compose build
 
 # 启动整个环境
-docker-compose up -d
+docker compose up -d
 ```
 
 每个环境目录下都有相应的说明文件，请阅读该文件，进行漏洞/环境测试。
@@ -65,7 +61,7 @@ docker-compose up -d
 测试完成后，删除整个环境
 
 ```
-docker-compose down -v
+docker compose down -v
 ```
 
 本项目每个漏洞环境均附带文档，建议你购买1G内存的vps搭建漏洞测试环境，文档中所说的`your-ip`均指你的vps的ip地址，如果你是用虚拟机搭建测试环境，是指你的虚拟机IP，而不是docker容器内部的IP，请不要混淆。
@@ -76,8 +72,8 @@ docker-compose down -v
 
 注意事项：
 
-1. 为防止出现权限错误，最好使用root用户执行docker和docker-compose命令
-2. docker部分镜像不支持在ARM等架构的机器上运行
+1. 为防止出现权限错误，请保证docker容器有权限访问当前目录下所有文件
+2. Vulhub暂不支持在ARM等非x86架构的机器上运行
 
 ## Contribution
 
@@ -85,7 +81,6 @@ docker-compose down -v
 
 更多问题，可以用如下方式和我们联系：
 
-- [讨论社区](https://www.wangan.com/vulhub)
 - [Discord](https://discord.gg/bQCpZEK)
 - [Twitter](https://twitter.com/vulhub)
 

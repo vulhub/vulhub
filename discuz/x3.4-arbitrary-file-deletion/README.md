@@ -9,7 +9,7 @@
 执行下列命令部署 Discuz!X 安装环境
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 安装时，只用修改数据库地址为`db`，其他保持默认即可：

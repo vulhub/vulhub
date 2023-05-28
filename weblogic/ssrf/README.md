@@ -7,7 +7,7 @@ Weblogic中存在一个SSRF漏洞，利用该漏洞可以发送任意HTTP请求�
 编译及启动测试环境
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 访问`http://your-ip:7001/uddiexplorer/`，无需登录即可查看uddiexplorer应用。

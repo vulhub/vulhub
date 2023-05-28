@@ -15,7 +15,7 @@ References:
 Execute following command to start the V2board 1.6.1:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the server is started, browse the `http://localhost:8080` to see the default login page of the V2board.

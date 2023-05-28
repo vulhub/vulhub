@@ -12,7 +12,7 @@
 执行如下命令启动struts2 2.3.30：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可看到上传页面。

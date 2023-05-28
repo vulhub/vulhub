@@ -15,7 +15,7 @@ Reference links：
 Enter the following command：(ThinkPHP version:5.0.20)
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Visit `http://your-ip:8080` and you'll see the default page of ThinkPHP.

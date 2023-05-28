@@ -5,9 +5,6 @@
     <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub">
     </a>
-    <a href="https://www.wangan.com/vulhub">
-      <img src="https://img.shields.io/badge/Official-Community-blue.svg" alt="Official Community">
-    </a>
     <a href="https://discord.gg/bQCpZEK">
       <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
     </a>
@@ -26,7 +23,7 @@ Vulhub is an open-source collection of pre-built vulnerable docker environments.
 
 ## Installation
 
-Install Docker on Ubuntu 20.04:
+Install Docker on Ubuntu 22.04:
 
 ```bash
 # Install the latest version docker
@@ -36,7 +33,7 @@ curl -s https://get.docker.com/ | sh
 systemctl start docker
 ```
 
-Note: if you already have (deprecated) Docker Compose v1 installed (aka `docker-compose`) you should upgrade to Compose v2.
+Note that as of April 2022, `docker compose` is merged into Docker as a subcommand as [Docker Compose V2](https://www.docker.com/blog/announcing-compose-v2-general-availability/), the Python version of docker-compose will be deprecated after June 2023. So Vulhub will no longer require the installation of additional `docker-compose`, and all documentation will be modified to use the `docker compose` instead.
 
 The installation steps of Docker and Docker Compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
 
@@ -72,8 +69,8 @@ It is recommended to use a VPS of at least 1GB memory to build a vulnerability e
 
 ## Notice
 
-1. To prevent permission errors, it is best to use the root user to execute the `docker` command.
-2. Some docker images do not support running on ARM machines.
+1. To prevent permission errors, please ensure that the docker container has permission to access all files in the current directory.
+2. Vulhub does not support running on machines with non-x86 architecture such as ARM for now.
 
 ## Contribution
 
@@ -81,7 +78,6 @@ This project relies on docker. So any error during compilation and running are t
 
 For more question, please contact:
 
-- [Chinese Community](https://www.wangan.com/vulhub)
 - [Discord](https://discord.gg/bQCpZEK)
 - [Twitter](https://twitter.com/vulhub)
 

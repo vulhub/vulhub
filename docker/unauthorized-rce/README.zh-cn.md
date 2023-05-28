@@ -9,8 +9,8 @@
 编译及启动漏洞环境：
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 环境启动后，将监听2375端口。

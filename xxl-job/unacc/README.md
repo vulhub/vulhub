@@ -13,7 +13,7 @@ XXL-JOB是一个分布式任务调度平台，其核心设计目标是开发迅�
 执行如下命令启动2.2.0版本的XXL-JOB：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可查看到管理端（admin），访问`http://your-ip:9999`可以查看到客户端（executor）。

@@ -7,8 +7,8 @@ Java Remote Method Invocation 用于在Java中进行远程调用。RMI存在远�
 执行如下命令编译及启动RMI Registry和服务器：
 
 ```
-docker-compose build
-docker-compose run -e RMIIP=your-ip -p 1099:1099 rmi
+docker compose build
+docker compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ```
 
 其中，`your-ip`是服务器IP，客户端会根据这个IP来连接服务器。

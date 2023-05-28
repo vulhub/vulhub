@@ -11,7 +11,7 @@ Grafana是一个开源的度量分析与可视化套件。在其管理后台中�
 执行如下命令启动一个Grafana 8.5.4：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:3000`即可查看到管理后台。这个管理后台是不需要登录的，因为Vulhub环境设置了匿名用户的权限：

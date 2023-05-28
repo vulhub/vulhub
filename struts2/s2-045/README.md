@@ -14,7 +14,7 @@ References:
 Execute the following command to start the Struts2 2.3.30：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the container is running, visit `http://your-ip:8080` that you can see an example of the upload page.

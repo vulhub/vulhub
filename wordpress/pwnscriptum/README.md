@@ -9,8 +9,8 @@ https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.ht
 ## Environment setup
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 Because Mysql initialization needs a little time, so please wait. After initialization succeeds, visit `http://your-ip:8080/`, set the administrator username and password to use it (the database is configured and not automatically updated).

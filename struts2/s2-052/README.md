@@ -12,7 +12,7 @@ Details:
 ## Setup
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Exploit
@@ -88,7 +88,7 @@ Content-Length: 2415
 </map>
 ```
 
-If the packet is executed, the file `/tmp/success` will be created in the docker container. We execute `docker-compose exec struts2 ls /tmp/`, and we can see `success`.
+If the packet is executed, the file `/tmp/success` will be created in the docker container. We execute `docker compose exec struts2 ls /tmp/`, and we can see `success`.
 
 In addition, we can also download a jspx webshell:
 

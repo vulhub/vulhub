@@ -15,7 +15,7 @@ uWSGI支持通过魔术变量（Magic Variables）的方式动态配置后端Web
 执行如下命令启动nginx+uwsgi环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可查看一个Web应用，其uwsgi暴露在8000端口。
@@ -26,6 +26,6 @@ docker-compose up -d
 
 ![](1.png)
 
-执行`docker-compose exec web bash`进入容器，可见`/tmp/success`已经成功执行：
+执行`docker compose exec web bash`进入容器，可见`/tmp/success`已经成功执行：
 
 ![](2.png)

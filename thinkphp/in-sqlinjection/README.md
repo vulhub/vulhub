@@ -14,7 +14,7 @@ Details to read the references：
 Enter the following command:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Visiting `http://your-ip/index.php?ids[]=1&ids[]=2`, you'll see the username is displayed, indicating that the environment is running successfully.

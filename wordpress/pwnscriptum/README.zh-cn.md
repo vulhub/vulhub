@@ -9,8 +9,8 @@
 编译及运行测试环境
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 由于Mysql初始化需要一段时间，所以请等待。成功运行后，访问`http://your-ip:8080/`打开站点，初始化管理员用户名和密码后即可使用（数据库等已经配置好，且不会自动更新）。

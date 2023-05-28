@@ -14,7 +14,7 @@ ThinkPHP是一个在中国使用较多的PHP框架。在其6.0.13版本及以前
 执行如下命令启动一个使用ThinkPHP 6.0.12版本开发的Web应用：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可查看到ThinkPHP默认的欢迎页面。

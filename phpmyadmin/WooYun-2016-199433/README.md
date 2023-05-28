@@ -9,7 +9,7 @@ Affected version: 2.x
 Run the following command to start phpmyadmin:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Visit `http://your-ip:8080` and you will see the phpmyadmin home page. Because there is no connection to the database, we will get an error. But this vulnerability is not related to the database, so just ignore.

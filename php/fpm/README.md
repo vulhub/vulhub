@@ -6,7 +6,7 @@
 
 ## 测试环境搭建
 
-直接执行`docker-compose up -d`即可运行测试环境，环境监听9000端口。
+直接执行`docker compose up -d`即可运行测试环境，环境监听9000端口。
 
 ## EXP
 

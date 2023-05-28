@@ -10,7 +10,7 @@ libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡。
 使用如下命令编译并启动环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080/index.php`即可看到phpinfo，搜索libxml即可看到其版本为2.8.0。

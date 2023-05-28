@@ -15,7 +15,7 @@ Reference link:
 Run the following commands to start environment
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment start, visit `http://your-ip:8080`, you will see the 2.7.3 installation page. Visit `http://your-ip:8081`, you will see the 3.6.0 installation page.

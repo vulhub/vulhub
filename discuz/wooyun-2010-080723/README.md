@@ -11,7 +11,7 @@
 执行如下命令启动Discuz 7.2：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 启动后，访问`http://your-ip:8080/install/`来安装discuz，数据库地址填写`db`，数据库名为`discuz`，数据库账号密码均为`root`。

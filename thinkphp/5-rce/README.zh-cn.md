@@ -13,7 +13,7 @@ ThinkPHP是一款运用极广的PHP开发框架。其版本5中，由于没有�
 运行ThinkPHP 5.0.20版本：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可看到ThinkPHP默认启动页面。

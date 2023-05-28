@@ -10,7 +10,7 @@
 ## 测试环境搭建
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境运行后，访问`http://your-ip:8080/hello.action`即可看到一个提交页面。

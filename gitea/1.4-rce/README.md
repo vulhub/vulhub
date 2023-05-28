@@ -12,7 +12,7 @@ Gitea是从gogs衍生出的一个开源项目，是一个类似于Github、Gitla
 执行如下命令启动启动漏洞环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://you-ip:3000`，将进入安装页面，填写管理员账号密码，并修改网站URL，其他的用默认配置安装即可。（不要修改端口号）
@@ -21,7 +21,7 @@ docker-compose up -d
 
 ![](1.png)
 
-然后，需要执行一次`docker-compose restart`重启gitea服务。（原因详见第二个参考链接）
+然后，需要执行一次`docker compose restart`重启gitea服务。（原因详见第二个参考链接）
 
 ## 漏洞复现
 

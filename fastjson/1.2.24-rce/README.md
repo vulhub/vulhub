@@ -12,7 +12,7 @@ fastjson在解析json的过程中，支持使用autoType来实例化某一个具
 运行测试环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境运行后，访问`http://your-ip:8090`即可看到JSON格式的输出。

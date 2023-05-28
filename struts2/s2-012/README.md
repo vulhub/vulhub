@@ -25,8 +25,8 @@ During the redirection process, struts2 performs an OGNL expression parsing on t
 ## Setup
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## Exploit

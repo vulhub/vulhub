@@ -11,7 +11,7 @@ References: <https://www.leavesongs.com/PENETRATION/attack-scrapy.html>
 Execution the following command to start a scrapyd server:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 After scrapyd is deployed, the server is listening on `http://your-ip:6800`.

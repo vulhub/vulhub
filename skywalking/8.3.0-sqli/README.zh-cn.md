@@ -14,7 +14,7 @@ Apache Skywalking是一款针对分布式系统的应用程序性能监视工具
 执行如下命令启动一个Apache Skywalking 8.3.0版本：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可查看Skywalking的页面。

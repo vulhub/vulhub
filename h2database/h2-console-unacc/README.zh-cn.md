@@ -18,7 +18,7 @@ spring.h2.console.settings.web-allow-others=true
 执行如下命令启动一个Springboot + h2database环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 启动后，访问`http://your-ip:8080/h2-console/`即可查看到H2 database的管理页面。

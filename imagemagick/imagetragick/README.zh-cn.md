@@ -13,7 +13,7 @@ ImageMagick是一款使用量很广的图片处理程序，很多厂商都调用
 执行如下命令启动一个包含了Imagemagick 6.9.2-10的PHP服务器：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## 漏洞复现

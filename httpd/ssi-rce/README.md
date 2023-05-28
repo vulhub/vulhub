@@ -12,7 +12,7 @@
 运行一个支持SSI与CGI的Apache服务器：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080/upload.php`，即可看到一个上传表单。

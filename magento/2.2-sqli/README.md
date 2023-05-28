@@ -14,7 +14,7 @@ Magento（麦进斗）是一款新的专业开源电子商务平台，采用php�
 执行如下命令启动Magento 2.2.7：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`，即可看到Magento的安装页面。安装Magento时，数据库地址填写`mysql`，账号密码均为`root`，其他保持默认：

@@ -14,7 +14,7 @@ S2-061是对S2-059的绕过，Struts2官方对S2-059的修复方式是加强OGNL
 执行如下命令启动一个Struts2 2.5.25版本环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://target-ip:8080/index.action`查看到首页。

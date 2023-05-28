@@ -13,7 +13,7 @@ References:
 Execute following commands to start a Apache Solr 8.8.1:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment is started, browser `http://your-ip:8983` to view the Apache Solr.

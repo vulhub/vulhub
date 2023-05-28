@@ -15,7 +15,7 @@ Reference links:
 Execute the following command to start a JSF application which using JDK7u21 and Mojarra 2.1.28:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the application is started, visit `http://your-ip:8080` to see the demo page.

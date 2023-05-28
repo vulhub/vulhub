@@ -13,7 +13,7 @@ Reference:
 Execute following commands to start an Apereo CAS 4.1.5：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the Apereo CAS is started, visiting `http://your-ip:8080/cas/login` to see the login page.

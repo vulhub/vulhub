@@ -10,8 +10,8 @@
 ## 测试环境搭建
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## 漏洞复现

@@ -11,8 +11,8 @@
 执行以下命令启动s2-001测试环境
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## POC && EXP

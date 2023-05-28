@@ -13,7 +13,7 @@ References:
 Execute following command to start a YApi server v1.10.2:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the server is started, you can browse the website at `http://your-ip:3000/`.

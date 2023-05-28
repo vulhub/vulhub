@@ -14,7 +14,7 @@ Apache Struts框架, 会对某些特定的标签的属性值，比如id属性进
 启动 Struts 2.5.16环境:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 启动环境之后访问`http://your-ip:8080/?id=1` 就可以看到测试界面

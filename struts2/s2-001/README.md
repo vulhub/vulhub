@@ -13,8 +13,8 @@
 Run the following commands to setup
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## POC && EXP

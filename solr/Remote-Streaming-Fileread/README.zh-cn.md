@@ -11,7 +11,7 @@ Apache Solr 是一个开源的搜索服务器。在Apache Solr未开启认证的
 执行如下命令启动solr 8.8.1：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8983`即可查看Apache Solr后台。

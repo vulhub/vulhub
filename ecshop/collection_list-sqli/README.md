@@ -10,7 +10,7 @@ References:
 Execute following command to start a ECShop 4.0.6:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After server is started, browse the `http://your-ip:8080` to see the installation wizard. Follow the manual, fill in the database address as `mysql`, username and password as `root` and `root`.

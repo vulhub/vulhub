@@ -9,7 +9,7 @@ scrapyd是爬虫框架scrapy提供的云服务，用户可以部署自己的scra
 执行如下命令启动scrapyd服务：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:6800`即可看到Web界面。

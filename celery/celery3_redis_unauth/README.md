@@ -11,7 +11,7 @@ In Celery <4.0 version, Pickle is used by default for serialized task messages. 
 Execute the following command to start Celery 3.1.23 + Redis:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Exploit
@@ -26,7 +26,7 @@ python exploit.py [Host IP]
 View Results：
 
 ```
-docker-compose logs celery
+docker compose logs celery
 ```
 
 You can see the following task message error：
@@ -34,7 +34,7 @@ You can see the following task message error：
 ![](a.png)
 
 ```bash
-docker-compose exec celery ls -l /tmp
+docker compose exec celery ls -l /tmp
 ```
 
 You can see that the file `celery_success` was successfully created

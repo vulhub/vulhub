@@ -11,7 +11,7 @@ Java版本：1.6
 启动本环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## 弱口令
