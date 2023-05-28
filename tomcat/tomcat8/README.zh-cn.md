@@ -48,7 +48,7 @@ Tomcat7+权限分为：
 无需编译，直接启动整个环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 打开tomcat管理页面`http://your-ip:8080/manager/html`，输入弱密码`tomcat:tomcat`，即可访问后台：

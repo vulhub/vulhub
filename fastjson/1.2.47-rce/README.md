@@ -12,7 +12,7 @@ Fastjson是阿里巴巴公司开源的一款json解析器，其性能优越，�
 执行如下命令启动一个spring web项目，其中使用fastjson作为默认json解析器：
 
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8090`即可看到一个json对象被返回，我们将content-type修改为`application/json`后可向其POST新的JSON对象，后端会利用fastjson进行解析。

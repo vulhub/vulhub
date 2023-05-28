@@ -9,7 +9,7 @@ Jupyter Notebook（此前被称为 IPython notebook）是一个交互式笔记�
 运行测试环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 运行后，访问`http://your-ip:8888`将看到Jupyter Notebook的Web管理界面，并没有要求填写密码。

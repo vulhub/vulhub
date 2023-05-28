@@ -12,7 +12,7 @@ DNS协议支持使用axfr类型的记录进行区域传送，用来解决主从�
 Vulhub使用[Bind9](https://wiki.debian.org/Bind9)来搭建dns服务器，但不代表只有Bind9支持AXFR记录。运行DNS服务器：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境运行后，将会监听TCP和UDP的53端口，DNS协议同时支持从这两个端口进行数据传输。

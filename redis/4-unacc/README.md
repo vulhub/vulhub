@@ -15,7 +15,7 @@ Reference:
 Execute following command to start a Redis server 4.0.14:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After server is started, you can connect to this server without credentials by `redis-cli`:

@@ -11,7 +11,7 @@ YApi是一个API管理工具。在其1.12.0版本之前，存在一处NoSQL注�
 执行如下命令启动一个YApi v1.10.2服务：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:3000`即可看到YApi首页。

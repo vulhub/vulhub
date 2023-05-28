@@ -3,7 +3,7 @@
 ## 运行测试环境
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 运行成功后，Nginx将会监听8080/8081/8082三个端口，分别对应三种漏洞。

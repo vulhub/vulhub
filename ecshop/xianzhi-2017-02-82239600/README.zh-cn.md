@@ -13,7 +13,7 @@ ECShop是一款B2C独立网店系统，适合企业及个人快速构建个性�
 执行如下命令启动ecshop 2.7.3与3.6.0：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`将看到2.7.3的安装页面，访问`http://your-ip:8081`将看到3.6.0的安装页面。

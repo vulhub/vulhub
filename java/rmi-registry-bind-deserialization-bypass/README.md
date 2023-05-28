@@ -28,8 +28,8 @@ if (String.class == clazz
 执行如下命令编译及启动RMI Registry和服务器：
 
 ```
-docker-compose build
-docker-compose run -e RMIIP=your-ip -p 1099:1099 rmi
+docker compose build
+docker compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ```
 
 其中，`your-ip`是服务器IP，客户端会根据这个IP来连接服务器。

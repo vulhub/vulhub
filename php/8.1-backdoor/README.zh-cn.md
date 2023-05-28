@@ -13,7 +13,7 @@ PHP 8.1.0-dev 版本在2021年3月28日被植入后门，但是后门很快被�
 执行如下命令启动一个存在后门的PHP 8.1服务器：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，服务运行在`http://your-ip:8080`。

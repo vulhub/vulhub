@@ -12,8 +12,8 @@
 编译及运行测试环境：
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 访问`http://your-ip/?name={{233*233}}`，得到54289，说明SSTI漏洞存在。

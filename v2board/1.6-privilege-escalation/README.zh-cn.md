@@ -13,7 +13,7 @@ V2board是一个多用户代理工具管理面板。在其1.6.1版本中，引�
 执行如下命令启动一个V2board 1.6.1版本服务器：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 服务启动后，访问`http://localhost:8080`即可查看到其登录页面。

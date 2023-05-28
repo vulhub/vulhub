@@ -11,8 +11,8 @@ Reference Links：
 Enter the following command to build and run the vulnerability environment:
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## Exploit

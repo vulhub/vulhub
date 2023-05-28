@@ -14,7 +14,7 @@ YApi是一个API管理工具。如果注册功能开放，攻击者可以使用M
 执行如下命令启动一个YApi 1.9.2：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:3000`即可查看到YApi首页。

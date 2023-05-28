@@ -32,8 +32,8 @@ Process follows:
 Run the following commands to start the environment
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## POC && EXP

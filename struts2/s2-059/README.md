@@ -16,7 +16,7 @@ References:
 Start the Struts 2.5.16 environment:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment is started, visit `http://your-ip:8080/?id=1` and you will see the Struts2 test page.

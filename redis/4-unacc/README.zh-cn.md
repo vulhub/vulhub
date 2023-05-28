@@ -13,7 +13,7 @@ Redis未授权访问在4.x/5.0.5以前版本下，我们可以使用master/slave
 执行如下命令启动redis 4.0.14：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，通过`redis-cli -h your-ip`即可进行连接，可见存在未授权访问漏洞。

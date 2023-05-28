@@ -11,7 +11,7 @@ ThinkPHP是一款运用极广的PHP开发框架。其5.0.23以前的版本中，
 执行如下命令启动一个默认的thinkphp 5.0.23环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可看到默认的ThinkPHP启动页面。

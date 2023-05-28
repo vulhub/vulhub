@@ -15,7 +15,7 @@ Referers:
 Execute the following command to start a PHP server that includes Imagemagick 6.9.2-10:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Exploit

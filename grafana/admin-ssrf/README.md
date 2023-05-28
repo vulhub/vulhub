@@ -15,7 +15,7 @@ References:
 Execute following command to start a Grafana 8.5.4:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Then you can see the portal page for Grafana without the authentication in `http://your-ip:3000`, because this server enabled the anonymous as admins by:

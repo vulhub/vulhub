@@ -9,7 +9,7 @@ Celery 是一个简单、灵活且可靠的分布式系统，用于处理大量�
 执行如下命令启动Celery 3.1.23 + Redis：
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## 漏洞复现
@@ -24,7 +24,7 @@ python exploit.py [主机IP]
 查看结果：
 
 ```
-docker-compose logs celery
+docker compose logs celery
 ```
 
 可以看到如下任务消息报错：
@@ -32,7 +32,7 @@ docker-compose logs celery
 ![](a.png)
 
 ```bash
-docker-compose exec celery ls -l /tmp
+docker compose exec celery ls -l /tmp
 ```
 
 可以看到成功创建了文件`celery_success`

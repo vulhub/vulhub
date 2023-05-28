@@ -19,8 +19,8 @@ xdebug.remote_enable = 1
 编译及启动测试环境
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 启动完成后，访问`http://your-ip:8080/`即可发现主页是一个简单的phpinfo，在其中可以找到xdebug的配置，可见开启了远程调试。

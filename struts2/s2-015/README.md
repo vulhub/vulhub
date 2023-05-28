@@ -9,8 +9,8 @@ Details: http://struts.apache.org/docs/s2-015.html
 ## Setup
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ## Reference

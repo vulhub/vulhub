@@ -7,8 +7,8 @@ rsync是Linux下一款数据备份工具，支持通过rsync协议、ssh协议�
 编译及运行rsync服务器：
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 环境启动后，我们用rsync命令访问之：

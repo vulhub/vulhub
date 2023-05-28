@@ -18,7 +18,7 @@ References:
 Start a Struts 2.5.25 server:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment is started, visit `http://your-ip:8080/` and you will see a simple page. It is just a copy application of the [S2-059](https://github.com/vulhub/vulhub/tree/master/struts2/s2-059), except for the different Struts versions.

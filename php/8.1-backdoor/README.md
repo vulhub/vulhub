@@ -15,7 +15,7 @@ References:
 Start a PHP 8.1-dev server with the backdoor.
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment is started, the service runs at ``http://your-ip:8080``.

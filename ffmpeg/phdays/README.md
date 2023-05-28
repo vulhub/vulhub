@@ -11,8 +11,8 @@
 编译及启动环境
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 环境启动后监听8080端口，访问`http://your-ip:8080/`即可查看。
@@ -34,4 +34,4 @@ cd ffmpeg-avi-m3u-xbin
 
 ![](01.png)
 
-你也可以执行`docker-compose exec web bash`进入本环境内部，测试ffmpeg。
+你也可以执行`docker compose exec web bash`进入本环境内部，测试ffmpeg。

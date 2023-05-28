@@ -17,7 +17,7 @@ Reference links：
 Enter the following command：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 `http://your-ip:8080` is a web application and its uwsgi is exposed to 8000 port.
@@ -28,6 +28,6 @@ Using [poc.py](poc.py)，you can run the command `python poc.py -u your-ip:8000 
 
 ![](1.png)
 
-Entering the container through `docker-compose exec web bash` ，you'll see `/tmp/success` creating successfully：
+Entering the container through `docker compose exec web bash` ，you'll see `/tmp/success` creating successfully：
 
 ![](2.png)

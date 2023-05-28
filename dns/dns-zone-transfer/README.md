@@ -16,7 +16,7 @@ Vulhub uses [Bind9](https://wiki.debian.org/Bind9) to build the dns server, but 
 To run the DNS server.
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Once the environment is running, it will listen on port 53 of TCP and UDP, and the DNS protocol supports data transfer from both ports.

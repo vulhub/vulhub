@@ -16,7 +16,7 @@ Reference link:
 Execute the following command to start an Apache Skywalking 8.3.0:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment is started, visit `http://your-ip:8080` to view the Skywalking page.

@@ -13,7 +13,7 @@ JavaServer Faces (JSF) 是一种用于构建 Web 应用程序的标准，Mojarra
 执行如下命令启动一个使用了JDK7u21和mojarra 2.1.28的JSF应用：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080`即可查看到demo页面。

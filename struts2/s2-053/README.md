@@ -12,7 +12,7 @@ Details:
 ## Setup
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the environment run, you can see a submission page by visiting `http://your-ip:8080/hello.action`.

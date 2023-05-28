@@ -11,7 +11,7 @@ PHP文件包含漏洞中，如果找不到可以包含的文件，我们可以�
 执行如下命令启动环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 目标环境是官方最新版PHP7.2，说明该漏洞与PHP版本无关。

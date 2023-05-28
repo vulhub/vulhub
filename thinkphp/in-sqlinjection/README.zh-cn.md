@@ -3,7 +3,7 @@
 运行环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 启动后，访问`http://your-ip/index.php?ids[]=1&ids[]=2`，即可看到用户名被显示了出来，说明环境运行成功。

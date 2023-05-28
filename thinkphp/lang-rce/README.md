@@ -16,7 +16,7 @@ References:
 Execute following command to start a server that is developed by ThinkPHP v6.0.12:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the server is started, browse the `http://your-ip:8080` to see the default welcome page of ThinkPHP.

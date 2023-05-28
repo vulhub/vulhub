@@ -14,7 +14,7 @@ References:
 Execute following command to start a YApi server 1.9.2:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 After the server is started, browse the `http://localhost:3000` to see the index page of the YApi.

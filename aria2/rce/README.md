@@ -15,7 +15,7 @@ Reference article:
 Start the vulnerable environment：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 6800 is the default port of aria2's rpc service. After the environment is started, access `http://your-ip:6800/`, and the service should return a 404 page.

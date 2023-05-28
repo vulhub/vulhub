@@ -10,7 +10,7 @@
 ## 测试环境搭建
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## 漏洞说明
@@ -108,7 +108,7 @@ Content-Length: 2415
 </map>
 ```
 
-以上数据包成功执行的话，会在docker容器内创建文件`/tmp/success`，执行`docker-compose exec struts2 ls /tmp/`即可看到。
+以上数据包成功执行的话，会在docker容器内创建文件`/tmp/success`，执行`docker compose exec struts2 ls /tmp/`即可看到。
 
 此外，我们还可以下载一个jspx的webshell：
 

@@ -11,7 +11,7 @@ Apereo CAS是一款Apereo发布的集中认证服务平台，常被用于企业�
 执行如下命令启动一个Apereo CAS 4.1.5：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080/cas/login`即可查看到登录页面。

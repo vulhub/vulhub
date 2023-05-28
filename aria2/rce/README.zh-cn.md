@@ -9,7 +9,7 @@ Aria2是一个命令行下轻量级、多协议、多来源的下载工具（支
 启动漏洞环境：
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 6800是aria2的rpc服务的默认端口，环境启动后，访问`http://your-ip:6800/`，发现服务已启动并且返回404页面。

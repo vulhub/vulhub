@@ -15,8 +15,8 @@ ElasticSearch具有备份数据的功能，用户可以传入一个路径，让�
 编译与启动测试环境：
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 简单介绍一下本测试环境。本测试环境同时运行了Tomcat和ElasticSearch，Tomcat目录在`/usr/local/tomcat`，web目录是`/usr/local/tomcat/webapps`；ElasticSearch目录在`/usr/share/elasticsearch`。

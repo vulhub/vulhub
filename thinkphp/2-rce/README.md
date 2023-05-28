@@ -15,7 +15,7 @@ ThinkPHP 3.0版本因为Lite模式下没有修复该漏洞，也存在这个漏�
 执行如下命令启动ThinkPHP 2.1的Demo应用：
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 环境启动后，访问`http://your-ip:8080/Index/Index`即可查看到默认页面。
