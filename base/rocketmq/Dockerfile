@@ -7,10 +7,10 @@ COPY ./runbroker.sh /runbroker.sh
 
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list; \
 	sed -i s@/security.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list; \
-	apt clean; \
-	apt update; \
-	apt install -y unzip; \
-	apt install -y openjdk-8-jdk;
+	apt-get clean; \
+	apt-get update; \
+	apt-get install -y unzip; \
+	apt-get install -y openjdk-8-jdk;
 
 RUN unzip /rocketmq.zip; \
 	mv /runbroker.sh /rocketmq-all-5.1.0-bin-release/bin/runbroker.sh; \
