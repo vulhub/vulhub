@@ -1,0 +1,6 @@
+version: '2'
+services:
+ cmd:
+   image: 4ra1nx/rocketmq-vuln:0.1
+   ports:
+     - 10911:10911
