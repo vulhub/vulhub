@@ -4,7 +4,12 @@ LABEL MAINTAINER="4ra1n"
 
 COPY ./runbroker.sh /runbroker.sh
 
+<<<<<<< Updated upstream
 RUN wget https://archive.apache.org/dist/rocketmq/5.1.0/rocketmq-all-5.1.0-bin-release.zip; -O /rocketmq.zip; \
+=======
+RUN set -ex; \
+        wget -qO/rocketmq.zip https://archive.apache.org/dist/rocketmq/5.1.0/rocketmq-all-5.1.0-bin-release.zip; \
+>>>>>>> Stashed changes
         unzip /rocketmq.zip; \
         rm -f /rocketmq.zip; \
         mv /runbroker.sh /rocketmq-all-5.1.0-bin-release/bin/runbroker.sh; \
