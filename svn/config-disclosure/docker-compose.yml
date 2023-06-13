@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  vul-svndisclosure:
+    build: .
+    container_name: vulhub-svndisclosure
+    ports:
+      - 8080:80
