@@ -3,8 +3,8 @@ FROM httpd:2.4
 LABEL maintainer="b1tkeeper <bohan.wang.growing@outlook.com>"
 
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list &&\
-    apt update &&\
-    apt install subversion -y &&\
+    apt-get update &&\
+    apt-get install subversion -y &&\
     cd /root/ &&\
     svnadmin create svnrepo &&\
     sed -i 's/# anon-access = read/anon-access = write/g' svnrepo/conf/svnserve.conf &&\
