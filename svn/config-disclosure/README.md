@@ -21,7 +21,8 @@ After the environment is started, visit ``http://your-ip:8080`` to view the home
 ## Vulnerability recurrence
 
 Directly request the svn configuration file and see if it returns the contents of the file
-```
+
+```shell
 curl http://your-ip:8080/.svn/entries
 ```
 

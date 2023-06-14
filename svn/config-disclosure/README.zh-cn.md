@@ -21,7 +21,8 @@ docker compose up -d
 ## 漏洞复现
 
 直接请求svn配置文件，观察其是否返回文件内容
-```
+
+```shell
 curl http://your-ip:8080/.svn/entries
 ```
 
