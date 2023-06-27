@@ -3,7 +3,9 @@ FROM vulhub/php:7.1.12-apache
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN a2enmod rewrite && \
-    pecl install xdebug-2.5.5 && \
+    curl -Ok https://pecl.php.net/get/xdebug-2.5.5.tgz && \
+    pecl install xdebug-2.5.5.tgz && \
+    rm xdebug-2.5.5.tgz && \
     docker-php-ext-enable xdebug && \
     echo "xdebug.default_enable = 1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
     echo "xdebug.remote_enable = 1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
