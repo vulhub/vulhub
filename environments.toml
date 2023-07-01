@@ -44,6 +44,7 @@ path = "apache-druid/CVE-2021-25646"
 name_en = "Apereo CAS 4.1 Deserialization Command Execution"
 name_zh = "Apereo CAS 4.1 反序列化命令执行漏洞"
 app = "Apereo CAS"
+cve = ""
 path = "apereo-cas/4.1-rce"
 
 [[containers]]
@@ -71,6 +72,7 @@ path = "appweb/CVE-2018-8715"
 name_en = "Aria2 Arbitrary File Write"
 name_zh = "Aria2 任意文件写入漏洞"
 app = "Aria2"
+cve = ""
 path = "aria2/rce"
 
 [[containers]]
@@ -91,6 +93,7 @@ path = "cacti/CVE-2022-46169"
 name_en = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
 name_zh = "Celery <4.0 Redis未授权访问+Pickle反序列化利用"
 app = "celery"
+cve = ""
 path = "celery/celery3_redis_unauth"
 
 [[containers]]
@@ -160,12 +163,14 @@ path = "couchdb/CVE-2022-24706"
 name_en = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
 name_zh = "Discuz 7.x/6.x 全局变量防御绕过导致代码执行"
 app = "Discuz"
+cve = ""
 path = "discuz/wooyun-2010-080723"
 
 [[containers]]
 name_en = "Discuz!X ≤3.4 Arbitrary File Deletion"
 name_zh = "Discuz!X ≤3.4 任意文件删除漏洞"
 app = "Discuz"
+cve = ""
 path = "discuz/x3.4-arbitrary-file-deletion"
 
 [[containers]]
@@ -214,12 +219,14 @@ path = "django/CVE-2022-34265"
 name_en = "DNS Domain Transfer"
 name_zh = "DNS域传送漏洞"
 app = "dns"
+cve = ""
 path = "dns/dns-zone-transfer"
 
 [[containers]]
 name_en = "Docker Daemon API Unauthorized Access"
 name_zh = "Docker Daemon API 未授权访问漏洞"
 app = "docker"
+cve = ""
 path = "docker/unauthorized-rce"
 
 [[containers]]
@@ -275,12 +282,14 @@ path = "dubbo/CVE-2019-17564"
 name_en = "ECShop 4.x collection_list SQL Injection"
 name_zh = "ECShop 4.x collection_list SQL注入"
 app = "ecshop"
+cve = ""
 path = "ecshop/collection_list-sqli"
 
 [[containers]]
 name_en = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
 name_zh = "ECShop 2.x/3.x SQL注入/任意代码执行漏洞"
 app = "ecshop"
+cve = ""
 path = "ecshop/xianzhi-2017-02-82239600"
 
 [[containers]]
@@ -315,6 +324,7 @@ path = "elasticsearch/CVE-2015-5531"
 name_en = "Elasticsearch Webshell"
 name_zh = "Elasticsearch 写入webshell漏洞"
 app = "ElasticSearch"
+cve = ""
 path = "elasticsearch/WooYun-2015-110216"
 
 [[containers]]
@@ -349,6 +359,7 @@ path = "fastjson/1.2.24-rce"
 name_en = "Fastjson 1.2.47 Remote Command Execution"
 name_zh = "Fastjson 1.2.47 远程命令执行漏洞"
 app = "Fastjson"
+cve = ""
 path = "fastjson/1.2.47-rce"
 
 [[containers]]
@@ -369,6 +380,7 @@ path = "ffmpeg/phdays"
 name_en = "Jinja2 SSTI Template Injection"
 name_zh = "Jinja2 SSTI模板注入"
 app = "Jinja2"
+cve = ""
 path = "flask/ssti"
 
 [[containers]]
@@ -424,6 +436,7 @@ path = "git/CVE-2017-8386"
 name_en = "Gitea 1.4.0 Directory Traversal to Command Execution"
 name_zh = "Gitea 1.4.0 目录穿越导致命令执行漏洞"
 app = "gitea"
+cve = ""
 path = "gitea/1.4-rce"
 
 [[containers]]
@@ -444,12 +457,14 @@ path = "gitlab/CVE-2021-22205"
 name_en = "gitlist 0.6.0 Remote Command Execution"
 name_zh = "gitlist 0.6.0 远程命令执行漏洞"
 app = "gitlist"
+cve = ""
 path = "gitlist/0.6.0-rce"
 
 [[containers]]
 name_en = "GlassFish Arbitrary File Read"
 name_zh = "GlassFish 任意文件读取漏洞"
 app = "GlassFish"
+cve = ""
 path = "glassfish/4.1.0"
 
 [[containers]]
@@ -484,18 +499,21 @@ path = "grafana/CVE-2021-43798"
 name_en = "Grafana Management Background SSRF"
 name_zh = "Grafana管理后台SSRF"
 app = "Grafana"
+cve = ""
 path = "grafana/admin-ssrf"
 
 [[containers]]
 name_en = "H2 Database Console Unauthorized Access"
 name_zh = "H2 Database Console 未授权访问"
 app = "Springboot H2 Database"
+cve = ""
 path = "h2database/h2-console-unacc"
 
 [[containers]]
 name_en = "Hadoop YARN ResourceManager Unauthorized Access"
 name_zh = "Hadoop YARN ResourceManager 未授权访问漏洞"
 app = "Hadoop YARN"
+cve = ""
 path = "hadoop/unauthorized-yarn"
 
 [[containers]]
@@ -530,12 +548,14 @@ path = "httpd/CVE-2021-42013"
 name_en = "Apache HTTPD Unknown Suffix Parsing"
 name_zh = "Apache HTTPD 未知后缀解析漏洞"
 app = "Apache HTTP Server"
+cve = ""
 path = "httpd/apache_parsing_vulnerability"
 
 [[containers]]
 name_en = "Apache SSI Remote Command Execution"
 name_zh = "Apache SSI 远程命令执行漏洞"
 app = "Apache HTTP Server"
+cve = ""
 path = "httpd/ssi-rce"
 
 [[containers]]
@@ -577,18 +597,21 @@ path = "jackson/CVE-2017-7525"
 name_en = "Java RMI codebase Remote Code Execution"
 name_zh = "Java RMI codebase 远程代码执行漏洞"
 app = "java rmi"
+cve = ""
 path = "java/rmi-codebase"
 
 [[containers]]
 name_en = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
 name_zh = "Java RMI Registry 反序列化漏洞(<=jdk8u111)"
 app = "java rmi"
+cve = ""
 path = "java/rmi-registry-bind-deserialization"
 
 [[containers]]
 name_en = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
 name_zh = "Java RMI Registry 反序列化漏洞(<jdk8u232_b09)"
 app = "java rmi"
+cve = ""
 path = "java/rmi-registry-bind-deserialization-bypass"
 
 [[containers]]
@@ -609,6 +632,7 @@ path = "jboss/CVE-2017-7504"
 name_en = "JBoss JMXInvokerServlet Deserialization"
 name_zh = "JBoss JMXInvokerServlet 反序列化漏洞"
 app = "jboss"
+cve = ""
 path = "jboss/JMXInvokerServlet-deserialization"
 
 [[containers]]
@@ -685,6 +709,7 @@ path = "joomla/CVE-2023-23752"
 name_en = "Jupyter Notebook Unauthorized Access"
 name_zh = "Jupyter Notebook 未授权访问漏洞"
 app = "Jupyter"
+cve = ""
 path = "jupyter/notebook-rce"
 
 [[containers]]
@@ -747,6 +772,7 @@ path = "log4j/CVE-2021-44228"
 name_en = "Magento 2.2 SQL Injection"
 name_zh = "Magento 2.2 SQL注入漏洞"
 app = "Magento"
+cve = ""
 path = "magento/2.2-sqli"
 
 [[containers]]
@@ -774,6 +800,7 @@ path = "minio/CVE-2023-28432"
 name_en = "Mojarra JSF ViewState Deserialization"
 name_zh = "Mojarra JSF ViewState 反序列化漏洞"
 app = "Mojarra JSF"
+cve = ""
 path = "mojarra/jsf-viewstate-deserialization"
 
 [[containers]]
@@ -843,12 +870,14 @@ path = "nginx/CVE-2017-7529"
 name_en = "Nginx Configuration Errors"
 name_zh = "Nginx 配置错误三例"
 app = "Nginx"
+cve = ""
 path = "nginx/insecure-configuration"
 
 [[containers]]
 name_en = "Nginx Parsing"
 name_zh = "Nginx 解析漏洞"
 app = "Nginx"
+cve = ""
 path = "nginx/nginx_parsing_vulnerability"
 
 [[containers]]
@@ -925,6 +954,7 @@ path = "opentsdb/CVE-2020-35476"
 name_en = "PHP 8.1.0-dev Development Version Backdoor Event"
 name_zh = "PHP 8.1.0-dev 开发版本后门事件"
 app = "PHP"
+cve = ""
 path = "php/8.1-backdoor"
 
 [[containers]]
@@ -952,24 +982,28 @@ path = "php/CVE-2019-11043"
 name_en = "PHP-FPM FastCGI Unauthorized Access"
 name_zh = "PHP-FPM FastCGI 未授权访问漏洞"
 app = "PHP-FPM"
+cve = ""
 path = "php/fpm"
 
 [[containers]]
 name_en = "PHP Files Vulnerabilities (by phpinfo())"
 name_zh = "PHP文件包含漏洞 (利用phpinfo())"
 app = "PHP"
+cve = ""
 path = "php/inclusion"
 
 [[containers]]
 name_en = "PHP XML Entity Injection"
 name_zh = "PHP XML实体注入"
 app = "PHP"
+cve = ""
 path = "php/php_xxe"
 
 [[containers]]
 name_en = "XDebug Remote Debugging Code Execution"
 name_zh = "XDebug 远程调试漏洞 (代码执行)"
 app = "PHP"
+cve = ""
 path = "php/xdebug-rce"
 
 [[containers]]
@@ -997,6 +1031,7 @@ path = "phpmyadmin/CVE-2018-12613"
 name_en = "phpmyadmin scripts/setup.php Deserialization"
 name_zh = "phpmyadmin scripts/setup.php 反序列化漏洞"
 app = "phpmyadmin"
+cve = ""
 path = "phpmyadmin/WooYun-2016-199433"
 
 [[containers]]
@@ -1045,6 +1080,7 @@ path = "python/PIL-CVE-2018-16509"
 name_en = "Python Unpickle Deserialization"
 name_zh = "Python Unpickle 反序列化漏洞"
 app = "Python"
+cve = ""
 path = "python/unpickle"
 
 [[containers]]
@@ -1065,6 +1101,7 @@ path = "rails/CVE-2019-5418"
 name_en = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
 name_zh = "Redis 4.x/5.x 主从复制导致的命令执行"
 app = "redis"
+cve = ""
 path = "redis/4-unacc"
 
 [[containers]]
@@ -1092,6 +1129,7 @@ path = "rocketmq/CVE-2023-33246"
 name_en = "rsync Unauthorized Access"
 name_zh = "rsync 未授权访问漏洞"
 app = "rsync"
+cve = ""
 path = "rsync/common"
 
 [[containers]]
@@ -1133,6 +1171,7 @@ path = "samba/CVE-2017-7494"
 name_en = "Scrapyd Unauthorized Access"
 name_zh = "Scrapyd 未授权访问漏洞"
 app = "Scrapyd"
+cve = ""
 path = "scrapy/scrapyd-unacc"
 
 [[containers]]
@@ -1160,6 +1199,7 @@ path = "shiro/CVE-2020-1957"
 name_en = "Apache Skywalking 8.3.0 SQL Injection"
 name_zh = "Apache Skywalking 8.3.0 SQL注入漏洞"
 app = "skywalking"
+cve = ""
 path = "skywalking/8.3.0-sqli"
 
 [[containers]]
@@ -1194,12 +1234,14 @@ path = "solr/CVE-2019-17558"
 name_en = "Apache Solr RemoteStreaming File Reading and SSRF"
 name_zh = "Apache Solr RemoteStreaming 文件读取与SSRF漏洞"
 app = "solr"
+cve = ""
 path = "solr/Remote-Streaming-Fileread"
 
 [[containers]]
 name_en = "Apache Spark Unauthorized Access Leak"
 name_zh = "Apache Spark 未授权访问漏"
 app = "spark"
+cve = ""
 path = "spark/unacc"
 
 [[containers]]
@@ -1269,6 +1311,7 @@ path = "spring/CVE-2022-22978"
 name_en = "S2-001 Remote Code Execution"
 name_zh = "S2-001 远程代码执行漏洞"
 app = "Struts2"
+cve = ""
 path = "struts2/s2-001"
 
 [[containers]]
@@ -1282,6 +1325,7 @@ path = "struts2/s2-005"
 name_en = "S2-007 Remote Code Execution"
 name_zh = "S2-007 远程代码执行漏洞"
 app = "Struts2"
+cve = ""
 path = "struts2/s2-007"
 
 [[containers]]
@@ -1400,30 +1444,35 @@ path = "supervisor/CVE-2017-11610"
 name_en = "ThinkPHP 2.x Arbitrary Code Execution"
 name_zh = "ThinkPHP 2.x 任意代码执行漏洞"
 app = "ThinkPHP"
+cve = ""
 path = "thinkphp/2-rce"
 
 [[containers]]
 name_en = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
 name_zh = "ThinkPHP5 5.0.22/5.1.29 远程代码执行漏洞"
 app = "ThinkPHP"
+cve = ""
 path = "thinkphp/5-rce"
 
 [[containers]]
 name_en = "ThinkPHP5 5.0.23 Remote Code Execution"
 name_zh = "ThinkPHP5 5.0.23 远程代码执行漏洞"
 app = "ThinkPHP"
+cve = ""
 path = "thinkphp/5.0.23-rce"
 
 [[containers]]
 name_en = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
 name_zh = "ThinkPHP5 SQL注入漏洞/信息泄露"
 app = "ThinkPHP"
+cve = ""
 path = "thinkphp/in-sqlinjection"
 
 [[containers]]
 name_en = "ThinkPHP Multilingual Local File Inclusion"
 name_zh = "ThinkPHP 多语言本地文件包含漏洞"
 app = "ThinkPHP"
+cve = ""
 path = "thinkphp/lang-rce"
 
 [[containers]]
@@ -1451,6 +1500,7 @@ path = "tomcat/CVE-2020-1938"
 name_en = "Tomcat Weak Password"
 name_zh = "Tomcat弱口令"
 app = "Tomcat"
+cve = ""
 path = "tomcat/tomcat8"
 
 [[containers]]
@@ -1471,12 +1521,14 @@ path = "uwsgi/CVE-2018-7490"
 name_en = "uWSGI Unauthorized Access"
 name_zh = "uWSGI 未授权访问漏洞"
 app = "uWSGI"
+cve = ""
 path = "uwsgi/unacc"
 
 [[containers]]
 name_en = "V2board 1.6.1 Privilege Escalation"
 name_zh = "V2board 1.6.1 提权漏洞"
 app = "V2board"
+cve = ""
 path = "v2board/1.6-privilege-escalation"
 
 [[containers]]
@@ -1518,12 +1570,14 @@ path = "weblogic/CVE-2023-21839"
 name_en = "WebLogic SSRF"
 name_zh = "WebLogic SSRF漏洞"
 app = "WebLogic"
+cve = ""
 path = "weblogic/ssrf"
 
 [[containers]]
 name_en = "WebLogic File Read"
 name_zh = "WebLogic 文件读取漏洞"
 app = "WebLogic"
+cve = ""
 path = "weblogic/weak_password"
 
 [[containers]]
@@ -1537,6 +1591,7 @@ path = "webmin/CVE-2019-15107"
 name_en = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
 name_zh = "Wordpress 4.6 任意命令执行漏洞 (PwnScriptum)"
 app = "Wordpress"
+cve = ""
 path = "wordpress/pwnscriptum"
 
 [[containers]]
@@ -1557,18 +1612,21 @@ path = "xstream/CVE-2021-29505"
 name_en = "XXL-JOB Executor Unauthorized Access"
 name_zh = "XXL-JOB Executor 未授权访问漏洞"
 app = "xxl-job"
+cve = ""
 path = "xxl-job/unacc"
 
 [[containers]]
 name_en = "YApi NoSQL Injection to Remote Command Execution"
 name_zh = "YApi NoSQL注入导致远程命令执行漏洞"
 app = "YApi"
+cve = ""
 path = "yapi/mongodb-inj"
 
 [[containers]]
 name_en = "YApi Open Registration due to RCE"
 name_zh = "YApi开放注册导致RCE"
 app = "YApi"
+cve = ""
 path = "yapi/unacc"
 
 [[containers]]
