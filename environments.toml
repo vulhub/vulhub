@@ -1,6 +1,7 @@
 [[container]]
-name_en = "Apache ActiveMQ Deserialization"
-name_zh = "Apache ActiveMQ 反序列化漏洞"
+  [[container.name]]
+  en = "Apache ActiveMQ Deserialization"
+  zh = "Apache ActiveMQ 反序列化漏洞"
 app = "ActiveMQ"
   [[container.cve]]
   name = "CVE-2015-5254"
@@ -8,8 +9,9 @@ app = "ActiveMQ"
 path = "activemq/CVE-2015-5254"
 
 [[container]]
-name_en = "Apache ActiveMQ Arbitrary File Write"
-name_zh = "Apache ActiveMQ 任意文件写入漏洞"
+  [[container.name]]
+  en = "Apache ActiveMQ Arbitrary File Write"
+  zh = "Apache ActiveMQ 任意文件写入漏洞"
 app = "ActiveMQ"
   [[container.cve]]
   name = "CVE-2016-3088"
@@ -17,8 +19,9 @@ app = "ActiveMQ"
 path = "activemq/CVE-2016-3088"
 
 [[container]]
-name_en = "Apache Airflow Command Injection"
-name_zh = "Apache Airflow 示例dag中的命令注入"
+  [[container.name]]
+  en = "Apache Airflow Command Injection"
+  zh = "Apache Airflow 示例dag中的命令注入"
 app = "Airflow"
   [[container.cve]]
   name = "CVE-2020-11978"
@@ -26,8 +29,9 @@ app = "Airflow"
 path = "airflow/CVE-2020-11978"
 
 [[container]]
-name_en = "Apache Airflow Celery Message Middleware Command Execution"
-name_zh = "Apache Airflow Celery 消息中间件命令执行"
+  [[container.name]]
+  en = "Apache Airflow Celery Message Middleware Command Execution"
+  zh = "Apache Airflow Celery 消息中间件命令执行"
 app = "Airflow"
   [[container.cve]]
   name = "CVE-2020-11981"
@@ -35,8 +39,9 @@ app = "Airflow"
 path = "airflow/CVE-2020-11981"
 
 [[container]]
-name_en = "Apache Airflow Permission Bypass"
-name_zh = "Apache Airflow 默认密钥导致的权限绕过"
+  [[container.name]]
+  en = "Apache Airflow Permission Bypass"
+  zh = "Apache Airflow 默认密钥导致的权限绕过"
 app = "Airflow"
   [[container.cve]]
   name = "CVE-2020-17526"
@@ -44,8 +49,9 @@ app = "Airflow"
 path = "airflow/CVE-2020-17526"
 
 [[container]]
-name_en = "Apache Druid Code Execution"
-name_zh = "Apache Druid 代码执行漏洞"
+  [[container.name]]
+  en = "Apache Druid Code Execution"
+  zh = "Apache Druid 代码执行漏洞"
 app = "Apache Druid"
   [[container.cve]]
   name = "CVE-2021-25646"
@@ -53,8 +59,9 @@ app = "Apache Druid"
 path = "apache-druid/CVE-2021-25646"
 
 [[container]]
-name_en = "Apereo CAS 4.1 Deserialization Command Execution"
-name_zh = "Apereo CAS 4.1 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "Apereo CAS 4.1 Deserialization Command Execution"
+  zh = "Apereo CAS 4.1 反序列化命令执行漏洞"
 app = "Apereo CAS"
   [[container.cve]]
   name = ""
@@ -62,8 +69,9 @@ app = "Apereo CAS"
 path = "apereo-cas/4.1-rce"
 
 [[container]]
-name_en = "Apache APISIX Default Key"
-name_zh = "Apache APISIX 默认密钥漏洞"
+  [[container.name]]
+  en = "Apache APISIX Default Key"
+  zh = "Apache APISIX 默认密钥漏洞"
 app = "Apache APISIX"
   [[container.cve]]
   name = "CVE-2020-13945"
@@ -71,8 +79,9 @@ app = "Apache APISIX"
 path = "apisix/CVE-2020-13945"
 
 [[container]]
-name_en = "Apache APISIX Dashboard API Permission Bypass to RCE"
-name_zh = "Apache APISIX Dashboard API权限绕过导致RCE"
+  [[container.name]]
+  en = "Apache APISIX Dashboard API Permission Bypass to RCE"
+  zh = "Apache APISIX Dashboard API权限绕过导致RCE"
 app = "Apache APISIX"
   [[container.cve]]
   name = "CVE-2021-45232"
@@ -80,8 +89,9 @@ app = "Apache APISIX"
 path = "apisix/CVE-2021-45232"
 
 [[container]]
-name_en = "AppWeb Authentication Bypass"
-name_zh = "AppWeb 认证绕过漏洞"
+  [[container.name]]
+  en = "AppWeb Authentication Bypass"
+  zh = "AppWeb 认证绕过漏洞"
 app = "AppWeb"
   [[container.cve]]
   name = "CVE-2018-8715"
@@ -89,8 +99,9 @@ app = "AppWeb"
 path = "appweb/CVE-2018-8715"
 
 [[container]]
-name_en = "Aria2 Arbitrary File Write"
-name_zh = "Aria2 任意文件写入漏洞"
+  [[container.name]]
+  en = "Aria2 Arbitrary File Write"
+  zh = "Aria2 任意文件写入漏洞"
 app = "Aria2"
   [[container.cve]]
   name = ""
@@ -98,8 +109,9 @@ app = "Aria2"
 path = "aria2/rce"
 
 [[container]]
-name_en = "Bash Shellshock Shell Exploit"
-name_zh = "Bash Shellshock 破壳漏洞"
+  [[container.name]]
+  en = "Bash Shellshock Shell Exploit"
+  zh = "Bash Shellshock 破壳漏洞"
 app = "bash"
   [[container.cve]]
   name = "CVE-2014-6271"
@@ -107,8 +119,9 @@ app = "bash"
 path = "bash/CVE-2014-6271"
 
 [[container]]
-name_en = "Cacti Foreground Command Injection"
-name_zh = "Cacti 前台命令注入漏洞"
+  [[container.name]]
+  en = "Cacti Foreground Command Injection"
+  zh = "Cacti 前台命令注入漏洞"
 app = "cacti"
   [[container.cve]]
   name = "CVE-2022-46169"
@@ -116,8 +129,9 @@ app = "cacti"
 path = "cacti/CVE-2022-46169"
 
 [[container]]
-name_en = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
-name_zh = "Celery <4.0 Redis未授权访问+Pickle反序列化利用"
+  [[container.name]]
+  en = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
+  zh = "Celery <4.0 Redis未授权访问+Pickle反序列化利用"
 app = "celery"
   [[container.cve]]
   name = ""
@@ -125,8 +139,9 @@ app = "celery"
 path = "celery/celery3_redis_unauth"
 
 [[container]]
-name_en = "CGI HTTPoxy Flaw"
-name_zh = "CGI HTTPoxy 漏洞"
+  [[container.name]]
+  en = "CGI HTTPoxy Flaw"
+  zh = "CGI HTTPoxy 漏洞"
 app = "cgi"
   [[container.cve]]
   name = "CVE-2016-5385"
@@ -134,8 +149,9 @@ app = "cgi"
 path = "cgi/CVE-2016-5385"
 
 [[container]]
-name_en = "Adobe ColdFusion File Read"
-name_zh = "Adobe ColdFusion 文件读取漏洞"
+  [[container.name]]
+  en = "Adobe ColdFusion File Read"
+  zh = "Adobe ColdFusion 文件读取漏洞"
 app = "Adobe ColdFusion"
   [[container.cve]]
   name = "CVE-2010-2861"
@@ -143,8 +159,9 @@ app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2010-2861"
 
 [[container]]
-name_en = "Adobe ColdFusion Deserialization"
-name_zh = "Adobe ColdFusion 反序列化漏洞"
+  [[container.name]]
+  en = "Adobe ColdFusion Deserialization"
+  zh = "Adobe ColdFusion 反序列化漏洞"
 app = "Adobe ColdFusion"
   [[container.cve]]
   name = "CVE-2017-3066"
@@ -152,8 +169,9 @@ app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2017-3066"
 
 [[container]]
-name_en = "Atlassian Confluence Path Traversal and Command Execution"
-name_zh = "Atlassian Confluence 路径穿越与命令执行漏洞"
+  [[container.name]]
+  en = "Atlassian Confluence Path Traversal and Command Execution"
+  zh = "Atlassian Confluence 路径穿越与命令执行漏洞"
 app = "Atlassian Confluence"
   [[container.cve]]
   name = "CVE-2019-3396"
@@ -161,8 +179,9 @@ app = "Atlassian Confluence"
 path = "confluence/CVE-2019-3396"
 
 [[container]]
-name_en = "Atlassian Confluence OGNL Expression Injection Code Execution"
-name_zh = "Atlassian Confluence OGNL 表达式注入代码执行漏洞"
+  [[container.name]]
+  en = "Atlassian Confluence OGNL Expression Injection Code Execution"
+  zh = "Atlassian Confluence OGNL 表达式注入代码执行漏洞"
 app = "Atlassian Confluence"
   [[container.cve]]
   name = "CVE-2021-26084"
@@ -170,8 +189,9 @@ app = "Atlassian Confluence"
 path = "confluence/CVE-2021-26084"
 
 [[container]]
-name_en = "Atlassian Confluence OGNL Expression Injection Command Execution"
-name_zh = "Atlassian Confluence OGNL 表达式注入命令执行漏洞"
+  [[container.name]]
+  en = "Atlassian Confluence OGNL Expression Injection Command Execution"
+  zh = "Atlassian Confluence OGNL 表达式注入命令执行漏洞"
 app = "Atlassian Confluence"
   [[container.cve]]
   name = "CVE-2022-26134"
@@ -179,8 +199,9 @@ app = "Atlassian Confluence"
 path = "confluence/CVE-2022-26134"
 
 [[container]]
-name_en = "CouchDB Vertical Permission Bypass"
-name_zh = "CouchDB 垂直权限绕过漏洞"
+  [[container.name]]
+  en = "CouchDB Vertical Permission Bypass"
+  zh = "CouchDB 垂直权限绕过漏洞"
 app = "CouchDB"
   [[container.cve]]
   name = "CVE-2017-12635"
@@ -188,8 +209,9 @@ app = "CouchDB"
 path = "couchdb/CVE-2017-12635"
 
 [[container]]
-name_en = "CouchDB Arbitrary Command Execution"
-name_zh = "CouchDB 任意命令执行漏洞"
+  [[container.name]]
+  en = "CouchDB Arbitrary Command Execution"
+  zh = "CouchDB 任意命令执行漏洞"
 app = "CouchDB"
   [[container.cve]]
   name = "CVE-2017-12636"
@@ -197,8 +219,9 @@ app = "CouchDB"
 path = "couchdb/CVE-2017-12636"
 
 [[container]]
-name_en = "CouchDB Erlang Distributed Protocol Code Execution"
-name_zh = "CouchDB Erlang 分布式协议代码执行"
+  [[container.name]]
+  en = "CouchDB Erlang Distributed Protocol Code Execution"
+  zh = "CouchDB Erlang 分布式协议代码执行"
 app = "CouchDB"
   [[container.cve]]
   name = "CVE-2022-24706"
@@ -206,8 +229,9 @@ app = "CouchDB"
 path = "couchdb/CVE-2022-24706"
 
 [[container]]
-name_en = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
-name_zh = "Discuz 7.x/6.x 全局变量防御绕过导致代码执行"
+  [[container.name]]
+  en = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
+  zh = "Discuz 7.x/6.x 全局变量防御绕过导致代码执行"
 app = "Discuz"
   [[container.cve]]
   name = ""
@@ -215,8 +239,9 @@ app = "Discuz"
 path = "discuz/wooyun-2010-080723"
 
 [[container]]
-name_en = "Discuz!X ≤3.4 Arbitrary File Deletion"
-name_zh = "Discuz!X ≤3.4 任意文件删除漏洞"
+  [[container.name]]
+  en = "Discuz!X ≤3.4 Arbitrary File Deletion"
+  zh = "Discuz!X ≤3.4 任意文件删除漏洞"
 app = "Discuz"
   [[container.cve]]
   name = ""
@@ -224,8 +249,9 @@ app = "Discuz"
 path = "discuz/x3.4-arbitrary-file-deletion"
 
 [[container]]
-name_en = "Django debug page XSS Flaw"
-name_zh = "Django debug page XSS 漏洞"
+  [[container.name]]
+  en = "Django debug page XSS Flaw"
+  zh = "Django debug page XSS 漏洞"
 app = "Django"
   [[container.cve]]
   name = "CVE-2017-12794"
@@ -233,8 +259,9 @@ app = "Django"
 path = "django/CVE-2017-12794"
 
 [[container]]
-name_en = "Django < 2.0.8 Arbitrary URL Redirection"
-name_zh = "Django < 2.0.8 任意URL跳转漏洞"
+  [[container.name]]
+  en = "Django < 2.0.8 Arbitrary URL Redirection"
+  zh = "Django < 2.0.8 任意URL跳转漏洞"
 app = "Django"
   [[container.cve]]
   name = "CVE-2018-14574"
@@ -242,8 +269,9 @@ app = "Django"
 path = "django/CVE-2018-14574"
 
 [[container]]
-name_en = "Django JSONField/HStoreField SQL Injection"
-name_zh = "Django JSONField/HStoreField SQL注入漏洞"
+  [[container.name]]
+  en = "Django JSONField/HStoreField SQL Injection"
+  zh = "Django JSONField/HStoreField SQL注入漏洞"
 app = "Django"
   [[container.cve]]
   name = "CVE-2019-14234"
@@ -251,8 +279,9 @@ app = "Django"
 path = "django/CVE-2019-14234"
 
 [[container]]
-name_en = "Django GIS SQL Injection"
-name_zh = "Django GIS SQL注入漏洞"
+  [[container.name]]
+  en = "Django GIS SQL Injection"
+  zh = "Django GIS SQL注入漏洞"
 app = "Django"
   [[container.cve]]
   name = "CVE-2020-9402"
@@ -260,8 +289,9 @@ app = "Django"
 path = "django/CVE-2020-9402"
 
 [[container]]
-name_en = "Django QuerySet.order_by() SQL Injection"
-name_zh = "Django QuerySet.order_by() SQL注入漏洞"
+  [[container.name]]
+  en = "Django QuerySet.order_by() SQL Injection"
+  zh = "Django QuerySet.order_by() SQL注入漏洞"
 app = "Django"
   [[container.cve]]
   name = "CVE-2021-35042"
@@ -269,8 +299,9 @@ app = "Django"
 path = "django/CVE-2021-35042"
 
 [[container]]
-name_en = "Django Trunc(kind) and Extract(lookup_name) SQL Injection"
-name_zh = "Django Trunc(kind) and Extract(lookup_name) SQL注入漏洞"
+  [[container.name]]
+  en = "Django Trunc(kind) and Extract(lookup_name) SQL Injection"
+  zh = "Django Trunc(kind) and Extract(lookup_name) SQL注入漏洞"
 app = "Django"
   [[container.cve]]
   name = "CVE-2022-34265"
@@ -278,8 +309,9 @@ app = "Django"
 path = "django/CVE-2022-34265"
 
 [[container]]
-name_en = "DNS Domain Transfer"
-name_zh = "DNS域传送漏洞"
+  [[container.name]]
+  en = "DNS Domain Transfer"
+  zh = "DNS域传送漏洞"
 app = "dns"
   [[container.cve]]
   name = ""
@@ -287,8 +319,9 @@ app = "dns"
 path = "dns/dns-zone-transfer"
 
 [[container]]
-name_en = "Docker Daemon API Unauthorized Access"
-name_zh = "Docker Daemon API 未授权访问漏洞"
+  [[container.name]]
+  en = "Docker Daemon API Unauthorized Access"
+  zh = "Docker Daemon API 未授权访问漏洞"
 app = "docker"
   [[container.cve]]
   name = ""
@@ -296,8 +329,9 @@ app = "docker"
 path = "docker/unauthorized-rce"
 
 [[container]]
-name_en = "Drupal < 7.32 'Drupalgeddon' SQL Injection"
-name_zh = "Drupal < 7.32 'Drupalgeddon' SQL注入漏洞"
+  [[container.name]]
+  en = "Drupal < 7.32 'Drupalgeddon' SQL Injection"
+  zh = "Drupal < 7.32 'Drupalgeddon' SQL注入漏洞"
 app = "drupal"
   [[container.cve]]
   name = "CVE-2014-3704"
@@ -305,8 +339,9 @@ app = "drupal"
 path = "drupal/CVE-2014-3704"
 
 [[container]]
-name_en = "Drupal Core 8 PECL YAML Deserialization Arbitrary Code Execution"
-name_zh = "Drupal Core 8 PECL YAML 反序列化任意代码执行漏洞"
+  [[container.name]]
+  en = "Drupal Core 8 PECL YAML Deserialization Arbitrary Code Execution"
+  zh = "Drupal Core 8 PECL YAML 反序列化任意代码执行漏洞"
 app = "drupal"
   [[container.cve]]
   name = "CVE-2017-6920"
@@ -314,8 +349,9 @@ app = "drupal"
 path = "drupal/CVE-2017-6920"
 
 [[container]]
-name_en = "Drupal Drupalgeddon 2 Remote Code Execution"
-name_zh = "Drupal Drupalgeddon 2 远程代码执行漏洞"
+  [[container.name]]
+  en = "Drupal Drupalgeddon 2 Remote Code Execution"
+  zh = "Drupal Drupalgeddon 2 远程代码执行漏洞"
 app = "drupal"
   [[container.cve]]
   name = "CVE-2018-7600"
@@ -323,8 +359,9 @@ app = "drupal"
 path = "drupal/CVE-2018-7600"
 
 [[container]]
-name_en = "Drupal Remote Code Execution"
-name_zh = "Drupal 远程代码执行漏洞"
+  [[container.name]]
+  en = "Drupal Remote Code Execution"
+  zh = "Drupal 远程代码执行漏洞"
 app = "drupal"
   [[container.cve]]
   name = "CVE-2018-7602"
@@ -332,8 +369,9 @@ app = "drupal"
 path = "drupal/CVE-2018-7602"
 
 [[container]]
-name_en = "Drupal Remote Code Execution"
-name_zh = "Drupal 远程代码执行漏洞"
+  [[container.name]]
+  en = "Drupal Remote Code Execution"
+  zh = "Drupal 远程代码执行漏洞"
 app = "drupal"
   [[container.cve]]
   name = "CVE-2019-6339"
@@ -341,8 +379,9 @@ app = "drupal"
 path = "drupal/CVE-2019-6339"
 
 [[container]]
-name_en = "Drupal XSS"
-name_zh = "Drupal XSS漏洞"
+  [[container.name]]
+  en = "Drupal XSS"
+  zh = "Drupal XSS漏洞"
 app = "drupal"
   [[container.cve]]
   name = "CVE-2019-6341"
@@ -350,8 +389,9 @@ app = "drupal"
 path = "drupal/CVE-2019-6341"
 
 [[container]]
-name_en = "Apache Dubbo Java Deserialization"
-name_zh = "Apache Dubbo Java反序列化漏洞"
+  [[container.name]]
+  en = "Apache Dubbo Java Deserialization"
+  zh = "Apache Dubbo Java反序列化漏洞"
 app = "dubbo"
   [[container.cve]]
   name = "CVE-2019-17564"
@@ -359,8 +399,9 @@ app = "dubbo"
 path = "dubbo/CVE-2019-17564"
 
 [[container]]
-name_en = "ECShop 4.x collection_list SQL Injection"
-name_zh = "ECShop 4.x collection_list SQL注入"
+  [[container.name]]
+  en = "ECShop 4.x collection_list SQL Injection"
+  zh = "ECShop 4.x collection_list SQL注入"
 app = "ecshop"
   [[container.cve]]
   name = ""
@@ -368,8 +409,9 @@ app = "ecshop"
 path = "ecshop/collection_list-sqli"
 
 [[container]]
-name_en = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
-name_zh = "ECShop 2.x/3.x SQL注入/任意代码执行漏洞"
+  [[container.name]]
+  en = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
+  zh = "ECShop 2.x/3.x SQL注入/任意代码执行漏洞"
 app = "ecshop"
   [[container.cve]]
   name = ""
@@ -377,8 +419,9 @@ app = "ecshop"
 path = "ecshop/xianzhi-2017-02-82239600"
 
 [[container]]
-name_en = "ElasticSearch Command Execution"
-name_zh = "ElasticSearch 命令执行漏洞"
+  [[container.name]]
+  en = "ElasticSearch Command Execution"
+  zh = "ElasticSearch 命令执行漏洞"
 app = "ElasticSearch"
   [[container.cve]]
   name = "CVE-2014-3120"
@@ -386,8 +429,9 @@ app = "ElasticSearch"
 path = "elasticsearch/CVE-2014-3120"
 
 [[container]]
-name_en = "ElasticSearch Groovy Sandbox Bypass/Code Execution"
-name_zh = "ElasticSearch Groovy 沙盒绕过/代码执行漏洞"
+  [[container.name]]
+  en = "ElasticSearch Groovy Sandbox Bypass/Code Execution"
+  zh = "ElasticSearch Groovy 沙盒绕过/代码执行漏洞"
 app = "ElasticSearch"
   [[container.cve]]
   name = "CVE-2015-1427"
@@ -395,8 +439,9 @@ app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-1427"
 
 [[container]]
-name_en = "ElasticSearch Plug-in Directory Traversal"
-name_zh = "ElasticSearch 插件目录穿越漏洞"
+  [[container.name]]
+  en = "ElasticSearch Plug-in Directory Traversal"
+  zh = "ElasticSearch 插件目录穿越漏洞"
 app = "ElasticSearch"
   [[container.cve]]
   name = "CVE-2015-3337"
@@ -404,8 +449,9 @@ app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-3337"
 
 [[container]]
-name_en = "ElasticSearch Directory Traversal"
-name_zh = "ElasticSearch 目录穿越漏洞"
+  [[container.name]]
+  en = "ElasticSearch Directory Traversal"
+  zh = "ElasticSearch 目录穿越漏洞"
 app = "ElasticSearch"
   [[container.cve]]
   name = "CVE-2015-5531"
@@ -413,8 +459,9 @@ app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-5531"
 
 [[container]]
-name_en = "Elasticsearch Webshell"
-name_zh = "Elasticsearch 写入webshell漏洞"
+  [[container.name]]
+  en = "Elasticsearch Webshell"
+  zh = "Elasticsearch 写入webshell漏洞"
 app = "ElasticSearch"
   [[container.cve]]
   name = ""
@@ -422,8 +469,9 @@ app = "ElasticSearch"
 path = "elasticsearch/WooYun-2015-110216"
 
 [[container]]
-name_en = "Electron Remote Command Execution"
-name_zh = "Electron 远程命令执行漏洞"
+  [[container.name]]
+  en = "Electron Remote Command Execution"
+  zh = "Electron 远程命令执行漏洞"
 app = "electron"
   [[container.cve]]
   name = "CVE-2018-1000006"
@@ -431,8 +479,9 @@ app = "electron"
 path = "electron/CVE-2018-1000006"
 
 [[container]]
-name_en = "Electron WebPreferences Remote Command Execution"
-name_zh = "Electron WebPreferences 远程命令执行漏洞"
+  [[container.name]]
+  en = "Electron WebPreferences Remote Command Execution"
+  zh = "Electron WebPreferences 远程命令执行漏洞"
 app = "electron"
   [[container.cve]]
   name = "CVE-2018-15685"
@@ -440,8 +489,9 @@ app = "electron"
 path = "electron/CVE-2018-15685"
 
 [[container]]
-name_en = "elFinder ZIP Parameter and Arbitrary Command Injection"
-name_zh = "elFinder ZIP 参数与任意命令注入"
+  [[container.name]]
+  en = "elFinder ZIP Parameter and Arbitrary Command Injection"
+  zh = "elFinder ZIP 参数与任意命令注入"
 app = "elFinder"
   [[container.cve]]
   name = "CVE-2021-32682"
@@ -449,8 +499,9 @@ app = "elFinder"
 path = "elfinder/CVE-2021-32682"
 
 [[container]]
-name_en = "Fastjson Deserialization to Arbitrary Command Execution"
-name_zh = "Fastjson 反序列化导致任意命令执行漏洞"
+  [[container.name]]
+  en = "Fastjson Deserialization to Arbitrary Command Execution"
+  zh = "Fastjson 反序列化导致任意命令执行漏洞"
 app = "Fastjson"
   [[container.cve]]
   name = "CVE-2017-18349"
@@ -458,8 +509,9 @@ app = "Fastjson"
 path = "fastjson/1.2.24-rce"
 
 [[container]]
-name_en = "Fastjson 1.2.47 Remote Command Execution"
-name_zh = "Fastjson 1.2.47 远程命令执行漏洞"
+  [[container.name]]
+  en = "Fastjson 1.2.47 Remote Command Execution"
+  zh = "Fastjson 1.2.47 远程命令执行漏洞"
 app = "Fastjson"
   [[container.cve]]
   name = ""
@@ -467,8 +519,9 @@ app = "Fastjson"
 path = "fastjson/1.2.47-rce"
 
 [[container]]
-name_en = "FFmpeg Arbitrary File Read/SSRF"
-name_zh = "FFmpeg 任意文件读取漏洞/SSRF漏洞"
+  [[container.name]]
+  en = "FFmpeg Arbitrary File Read/SSRF"
+  zh = "FFmpeg 任意文件读取漏洞/SSRF漏洞"
 app = "ffmpeg"
   [[container.cve]]
   name = "CVE-2016-1897,CVE-2016-1898"
@@ -476,8 +529,9 @@ app = "ffmpeg"
 path = "ffmpeg/CVE-2016-1897"
 
 [[container]]
-name_en = "FFmpeg Arbitrary File Read"
-name_zh = "FFmpeg 任意文件读取漏洞"
+  [[container.name]]
+  en = "FFmpeg Arbitrary File Read"
+  zh = "FFmpeg 任意文件读取漏洞"
 app = "ffmpeg"
   [[container.cve]]
   name = "CVE-2017-9993"
@@ -485,8 +539,9 @@ app = "ffmpeg"
 path = "ffmpeg/phdays"
 
 [[container]]
-name_en = "Jinja2 SSTI Template Injection"
-name_zh = "Jinja2 SSTI模板注入"
+  [[container.name]]
+  en = "Jinja2 SSTI Template Injection"
+  zh = "Jinja2 SSTI模板注入"
 app = "Jinja2"
   [[container.cve]]
   name = ""
@@ -494,8 +549,9 @@ app = "Jinja2"
 path = "flask/ssti"
 
 [[container]]
-name_en = "Apache Flink File Upload"
-name_zh = "Apache Flink 文件上传漏洞"
+  [[container.name]]
+  en = "Apache Flink File Upload"
+  zh = "Apache Flink 文件上传漏洞"
 app = "flink"
   [[container.cve]]
   name = "CVE-2020-17518"
@@ -503,8 +559,9 @@ app = "flink"
 path = "flink/CVE-2020-17518"
 
 [[container]]
-name_en = "Apache Flink Jobmanager/Logs Directory Traversal"
-name_zh = "Apache Flink Jobmanager/Logs 目录穿越漏洞"
+  [[container.name]]
+  en = "Apache Flink Jobmanager/Logs Directory Traversal"
+  zh = "Apache Flink Jobmanager/Logs 目录穿越漏洞"
 app = "flink"
   [[container.cve]]
   name = "CVE-2020-17519"
@@ -512,8 +569,9 @@ app = "flink"
 path = "flink/CVE-2020-17519"
 
 [[container]]
-name_en = "GeoServer OGC Filter SQL Injection"
-name_zh = "GeoServer OGC Filter SQL注入漏洞"
+  [[container.name]]
+  en = "GeoServer OGC Filter SQL Injection"
+  zh = "GeoServer OGC Filter SQL注入漏洞"
 app = "GeoServer"
   [[container.cve]]
   name = "CVE-2023-25157"
@@ -521,8 +579,9 @@ app = "GeoServer"
 path = "geoserver/CVE-2023-25157"
 
 [[container]]
-name_en = "GhostScript Sandbox Bypass (Command Execution)"
-name_zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
+  [[container.name]]
+  en = "GhostScript Sandbox Bypass (Command Execution)"
+  zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
 app = "ghostscript"
   [[container.cve]]
   name = "CVE-2018-16509"
@@ -530,8 +589,9 @@ app = "ghostscript"
 path = "ghostscript/CVE-2018-16509"
 
 [[container]]
-name_en = "GhostScript Sandbox Bypass (Command Execution)"
-name_zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
+  [[container.name]]
+  en = "GhostScript Sandbox Bypass (Command Execution)"
+  zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
 app = "ghostscript"
   [[container.cve]]
   name = "CVE-2018-19475"
@@ -539,8 +599,9 @@ app = "ghostscript"
 path = "ghostscript/CVE-2018-19475"
 
 [[container]]
-name_en = "GhostScript Sandbox Bypass (Command Execution)"
-name_zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
+  [[container.name]]
+  en = "GhostScript Sandbox Bypass (Command Execution)"
+  zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
 app = "ghostscript"
   [[container.cve]]
   name = "CVE-2019-6116"
@@ -548,8 +609,9 @@ app = "ghostscript"
 path = "ghostscript/CVE-2019-6116"
 
 [[container]]
-name_en = "GIT-SHELL Sandbox Bypass"
-name_zh = "GIT-SHELL 沙盒绕过"
+  [[container.name]]
+  en = "GIT-SHELL Sandbox Bypass"
+  zh = "GIT-SHELL 沙盒绕过"
 app = "git"
   [[container.cve]]
   name = "CVE-2017-8386"
@@ -557,8 +619,9 @@ app = "git"
 path = "git/CVE-2017-8386"
 
 [[container]]
-name_en = "Gitea 1.4.0 Directory Traversal to Command Execution"
-name_zh = "Gitea 1.4.0 目录穿越导致命令执行漏洞"
+  [[container.name]]
+  en = "Gitea 1.4.0 Directory Traversal to Command Execution"
+  zh = "Gitea 1.4.0 目录穿越导致命令执行漏洞"
 app = "gitea"
   [[container.cve]]
   name = ""
@@ -566,8 +629,9 @@ app = "gitea"
 path = "gitea/1.4-rce"
 
 [[container]]
-name_en = "GitLab Arbitrary File Read"
-name_zh = "GitLab 任意文件读取漏洞"
+  [[container.name]]
+  en = "GitLab Arbitrary File Read"
+  zh = "GitLab 任意文件读取漏洞"
 app = "gitlab"
   [[container.cve]]
   name = "CVE-2016-9086"
@@ -575,8 +639,9 @@ app = "gitlab"
 path = "gitlab/CVE-2016-9086"
 
 [[container]]
-name_en = "GitLab Remote Command Execution"
-name_zh = "GitLab 远程命令执行漏洞"
+  [[container.name]]
+  en = "GitLab Remote Command Execution"
+  zh = "GitLab 远程命令执行漏洞"
 app = "gitlab"
   [[container.cve]]
   name = "CVE-2021-22205"
@@ -584,8 +649,9 @@ app = "gitlab"
 path = "gitlab/CVE-2021-22205"
 
 [[container]]
-name_en = "gitlist 0.6.0 Remote Command Execution"
-name_zh = "gitlist 0.6.0 远程命令执行漏洞"
+  [[container.name]]
+  en = "gitlist 0.6.0 Remote Command Execution"
+  zh = "gitlist 0.6.0 远程命令执行漏洞"
 app = "gitlist"
   [[container.cve]]
   name = ""
@@ -593,8 +659,9 @@ app = "gitlist"
 path = "gitlist/0.6.0-rce"
 
 [[container]]
-name_en = "GlassFish Arbitrary File Read"
-name_zh = "GlassFish 任意文件读取漏洞"
+  [[container.name]]
+  en = "GlassFish Arbitrary File Read"
+  zh = "GlassFish 任意文件读取漏洞"
 app = "GlassFish"
   [[container.cve]]
   name = ""
@@ -602,8 +669,9 @@ app = "GlassFish"
 path = "glassfish/4.1.0"
 
 [[container]]
-name_en = "GoAhead Remote Command Execution"
-name_zh = "GoAhead 远程命令执行漏洞"
+  [[container.name]]
+  en = "GoAhead Remote Command Execution"
+  zh = "GoAhead 远程命令执行漏洞"
 app = "GoAhead"
   [[container.cve]]
   name = "CVE-2017-17562"
@@ -611,8 +679,9 @@ app = "GoAhead"
 path = "goahead/CVE-2017-17562"
 
 [[container]]
-name_en = "GoAhead Server Environment Variable Injection"
-name_zh = "GoAhead Server 环境变量注入"
+  [[container.name]]
+  en = "GoAhead Server Environment Variable Injection"
+  zh = "GoAhead Server 环境变量注入"
 app = "GoAhead"
   [[container.cve]]
   name = "CVE-2021-42342"
@@ -620,8 +689,9 @@ app = "GoAhead"
 path = "goahead/CVE-2021-42342"
 
 [[container]]
-name_en = "Gogs Arbitrary User Login"
-name_zh = "Gogs 任意用户登录漏洞"
+  [[container.name]]
+  en = "Gogs Arbitrary User Login"
+  zh = "Gogs 任意用户登录漏洞"
 app = "Gogs"
   [[container.cve]]
   name = "CVE-2018-18925"
@@ -629,8 +699,9 @@ app = "Gogs"
 path = "gogs/CVE-2018-18925"
 
 [[container]]
-name_en = "Grafana 8.x Plug-in Module Directory Traversal"
-name_zh = "Grafana 8.x 插件模块目录穿越漏洞"
+  [[container.name]]
+  en = "Grafana 8.x Plug-in Module Directory Traversal"
+  zh = "Grafana 8.x 插件模块目录穿越漏洞"
 app = "Grafana"
   [[container.cve]]
   name = "CVE-2021-43798"
@@ -638,8 +709,9 @@ app = "Grafana"
 path = "grafana/CVE-2021-43798"
 
 [[container]]
-name_en = "Grafana Management Background SSRF"
-name_zh = "Grafana管理后台SSRF"
+  [[container.name]]
+  en = "Grafana Management Background SSRF"
+  zh = "Grafana管理后台SSRF"
 app = "Grafana"
   [[container.cve]]
   name = ""
@@ -647,8 +719,9 @@ app = "Grafana"
 path = "grafana/admin-ssrf"
 
 [[container]]
-name_en = "H2 Database Console Unauthorized Access"
-name_zh = "H2 Database Console 未授权访问"
+  [[container.name]]
+  en = "H2 Database Console Unauthorized Access"
+  zh = "H2 Database Console 未授权访问"
 app = "Springboot H2 Database"
   [[container.cve]]
   name = ""
@@ -656,8 +729,9 @@ app = "Springboot H2 Database"
 path = "h2database/h2-console-unacc"
 
 [[container]]
-name_en = "Hadoop YARN ResourceManager Unauthorized Access"
-name_zh = "Hadoop YARN ResourceManager 未授权访问漏洞"
+  [[container.name]]
+  en = "Hadoop YARN ResourceManager Unauthorized Access"
+  zh = "Hadoop YARN ResourceManager 未授权访问漏洞"
 app = "Hadoop YARN"
   [[container.cve]]
   name = ""
@@ -665,8 +739,9 @@ app = "Hadoop YARN"
 path = "hadoop/unauthorized-yarn"
 
 [[container]]
-name_en = "Apache HTTPD Newline Parsing"
-name_zh = "Apache HTTPD 换行解析漏洞"
+  [[container.name]]
+  en = "Apache HTTPD Newline Parsing"
+  zh = "Apache HTTPD 换行解析漏洞"
 app = "Apache HTTP Server"
   [[container.cve]]
   name = "CVE-2017-15715"
@@ -674,8 +749,9 @@ app = "Apache HTTP Server"
 path = "httpd/CVE-2017-15715"
 
 [[container]]
-name_en = "Apache HTTP Server 2.4.48 mod_proxy SSRF"
-name_zh = "Apache HTTP Server 2.4.48 mod_proxy SSRF漏洞"
+  [[container.name]]
+  en = "Apache HTTP Server 2.4.48 mod_proxy SSRF"
+  zh = "Apache HTTP Server 2.4.48 mod_proxy SSRF漏洞"
 app = "Apache HTTP Server"
   [[container.cve]]
   name = "CVE-2021-40438"
@@ -683,8 +759,9 @@ app = "Apache HTTP Server"
 path = "httpd/CVE-2021-40438"
 
 [[container]]
-name_en = "Apache HTTP Server 2.4.49 Path Traversal"
-name_zh = "Apache HTTP Server 2.4.49 路径穿越漏洞"
+  [[container.name]]
+  en = "Apache HTTP Server 2.4.49 Path Traversal"
+  zh = "Apache HTTP Server 2.4.49 路径穿越漏洞"
 app = "Apache HTTP Server"
   [[container.cve]]
   name = "CVE-2021-41773"
@@ -692,8 +769,9 @@ app = "Apache HTTP Server"
 path = "httpd/CVE-2021-41773"
 
 [[container]]
-name_en = "Apache HTTP Server 2.4.50 Path Traversal"
-name_zh = "Apache HTTP Server 2.4.50 路径穿越漏洞"
+  [[container.name]]
+  en = "Apache HTTP Server 2.4.50 Path Traversal"
+  zh = "Apache HTTP Server 2.4.50 路径穿越漏洞"
 app = "Apache HTTP Server"
   [[container.cve]]
   name = "CVE-2021-42013"
@@ -701,8 +779,9 @@ app = "Apache HTTP Server"
 path = "httpd/CVE-2021-42013"
 
 [[container]]
-name_en = "Apache HTTPD Unknown Suffix Parsing"
-name_zh = "Apache HTTPD 未知后缀解析漏洞"
+  [[container.name]]
+  en = "Apache HTTPD Unknown Suffix Parsing"
+  zh = "Apache HTTPD 未知后缀解析漏洞"
 app = "Apache HTTP Server"
   [[container.cve]]
   name = ""
@@ -710,8 +789,9 @@ app = "Apache HTTP Server"
 path = "httpd/apache_parsing_vulnerability"
 
 [[container]]
-name_en = "Apache SSI Remote Command Execution"
-name_zh = "Apache SSI 远程命令执行漏洞"
+  [[container.name]]
+  en = "Apache SSI Remote Command Execution"
+  zh = "Apache SSI 远程命令执行漏洞"
 app = "Apache HTTP Server"
   [[container.cve]]
   name = ""
@@ -719,8 +799,9 @@ app = "Apache HTTP Server"
 path = "httpd/ssi-rce"
 
 [[container]]
-name_en = "Imagetragick Command Execution"
-name_zh = "Imagetragick 命令执行漏洞"
+  [[container.name]]
+  en = "Imagetragick Command Execution"
+  zh = "Imagetragick 命令执行漏洞"
 app = "ImageMagick"
   [[container.cve]]
   name = "CVE-2016-3714"
@@ -728,8 +809,9 @@ app = "ImageMagick"
 path = "imagemagick/imagetragick"
 
 [[container]]
-name_en = "ImageMagick PDF Password Location Command Injection"
-name_zh = "ImageMagick PDF密码位置命令注入漏洞"
+  [[container.name]]
+  en = "ImageMagick PDF Password Location Command Injection"
+  zh = "ImageMagick PDF密码位置命令注入漏洞"
 app = "imagemagick"
   [[container.cve]]
   name = "CVE-2020-29599"
@@ -737,8 +819,9 @@ app = "imagemagick"
 path = "imagemagick/CVE-2020-29599"
 
 [[container]]
-name_en = "ImageMagick Arbitrary File Read"
-name_zh = "ImageMagick任意文件读取漏洞"
+  [[container.name]]
+  en = "ImageMagick Arbitrary File Read"
+  zh = "ImageMagick任意文件读取漏洞"
 app = "imagemagick"
   [[container.cve]]
   name = "CVE-2022-44268"
@@ -746,8 +829,9 @@ app = "imagemagick"
 path = "imagemagick/CVE-2022-44268"
 
 [[container]]
-name_en = "InfluxDB Empty JWT Secret Key Authentication Bypass"
-name_zh = "InfluxDB Empty JWT Secret Key Authentication Bypass"
+  [[container.name]]
+  en = "InfluxDB Empty JWT Secret Key Authentication Bypass"
+  zh = "InfluxDB Empty JWT Secret Key Authentication Bypass"
 app = "InfluxDB"
   [[container.cve]]
   name = "CVE-2019-20933"
@@ -755,8 +839,9 @@ app = "InfluxDB"
 path = "influxdb/CVE-2019-20933"
 
 [[container]]
-name_en = "Jackson-databind Deserialization"
-name_zh = "Jackson-databind 反序列化漏洞"
+  [[container.name]]
+  en = "Jackson-databind Deserialization"
+  zh = "Jackson-databind 反序列化漏洞"
 app = "Jackson-databind"
   [[container.cve]]
   name = "CVE-2017-7525"
@@ -764,8 +849,9 @@ app = "Jackson-databind"
 path = "jackson/CVE-2017-7525"
 
 [[container]]
-name_en = "Java RMI codebase Remote Code Execution"
-name_zh = "Java RMI codebase 远程代码执行漏洞"
+  [[container.name]]
+  en = "Java RMI codebase Remote Code Execution"
+  zh = "Java RMI codebase 远程代码执行漏洞"
 app = "java rmi"
   [[container.cve]]
   name = ""
@@ -773,8 +859,9 @@ app = "java rmi"
 path = "java/rmi-codebase"
 
 [[container]]
-name_en = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
-name_zh = "Java RMI Registry 反序列化漏洞(<=jdk8u111)"
+  [[container.name]]
+  en = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
+  zh = "Java RMI Registry 反序列化漏洞(<=jdk8u111)"
 app = "java rmi"
   [[container.cve]]
   name = ""
@@ -782,8 +869,9 @@ app = "java rmi"
 path = "java/rmi-registry-bind-deserialization"
 
 [[container]]
-name_en = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
-name_zh = "Java RMI Registry 反序列化漏洞(<jdk8u232_b09)"
+  [[container.name]]
+  en = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
+  zh = "Java RMI Registry 反序列化漏洞(<jdk8u232_b09)"
 app = "java rmi"
   [[container.cve]]
   name = ""
@@ -791,8 +879,9 @@ app = "java rmi"
 path = "java/rmi-registry-bind-deserialization-bypass"
 
 [[container]]
-name_en = "JBoss 5.x/6.x Deserialization"
-name_zh = "JBoss 5.x/6.x 反序列化漏洞"
+  [[container.name]]
+  en = "JBoss 5.x/6.x Deserialization"
+  zh = "JBoss 5.x/6.x 反序列化漏洞"
 app = "jboss"
   [[container.cve]]
   name = "CVE-2017-12149"
@@ -800,8 +889,9 @@ app = "jboss"
 path = "jboss/CVE-2017-12149"
 
 [[container]]
-name_en = "JBoss 4.x JBossMQ JMS Deserialization"
-name_zh = "JBoss 4.x JBossMQ JMS 反序列化漏洞"
+  [[container.name]]
+  en = "JBoss 4.x JBossMQ JMS Deserialization"
+  zh = "JBoss 4.x JBossMQ JMS 反序列化漏洞"
 app = "jboss"
   [[container.cve]]
   name = "CVE-2017-7504"
@@ -809,8 +899,9 @@ app = "jboss"
 path = "jboss/CVE-2017-7504"
 
 [[container]]
-name_en = "JBoss JMXInvokerServlet Deserialization"
-name_zh = "JBoss JMXInvokerServlet 反序列化漏洞"
+  [[container.name]]
+  en = "JBoss JMXInvokerServlet Deserialization"
+  zh = "JBoss JMXInvokerServlet 反序列化漏洞"
 app = "jboss"
   [[container.cve]]
   name = ""
@@ -818,8 +909,9 @@ app = "jboss"
 path = "jboss/JMXInvokerServlet-deserialization"
 
 [[container]]
-name_en = "Jenkins-CI Remote Code Execution"
-name_zh = "Jenkins-CI 远程代码执行漏洞"
+  [[container.name]]
+  en = "Jenkins-CI Remote Code Execution"
+  zh = "Jenkins-CI 远程代码执行漏洞"
 app = "Jenkins"
   [[container.cve]]
   name = "CVE-2017-1000353"
@@ -827,8 +919,9 @@ app = "Jenkins"
 path = "jenkins/CVE-2017-1000353"
 
 [[container]]
-name_en = "Jenkins Remote Command Execution"
-name_zh = "Jenkins远程命令执行漏洞"
+  [[container.name]]
+  en = "Jenkins Remote Command Execution"
+  zh = "Jenkins远程命令执行漏洞"
 app = "Jenkins"
   [[container.cve]]
   name = "CVE-2018-1000861"
@@ -836,8 +929,9 @@ app = "Jenkins"
 path = "jenkins/CVE-2018-1000861"
 
 [[container]]
-name_en = "Jetty WEB-INF Sensitive Information Disclosure"
-name_zh = "Jetty WEB-INF 敏感信息泄露漏洞"
+  [[container.name]]
+  en = "Jetty WEB-INF Sensitive Information Disclosure"
+  zh = "Jetty WEB-INF 敏感信息泄露漏洞"
 app = "jetty"
   [[container.cve]]
   name = "CVE-2021-28164"
@@ -845,8 +939,9 @@ app = "jetty"
 path = "jetty/CVE-2021-28164"
 
 [[container]]
-name_en = "Jetty Common Servlets Component ConcatServlet Information Disclosure"
-name_zh = "Jetty 通用 Servlets 组件 ConcatServlet 信息泄露漏洞"
+  [[container.name]]
+  en = "Jetty Common Servlets Component ConcatServlet Information Disclosure"
+  zh = "Jetty 通用 Servlets 组件 ConcatServlet 信息泄露漏洞"
 app = "jetty"
   [[container.cve]]
   name = "CVE-2021-28169"
@@ -854,8 +949,9 @@ app = "jetty"
 path = "jetty/CVE-2021-28169"
 
 [[container]]
-name_en = "Jetty WEB-INF Sensitive Information Disclosure"
-name_zh = "Jetty WEB-INF 敏感信息泄露漏洞"
+  [[container.name]]
+  en = "Jetty WEB-INF Sensitive Information Disclosure"
+  zh = "Jetty WEB-INF 敏感信息泄露漏洞"
 app = "jetty"
   [[container.cve]]
   name = "CVE-2021-34429"
@@ -863,8 +959,9 @@ app = "jetty"
 path = "jetty/CVE-2021-34429"
 
 [[container]]
-name_en = "Atlassian Jira Template Injection"
-name_zh = "Atlassian Jira 模板注入漏洞"
+  [[container.name]]
+  en = "Atlassian Jira Template Injection"
+  zh = "Atlassian Jira 模板注入漏洞"
 app = "jira"
   [[container.cve]]
   name = "CVE-2019-11581"
@@ -872,8 +969,9 @@ app = "jira"
 path = "jira/CVE-2019-11581"
 
 [[container]]
-name_en = "Jmeter RMI Deserialization Command Execution"
-name_zh = "Jmeter RMI 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "Jmeter RMI Deserialization Command Execution"
+  zh = "Jmeter RMI 反序列化命令执行漏洞"
 app = "Apache Jmeter"
   [[container.cve]]
   name = "CVE-2018-1297"
@@ -881,8 +979,9 @@ app = "Apache Jmeter"
 path = "jmeter/CVE-2018-1297"
 
 [[container]]
-name_en = "Joomla 3.4.5 Deserialization"
-name_zh = "Joomla 3.4.5 反序列化漏洞"
+  [[container.name]]
+  en = "Joomla 3.4.5 Deserialization"
+  zh = "Joomla 3.4.5 反序列化漏洞"
 app = "Joomla"
   [[container.cve]]
   name = "CVE-2015-8562"
@@ -890,8 +989,9 @@ app = "Joomla"
 path = "joomla/CVE-2015-8562"
 
 [[container]]
-name_en = "Joomla 3.7.0 SQL Injection"
-name_zh = "Joomla 3.7.0 SQL注入漏洞"
+  [[container.name]]
+  en = "Joomla 3.7.0 SQL Injection"
+  zh = "Joomla 3.7.0 SQL注入漏洞"
 app = "Joomla"
   [[container.cve]]
   name = "CVE-2017-8917"
@@ -899,8 +999,9 @@ app = "Joomla"
 path = "joomla/CVE-2017-8917"
 
 [[container]]
-name_en = "Joomla 4.2.7 Permission Bypass"
-name_zh = "Joomla 4.2.7 权限绕过漏洞"
+  [[container.name]]
+  en = "Joomla 4.2.7 Permission Bypass"
+  zh = "Joomla 4.2.7 权限绕过漏洞"
 app = "Joomla"
   [[container.cve]]
   name = "CVE-2023-23752"
@@ -908,8 +1009,9 @@ app = "Joomla"
 path = "joomla/CVE-2023-23752"
 
 [[container]]
-name_en = "Jupyter Notebook Unauthorized Access"
-name_zh = "Jupyter Notebook 未授权访问漏洞"
+  [[container.name]]
+  en = "Jupyter Notebook Unauthorized Access"
+  zh = "Jupyter Notebook 未授权访问漏洞"
 app = "Jupyter"
   [[container.cve]]
   name = ""
@@ -917,8 +1019,9 @@ app = "Jupyter"
 path = "jupyter/notebook-rce"
 
 [[container]]
-name_en = "Apache Kafka Clients JNDI Injection"
-name_zh = "Apache Kafka Clients JNDI注入漏洞"
+  [[container.name]]
+  en = "Apache Kafka Clients JNDI Injection"
+  zh = "Apache Kafka Clients JNDI注入漏洞"
 app = "Apache Kafka"
   [[container.cve]]
   name = "CVE-2023-25194"
@@ -926,8 +1029,9 @@ app = "Apache Kafka"
 path = "kafka/CVE-2023-25194"
 
 [[container]]
-name_en = "Kibana Local File Inclusion"
-name_zh = "Kibana 本地文件包含漏洞"
+  [[container.name]]
+  en = "Kibana Local File Inclusion"
+  zh = "Kibana 本地文件包含漏洞"
 app = "kibana"
   [[container.cve]]
   name = "CVE-2018-17246"
@@ -935,8 +1039,9 @@ app = "kibana"
 path = "kibana/CVE-2018-17246"
 
 [[container]]
-name_en = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
-name_zh = "Kibana 原型链污染导致任意代码执行漏洞"
+  [[container.name]]
+  en = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
+  zh = "Kibana 原型链污染导致任意代码执行漏洞"
 app = "kibana"
   [[container.cve]]
   name = "CVE-2019-7609"
@@ -944,8 +1049,9 @@ app = "kibana"
 path = "kibana/CVE-2019-7609"
 
 [[container]]
-name_en = "Laravel Ignition 2.5.1 Code Execution"
-name_zh = "Laravel Ignition 2.5.1 代码执行漏洞"
+  [[container.name]]
+  en = "Laravel Ignition 2.5.1 Code Execution"
+  zh = "Laravel Ignition 2.5.1 代码执行漏洞"
 app = "laravel"
   [[container.cve]]
   name = "CVE-2021-3129"
@@ -953,8 +1059,9 @@ app = "laravel"
 path = "kibana/CVE-2021-3129"
 
 [[container]]
-name_en = "libssh Server-side Authentication Bypass"
-name_zh = "libssh 服务端权限认证绕过漏洞"
+  [[container.name]]
+  en = "libssh Server-side Authentication Bypass"
+  zh = "libssh 服务端权限认证绕过漏洞"
 app = "libssh"
   [[container.cve]]
   name = "CVE-2018-10933"
@@ -962,8 +1069,9 @@ app = "libssh"
 path = "libssh/CVE-2018-10933"
 
 [[container]]
-name_en = "Liferay Portal CE Deserialization Command Execution"
-name_zh = "Liferay Portal CE 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "Liferay Portal CE Deserialization Command Execution"
+  zh = "Liferay Portal CE 反序列化命令执行漏洞"
 app = "Liferay Portal"
   [[container.cve]]
   name = "CVE-2020-7961"
@@ -971,8 +1079,9 @@ app = "Liferay Portal"
 path = "liferay-portal/CVE-2020-7961"
 
 [[container]]
-name_en = "Apache Log4j Server Deserialization Command Execution"
-name_zh = "Apache Log4j Server 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "Apache Log4j Server Deserialization Command Execution"
+  zh = "Apache Log4j Server 反序列化命令执行漏洞"
 app = "Apache Log4j"
   [[container.cve]]
   name = "CVE-2017-5645"
@@ -980,8 +1089,9 @@ app = "Apache Log4j"
 path = "log4j/CVE-2017-5645"
 
 [[container]]
-name_en = "Apache Log4j2 lookup JNDI Injection"
-name_zh = "Apache Log4j2 lookup JNDI 注入漏洞"
+  [[container.name]]
+  en = "Apache Log4j2 lookup JNDI Injection"
+  zh = "Apache Log4j2 lookup JNDI 注入漏洞"
 app = "Apache Log4j"
   [[container.cve]]
   name = "CVE-2021-44228"
@@ -989,8 +1099,9 @@ app = "Apache Log4j"
 path = "log4j/CVE-2021-44228"
 
 [[container]]
-name_en = "Magento 2.2 SQL Injection"
-name_zh = "Magento 2.2 SQL注入漏洞"
+  [[container.name]]
+  en = "Magento 2.2 SQL Injection"
+  zh = "Magento 2.2 SQL注入漏洞"
 app = "Magento"
   [[container.cve]]
   name = ""
@@ -998,8 +1109,9 @@ app = "Magento"
 path = "magento/2.2-sqli"
 
 [[container]]
-name_en = "Metabase Arbitrary File Read"
-name_zh = "Metabase任意文件读取漏洞"
+  [[container.name]]
+  en = "Metabase Arbitrary File Read"
+  zh = "Metabase任意文件读取漏洞"
 app = "metabase"
   [[container.cve]]
   name = "CVE-2021-41277"
@@ -1007,8 +1119,9 @@ app = "metabase"
 path = "metabase/CVE-2021-41277"
 
 [[container]]
-name_en = "mini_httpd Arbitrary File Read"
-name_zh = "mini_httpd任意文件读取漏洞"
+  [[container.name]]
+  en = "mini_httpd Arbitrary File Read"
+  zh = "mini_httpd任意文件读取漏洞"
 app = "mini_httpd"
   [[container.cve]]
   name = "CVE-2018-18778"
@@ -1016,8 +1129,9 @@ app = "mini_httpd"
 path = "mini_httpd/CVE-2018-18778"
 
 [[container]]
-name_en = "MinIO Cluster Mode Information Disclosure"
-name_zh = "MinIO集群模式信息泄露漏洞"
+  [[container.name]]
+  en = "MinIO Cluster Mode Information Disclosure"
+  zh = "MinIO集群模式信息泄露漏洞"
 app = "MinIO"
   [[container.cve]]
   name = "CVE-2023-28432"
@@ -1025,8 +1139,9 @@ app = "MinIO"
 path = "minio/CVE-2023-28432"
 
 [[container]]
-name_en = "Mojarra JSF ViewState Deserialization"
-name_zh = "Mojarra JSF ViewState 反序列化漏洞"
+  [[container.name]]
+  en = "Mojarra JSF ViewState Deserialization"
+  zh = "Mojarra JSF ViewState 反序列化漏洞"
 app = "Mojarra JSF"
   [[container.cve]]
   name = ""
@@ -1034,8 +1149,9 @@ app = "Mojarra JSF"
 path = "mojarra/jsf-viewstate-deserialization"
 
 [[container]]
-name_en = "Mongo Express Remote Code Execution"
-name_zh = "Mongo Express 远程代码执行漏洞"
+  [[container.name]]
+  en = "Mongo Express Remote Code Execution"
+  zh = "Mongo Express 远程代码执行漏洞"
 app = "mongo-express"
   [[container.cve]]
   name = "CVE-2019-10758"
@@ -1043,8 +1159,9 @@ app = "mongo-express"
 path = "mongo-express/CVE-2019-10758"
 
 [[container]]
-name_en = "MySQL Authentication Bypass"
-name_zh = "MySQL 身份认证绕过漏洞"
+  [[container.name]]
+  en = "MySQL Authentication Bypass"
+  zh = "MySQL 身份认证绕过漏洞"
 app = "MySQL"
   [[container.cve]]
   name = "CVE-2012-2122"
@@ -1052,8 +1169,9 @@ app = "MySQL"
 path = "mysql/CVE-2012-2122"
 
 [[container]]
-name_en = "Nacos Authentication Bypass"
-name_zh = "Nacos 认证绕过漏洞"
+  [[container.name]]
+  en = "Nacos Authentication Bypass"
+  zh = "Nacos 认证绕过漏洞"
 app = "Nacos"
   [[container.cve]]
   name = "CVE-2021-29441"
@@ -1061,8 +1179,9 @@ app = "Nacos"
 path = "nacos/CVE-2021-29441"
 
 [[container]]
-name_en = "Neo4j Shell Server Deserialization"
-name_zh = "Neo4j Shell Server 反序列化漏洞"
+  [[container.name]]
+  en = "Neo4j Shell Server Deserialization"
+  zh = "Neo4j Shell Server 反序列化漏洞"
 app = "Neo4j"
   [[container.cve]]
   name = "CVE-2021-34371"
@@ -1070,8 +1189,9 @@ app = "Neo4j"
 path = "neo4j/CVE-2021-34371"
 
 [[container]]
-name_en = "Nexus Repository Manager 3 Remote Command Execution"
-name_zh = "Nexus Repository Manager 3 远程命令执行漏洞"
+  [[container.name]]
+  en = "Nexus Repository Manager 3 Remote Command Execution"
+  zh = "Nexus Repository Manager 3 远程命令执行漏洞"
 app = "Nexus Repository Manager"
   [[container.cve]]
   name = "CVE-2019-7238"
@@ -1079,8 +1199,9 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2019-7238"
 
 [[container]]
-name_en = "Nexus Repository Manager 3 Remote Command Execution"
-name_zh = "Nexus Repository Manager 3 远程命令执行漏洞"
+  [[container.name]]
+  en = "Nexus Repository Manager 3 Remote Command Execution"
+  zh = "Nexus Repository Manager 3 远程命令执行漏洞"
 app = "Nexus Repository Manager"
   [[container.cve]]
   name = "CVE-2020-10199"
@@ -1088,8 +1209,9 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10199"
 
 [[container]]
-name_en = "Nexus Repository Manager 3 Remote Command Execution"
-name_zh = "Nexus Repository Manager 3 远程命令执行漏洞"
+  [[container.name]]
+  en = "Nexus Repository Manager 3 Remote Command Execution"
+  zh = "Nexus Repository Manager 3 远程命令执行漏洞"
 app = "Nexus Repository Manager"
   [[container.cve]]
   name = "CVE-2020-10204"
@@ -1097,8 +1219,9 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10204"
 
 [[container]]
-name_en = "Nginx Filename Logic"
-name_zh = "Nginx 文件名逻辑漏洞"
+  [[container.name]]
+  en = "Nginx Filename Logic"
+  zh = "Nginx 文件名逻辑漏洞"
 app = "Nginx"
   [[container.cve]]
   name = "CVE-2013-4547"
@@ -1106,8 +1229,9 @@ app = "Nginx"
 path = "nginx/CVE-2013-4547"
 
 [[container]]
-name_en = "Nginx Out-of-Bounds Read Cache"
-name_zh = "Nginx越界读取缓存漏洞"
+  [[container.name]]
+  en = "Nginx Out-of-Bounds Read Cache"
+  zh = "Nginx越界读取缓存漏洞"
 app = "Nginx"
   [[container.cve]]
   name = "CVE-2017-7529"
@@ -1115,8 +1239,9 @@ app = "Nginx"
 path = "nginx/CVE-2017-7529"
 
 [[container]]
-name_en = "Nginx Configuration Errors"
-name_zh = "Nginx 配置错误三例"
+  [[container.name]]
+  en = "Nginx Configuration Errors"
+  zh = "Nginx 配置错误三例"
 app = "Nginx"
   [[container.cve]]
   name = ""
@@ -1124,8 +1249,9 @@ app = "Nginx"
 path = "nginx/insecure-configuration"
 
 [[container]]
-name_en = "Nginx Parsing"
-name_zh = "Nginx 解析漏洞"
+  [[container.name]]
+  en = "Nginx Parsing"
+  zh = "Nginx 解析漏洞"
 app = "Nginx"
   [[container.cve]]
   name = ""
@@ -1133,8 +1259,9 @@ app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
 
 [[container]]
-name_en = "NodeJS Directory Traversal"
-name_zh = "NodeJS 目录穿越漏洞"
+  [[container.name]]
+  en = "NodeJS Directory Traversal"
+  zh = "NodeJS 目录穿越漏洞"
 app = "node"
   [[container.cve]]
   name = "CVE-2017-14849"
@@ -1142,8 +1269,9 @@ app = "node"
 path = "node/CVE-2017-14849"
 
 [[container]]
-name_en = "node-postgres Code Execution"
-name_zh = "node-postgres 代码执行漏洞分析"
+  [[container.name]]
+  en = "node-postgres Code Execution"
+  zh = "node-postgres 代码执行漏洞分析"
 app = "node-postgres"
   [[container.cve]]
   name = "CVE-2017-16082"
@@ -1151,8 +1279,9 @@ app = "node-postgres"
 path = "node/CVE-2017-16082"
 
 [[container]]
-name_en = "ntopng Permission Bypass"
-name_zh = "ntopng权限绕过漏洞"
+  [[container.name]]
+  en = "ntopng Permission Bypass"
+  zh = "ntopng权限绕过漏洞"
 app = "ntopng"
   [[container.cve]]
   name = "CVE-2021-28073"
@@ -1160,8 +1289,9 @@ app = "ntopng"
 path = "ntopng/CVE-2021-28073"
 
 [[container]]
-name_en = "Apache OfBiz Deserialization Command Execution"
-name_zh = "Apache OfBiz 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "Apache OfBiz Deserialization Command Execution"
+  zh = "Apache OfBiz 反序列化命令执行漏洞"
 app = "Apache OfBiz"
   [[container.cve]]
   name = "CVE-2020-9496"
@@ -1169,8 +1299,9 @@ app = "Apache OfBiz"
 path = "ofbiz/CVE-2020-9496"
 
 [[container]]
-name_en = "Openfire Management Background Authentication Bypass"
-name_zh = "Openfire管理后台认证绕过漏洞"
+  [[container.name]]
+  en = "Openfire Management Background Authentication Bypass"
+  zh = "Openfire管理后台认证绕过漏洞"
 app = "Openfire"
   [[container.cve]]
   name = "CVE-2023-32315"
@@ -1178,8 +1309,9 @@ app = "Openfire"
 path = "openfire/CVE-2023-32315"
 
 [[container]]
-name_en = "OpenSMTPD Remote Command Execution"
-name_zh = "OpenSMTPD 远程命令执行漏洞"
+  [[container.name]]
+  en = "OpenSMTPD Remote Command Execution"
+  zh = "OpenSMTPD 远程命令执行漏洞"
 app = "OpenSMTPD"
   [[container.cve]]
   name = "CVE-2020-7247"
@@ -1187,8 +1319,9 @@ app = "OpenSMTPD"
 path = "opensmtpd/CVE-2020-7247"
 
 [[container]]
-name_en = "OpenSSH Username Enumeration"
-name_zh = "OpenSSH 用户名枚举漏洞"
+  [[container.name]]
+  en = "OpenSSH Username Enumeration"
+  zh = "OpenSSH 用户名枚举漏洞"
 app = "OpenSSH"
   [[container.cve]]
   name = "CVE-2018-15473"
@@ -1196,8 +1329,9 @@ app = "OpenSSH"
 path = "openssh/CVE-2018-15473"
 
 [[container]]
-name_en = "OpenSSL Heartbleed"
-name_zh = "OpenSSL 心脏出血漏洞"
+  [[container.name]]
+  en = "OpenSSL Heartbleed"
+  zh = "OpenSSL 心脏出血漏洞"
 app = "OpenSSL"
   [[container.cve]]
   name = "CVE-2014-0160"
@@ -1205,8 +1339,9 @@ app = "OpenSSL"
 path = "openssl/CVE-2014-0160"
 
 [[container]]
-name_en = "OpenSSL Infinite Loop DoS"
-name_zh = "OpenSSL无限循环DoS漏洞"
+  [[container.name]]
+  en = "OpenSSL Infinite Loop DoS"
+  zh = "OpenSSL无限循环DoS漏洞"
 app = "OpenSSL"
   [[container.cve]]
   name = "CVE-2022-0778"
@@ -1214,8 +1349,9 @@ app = "OpenSSL"
 path = "openssl/CVE-2022-0778"
 
 [[container]]
-name_en = "OpenTSDB Command Injection"
-name_zh = "OpenTSDB 命令注入漏洞"
+  [[container.name]]
+  en = "OpenTSDB Command Injection"
+  zh = "OpenTSDB 命令注入漏洞"
 app = "OpenTSDB"
   [[container.cve]]
   name = "CVE-2020-35476"
@@ -1223,8 +1359,9 @@ app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
 
 [[container]]
-name_en = "PHP 8.1.0-dev Development Version Backdoor Event"
-name_zh = "PHP 8.1.0-dev 开发版本后门事件"
+  [[container.name]]
+  en = "PHP 8.1.0-dev Development Version Backdoor Event"
+  zh = "PHP 8.1.0-dev 开发版本后门事件"
 app = "PHP"
   [[container.cve]]
   name = ""
@@ -1232,8 +1369,9 @@ app = "PHP"
 path = "php/8.1-backdoor"
 
 [[container]]
-name_en = "PHP-CGI Remote Code Execution"
-name_zh = "PHP-CGI远程代码执行漏洞"
+  [[container.name]]
+  en = "PHP-CGI Remote Code Execution"
+  zh = "PHP-CGI远程代码执行漏洞"
 app = "PHP-CGI"
   [[container.cve]]
   name = "CVE-2012-1823"
@@ -1241,8 +1379,9 @@ app = "PHP-CGI"
 path = "php/CVE-2012-1823"
 
 [[container]]
-name_en = "PHP-IMAP Remote Command Execution"
-name_zh = "PHP-IMAP 远程命令执行漏洞"
+  [[container.name]]
+  en = "PHP-IMAP Remote Command Execution"
+  zh = "PHP-IMAP 远程命令执行漏洞"
 app = "PHP-IMAP"
   [[container.cve]]
   name = "CVE-2018-19518"
@@ -1250,8 +1389,9 @@ app = "PHP-IMAP"
 path = "php/CVE-2018-19518"
 
 [[container]]
-name_en = "PHP-FPM Remote Command Execution"
-name_zh = "PHP-FPM 远程代码执行漏洞"
+  [[container.name]]
+  en = "PHP-FPM Remote Command Execution"
+  zh = "PHP-FPM 远程代码执行漏洞"
 app = "PHP-FPM"
   [[container.cve]]
   name = "CVE-2019-11043"
@@ -1259,8 +1399,9 @@ app = "PHP-FPM"
 path = "php/CVE-2019-11043"
 
 [[container]]
-name_en = "PHP-FPM FastCGI Unauthorized Access"
-name_zh = "PHP-FPM FastCGI 未授权访问漏洞"
+  [[container.name]]
+  en = "PHP-FPM FastCGI Unauthorized Access"
+  zh = "PHP-FPM FastCGI 未授权访问漏洞"
 app = "PHP-FPM"
   [[container.cve]]
   name = ""
@@ -1268,8 +1409,9 @@ app = "PHP-FPM"
 path = "php/fpm"
 
 [[container]]
-name_en = "PHP Files Vulnerabilities (by phpinfo())"
-name_zh = "PHP文件包含漏洞 (利用phpinfo())"
+  [[container.name]]
+  en = "PHP Files Vulnerabilities (by phpinfo())"
+  zh = "PHP文件包含漏洞 (利用phpinfo())"
 app = "PHP"
   [[container.cve]]
   name = ""
@@ -1277,8 +1419,9 @@ app = "PHP"
 path = "php/inclusion"
 
 [[container]]
-name_en = "PHP XML Entity Injection"
-name_zh = "PHP XML实体注入"
+  [[container.name]]
+  en = "PHP XML Entity Injection"
+  zh = "PHP XML实体注入"
 app = "PHP"
   [[container.cve]]
   name = ""
@@ -1286,8 +1429,9 @@ app = "PHP"
 path = "php/php_xxe"
 
 [[container]]
-name_en = "XDebug Remote Debugging Code Execution"
-name_zh = "XDebug 远程调试漏洞 (代码执行)"
+  [[container.name]]
+  en = "XDebug Remote Debugging Code Execution"
+  zh = "XDebug 远程调试漏洞 (代码执行)"
 app = "PHP"
   [[container.cve]]
   name = ""
@@ -1295,8 +1439,9 @@ app = "PHP"
 path = "php/xdebug-rce"
 
 [[container]]
-name_en = "PHPMailer Arbitrary File Read"
-name_zh = "PHPMailer 任意文件读取漏洞"
+  [[container.name]]
+  en = "PHPMailer Arbitrary File Read"
+  zh = "PHPMailer 任意文件读取漏洞"
 app = "PHPMailer"
   [[container.cve]]
   name = "CVE-2017-5223"
@@ -1304,8 +1449,9 @@ app = "PHPMailer"
 path = "phpmailer/CVE-2017-5223"
 
 [[container]]
-name_en = "phpMyAdmin 4.0.x—4.6.2 Remote Code Execution"
-name_zh = "phpMyAdmin 4.0.x—4.6.2 远程代码执行漏洞"
+  [[container.name]]
+  en = "phpMyAdmin 4.0.x—4.6.2 Remote Code Execution"
+  zh = "phpMyAdmin 4.0.x—4.6.2 远程代码执行漏洞"
 app = "phpmyadmin"
   [[container.cve]]
   name = "CVE-2016-5734"
@@ -1313,8 +1459,9 @@ app = "phpmyadmin"
 path = "phpmyadmin/CVE-2016-5734"
 
 [[container]]
-name_en = "phpmyadmin 4.8.1 Remote File Inclusion"
-name_zh = "phpmyadmin 4.8.1 远程文件包含漏洞"
+  [[container.name]]
+  en = "phpmyadmin 4.8.1 Remote File Inclusion"
+  zh = "phpmyadmin 4.8.1 远程文件包含漏洞"
 app = "phpmyadmin"
   [[container.cve]]
   name = "CVE-2018-12613"
@@ -1322,8 +1469,9 @@ app = "phpmyadmin"
 path = "phpmyadmin/CVE-2018-12613"
 
 [[container]]
-name_en = "phpmyadmin scripts/setup.php Deserialization"
-name_zh = "phpmyadmin scripts/setup.php 反序列化漏洞"
+  [[container.name]]
+  en = "phpmyadmin scripts/setup.php Deserialization"
+  zh = "phpmyadmin scripts/setup.php 反序列化漏洞"
 app = "phpmyadmin"
   [[container.cve]]
   name = ""
@@ -1331,8 +1479,9 @@ app = "phpmyadmin"
 path = "phpmyadmin/WooYun-2016-199433"
 
 [[container]]
-name_en = "phpunit Remote Code Execution"
-name_zh = "phpunit 远程代码执行漏洞"
+  [[container.name]]
+  en = "phpunit Remote Code Execution"
+  zh = "phpunit 远程代码执行漏洞"
 app = "phpunit"
   [[container.cve]]
   name = "CVE-2017-9841"
@@ -1340,8 +1489,9 @@ app = "phpunit"
 path = "phpunit/CVE-2017-9841"
 
 [[container]]
-name_en = "Polkit pkexec Privilege Escalation"
-name_zh = "Polkit pkexec 权限提升漏洞"
+  [[container.name]]
+  en = "Polkit pkexec Privilege Escalation"
+  zh = "Polkit pkexec 权限提升漏洞"
 app = "Polkit Pkexec"
   [[container.cve]]
   name = "CVE-2021-4034"
@@ -1349,8 +1499,9 @@ app = "Polkit Pkexec"
 path = "polkit/CVE-2021-4034"
 
 [[container]]
-name_en = "PostgreSQL Privilege Escalation"
-name_zh = "PostgreSQL 提权漏洞"
+  [[container.name]]
+  en = "PostgreSQL Privilege Escalation"
+  zh = "PostgreSQL 提权漏洞"
 app = "PostgreSQL"
   [[container.cve]]
   name = "CVE-2018-1058"
@@ -1358,8 +1509,9 @@ app = "PostgreSQL"
 path = "postgres/CVE-2018-1058"
 
 [[container]]
-name_en = "PostgreSQL High Privilege Command Execution"
-name_zh = "PostgreSQL 高权限命令执行漏洞"
+  [[container.name]]
+  en = "PostgreSQL High Privilege Command Execution"
+  zh = "PostgreSQL 高权限命令执行漏洞"
 app = "PostgreSQL"
   [[container.cve]]
   name = "CVE-2019-9193"
@@ -1367,8 +1519,9 @@ app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
 
 [[container]]
-name_en = "Python PIL Remote Command Execution (GhostButt)"
-name_zh = "Python PIL 远程命令执行漏洞 (GhostButt)"
+  [[container.name]]
+  en = "Python PIL Remote Command Execution (GhostButt)"
+  zh = "Python PIL 远程命令执行漏洞 (GhostButt)"
 app = "Python"
   [[container.cve]]
   name = "CVE-2017-8291"
@@ -1376,8 +1529,9 @@ app = "Python"
 path = "python/PIL-CVE-2017-8291"
 
 [[container]]
-name_en = "Python PIL Remote Command Execution (via Ghostscript)"
-name_zh = "Python PIL 远程命令执行漏洞 (via Ghostscript)"
+  [[container.name]]
+  en = "Python PIL Remote Command Execution (via Ghostscript)"
+  zh = "Python PIL 远程命令执行漏洞 (via Ghostscript)"
 app = "Python"
   [[container.cve]]
   name = "CVE-2018-16509"
@@ -1385,8 +1539,9 @@ app = "Python"
 path = "python/PIL-CVE-2018-16509"
 
 [[container]]
-name_en = "Python Unpickle Deserialization"
-name_zh = "Python Unpickle 反序列化漏洞"
+  [[container.name]]
+  en = "Python Unpickle Deserialization"
+  zh = "Python Unpickle 反序列化漏洞"
 app = "Python"
   [[container.cve]]
   name = ""
@@ -1394,8 +1549,9 @@ app = "Python"
 path = "python/unpickle"
 
 [[container]]
-name_en = "Ruby on Rails Path Traversal"
-name_zh = "Ruby on Rails 路径穿越漏洞"
+  [[container.name]]
+  en = "Ruby on Rails Path Traversal"
+  zh = "Ruby on Rails 路径穿越漏洞"
 app = "Ruby on Rails"
   [[container.cve]]
   name = "CVE-2018-3760"
@@ -1403,8 +1559,9 @@ app = "Ruby on Rails"
 path = "rails/CVE-2018-3760"
 
 [[container]]
-name_en = "Ruby on Rails Path Traversal and Arbitrary File Read"
-name_zh = "Ruby on Rails 路径穿越与任意文件读取漏洞"
+  [[container.name]]
+  en = "Ruby on Rails Path Traversal and Arbitrary File Read"
+  zh = "Ruby on Rails 路径穿越与任意文件读取漏洞"
 app = "Ruby on Rails"
   [[container.cve]]
   name = "CVE-2019-5418"
@@ -1412,8 +1569,9 @@ app = "Ruby on Rails"
 path = "rails/CVE-2019-5418"
 
 [[container]]
-name_en = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
-name_zh = "Redis 4.x/5.x 主从复制导致的命令执行"
+  [[container.name]]
+  en = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
+  zh = "Redis 4.x/5.x 主从复制导致的命令执行"
 app = "redis"
   [[container.cve]]
   name = ""
@@ -1421,8 +1579,9 @@ app = "redis"
 path = "redis/4-unacc"
 
 [[container]]
-name_en = "Redis Lua Sandbox Bypass Command Execution"
-name_zh = "Redis Lua沙盒绕过命令执行"
+  [[container.name]]
+  en = "Redis Lua Sandbox Bypass Command Execution"
+  zh = "Redis Lua沙盒绕过命令执行"
 app = "redis"
   [[container.cve]]
   name = "CVE-2022-0543"
@@ -1430,8 +1589,9 @@ app = "redis"
 path = "redis/CVE-2022-0543"
 
 [[container]]
-name_en = "Rocket Chat MongoDB Injection"
-name_zh = "Rocket Chat MongoDB 注入漏洞"
+  [[container.name]]
+  en = "Rocket Chat MongoDB Injection"
+  zh = "Rocket Chat MongoDB 注入漏洞"
 app = "rocket chat"
   [[container.cve]]
   name = "CVE-2021-22911"
@@ -1439,8 +1599,9 @@ app = "rocket chat"
 path = "rocketchat/CVE-2021-22911"
 
 [[container]]
-name_en = "Apache RocketMQ Remote Command Execution"
-name_zh = "Apache RocketMQ 远程命令执行漏洞"
+  [[container.name]]
+  en = "Apache RocketMQ Remote Command Execution"
+  zh = "Apache RocketMQ 远程命令执行漏洞"
 app = "Apache RocketMQ"
   [[container.cve]]
   name = "CVE-2023-33246"
@@ -1448,8 +1609,9 @@ app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-33246"
 
 [[container]]
-name_en = "rsync Unauthorized Access"
-name_zh = "rsync 未授权访问漏洞"
+  [[container.name]]
+  en = "rsync Unauthorized Access"
+  zh = "rsync 未授权访问漏洞"
 app = "rsync"
   [[container.cve]]
   name = ""
@@ -1457,8 +1619,9 @@ app = "rsync"
 path = "rsync/common"
 
 [[container]]
-name_en = "Ruby Net::FTP Module Command Injection"
-name_zh = "Ruby Net::FTP 模块命令注入漏洞"
+  [[container.name]]
+  en = "Ruby Net::FTP Module Command Injection"
+  zh = "Ruby Net::FTP 模块命令注入漏洞"
 app = "ruby"
   [[container.cve]]
   name = "CVE-2017-17405"
@@ -1466,8 +1629,9 @@ app = "ruby"
 path = "ruby/CVE-2017-17405"
 
 [[container]]
-name_en = "SaltStack Horizontal Privilege Bypass"
-name_zh = "SaltStack 水平权限绕过漏洞"
+  [[container.name]]
+  en = "SaltStack Horizontal Privilege Bypass"
+  zh = "SaltStack 水平权限绕过漏洞"
 app = "SaltStack"
   [[container.cve]]
   name = "CVE-2020-11651"
@@ -1475,8 +1639,9 @@ app = "SaltStack"
 path = "saltstack/CVE-2020-11651"
 
 [[container]]
-name_en = "SaltStack Arbitrary File Read and Write"
-name_zh = "SaltStack 任意文件读写漏洞"
+  [[container.name]]
+  en = "SaltStack Arbitrary File Read and Write"
+  zh = "SaltStack 任意文件读写漏洞"
 app = "SaltStack"
   [[container.cve]]
   name = "CVE-2020-11652"
@@ -1484,8 +1649,9 @@ app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
 
 [[container]]
-name_en = "SaltStack Command Injection"
-name_zh = "SaltStack 命令注入漏洞"
+  [[container.name]]
+  en = "SaltStack Command Injection"
+  zh = "SaltStack 命令注入漏洞"
 app = "SaltStack"
   [[container.cve]]
   name = "CVE-2020-16846"
@@ -1493,8 +1659,9 @@ app = "SaltStack"
 path = "saltstack/CVE-2020-16846"
 
 [[container]]
-name_en = "Samba Remote Command Execution"
-name_zh = "Samba 远程命令执行漏洞"
+  [[container.name]]
+  en = "Samba Remote Command Execution"
+  zh = "Samba 远程命令执行漏洞"
 app = "Samba"
   [[container.cve]]
   name = "CVE-2017-7494"
@@ -1502,8 +1669,9 @@ app = "Samba"
 path = "samba/CVE-2017-7494"
 
 [[container]]
-name_en = "Scrapyd Unauthorized Access"
-name_zh = "Scrapyd 未授权访问漏洞"
+  [[container.name]]
+  en = "Scrapyd Unauthorized Access"
+  zh = "Scrapyd 未授权访问漏洞"
 app = "Scrapyd"
   [[container.cve]]
   name = ""
@@ -1511,8 +1679,9 @@ app = "Scrapyd"
 path = "scrapy/scrapyd-unacc"
 
 [[container]]
-name_en = "Apache Shiro Authentication Bypass"
-name_zh = "Apache Shiro 认证绕过漏洞"
+  [[container.name]]
+  en = "Apache Shiro Authentication Bypass"
+  zh = "Apache Shiro 认证绕过漏洞"
 app = "shiro"
   [[container.cve]]
   name = "CVE-2010-3863"
@@ -1520,8 +1689,9 @@ app = "shiro"
 path = "shiro/CVE-2010-3863"
 
 [[container]]
-name_en = "Apache Shiro 1.2.4 Deserialization"
-name_zh = "Apache Shiro 1.2.4反序列化漏洞"
+  [[container.name]]
+  en = "Apache Shiro 1.2.4 Deserialization"
+  zh = "Apache Shiro 1.2.4反序列化漏洞"
 app = "shiro"
   [[container.cve]]
   name = "CVE-2016-4437"
@@ -1529,8 +1699,9 @@ app = "shiro"
 path = "shiro/CVE-2016-4437"
 
 [[container]]
-name_en = "Apache Shiro Authentication Bypass"
-name_zh = "Apache Shiro 认证绕过漏洞"
+  [[container.name]]
+  en = "Apache Shiro Authentication Bypass"
+  zh = "Apache Shiro 认证绕过漏洞"
 app = "shiro"
   [[container.cve]]
   name = "CVE-2020-1957"
@@ -1538,8 +1709,9 @@ app = "shiro"
 path = "shiro/CVE-2020-1957"
 
 [[container]]
-name_en = "Apache Skywalking 8.3.0 SQL Injection"
-name_zh = "Apache Skywalking 8.3.0 SQL注入漏洞"
+  [[container.name]]
+  en = "Apache Skywalking 8.3.0 SQL Injection"
+  zh = "Apache Skywalking 8.3.0 SQL注入漏洞"
 app = "skywalking"
   [[container.cve]]
   name = ""
@@ -1547,8 +1719,9 @@ app = "skywalking"
 path = "skywalking/8.3.0-sqli"
 
 [[container]]
-name_en = "Apache Solr Remote Command Execution"
-name_zh = "Apache Solr 远程命令执行漏洞"
+  [[container.name]]
+  en = "Apache Solr Remote Command Execution"
+  zh = "Apache Solr 远程命令执行漏洞"
 app = "solr"
   [[container.cve]]
   name = "CVE-2017-12629"
@@ -1556,8 +1729,9 @@ app = "solr"
 path = "solr/CVE-2017-12629-RCE"
 
 [[container]]
-name_en = "Apache Solr XML Entity Injection"
-name_zh = "Apache Solr XML 实体注入漏洞"
+  [[container.name]]
+  en = "Apache Solr XML Entity Injection"
+  zh = "Apache Solr XML 实体注入漏洞"
 app = "solr"
   [[container.cve]]
   name = "CVE-2017-12629"
@@ -1565,8 +1739,9 @@ app = "solr"
 path = "solr/CVE-2017-12629-XXE"
 
 [[container]]
-name_en = "Apache Solr Remote Command Execution"
-name_zh = "Apache Solr 远程命令执行漏洞"
+  [[container.name]]
+  en = "Apache Solr Remote Command Execution"
+  zh = "Apache Solr 远程命令执行漏洞"
 app = "solr"
   [[container.cve]]
   name = "CVE-2019-0193"
@@ -1574,8 +1749,9 @@ app = "solr"
 path = "solr/CVE-2019-0193"
 
 [[container]]
-name_en = "Apache Solr Velocity Inject Remote Command Execution"
-name_zh = "Apache Solr Velocity 注入远程命令执行漏洞"
+  [[container.name]]
+  en = "Apache Solr Velocity Inject Remote Command Execution"
+  zh = "Apache Solr Velocity 注入远程命令执行漏洞"
 app = "solr"
   [[container.cve]]
   name = "CVE-2019-17558"
@@ -1583,8 +1759,9 @@ app = "solr"
 path = "solr/CVE-2019-17558"
 
 [[container]]
-name_en = "Apache Solr RemoteStreaming File Reading and SSRF"
-name_zh = "Apache Solr RemoteStreaming 文件读取与SSRF漏洞"
+  [[container.name]]
+  en = "Apache Solr RemoteStreaming File Reading and SSRF"
+  zh = "Apache Solr RemoteStreaming 文件读取与SSRF漏洞"
 app = "solr"
   [[container.cve]]
   name = ""
@@ -1592,8 +1769,9 @@ app = "solr"
 path = "solr/Remote-Streaming-Fileread"
 
 [[container]]
-name_en = "Apache Spark Unauthorized Access Leak"
-name_zh = "Apache Spark 未授权访问漏"
+  [[container.name]]
+  en = "Apache Spark Unauthorized Access Leak"
+  zh = "Apache Spark 未授权访问漏"
 app = "spark"
   [[container.cve]]
   name = ""
@@ -1601,8 +1779,9 @@ app = "spark"
 path = "spark/unacc"
 
 [[container]]
-name_en = "Spring Security Oauth2 Remote Command Execution"
-name_zh = "Spring Security Oauth2 远程命令执行漏洞"
+  [[container.name]]
+  en = "Spring Security Oauth2 Remote Command Execution"
+  zh = "Spring Security Oauth2 远程命令执行漏洞"
 app = "spring security oauth2"
   [[container.cve]]
   name = "CVE-2016-4977"
@@ -1610,8 +1789,9 @@ app = "spring security oauth2"
 path = "spring/CVE-2016-4977"
 
 [[container]]
-name_en = "Spring WebFlow Remote Code Execution"
-name_zh = "Spring WebFlow 远程代码执行漏洞"
+  [[container.name]]
+  en = "Spring WebFlow Remote Code Execution"
+  zh = "Spring WebFlow 远程代码执行漏洞"
 app = "spring webflow"
   [[container.cve]]
   name = "CVE-2017-4971"
@@ -1619,8 +1799,9 @@ app = "spring webflow"
 path = "spring/CVE-2017-4971"
 
 [[container]]
-name_en = "Spring Data Rest Remote Command Execution"
-name_zh = "Spring Data Rest 远程命令执行漏洞"
+  [[container.name]]
+  en = "Spring Data Rest Remote Command Execution"
+  zh = "Spring Data Rest 远程命令执行漏洞"
 app = "spring data rest"
   [[container.cve]]
   name = "CVE-2017-8046"
@@ -1628,8 +1809,9 @@ app = "spring data rest"
 path = "spring/CVE-2017-8046"
 
 [[container]]
-name_en = "Spring Messaging Remote Command Execution"
-name_zh = "Spring Messaging 远程命令执行漏洞"
+  [[container.name]]
+  en = "Spring Messaging Remote Command Execution"
+  zh = "Spring Messaging 远程命令执行漏洞"
 app = "spring messaging"
   [[container.cve]]
   name = "CVE-2018-1270"
@@ -1637,8 +1819,9 @@ app = "spring messaging"
 path = "spring/CVE-2018-1270"
 
 [[container]]
-name_en = "Spring Data Commons Remote Command Execution"
-name_zh = "Spring Data Commons 远程命令执行漏洞"
+  [[container.name]]
+  en = "Spring Data Commons Remote Command Execution"
+  zh = "Spring Data Commons 远程命令执行漏洞"
 app = "spring data commons"
   [[container.cve]]
   name = "CVE-2018-1273"
@@ -1646,8 +1829,9 @@ app = "spring data commons"
 path = "spring/CVE-2018-1273"
 
 [[container]]
-name_en = "Spring Cloud Gateway Actuator API SpEL Expression Injection Command Execution"
-name_zh = "Spring Cloud Gateway Actuator API SpEL表达式注入命令执行"
+  [[container.name]]
+  en = "Spring Cloud Gateway Actuator API SpEL Expression Injection Command Execution"
+  zh = "Spring Cloud Gateway Actuator API SpEL表达式注入命令执行"
 app = "spring cloud gateway"
   [[container.cve]]
   name = "CVE-2022-22947"
@@ -1655,8 +1839,9 @@ app = "spring cloud gateway"
 path = "spring/CVE-2022-22947"
 
 [[container]]
-name_en = "Spring Cloud Function SpEL Expression Command Injection"
-name_zh = "Spring Cloud Function SpEL表达式命令注入"
+  [[container.name]]
+  en = "Spring Cloud Function SpEL Expression Command Injection"
+  zh = "Spring Cloud Function SpEL表达式命令注入"
 app = "spring cloud function"
   [[container.cve]]
   name = "CVE-2022-22963"
@@ -1664,8 +1849,9 @@ app = "spring cloud function"
 path = "spring/CVE-2022-22963"
 
 [[container]]
-name_en = "Remote Code Execution Vulnerability due to Spring Framework Data Binding and JDK 9+"
-name_zh = "Spring框架Data Binding与JDK 9+导致的远程代码执行漏洞"
+  [[container.name]]
+  en = "Remote Code Execution Vulnerability due to Spring Framework Data Binding and JDK 9+"
+  zh = "Spring框架Data Binding与JDK 9+导致的远程代码执行漏洞"
 app = "Spring"
   [[container.cve]]
   name = "CVE-2022-22965"
@@ -1673,8 +1859,9 @@ app = "Spring"
 path = "spring/CVE-2022-22965"
 
 [[container]]
-name_en = "Spring Security Authorization Bypass in RegexRequestMatcher"
-name_zh = "Spring Security Authorization Bypass in RegexRequestMatcher"
+  [[container.name]]
+  en = "Spring Security Authorization Bypass in RegexRequestMatcher"
+  zh = "Spring Security Authorization Bypass in RegexRequestMatcher"
 app = "Spring"
   [[container.cve]]
   name = "CVE-2022-22978"
@@ -1682,8 +1869,9 @@ app = "Spring"
 path = "spring/CVE-2022-22978"
 
 [[container]]
-name_en = "S2-001 Remote Code Execution"
-name_zh = "S2-001 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-001 Remote Code Execution"
+  zh = "S2-001 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = ""
@@ -1691,8 +1879,9 @@ app = "Struts2"
 path = "struts2/s2-001"
 
 [[container]]
-name_en = "S2-005 Remote Code Execution"
-name_zh = "S2-005 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-005 Remote Code Execution"
+  zh = "S2-005 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2010-1870"
@@ -1700,8 +1889,9 @@ app = "Struts2"
 path = "struts2/s2-005"
 
 [[container]]
-name_en = "S2-007 Remote Code Execution"
-name_zh = "S2-007 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-007 Remote Code Execution"
+  zh = "S2-007 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = ""
@@ -1709,8 +1899,9 @@ app = "Struts2"
 path = "struts2/s2-007"
 
 [[container]]
-name_en = "S2-008 Remote Code Execution"
-name_zh = "S2-008 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-008 Remote Code Execution"
+  zh = "S2-008 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2012-0391"
@@ -1718,8 +1909,9 @@ app = "Struts2"
 path = "struts2/s2-008"
 
 [[container]]
-name_en = "S2-009 Remote Code Execution"
-name_zh = "S2-009 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-009 Remote Code Execution"
+  zh = "S2-009 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2011-3923"
@@ -1727,8 +1919,9 @@ app = "Struts2"
 path = "struts2/s2-009"
 
 [[container]]
-name_en = "S2-012 Remote Code Execution"
-name_zh = "S2-012 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-012 Remote Code Execution"
+  zh = "S2-012 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2013-1965"
@@ -1736,8 +1929,9 @@ app = "Struts2"
 path = "struts2/s2-012"
 
 [[container]]
-name_en = "S2-013 Remote Code Execution"
-name_zh = "S2-013 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-013 Remote Code Execution"
+  zh = "S2-013 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2013-1966"
@@ -1745,8 +1939,9 @@ app = "Struts2"
 path = "struts2/s2-013"
 
 [[container]]
-name_en = "S2-015 Remote Code Execution"
-name_zh = "S2-015 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-015 Remote Code Execution"
+  zh = "S2-015 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2013-2134"
@@ -1758,8 +1953,9 @@ app = "Struts2"
 path = "struts2/s2-015"
 
 [[container]]
-name_en = "S2-016 Remote Code Execution"
-name_zh = "S2-016 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-016 Remote Code Execution"
+  zh = "S2-016 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2013-2251"
@@ -1767,8 +1963,9 @@ app = "Struts2"
 path = "struts2/s2-016"
 
 [[container]]
-name_en = "S2-032 Remote Code Execution"
-name_zh = "S2-032 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-032 Remote Code Execution"
+  zh = "S2-032 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2016-3081"
@@ -1776,8 +1973,9 @@ app = "Struts2"
 path = "struts2/s2-032"
 
 [[container]]
-name_en = "S2-045 Remote Code Execution"
-name_zh = "S2-045 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-045 Remote Code Execution"
+  zh = "S2-045 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2017-5638"
@@ -1785,8 +1983,9 @@ app = "Struts2"
 path = "struts2/s2-045"
 
 [[container]]
-name_en = "S2-046 Remote Code Execution"
-name_zh = "S2-046 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-046 Remote Code Execution"
+  zh = "S2-046 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2017-5638"
@@ -1794,8 +1993,9 @@ app = "Struts2"
 path = "struts2/s2-046"
 
 [[container]]
-name_en = "S2-048 Remote Code Execution"
-name_zh = "S2-048 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-048 Remote Code Execution"
+  zh = "S2-048 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2017-9791"
@@ -1803,8 +2003,9 @@ app = "Struts2"
 path = "struts2/s2-048"
 
 [[container]]
-name_en = "S2-052 Remote Code Execution"
-name_zh = "S2-052 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-052 Remote Code Execution"
+  zh = "S2-052 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2017-9805"
@@ -1812,8 +2013,9 @@ app = "Struts2"
 path = "struts2/s2-052"
 
 [[container]]
-name_en = "S2-053 Remote Code Execution"
-name_zh = "S2-053 远程代码执行漏洞"
+  [[container.name]]
+  en = "S2-053 Remote Code Execution"
+  zh = "S2-053 远程代码执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2017-12611"
@@ -1821,8 +2023,9 @@ app = "Struts2"
 path = "struts2/s2-053"
 
 [[container]]
-name_en = "Struts2 S2-057 Remote Command Execution"
-name_zh = "Struts2 S2-057 远程命令执行漏洞"
+  [[container.name]]
+  en = "Struts2 S2-057 Remote Command Execution"
+  zh = "Struts2 S2-057 远程命令执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2018-11776"
@@ -1830,8 +2033,9 @@ app = "Struts2"
 path = "struts2/s2-057"
 
 [[container]]
-name_en = "Struts2 S2-059 Remote Command Execution"
-name_zh = "Struts2 S2-059 远程命令执行漏洞"
+  [[container.name]]
+  en = "Struts2 S2-059 Remote Command Execution"
+  zh = "Struts2 S2-059 远程命令执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2019-0230"
@@ -1839,8 +2043,9 @@ app = "Struts2"
 path = "struts2/s2-059"
 
 [[container]]
-name_en = "Struts2 S2-061 Remote Command Execution"
-name_zh = "Struts2 S2-061 远程命令执行漏洞"
+  [[container.name]]
+  en = "Struts2 S2-061 Remote Command Execution"
+  zh = "Struts2 S2-061 远程命令执行漏洞"
 app = "Struts2"
   [[container.cve]]
   name = "CVE-2020-17530"
@@ -1848,8 +2053,9 @@ app = "Struts2"
 path = "struts2/s2-061"
 
 [[container]]
-name_en = "Supervisord Remote Command Execution"
-name_zh = "Supervisord 远程命令执行漏洞"
+  [[container.name]]
+  en = "Supervisord Remote Command Execution"
+  zh = "Supervisord 远程命令执行漏洞"
 app = "Supervisor"
   [[container.cve]]
   name = "CVE-2017-11610"
@@ -1857,8 +2063,9 @@ app = "Supervisor"
 path = "supervisor/CVE-2017-11610"
 
 [[container]]
-name_en = "ThinkPHP 2.x Arbitrary Code Execution"
-name_zh = "ThinkPHP 2.x 任意代码执行漏洞"
+  [[container.name]]
+  en = "ThinkPHP 2.x Arbitrary Code Execution"
+  zh = "ThinkPHP 2.x 任意代码执行漏洞"
 app = "ThinkPHP"
   [[container.cve]]
   name = ""
@@ -1866,8 +2073,9 @@ app = "ThinkPHP"
 path = "thinkphp/2-rce"
 
 [[container]]
-name_en = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
-name_zh = "ThinkPHP5 5.0.22/5.1.29 远程代码执行漏洞"
+  [[container.name]]
+  en = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
+  zh = "ThinkPHP5 5.0.22/5.1.29 远程代码执行漏洞"
 app = "ThinkPHP"
   [[container.cve]]
   name = ""
@@ -1875,8 +2083,9 @@ app = "ThinkPHP"
 path = "thinkphp/5-rce"
 
 [[container]]
-name_en = "ThinkPHP5 5.0.23 Remote Code Execution"
-name_zh = "ThinkPHP5 5.0.23 远程代码执行漏洞"
+  [[container.name]]
+  en = "ThinkPHP5 5.0.23 Remote Code Execution"
+  zh = "ThinkPHP5 5.0.23 远程代码执行漏洞"
 app = "ThinkPHP"
   [[container.cve]]
   name = ""
@@ -1884,8 +2093,9 @@ app = "ThinkPHP"
 path = "thinkphp/5.0.23-rce"
 
 [[container]]
-name_en = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
-name_zh = "ThinkPHP5 SQL注入漏洞/信息泄露"
+  [[container.name]]
+  en = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
+  zh = "ThinkPHP5 SQL注入漏洞/信息泄露"
 app = "ThinkPHP"
   [[container.cve]]
   name = ""
@@ -1893,8 +2103,9 @@ app = "ThinkPHP"
 path = "thinkphp/in-sqlinjection"
 
 [[container]]
-name_en = "ThinkPHP Multilingual Local File Inclusion"
-name_zh = "ThinkPHP 多语言本地文件包含漏洞"
+  [[container.name]]
+  en = "ThinkPHP Multilingual Local File Inclusion"
+  zh = "ThinkPHP 多语言本地文件包含漏洞"
 app = "ThinkPHP"
   [[container.cve]]
   name = ""
@@ -1902,8 +2113,9 @@ app = "ThinkPHP"
 path = "thinkphp/lang-rce"
 
 [[container]]
-name_en = "Tiki Wiki CMS Groupware Authentication Bypass"
-name_zh = "Tiki Wiki CMS Groupware 认证绕过漏洞"
+  [[container.name]]
+  en = "Tiki Wiki CMS Groupware Authentication Bypass"
+  zh = "Tiki Wiki CMS Groupware 认证绕过漏洞"
 app = "Tiki Wiki"
   [[container.cve]]
   name = "CVE-2020-15906"
@@ -1911,8 +2123,9 @@ app = "Tiki Wiki"
 path = "tikiwiki/CVE-2020-15906"
 
 [[container]]
-name_en = "Tomcat Arbitrary Writing of Files in the PUT Method"
-name_zh = "Tomcat PUT方法任意写文件漏洞"
+  [[container.name]]
+  en = "Tomcat Arbitrary Writing of Files in the PUT Method"
+  zh = "Tomcat PUT方法任意写文件漏洞"
 app = "Tomcat"
   [[container.cve]]
   name = "CVE-2017-12615"
@@ -1920,8 +2133,9 @@ app = "Tomcat"
 path = "tomcat/CVE-2017-12615"
 
 [[container]]
-name_en = "Apache Tomcat AJP Bug"
-name_zh = "Apache Tomcat AJP 文件包含漏洞"
+  [[container.name]]
+  en = "Apache Tomcat AJP Bug"
+  zh = "Apache Tomcat AJP 文件包含漏洞"
 app = "Tomcat"
   [[container.cve]]
   name = "CVE-2020-1938"
@@ -1929,8 +2143,9 @@ app = "Tomcat"
 path = "tomcat/CVE-2020-1938"
 
 [[container]]
-name_en = "Tomcat Weak Password"
-name_zh = "Tomcat弱口令"
+  [[container.name]]
+  en = "Tomcat Weak Password"
+  zh = "Tomcat弱口令"
 app = "Tomcat"
   [[container.cve]]
   name = ""
@@ -1938,8 +2153,9 @@ app = "Tomcat"
 path = "tomcat/tomcat8"
 
 [[container]]
-name_en = "Apache Unomi Remote Expression Code Execution"
-name_zh = "Apache Unomi 远程表达式代码执行漏洞"
+  [[container.name]]
+  en = "Apache Unomi Remote Expression Code Execution"
+  zh = "Apache Unomi 远程表达式代码执行漏洞"
 app = "unomi"
   [[container.cve]]
   name = "CVE-2020-13942"
@@ -1947,8 +2163,9 @@ app = "unomi"
 path = "unomi/CVE-2020-13942"
 
 [[container]]
-name_en = "uWSGI PHP Directory Traversal"
-name_zh = "uWSGI PHP目录穿越漏洞"
+  [[container.name]]
+  en = "uWSGI PHP Directory Traversal"
+  zh = "uWSGI PHP目录穿越漏洞"
 app = "uWSGI"
   [[container.cve]]
   name = "CVE-2018-7490"
@@ -1956,8 +2173,9 @@ app = "uWSGI"
 path = "uwsgi/CVE-2018-7490"
 
 [[container]]
-name_en = "uWSGI Unauthorized Access"
-name_zh = "uWSGI 未授权访问漏洞"
+  [[container.name]]
+  en = "uWSGI Unauthorized Access"
+  zh = "uWSGI 未授权访问漏洞"
 app = "uWSGI"
   [[container.cve]]
   name = ""
@@ -1965,8 +2183,9 @@ app = "uWSGI"
 path = "uwsgi/unacc"
 
 [[container]]
-name_en = "V2board 1.6.1 Privilege Escalation"
-name_zh = "V2board 1.6.1 提权漏洞"
+  [[container.name]]
+  en = "V2board 1.6.1 Privilege Escalation"
+  zh = "V2board 1.6.1 提权漏洞"
 app = "V2board"
   [[container.cve]]
   name = ""
@@ -1974,8 +2193,9 @@ app = "V2board"
 path = "v2board/1.6-privilege-escalation"
 
 [[container]]
-name_en = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization"
-name_zh = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder 反序列化漏洞"
+  [[container.name]]
+  en = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization"
+  zh = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder 反序列化漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = "CVE-2017-10271"
@@ -1983,8 +2203,9 @@ app = "WebLogic"
 path = "weblogic/CVE-2017-10271"
 
 [[container]]
-name_en = "WebLogic WLS Core Components Deserialization Command Execution"
-name_zh = "WebLogic WLS Core Components 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "WebLogic WLS Core Components Deserialization Command Execution"
+  zh = "WebLogic WLS Core Components 反序列化命令执行漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = "CVE-2018-2628"
@@ -1992,8 +2213,9 @@ app = "WebLogic"
 path = "weblogic/CVE-2018-2628"
 
 [[container]]
-name_en = "WebLogic Arbitrary File Upload"
-name_zh = "WebLogic 任意文件上传漏洞"
+  [[container.name]]
+  en = "WebLogic Arbitrary File Upload"
+  zh = "WebLogic 任意文件上传漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = "CVE-2018-2894"
@@ -2001,8 +2223,9 @@ app = "WebLogic"
 path = "weblogic/CVE-2018-2894"
 
 [[container]]
-name_en = "WebLogic Management Console Unauthorized Remote Command Execution"
-name_zh = "WebLogic 管理控制台未授权远程命令执行漏洞"
+  [[container.name]]
+  en = "WebLogic Management Console Unauthorized Remote Command Execution"
+  zh = "WebLogic 管理控制台未授权远程命令执行漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = "CVE-2020-14882"
@@ -2010,8 +2233,9 @@ app = "WebLogic"
 path = "weblogic/CVE-2020-14882"
 
 [[container]]
-name_en = "WebLogic Unauthorized Remote Code Execution"
-name_zh = "WebLogic未授权远程代码执行漏洞"
+  [[container.name]]
+  en = "WebLogic Unauthorized Remote Code Execution"
+  zh = "WebLogic未授权远程代码执行漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = "CVE-2023-21839"
@@ -2019,8 +2243,9 @@ app = "WebLogic"
 path = "weblogic/CVE-2023-21839"
 
 [[container]]
-name_en = "WebLogic SSRF"
-name_zh = "WebLogic SSRF漏洞"
+  [[container.name]]
+  en = "WebLogic SSRF"
+  zh = "WebLogic SSRF漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = ""
@@ -2028,8 +2253,9 @@ app = "WebLogic"
 path = "weblogic/ssrf"
 
 [[container]]
-name_en = "WebLogic File Read"
-name_zh = "WebLogic 文件读取漏洞"
+  [[container.name]]
+  en = "WebLogic File Read"
+  zh = "WebLogic 文件读取漏洞"
 app = "WebLogic"
   [[container.cve]]
   name = ""
@@ -2037,8 +2263,9 @@ app = "WebLogic"
 path = "weblogic/weak_password"
 
 [[container]]
-name_en = "Webmin Remote Command Execution"
-name_zh = "Webmin 远程命令执行漏洞"
+  [[container.name]]
+  en = "Webmin Remote Command Execution"
+  zh = "Webmin 远程命令执行漏洞"
 app = "Webmin"
   [[container.cve]]
   name = "CVE-2019-15107"
@@ -2046,8 +2273,9 @@ app = "Webmin"
 path = "webmin/CVE-2019-15107"
 
 [[container]]
-name_en = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
-name_zh = "Wordpress 4.6 任意命令执行漏洞 (PwnScriptum)"
+  [[container.name]]
+  en = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
+  zh = "Wordpress 4.6 任意命令执行漏洞 (PwnScriptum)"
 app = "Wordpress"
   [[container.cve]]
   name = ""
@@ -2055,8 +2283,9 @@ app = "Wordpress"
 path = "wordpress/pwnscriptum"
 
 [[container]]
-name_en = "XStream Deserialization Command Execution"
-name_zh = "XStream 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "XStream Deserialization Command Execution"
+  zh = "XStream 反序列化命令执行漏洞"
 app = "XStream"
   [[container.cve]]
   name = "CVE-2021-21351"
@@ -2064,8 +2293,9 @@ app = "XStream"
 path = "xstream/CVE-2021-21351"
 
 [[container]]
-name_en = "XStream Deserialization Command Execution"
-name_zh = "XStream 反序列化命令执行漏洞"
+  [[container.name]]
+  en = "XStream Deserialization Command Execution"
+  zh = "XStream 反序列化命令执行漏洞"
 app = "XStream"
   [[container.cve]]
   name = "CVE-2021-29505"
@@ -2073,8 +2303,9 @@ app = "XStream"
 path = "xstream/CVE-2021-29505"
 
 [[container]]
-name_en = "XXL-JOB Executor Unauthorized Access"
-name_zh = "XXL-JOB Executor 未授权访问漏洞"
+  [[container.name]]
+  en = "XXL-JOB Executor Unauthorized Access"
+  zh = "XXL-JOB Executor 未授权访问漏洞"
 app = "xxl-job"
   [[container.cve]]
   name = ""
@@ -2082,8 +2313,9 @@ app = "xxl-job"
 path = "xxl-job/unacc"
 
 [[container]]
-name_en = "YApi NoSQL Injection to Remote Command Execution"
-name_zh = "YApi NoSQL注入导致远程命令执行漏洞"
+  [[container.name]]
+  en = "YApi NoSQL Injection to Remote Command Execution"
+  zh = "YApi NoSQL注入导致远程命令执行漏洞"
 app = "YApi"
   [[container.cve]]
   name = ""
@@ -2091,8 +2323,9 @@ app = "YApi"
 path = "yapi/mongodb-inj"
 
 [[container]]
-name_en = "YApi Open Registration due to RCE"
-name_zh = "YApi开放注册导致RCE"
+  [[container.name]]
+  en = "YApi Open Registration due to RCE"
+  zh = "YApi开放注册导致RCE"
 app = "YApi"
   [[container.cve]]
   name = ""
@@ -2100,8 +2333,9 @@ app = "YApi"
 path = "yapi/unacc"
 
 [[container]]
-name_en = "Zabbix latest.php SQL Injection"
-name_zh = "Zabbix latest.php SQL注入漏洞"
+  [[container.name]]
+  en = "Zabbix latest.php SQL Injection"
+  zh = "Zabbix latest.php SQL注入漏洞"
 app = "Zabbix"
   [[container.cve]]
   name = "CVE-2016-10134"
@@ -2109,8 +2343,9 @@ app = "Zabbix"
 path = "zabbix/CVE-2016-10134"
 
 [[container]]
-name_en = "Zabbix Server Trapper Command Injection"
-name_zh = "Zabbix Server Trapper命令注入漏洞"
+  [[container.name]]
+  en = "Zabbix Server Trapper Command Injection"
+  zh = "Zabbix Server Trapper命令注入漏洞"
 app = "Zabbix"
   [[container.cve]]
   name = "CVE-2020-11800"
