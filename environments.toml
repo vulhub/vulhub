@@ -1,2823 +1,1409 @@
-[[container]]
+[[environment]]
+name = "Apache ActiveMQ Deserialization"
+cve = ["CVE-2015-5254"]
 app = "ActiveMQ"
 path = "activemq/CVE-2015-5254"
 
-  [[container.name]]
-  en = "Apache ActiveMQ Deserialization"
-  zh = "Apache ActiveMQ 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2015-5254"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2015-5254"
-
-[[container]]
+[[environment]]
+name = "Apache ActiveMQ Arbitrary File Write"
+cve = ["CVE-2016-3088"]
 app = "ActiveMQ"
 path = "activemq/CVE-2016-3088"
 
-  [[container.name]]
-  en = "Apache ActiveMQ Arbitrary File Write"
-  zh = "Apache ActiveMQ 任意文件写入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-3088"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-3088"
-
-[[container]]
+[[environment]]
+name = "Apache Airflow Command Injection"
+cve = ["CVE-2020-11978"]
 app = "Airflow"
 path = "airflow/CVE-2020-11978"
 
-  [[container.name]]
-  en = "Apache Airflow Command Injection"
-  zh = "Apache Airflow 示例dag中的命令注入"
-
-  [[container.cve]]
-  id = "CVE-2020-11978"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-11978"
-
-[[container]]
+[[environment]]
+name = "Apache Airflow Celery Message Middleware Command Execution"
+cve = ["CVE-2020-11981"]
 app = "Airflow"
 path = "airflow/CVE-2020-11981"
 
-  [[container.name]]
-  en = "Apache Airflow Celery Message Middleware Command Execution"
-  zh = "Apache Airflow Celery 消息中间件命令执行"
-
-  [[container.cve]]
-  id = "CVE-2020-11981"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-11981"
-
-[[container]]
+[[environment]]
+name = "Apache Airflow Permission Bypass"
+cve = ["CVE-2020-17526"]
 app = "Airflow"
 path = "airflow/CVE-2020-17526"
 
-  [[container.name]]
-  en = "Apache Airflow Permission Bypass"
-  zh = "Apache Airflow 默认密钥导致的权限绕过"
-
-  [[container.cve]]
-  id = "CVE-2020-17526"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-17526"
-
-[[container]]
+[[environment]]
+name = "Apache Druid Code Execution"
+cve = ["CVE-2021-25646"]
 app = "Apache Druid"
 path = "apache-druid/CVE-2021-25646"
 
-  [[container.name]]
-  en = "Apache Druid Code Execution"
-  zh = "Apache Druid 代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-25646"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-25646"
-
-[[container]]
+[[environment]]
+name = "Apereo CAS 4.1 Deserialization Command Execution"
+cve = [""]
 app = "Apereo CAS"
 path = "apereo-cas/4.1-rce"
 
-  [[container.name]]
-  en = "Apereo CAS 4.1 Deserialization Command Execution"
-  zh = "Apereo CAS 4.1 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache APISIX Default Key"
+cve = ["CVE-2020-13945"]
 app = "Apache APISIX"
 path = "apisix/CVE-2020-13945"
 
-  [[container.name]]
-  en = "Apache APISIX Default Key"
-  zh = "Apache APISIX 默认密钥漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-13945"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-13945"
-
-[[container]]
+[[environment]]
+name = "Apache APISIX Dashboard API Permission Bypass to RCE"
+cve = ["CVE-2021-45232"]
 app = "Apache APISIX"
 path = "apisix/CVE-2021-45232"
 
-  [[container.name]]
-  en = "Apache APISIX Dashboard API Permission Bypass to RCE"
-  zh = "Apache APISIX Dashboard API权限绕过导致RCE"
-
-  [[container.cve]]
-  id = "CVE-2021-45232"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-45232"
-
-[[container]]
+[[environment]]
+name = "AppWeb Authentication Bypass"
+cve = ["CVE-2018-8715"]
 app = "AppWeb"
 path = "appweb/CVE-2018-8715"
 
-  [[container.name]]
-  en = "AppWeb Authentication Bypass"
-  zh = "AppWeb 认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-8715"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-8715"
-
-[[container]]
+[[environment]]
+name = "Aria2 Arbitrary File Write"
+cve = [""]
 app = "Aria2"
 path = "aria2/rce"
 
-  [[container.name]]
-  en = "Aria2 Arbitrary File Write"
-  zh = "Aria2 任意文件写入漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Bash Shellshock Shell Exploit"
+cve = ["CVE-2014-6271"]
 app = "bash"
 path = "bash/CVE-2014-6271"
 
-  [[container.name]]
-  en = "Bash Shellshock Shell Exploit"
-  zh = "Bash Shellshock 破壳漏洞"
-
-  [[container.cve]]
-  id = "CVE-2014-6271"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2014-6271"
-
-[[container]]
+[[environment]]
+name = "Cacti Foreground Command Injection"
+cve = ["CVE-2022-46169"]
 app = "cacti"
 path = "cacti/CVE-2022-46169"
 
-  [[container.name]]
-  en = "Cacti Foreground Command Injection"
-  zh = "Cacti 前台命令注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2022-46169"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-46169"
-
-[[container]]
+[[environment]]
+name = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
+cve = [""]
 app = "celery"
 path = "celery/celery3_redis_unauth"
 
-  [[container.name]]
-  en = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
-  zh = "Celery <4.0 Redis未授权访问+Pickle反序列化利用"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "CGI HTTPoxy Flaw"
+cve = ["CVE-2016-5385"]
 app = "cgi"
 path = "cgi/CVE-2016-5385"
 
-  [[container.name]]
-  en = "CGI HTTPoxy Flaw"
-  zh = "CGI HTTPoxy 漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-5385"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-5385"
-
-[[container]]
+[[environment]]
+name = "Adobe ColdFusion File Read"
+cve = ["CVE-2010-2861"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2010-2861"
 
-  [[container.name]]
-  en = "Adobe ColdFusion File Read"
-  zh = "Adobe ColdFusion 文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2010-2861"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2010-2861"
-
-[[container]]
+[[environment]]
+name = "Adobe ColdFusion Deserialization"
+cve = ["CVE-2017-3066"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2017-3066"
 
-  [[container.name]]
-  en = "Adobe ColdFusion Deserialization"
-  zh = "Adobe ColdFusion 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-3066"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-3066"
-
-[[container]]
+[[environment]]
+name = "Atlassian Confluence Path Traversal and Command Execution"
+cve = ["CVE-2019-3396"]
 app = "Atlassian Confluence"
 path = "confluence/CVE-2019-3396"
 
-  [[container.name]]
-  en = "Atlassian Confluence Path Traversal and Command Execution"
-  zh = "Atlassian Confluence 路径穿越与命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-3396"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-3396"
-
-[[container]]
+[[environment]]
+name = "Atlassian Confluence OGNL Expression Injection Code Execution"
+cve = ["CVE-2021-26084"]
 app = "Atlassian Confluence"
 path = "confluence/CVE-2021-26084"
 
-  [[container.name]]
-  en = "Atlassian Confluence OGNL Expression Injection Code Execution"
-  zh = "Atlassian Confluence OGNL 表达式注入代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-26084"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-26084"
-
-[[container]]
+[[environment]]
+name = "Atlassian Confluence OGNL Expression Injection Command Execution"
+cve = ["CVE-2022-26134"]
 app = "Atlassian Confluence"
 path = "confluence/CVE-2022-26134"
 
-  [[container.name]]
-  en = "Atlassian Confluence OGNL Expression Injection Command Execution"
-  zh = "Atlassian Confluence OGNL 表达式注入命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2022-26134"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-26134"
-
-[[container]]
+[[environment]]
+name = "CouchDB Vertical Permission Bypass"
+cve = ["CVE-2017-12635"]
 app = "CouchDB"
 path = "couchdb/CVE-2017-12635"
 
-  [[container.name]]
-  en = "CouchDB Vertical Permission Bypass"
-  zh = "CouchDB 垂直权限绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12635"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12635"
-
-[[container]]
+[[environment]]
+name = "CouchDB Arbitrary Command Execution"
+cve = ["CVE-2017-12636"]
 app = "CouchDB"
 path = "couchdb/CVE-2017-12636"
 
-  [[container.name]]
-  en = "CouchDB Arbitrary Command Execution"
-  zh = "CouchDB 任意命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12636"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12636"
-
-[[container]]
+[[environment]]
+name = "CouchDB Erlang Distributed Protocol Code Execution"
+cve = ["CVE-2022-24706"]
 app = "CouchDB"
 path = "couchdb/CVE-2022-24706"
 
-  [[container.name]]
-  en = "CouchDB Erlang Distributed Protocol Code Execution"
-  zh = "CouchDB Erlang 分布式协议代码执行"
-
-  [[container.cve]]
-  id = "CVE-2022-24706"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-24706"
-
-[[container]]
+[[environment]]
+name = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
+cve = [""]
 app = "Discuz"
 path = "discuz/wooyun-2010-080723"
 
-  [[container.name]]
-  en = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
-  zh = "Discuz 7.x/6.x 全局变量防御绕过导致代码执行"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Discuz!X ≤3.4 Arbitrary File Deletion"
+cve = [""]
 app = "Discuz"
 path = "discuz/x3.4-arbitrary-file-deletion"
 
-  [[container.name]]
-  en = "Discuz!X ≤3.4 Arbitrary File Deletion"
-  zh = "Discuz!X ≤3.4 任意文件删除漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Django debug page XSS Flaw"
+cve = ["CVE-2017-12794"]
 app = "Django"
 path = "django/CVE-2017-12794"
 
-  [[container.name]]
-  en = "Django debug page XSS Flaw"
-  zh = "Django debug page XSS 漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12794"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12794"
-
-[[container]]
+[[environment]]
+name = "Django < 2.0.8 Arbitrary URL Redirection"
+cve = ["CVE-2018-14574"]
 app = "Django"
 path = "django/CVE-2018-14574"
 
-  [[container.name]]
-  en = "Django < 2.0.8 Arbitrary URL Redirection"
-  zh = "Django < 2.0.8 任意URL跳转漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-14574"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-14574"
-
-[[container]]
+[[environment]]
+name = "Django JSONField/HStoreField SQL Injection"
+cve = ["CVE-2019-14234"]
 app = "Django"
 path = "django/CVE-2019-14234"
 
-  [[container.name]]
-  en = "Django JSONField/HStoreField SQL Injection"
-  zh = "Django JSONField/HStoreField SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-14234"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-14234"
-
-[[container]]
+[[environment]]
+name = "Django GIS SQL Injection"
+cve = ["CVE-2020-9402"]
 app = "Django"
 path = "django/CVE-2020-9402"
 
-  [[container.name]]
-  en = "Django GIS SQL Injection"
-  zh = "Django GIS SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-9402"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-9402"
-
-[[container]]
+[[environment]]
+name = "Django QuerySet.order_by() SQL Injection"
+cve = ["CVE-2021-35042"]
 app = "Django"
 path = "django/CVE-2021-35042"
 
-  [[container.name]]
-  en = "Django QuerySet.order_by() SQL Injection"
-  zh = "Django QuerySet.order_by() SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-35042"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-35042"
-
-[[container]]
+[[environment]]
+name = "Django Trunc(kind) and Extract(lookup_name) SQL Injection"
+cve = ["CVE-2022-34265"]
 app = "Django"
 path = "django/CVE-2022-34265"
 
-  [[container.name]]
-  en = "Django Trunc(kind) and Extract(lookup_name) SQL Injection"
-  zh = "Django Trunc(kind) and Extract(lookup_name) SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2022-34265"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-34265"
-
-[[container]]
+[[environment]]
+name = "DNS Domain Transfer"
+cve = [""]
 app = "dns"
 path = "dns/dns-zone-transfer"
 
-  [[container.name]]
-  en = "DNS Domain Transfer"
-  zh = "DNS域传送漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Docker Daemon API Unauthorized Access"
+cve = [""]
 app = "docker"
 path = "docker/unauthorized-rce"
 
-  [[container.name]]
-  en = "Docker Daemon API Unauthorized Access"
-  zh = "Docker Daemon API 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Drupal < 7.32 'Drupalgeddon' SQL Injection"
+cve = ["CVE-2014-3704"]
 app = "drupal"
 path = "drupal/CVE-2014-3704"
 
-  [[container.name]]
-  en = "Drupal < 7.32 'Drupalgeddon' SQL Injection"
-  zh = "Drupal < 7.32 'Drupalgeddon' SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2014-3704"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2014-3704"
-
-[[container]]
+[[environment]]
+name = "Drupal Core 8 PECL YAML Deserialization Arbitrary Code Execution"
+cve = ["CVE-2017-6920"]
 app = "drupal"
 path = "drupal/CVE-2017-6920"
 
-  [[container.name]]
-  en = "Drupal Core 8 PECL YAML Deserialization Arbitrary Code Execution"
-  zh = "Drupal Core 8 PECL YAML 反序列化任意代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-6920"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-6920"
-
-[[container]]
+[[environment]]
+name = "Drupal Drupalgeddon 2 Remote Code Execution"
+cve = ["CVE-2018-7600"]
 app = "drupal"
 path = "drupal/CVE-2018-7600"
 
-  [[container.name]]
-  en = "Drupal Drupalgeddon 2 Remote Code Execution"
-  zh = "Drupal Drupalgeddon 2 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-7600"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-7600"
-
-[[container]]
+[[environment]]
+name = "Drupal Remote Code Execution"
+cve = ["CVE-2018-7602"]
 app = "drupal"
 path = "drupal/CVE-2018-7602"
 
-  [[container.name]]
-  en = "Drupal Remote Code Execution"
-  zh = "Drupal 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-7602"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-7602"
-
-[[container]]
+[[environment]]
+name = "Drupal Remote Code Execution"
+cve = ["CVE-2019-6339"]
 app = "drupal"
 path = "drupal/CVE-2019-6339"
 
-  [[container.name]]
-  en = "Drupal Remote Code Execution"
-  zh = "Drupal 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-6339"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-6339"
-
-[[container]]
+[[environment]]
+name = "Drupal XSS"
+cve = ["CVE-2019-6341"]
 app = "drupal"
 path = "drupal/CVE-2019-6341"
 
-  [[container.name]]
-  en = "Drupal XSS"
-  zh = "Drupal XSS漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-6341"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-6341"
-
-[[container]]
+[[environment]]
+name = "Apache Dubbo Java Deserialization"
+cve = ["CVE-2019-17564"]
 app = "dubbo"
 path = "dubbo/CVE-2019-17564"
 
-  [[container.name]]
-  en = "Apache Dubbo Java Deserialization"
-  zh = "Apache Dubbo Java反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-17564"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-17564"
-
-[[container]]
+[[environment]]
+name = "ECShop 4.x collection_list SQL Injection"
+cve = [""]
 app = "ecshop"
 path = "ecshop/collection_list-sqli"
 
-  [[container.name]]
-  en = "ECShop 4.x collection_list SQL Injection"
-  zh = "ECShop 4.x collection_list SQL注入"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
+cve = [""]
 app = "ecshop"
 path = "ecshop/xianzhi-2017-02-82239600"
 
-  [[container.name]]
-  en = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
-  zh = "ECShop 2.x/3.x SQL注入/任意代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "ElasticSearch Command Execution"
+cve = ["CVE-2014-3120"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2014-3120"
 
-  [[container.name]]
-  en = "ElasticSearch Command Execution"
-  zh = "ElasticSearch 命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2014-3120"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2014-3120"
-
-[[container]]
+[[environment]]
+name = "ElasticSearch Groovy Sandbox Bypass/Code Execution"
+cve = ["CVE-2015-1427"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-1427"
 
-  [[container.name]]
-  en = "ElasticSearch Groovy Sandbox Bypass/Code Execution"
-  zh = "ElasticSearch Groovy 沙盒绕过/代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2015-1427"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2015-1427"
-
-[[container]]
+[[environment]]
+name = "ElasticSearch Plug-in Directory Traversal"
+cve = ["CVE-2015-3337"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-3337"
 
-  [[container.name]]
-  en = "ElasticSearch Plug-in Directory Traversal"
-  zh = "ElasticSearch 插件目录穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2015-3337"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2015-3337"
-
-[[container]]
+[[environment]]
+name = "ElasticSearch Directory Traversal"
+cve = ["CVE-2015-5531"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-5531"
 
-  [[container.name]]
-  en = "ElasticSearch Directory Traversal"
-  zh = "ElasticSearch 目录穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2015-5531"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2015-5531"
-
-[[container]]
+[[environment]]
+name = "Elasticsearch Webshell"
+cve = [""]
 app = "ElasticSearch"
 path = "elasticsearch/WooYun-2015-110216"
 
-  [[container.name]]
-  en = "Elasticsearch Webshell"
-  zh = "Elasticsearch 写入webshell漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Electron Remote Command Execution"
+cve = ["CVE-2018-1000006"]
 app = "electron"
 path = "electron/CVE-2018-1000006"
 
-  [[container.name]]
-  en = "Electron Remote Command Execution"
-  zh = "Electron 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1000006"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1000006"
-
-[[container]]
+[[environment]]
+name = "Electron WebPreferences Remote Command Execution"
+cve = ["CVE-2018-15685"]
 app = "electron"
 path = "electron/CVE-2018-15685"
 
-  [[container.name]]
-  en = "Electron WebPreferences Remote Command Execution"
-  zh = "Electron WebPreferences 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-15685"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-15685"
-
-[[container]]
+[[environment]]
+name = "elFinder ZIP Parameter and Arbitrary Command Injection"
+cve = ["CVE-2021-32682"]
 app = "elFinder"
 path = "elfinder/CVE-2021-32682"
 
-  [[container.name]]
-  en = "elFinder ZIP Parameter and Arbitrary Command Injection"
-  zh = "elFinder ZIP 参数与任意命令注入"
-
-  [[container.cve]]
-  id = "CVE-2021-32682"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-32682"
-
-[[container]]
+[[environment]]
+name = "Fastjson Deserialization to Arbitrary Command Execution"
+cve = ["CVE-2017-18349"]
 app = "Fastjson"
 path = "fastjson/1.2.24-rce"
 
-  [[container.name]]
-  en = "Fastjson Deserialization to Arbitrary Command Execution"
-  zh = "Fastjson 反序列化导致任意命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-18349"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-18349"
-
-[[container]]
+[[environment]]
+name = "Fastjson 1.2.47 Remote Command Execution"
+cve = [""]
 app = "Fastjson"
 path = "fastjson/1.2.47-rce"
 
-  [[container.name]]
-  en = "Fastjson 1.2.47 Remote Command Execution"
-  zh = "Fastjson 1.2.47 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "FFmpeg Arbitrary File Read/SSRF"
+cve = ["CVE-2016-1897", "CVE-2016-1898"]
 app = "ffmpeg"
 path = "ffmpeg/CVE-2016-1897"
 
-  [[container.name]]
-  en = "FFmpeg Arbitrary File Read/SSRF"
-  zh = "FFmpeg 任意文件读取漏洞/SSRF漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-1897,CVE-2016-1898"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-1897,CVE-2016-1898"
-
-[[container]]
+[[environment]]
+name = "FFmpeg Arbitrary File Read"
+cve = ["CVE-2017-9993"]
 app = "ffmpeg"
 path = "ffmpeg/phdays"
 
-  [[container.name]]
-  en = "FFmpeg Arbitrary File Read"
-  zh = "FFmpeg 任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-9993"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-9993"
-
-[[container]]
+[[environment]]
+name = "Jinja2 SSTI Template Injection"
+cve = [""]
 app = "Jinja2"
 path = "flask/ssti"
 
-  [[container.name]]
-  en = "Jinja2 SSTI Template Injection"
-  zh = "Jinja2 SSTI模板注入"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache Flink File Upload"
+cve = ["CVE-2020-17518"]
 app = "flink"
 path = "flink/CVE-2020-17518"
 
-  [[container.name]]
-  en = "Apache Flink File Upload"
-  zh = "Apache Flink 文件上传漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-17518"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-17518"
-
-[[container]]
+[[environment]]
+name = "Apache Flink Jobmanager/Logs Directory Traversal"
+cve = ["CVE-2020-17519"]
 app = "flink"
 path = "flink/CVE-2020-17519"
 
-  [[container.name]]
-  en = "Apache Flink Jobmanager/Logs Directory Traversal"
-  zh = "Apache Flink Jobmanager/Logs 目录穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-17519"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-17519"
-
-[[container]]
+[[environment]]
+name = "GeoServer OGC Filter SQL Injection"
+cve = ["CVE-2023-25157"]
 app = "GeoServer"
 path = "geoserver/CVE-2023-25157"
 
-  [[container.name]]
-  en = "GeoServer OGC Filter SQL Injection"
-  zh = "GeoServer OGC Filter SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-25157"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-25157"
-
-[[container]]
+[[environment]]
+name = "GhostScript Sandbox Bypass (Command Execution)"
+cve = ["CVE-2018-16509"]
 app = "ghostscript"
 path = "ghostscript/CVE-2018-16509"
 
-  [[container.name]]
-  en = "GhostScript Sandbox Bypass (Command Execution)"
-  zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-16509"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-16509"
-
-[[container]]
+[[environment]]
+name = "GhostScript Sandbox Bypass (Command Execution)"
+cve = ["CVE-2018-19475"]
 app = "ghostscript"
 path = "ghostscript/CVE-2018-19475"
 
-  [[container.name]]
-  en = "GhostScript Sandbox Bypass (Command Execution)"
-  zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-19475"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-19475"
-
-[[container]]
+[[environment]]
+name = "GhostScript Sandbox Bypass (Command Execution)"
+cve = ["CVE-2019-6116"]
 app = "ghostscript"
 path = "ghostscript/CVE-2019-6116"
 
-  [[container.name]]
-  en = "GhostScript Sandbox Bypass (Command Execution)"
-  zh = "GhostScript 沙箱绕过 (命令执行) 漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-6116"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-6116"
-
-[[container]]
+[[environment]]
+name = "GIT-SHELL Sandbox Bypass"
+cve = ["CVE-2017-8386"]
 app = "git"
 path = "git/CVE-2017-8386"
 
-  [[container.name]]
-  en = "GIT-SHELL Sandbox Bypass"
-  zh = "GIT-SHELL 沙盒绕过"
-
-  [[container.cve]]
-  id = "CVE-2017-8386"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-8386"
-
-[[container]]
+[[environment]]
+name = "Gitea 1.4.0 Directory Traversal to Command Execution"
+cve = [""]
 app = "gitea"
 path = "gitea/1.4-rce"
 
-  [[container.name]]
-  en = "Gitea 1.4.0 Directory Traversal to Command Execution"
-  zh = "Gitea 1.4.0 目录穿越导致命令执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "GitLab Arbitrary File Read"
+cve = ["CVE-2016-9086"]
 app = "gitlab"
 path = "gitlab/CVE-2016-9086"
 
-  [[container.name]]
-  en = "GitLab Arbitrary File Read"
-  zh = "GitLab 任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-9086"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-9086"
-
-[[container]]
+[[environment]]
+name = "GitLab Remote Command Execution"
+cve = ["CVE-2021-22205"]
 app = "gitlab"
 path = "gitlab/CVE-2021-22205"
 
-  [[container.name]]
-  en = "GitLab Remote Command Execution"
-  zh = "GitLab 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-22205"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-22205"
-
-[[container]]
+[[environment]]
+name = "gitlist 0.6.0 Remote Command Execution"
+cve = ["CVE-2018-1000533"]
 app = "gitlist"
 path = "gitlist/CVE-2018-1000533"
 
-  [[container.name]]
-  en = "gitlist 0.6.0 Remote Command Execution"
-  zh = "gitlist 0.6.0 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1000533"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1000533"
-
-[[container]]
+[[environment]]
+name = "GlassFish Arbitrary File Read"
+cve = [""]
 app = "GlassFish"
 path = "glassfish/4.1.0"
 
-  [[container.name]]
-  en = "GlassFish Arbitrary File Read"
-  zh = "GlassFish 任意文件读取漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "GoAhead Remote Command Execution"
+cve = ["CVE-2017-17562"]
 app = "GoAhead"
 path = "goahead/CVE-2017-17562"
 
-  [[container.name]]
-  en = "GoAhead Remote Command Execution"
-  zh = "GoAhead 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-17562"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-17562"
-
-[[container]]
+[[environment]]
+name = "GoAhead Server Environment Variable Injection"
+cve = ["CVE-2021-42342"]
 app = "GoAhead"
 path = "goahead/CVE-2021-42342"
 
-  [[container.name]]
-  en = "GoAhead Server Environment Variable Injection"
-  zh = "GoAhead Server 环境变量注入"
-
-  [[container.cve]]
-  id = "CVE-2021-42342"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-42342"
-
-[[container]]
+[[environment]]
+name = "Gogs Arbitrary User Login"
+cve = ["CVE-2018-18925"]
 app = "Gogs"
 path = "gogs/CVE-2018-18925"
 
-  [[container.name]]
-  en = "Gogs Arbitrary User Login"
-  zh = "Gogs 任意用户登录漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-18925"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-18925"
-
-[[container]]
+[[environment]]
+name = "Grafana 8.x Plug-in Module Directory Traversal"
+cve = ["CVE-2021-43798"]
 app = "Grafana"
 path = "grafana/CVE-2021-43798"
 
-  [[container.name]]
-  en = "Grafana 8.x Plug-in Module Directory Traversal"
-  zh = "Grafana 8.x 插件模块目录穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-43798"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-43798"
-
-[[container]]
+[[environment]]
+name = "Grafana Management Background SSRF"
+cve = [""]
 app = "Grafana"
 path = "grafana/admin-ssrf"
 
-  [[container.name]]
-  en = "Grafana Management Background SSRF"
-  zh = "Grafana管理后台SSRF"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "H2 Database Console Unauthorized Access"
+cve = [""]
 app = "Springboot H2 Database"
 path = "h2database/h2-console-unacc"
 
-  [[container.name]]
-  en = "H2 Database Console Unauthorized Access"
-  zh = "H2 Database Console 未授权访问"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Hadoop YARN ResourceManager Unauthorized Access"
+cve = [""]
 app = "Hadoop YARN"
 path = "hadoop/unauthorized-yarn"
 
-  [[container.name]]
-  en = "Hadoop YARN ResourceManager Unauthorized Access"
-  zh = "Hadoop YARN ResourceManager 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache HTTPD Newline Parsing"
+cve = ["CVE-2017-15715"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2017-15715"
 
-  [[container.name]]
-  en = "Apache HTTPD Newline Parsing"
-  zh = "Apache HTTPD 换行解析漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-15715"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-15715"
-
-[[container]]
+[[environment]]
+name = "Apache HTTP Server 2.4.48 mod_proxy SSRF"
+cve = ["CVE-2021-40438"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2021-40438"
 
-  [[container.name]]
-  en = "Apache HTTP Server 2.4.48 mod_proxy SSRF"
-  zh = "Apache HTTP Server 2.4.48 mod_proxy SSRF漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-40438"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-40438"
-
-[[container]]
+[[environment]]
+name = "Apache HTTP Server 2.4.49 Path Traversal"
+cve = ["CVE-2021-41773"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2021-41773"
 
-  [[container.name]]
-  en = "Apache HTTP Server 2.4.49 Path Traversal"
-  zh = "Apache HTTP Server 2.4.49 路径穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-41773"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-41773"
-
-[[container]]
+[[environment]]
+name = "Apache HTTP Server 2.4.50 Path Traversal"
+cve = ["CVE-2021-42013"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2021-42013"
 
-  [[container.name]]
-  en = "Apache HTTP Server 2.4.50 Path Traversal"
-  zh = "Apache HTTP Server 2.4.50 路径穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-42013"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-42013"
-
-[[container]]
+[[environment]]
+name = "Apache HTTPD Unknown Suffix Parsing"
+cve = [""]
 app = "Apache HTTP Server"
 path = "httpd/apache_parsing_vulnerability"
 
-  [[container.name]]
-  en = "Apache HTTPD Unknown Suffix Parsing"
-  zh = "Apache HTTPD 未知后缀解析漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache SSI Remote Command Execution"
+cve = [""]
 app = "Apache HTTP Server"
 path = "httpd/ssi-rce"
 
-  [[container.name]]
-  en = "Apache SSI Remote Command Execution"
-  zh = "Apache SSI 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Imagetragick Command Execution"
+cve = ["CVE-2016-3714"]
 app = "ImageMagick"
 path = "imagemagick/imagetragick"
 
-  [[container.name]]
-  en = "Imagetragick Command Execution"
-  zh = "Imagetragick 命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-3714"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-3714"
-
-[[container]]
+[[environment]]
+name = "ImageMagick PDF Password Location Command Injection"
+cve = ["CVE-2020-29599"]
 app = "imagemagick"
 path = "imagemagick/CVE-2020-29599"
 
-  [[container.name]]
-  en = "ImageMagick PDF Password Location Command Injection"
-  zh = "ImageMagick PDF密码位置命令注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-29599"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-29599"
-
-[[container]]
+[[environment]]
+name = "ImageMagick Arbitrary File Read"
+cve = ["CVE-2022-44268"]
 app = "imagemagick"
 path = "imagemagick/CVE-2022-44268"
 
-  [[container.name]]
-  en = "ImageMagick Arbitrary File Read"
-  zh = "ImageMagick任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2022-44268"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-44268"
-
-[[container]]
+[[environment]]
+name = "InfluxDB Empty JWT Secret Key Authentication Bypass"
+cve = ["CVE-2019-20933"]
 app = "InfluxDB"
 path = "influxdb/CVE-2019-20933"
 
-  [[container.name]]
-  en = "InfluxDB Empty JWT Secret Key Authentication Bypass"
-  zh = "InfluxDB Empty JWT Secret Key Authentication Bypass"
-
-  [[container.cve]]
-  id = "CVE-2019-20933"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-20933"
-
-[[container]]
+[[environment]]
+name = "Jackson-databind Deserialization"
+cve = ["CVE-2017-7525"]
 app = "Jackson-databind"
 path = "jackson/CVE-2017-7525"
 
-  [[container.name]]
-  en = "Jackson-databind Deserialization"
-  zh = "Jackson-databind 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-7525"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-7525"
-
-[[container]]
+[[environment]]
+name = "Java RMI codebase Remote Code Execution"
+cve = [""]
 app = "java rmi"
 path = "java/rmi-codebase"
 
-  [[container.name]]
-  en = "Java RMI codebase Remote Code Execution"
-  zh = "Java RMI codebase 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
+cve = [""]
 app = "java rmi"
 path = "java/rmi-registry-bind-deserialization"
 
-  [[container.name]]
-  en = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
-  zh = "Java RMI Registry 反序列化漏洞(<=jdk8u111)"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
+cve = [""]
 app = "java rmi"
 path = "java/rmi-registry-bind-deserialization-bypass"
 
-  [[container.name]]
-  en = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
-  zh = "Java RMI Registry 反序列化漏洞(<jdk8u232_b09)"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "JBoss 5.x/6.x Deserialization"
+cve = ["CVE-2017-12149"]
 app = "jboss"
 path = "jboss/CVE-2017-12149"
 
-  [[container.name]]
-  en = "JBoss 5.x/6.x Deserialization"
-  zh = "JBoss 5.x/6.x 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12149"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12149"
-
-[[container]]
+[[environment]]
+name = "JBoss 4.x JBossMQ JMS Deserialization"
+cve = ["CVE-2017-7504"]
 app = "jboss"
 path = "jboss/CVE-2017-7504"
 
-  [[container.name]]
-  en = "JBoss 4.x JBossMQ JMS Deserialization"
-  zh = "JBoss 4.x JBossMQ JMS 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-7504"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-7504"
-
-[[container]]
+[[environment]]
+name = "JBoss JMXInvokerServlet Deserialization"
+cve = [""]
 app = "jboss"
 path = "jboss/JMXInvokerServlet-deserialization"
 
-  [[container.name]]
-  en = "JBoss JMXInvokerServlet Deserialization"
-  zh = "JBoss JMXInvokerServlet 反序列化漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Jenkins-CI Remote Code Execution"
+cve = ["CVE-2017-1000353"]
 app = "Jenkins"
 path = "jenkins/CVE-2017-1000353"
 
-  [[container.name]]
-  en = "Jenkins-CI Remote Code Execution"
-  zh = "Jenkins-CI 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-1000353"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-1000353"
-
-[[container]]
+[[environment]]
+name = "Jenkins Remote Command Execution"
+cve = ["CVE-2018-1000861"]
 app = "Jenkins"
 path = "jenkins/CVE-2018-1000861"
 
-  [[container.name]]
-  en = "Jenkins Remote Command Execution"
-  zh = "Jenkins远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1000861"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1000861"
-
-[[container]]
+[[environment]]
+name = "Jetty WEB-INF Sensitive Information Disclosure"
+cve = ["CVE-2021-28164"]
 app = "jetty"
 path = "jetty/CVE-2021-28164"
 
-  [[container.name]]
-  en = "Jetty WEB-INF Sensitive Information Disclosure"
-  zh = "Jetty WEB-INF 敏感信息泄露漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-28164"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-28164"
-
-[[container]]
+[[environment]]
+name = "Jetty Common Servlets Component ConcatServlet Information Disclosure"
+cve = ["CVE-2021-28169"]
 app = "jetty"
 path = "jetty/CVE-2021-28169"
 
-  [[container.name]]
-  en = "Jetty Common Servlets Component ConcatServlet Information Disclosure"
-  zh = "Jetty 通用 Servlets 组件 ConcatServlet 信息泄露漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-28169"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-28169"
-
-[[container]]
+[[environment]]
+name = "Jetty WEB-INF Sensitive Information Disclosure"
+cve = ["CVE-2021-34429"]
 app = "jetty"
 path = "jetty/CVE-2021-34429"
 
-  [[container.name]]
-  en = "Jetty WEB-INF Sensitive Information Disclosure"
-  zh = "Jetty WEB-INF 敏感信息泄露漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-34429"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-34429"
-
-[[container]]
+[[environment]]
+name = "Atlassian Jira Template Injection"
+cve = ["CVE-2019-11581"]
 app = "jira"
 path = "jira/CVE-2019-11581"
 
-  [[container.name]]
-  en = "Atlassian Jira Template Injection"
-  zh = "Atlassian Jira 模板注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-11581"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-11581"
-
-[[container]]
+[[environment]]
+name = "Jmeter RMI Deserialization Command Execution"
+cve = ["CVE-2018-1297"]
 app = "Apache Jmeter"
 path = "jmeter/CVE-2018-1297"
 
-  [[container.name]]
-  en = "Jmeter RMI Deserialization Command Execution"
-  zh = "Jmeter RMI 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1297"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1297"
-
-[[container]]
+[[environment]]
+name = "Joomla 3.4.5 Deserialization"
+cve = ["CVE-2015-8562"]
 app = "Joomla"
 path = "joomla/CVE-2015-8562"
 
-  [[container.name]]
-  en = "Joomla 3.4.5 Deserialization"
-  zh = "Joomla 3.4.5 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2015-8562"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2015-8562"
-
-[[container]]
+[[environment]]
+name = "Joomla 3.7.0 SQL Injection"
+cve = ["CVE-2017-8917"]
 app = "Joomla"
 path = "joomla/CVE-2017-8917"
 
-  [[container.name]]
-  en = "Joomla 3.7.0 SQL Injection"
-  zh = "Joomla 3.7.0 SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-8917"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-8917"
-
-[[container]]
+[[environment]]
+name = "Joomla 4.2.7 Permission Bypass"
+cve = ["CVE-2023-23752"]
 app = "Joomla"
 path = "joomla/CVE-2023-23752"
 
-  [[container.name]]
-  en = "Joomla 4.2.7 Permission Bypass"
-  zh = "Joomla 4.2.7 权限绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-23752"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-23752"
-
-[[container]]
+[[environment]]
+name = "Jupyter Notebook Unauthorized Access"
+cve = [""]
 app = "Jupyter"
 path = "jupyter/notebook-rce"
 
-  [[container.name]]
-  en = "Jupyter Notebook Unauthorized Access"
-  zh = "Jupyter Notebook 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache Kafka Clients JNDI Injection"
+cve = ["CVE-2023-25194"]
 app = "Apache Kafka"
 path = "kafka/CVE-2023-25194"
 
-  [[container.name]]
-  en = "Apache Kafka Clients JNDI Injection"
-  zh = "Apache Kafka Clients JNDI注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-25194"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-25194"
-
-[[container]]
+[[environment]]
+name = "Kibana Local File Inclusion"
+cve = ["CVE-2018-17246"]
 app = "kibana"
 path = "kibana/CVE-2018-17246"
 
-  [[container.name]]
-  en = "Kibana Local File Inclusion"
-  zh = "Kibana 本地文件包含漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-17246"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-17246"
-
-[[container]]
+[[environment]]
+name = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
+cve = ["CVE-2019-7609"]
 app = "kibana"
 path = "kibana/CVE-2019-7609"
 
-  [[container.name]]
-  en = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
-  zh = "Kibana 原型链污染导致任意代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-7609"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-7609"
-
-[[container]]
+[[environment]]
+name = "Laravel Ignition 2.5.1 Code Execution"
+cve = ["CVE-2021-3129"]
 app = "laravel"
 path = "kibana/CVE-2021-3129"
 
-  [[container.name]]
-  en = "Laravel Ignition 2.5.1 Code Execution"
-  zh = "Laravel Ignition 2.5.1 代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-3129"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-3129"
-
-[[container]]
+[[environment]]
+name = "libssh Server-side Authentication Bypass"
+cve = ["CVE-2018-10933"]
 app = "libssh"
 path = "libssh/CVE-2018-10933"
 
-  [[container.name]]
-  en = "libssh Server-side Authentication Bypass"
-  zh = "libssh 服务端权限认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-10933"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-10933"
-
-[[container]]
+[[environment]]
+name = "Liferay Portal CE Deserialization Command Execution"
+cve = ["CVE-2020-7961"]
 app = "Liferay Portal"
 path = "liferay-portal/CVE-2020-7961"
 
-  [[container.name]]
-  en = "Liferay Portal CE Deserialization Command Execution"
-  zh = "Liferay Portal CE 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-7961"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-7961"
-
-[[container]]
+[[environment]]
+name = "Apache Log4j Server Deserialization Command Execution"
+cve = ["CVE-2017-5645"]
 app = "Apache Log4j"
 path = "log4j/CVE-2017-5645"
 
-  [[container.name]]
-  en = "Apache Log4j Server Deserialization Command Execution"
-  zh = "Apache Log4j Server 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-5645"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-5645"
-
-[[container]]
+[[environment]]
+name = "Apache Log4j2 lookup JNDI Injection"
+cve = ["CVE-2021-44228"]
 app = "Apache Log4j"
 path = "log4j/CVE-2021-44228"
 
-  [[container.name]]
-  en = "Apache Log4j2 lookup JNDI Injection"
-  zh = "Apache Log4j2 lookup JNDI 注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-44228"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-44228"
-
-[[container]]
+[[environment]]
+name = "Magento 2.2 SQL Injection"
+cve = [""]
 app = "Magento"
 path = "magento/2.2-sqli"
 
-  [[container.name]]
-  en = "Magento 2.2 SQL Injection"
-  zh = "Magento 2.2 SQL注入漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Metabase Arbitrary File Read"
+cve = ["CVE-2021-41277"]
 app = "metabase"
 path = "metabase/CVE-2021-41277"
 
-  [[container.name]]
-  en = "Metabase Arbitrary File Read"
-  zh = "Metabase任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-41277"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-41277"
-
-[[container]]
+[[environment]]
+name = "mini_httpd Arbitrary File Read"
+cve = ["CVE-2018-18778"]
 app = "mini_httpd"
 path = "mini_httpd/CVE-2018-18778"
 
-  [[container.name]]
-  en = "mini_httpd Arbitrary File Read"
-  zh = "mini_httpd任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-18778"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-18778"
-
-[[container]]
+[[environment]]
+name = "MinIO Cluster Mode Information Disclosure"
+cve = ["CVE-2023-28432"]
 app = "MinIO"
 path = "minio/CVE-2023-28432"
 
-  [[container.name]]
-  en = "MinIO Cluster Mode Information Disclosure"
-  zh = "MinIO集群模式信息泄露漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-28432"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-28432"
-
-[[container]]
+[[environment]]
+name = "Mojarra JSF ViewState Deserialization"
+cve = [""]
 app = "Mojarra JSF"
 path = "mojarra/jsf-viewstate-deserialization"
 
-  [[container.name]]
-  en = "Mojarra JSF ViewState Deserialization"
-  zh = "Mojarra JSF ViewState 反序列化漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Mongo Express Remote Code Execution"
+cve = ["CVE-2019-10758"]
 app = "mongo-express"
 path = "mongo-express/CVE-2019-10758"
 
-  [[container.name]]
-  en = "Mongo Express Remote Code Execution"
-  zh = "Mongo Express 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-10758"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-10758"
-
-[[container]]
+[[environment]]
+name = "MySQL Authentication Bypass"
+cve = ["CVE-2012-2122"]
 app = "MySQL"
 path = "mysql/CVE-2012-2122"
 
-  [[container.name]]
-  en = "MySQL Authentication Bypass"
-  zh = "MySQL 身份认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2012-2122"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2012-2122"
-
-[[container]]
+[[environment]]
+name = "Nacos Authentication Bypass"
+cve = ["CVE-2021-29441"]
 app = "Nacos"
 path = "nacos/CVE-2021-29441"
 
-  [[container.name]]
-  en = "Nacos Authentication Bypass"
-  zh = "Nacos 认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-29441"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-29441"
-
-[[container]]
+[[environment]]
+name = "Neo4j Shell Server Deserialization"
+cve = ["CVE-2021-34371"]
 app = "Neo4j"
 path = "neo4j/CVE-2021-34371"
 
-  [[container.name]]
-  en = "Neo4j Shell Server Deserialization"
-  zh = "Neo4j Shell Server 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-34371"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-34371"
-
-[[container]]
+[[environment]]
+name = "Nexus Repository Manager 3 Remote Command Execution"
+cve = ["CVE-2019-7238"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2019-7238"
 
-  [[container.name]]
-  en = "Nexus Repository Manager 3 Remote Command Execution"
-  zh = "Nexus Repository Manager 3 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-7238"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-7238"
-
-[[container]]
+[[environment]]
+name = "Nexus Repository Manager 3 Remote Command Execution"
+cve = ["CVE-2020-10199"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10199"
 
-  [[container.name]]
-  en = "Nexus Repository Manager 3 Remote Command Execution"
-  zh = "Nexus Repository Manager 3 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-10199"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-10199"
-
-[[container]]
+[[environment]]
+name = "Nexus Repository Manager 3 Remote Command Execution"
+cve = ["CVE-2020-10204"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10204"
 
-  [[container.name]]
-  en = "Nexus Repository Manager 3 Remote Command Execution"
-  zh = "Nexus Repository Manager 3 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-10204"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-10204"
-
-[[container]]
+[[environment]]
+name = "Nginx Filename Logic"
+cve = ["CVE-2013-4547"]
 app = "Nginx"
 path = "nginx/CVE-2013-4547"
 
-  [[container.name]]
-  en = "Nginx Filename Logic"
-  zh = "Nginx 文件名逻辑漏洞"
-
-  [[container.cve]]
-  id = "CVE-2013-4547"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-4547"
-
-[[container]]
+[[environment]]
+name = "Nginx Out-of-Bounds Read Cache"
+cve = ["CVE-2017-7529"]
 app = "Nginx"
 path = "nginx/CVE-2017-7529"
 
-  [[container.name]]
-  en = "Nginx Out-of-Bounds Read Cache"
-  zh = "Nginx越界读取缓存漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-7529"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-7529"
-
-[[container]]
+[[environment]]
+name = "Nginx Configuration Errors"
+cve = [""]
 app = "Nginx"
 path = "nginx/insecure-configuration"
 
-  [[container.name]]
-  en = "Nginx Configuration Errors"
-  zh = "Nginx 配置错误三例"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Nginx Parsing"
+cve = [""]
 app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
 
-  [[container.name]]
-  en = "Nginx Parsing"
-  zh = "Nginx 解析漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "NodeJS Directory Traversal"
+cve = ["CVE-2017-14849"]
 app = "node"
 path = "node/CVE-2017-14849"
 
-  [[container.name]]
-  en = "NodeJS Directory Traversal"
-  zh = "NodeJS 目录穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-14849"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-14849"
-
-[[container]]
+[[environment]]
+name = "node-postgres Code Execution"
+cve = ["CVE-2017-16082"]
 app = "node-postgres"
 path = "node/CVE-2017-16082"
 
-  [[container.name]]
-  en = "node-postgres Code Execution"
-  zh = "node-postgres 代码执行漏洞分析"
-
-  [[container.cve]]
-  id = "CVE-2017-16082"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-16082"
-
-[[container]]
+[[environment]]
+name = "ntopng Permission Bypass"
+cve = ["CVE-2021-28073"]
 app = "ntopng"
 path = "ntopng/CVE-2021-28073"
 
-  [[container.name]]
-  en = "ntopng Permission Bypass"
-  zh = "ntopng权限绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-28073"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-28073"
-
-[[container]]
+[[environment]]
+name = "Apache OfBiz Deserialization Command Execution"
+cve = ["CVE-2020-9496"]
 app = "Apache OfBiz"
 path = "ofbiz/CVE-2020-9496"
 
-  [[container.name]]
-  en = "Apache OfBiz Deserialization Command Execution"
-  zh = "Apache OfBiz 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-9496"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-9496"
-
-[[container]]
+[[environment]]
+name = "Openfire Management Background Authentication Bypass"
+cve = ["CVE-2023-32315"]
 app = "Openfire"
 path = "openfire/CVE-2023-32315"
 
-  [[container.name]]
-  en = "Openfire Management Background Authentication Bypass"
-  zh = "Openfire管理后台认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-32315"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-32315"
-
-[[container]]
+[[environment]]
+name = "OpenSMTPD Remote Command Execution"
+cve = ["CVE-2020-7247"]
 app = "OpenSMTPD"
 path = "opensmtpd/CVE-2020-7247"
 
-  [[container.name]]
-  en = "OpenSMTPD Remote Command Execution"
-  zh = "OpenSMTPD 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-7247"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-7247"
-
-[[container]]
+[[environment]]
+name = "OpenSSH Username Enumeration"
+cve = ["CVE-2018-15473"]
 app = "OpenSSH"
 path = "openssh/CVE-2018-15473"
 
-  [[container.name]]
-  en = "OpenSSH Username Enumeration"
-  zh = "OpenSSH 用户名枚举漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-15473"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-15473"
-
-[[container]]
+[[environment]]
+name = "OpenSSL Heartbleed"
+cve = ["CVE-2014-0160"]
 app = "OpenSSL"
 path = "openssl/CVE-2014-0160"
 
-  [[container.name]]
-  en = "OpenSSL Heartbleed"
-  zh = "OpenSSL 心脏出血漏洞"
-
-  [[container.cve]]
-  id = "CVE-2014-0160"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2014-0160"
-
-[[container]]
+[[environment]]
+name = "OpenSSL Infinite Loop DoS"
+cve = ["CVE-2022-0778"]
 app = "OpenSSL"
 path = "openssl/CVE-2022-0778"
 
-  [[container.name]]
-  en = "OpenSSL Infinite Loop DoS"
-  zh = "OpenSSL无限循环DoS漏洞"
-
-  [[container.cve]]
-  id = "CVE-2022-0778"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-0778"
-
-[[container]]
+[[environment]]
+name = "OpenTSDB Command Injection"
+cve = ["CVE-2020-35476"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
 
-  [[container.name]]
-  en = "OpenTSDB Command Injection"
-  zh = "OpenTSDB 命令注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-35476"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-35476"
-
-[[container]]
+[[environment]]
+name = "PHP 8.1.0-dev Development Version Backdoor Event"
+cve = [""]
 app = "PHP"
 path = "php/8.1-backdoor"
 
-  [[container.name]]
-  en = "PHP 8.1.0-dev Development Version Backdoor Event"
-  zh = "PHP 8.1.0-dev 开发版本后门事件"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "PHP-CGI Remote Code Execution"
+cve = ["CVE-2012-1823"]
 app = "PHP-CGI"
 path = "php/CVE-2012-1823"
 
-  [[container.name]]
-  en = "PHP-CGI Remote Code Execution"
-  zh = "PHP-CGI远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2012-1823"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2012-1823"
-
-[[container]]
+[[environment]]
+name = "PHP-IMAP Remote Command Execution"
+cve = ["CVE-2018-19518"]
 app = "PHP-IMAP"
 path = "php/CVE-2018-19518"
 
-  [[container.name]]
-  en = "PHP-IMAP Remote Command Execution"
-  zh = "PHP-IMAP 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-19518"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-19518"
-
-[[container]]
+[[environment]]
+name = "PHP-FPM Remote Command Execution"
+cve = ["CVE-2019-11043"]
 app = "PHP-FPM"
 path = "php/CVE-2019-11043"
 
-  [[container.name]]
-  en = "PHP-FPM Remote Command Execution"
-  zh = "PHP-FPM 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-11043"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-11043"
-
-[[container]]
+[[environment]]
+name = "PHP-FPM FastCGI Unauthorized Access"
+cve = [""]
 app = "PHP-FPM"
 path = "php/fpm"
 
-  [[container.name]]
-  en = "PHP-FPM FastCGI Unauthorized Access"
-  zh = "PHP-FPM FastCGI 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "PHP Files Vulnerabilities (by phpinfo())"
+cve = [""]
 app = "PHP"
 path = "php/inclusion"
 
-  [[container.name]]
-  en = "PHP Files Vulnerabilities (by phpinfo())"
-  zh = "PHP文件包含漏洞 (利用phpinfo())"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "PHP XML Entity Injection"
+cve = [""]
 app = "PHP"
 path = "php/php_xxe"
 
-  [[container.name]]
-  en = "PHP XML Entity Injection"
-  zh = "PHP XML实体注入"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "XDebug Remote Debugging Code Execution"
+cve = [""]
 app = "PHP"
 path = "php/xdebug-rce"
 
-  [[container.name]]
-  en = "XDebug Remote Debugging Code Execution"
-  zh = "XDebug 远程调试漏洞 (代码执行)"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "PHPMailer Arbitrary File Read"
+cve = ["CVE-2017-5223"]
 app = "PHPMailer"
 path = "phpmailer/CVE-2017-5223"
 
-  [[container.name]]
-  en = "PHPMailer Arbitrary File Read"
-  zh = "PHPMailer 任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-5223"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-5223"
-
-[[container]]
+[[environment]]
+name = "phpMyAdmin 4.0.x—4.6.2 Remote Code Execution"
+cve = ["CVE-2016-5734"]
 app = "phpmyadmin"
 path = "phpmyadmin/CVE-2016-5734"
 
-  [[container.name]]
-  en = "phpMyAdmin 4.0.x—4.6.2 Remote Code Execution"
-  zh = "phpMyAdmin 4.0.x—4.6.2 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-5734"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-5734"
-
-[[container]]
+[[environment]]
+name = "phpmyadmin 4.8.1 Remote File Inclusion"
+cve = ["CVE-2018-12613"]
 app = "phpmyadmin"
 path = "phpmyadmin/CVE-2018-12613"
 
-  [[container.name]]
-  en = "phpmyadmin 4.8.1 Remote File Inclusion"
-  zh = "phpmyadmin 4.8.1 远程文件包含漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-12613"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-12613"
-
-[[container]]
+[[environment]]
+name = "phpmyadmin scripts/setup.php Deserialization"
+cve = [""]
 app = "phpmyadmin"
 path = "phpmyadmin/WooYun-2016-199433"
 
-  [[container.name]]
-  en = "phpmyadmin scripts/setup.php Deserialization"
-  zh = "phpmyadmin scripts/setup.php 反序列化漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "phpunit Remote Code Execution"
+cve = ["CVE-2017-9841"]
 app = "phpunit"
 path = "phpunit/CVE-2017-9841"
 
-  [[container.name]]
-  en = "phpunit Remote Code Execution"
-  zh = "phpunit 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-9841"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-9841"
-
-[[container]]
+[[environment]]
+name = "Polkit pkexec Privilege Escalation"
+cve = ["CVE-2021-4034"]
 app = "Polkit Pkexec"
 path = "polkit/CVE-2021-4034"
 
-  [[container.name]]
-  en = "Polkit pkexec Privilege Escalation"
-  zh = "Polkit pkexec 权限提升漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-4034"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-4034"
-
-[[container]]
+[[environment]]
+name = "PostgreSQL Privilege Escalation"
+cve = ["CVE-2018-1058"]
 app = "PostgreSQL"
 path = "postgres/CVE-2018-1058"
 
-  [[container.name]]
-  en = "PostgreSQL Privilege Escalation"
-  zh = "PostgreSQL 提权漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1058"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1058"
-
-[[container]]
+[[environment]]
+name = "PostgreSQL High Privilege Command Execution"
+cve = ["CVE-2019-9193"]
 app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
 
-  [[container.name]]
-  en = "PostgreSQL High Privilege Command Execution"
-  zh = "PostgreSQL 高权限命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-9193"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-9193"
-
-[[container]]
+[[environment]]
+name = "Python PIL Remote Command Execution (GhostButt)"
+cve = ["CVE-2017-8291"]
 app = "Python"
 path = "python/PIL-CVE-2017-8291"
 
-  [[container.name]]
-  en = "Python PIL Remote Command Execution (GhostButt)"
-  zh = "Python PIL 远程命令执行漏洞 (GhostButt)"
-
-  [[container.cve]]
-  id = "CVE-2017-8291"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-8291"
-
-[[container]]
+[[environment]]
+name = "Python PIL Remote Command Execution (via Ghostscript)"
+cve = ["CVE-2018-16509"]
 app = "Python"
 path = "python/PIL-CVE-2018-16509"
 
-  [[container.name]]
-  en = "Python PIL Remote Command Execution (via Ghostscript)"
-  zh = "Python PIL 远程命令执行漏洞 (via Ghostscript)"
-
-  [[container.cve]]
-  id = "CVE-2018-16509"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-16509"
-
-[[container]]
+[[environment]]
+name = "Python Unpickle Deserialization"
+cve = [""]
 app = "Python"
 path = "python/unpickle"
 
-  [[container.name]]
-  en = "Python Unpickle Deserialization"
-  zh = "Python Unpickle 反序列化漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Ruby on Rails Path Traversal"
+cve = ["CVE-2018-3760"]
 app = "Ruby on Rails"
 path = "rails/CVE-2018-3760"
 
-  [[container.name]]
-  en = "Ruby on Rails Path Traversal"
-  zh = "Ruby on Rails 路径穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-3760"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-3760"
-
-[[container]]
+[[environment]]
+name = "Ruby on Rails Path Traversal and Arbitrary File Read"
+cve = ["CVE-2019-5418"]
 app = "Ruby on Rails"
 path = "rails/CVE-2019-5418"
 
-  [[container.name]]
-  en = "Ruby on Rails Path Traversal and Arbitrary File Read"
-  zh = "Ruby on Rails 路径穿越与任意文件读取漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-5418"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-5418"
-
-[[container]]
+[[environment]]
+name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
+cve = [""]
 app = "redis"
 path = "redis/4-unacc"
 
-  [[container.name]]
-  en = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
-  zh = "Redis 4.x/5.x 主从复制导致的命令执行"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Redis Lua Sandbox Bypass Command Execution"
+cve = ["CVE-2022-0543"]
 app = "redis"
 path = "redis/CVE-2022-0543"
 
-  [[container.name]]
-  en = "Redis Lua Sandbox Bypass Command Execution"
-  zh = "Redis Lua沙盒绕过命令执行"
-
-  [[container.cve]]
-  id = "CVE-2022-0543"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-0543"
-
-[[container]]
+[[environment]]
+name = "Rocket Chat MongoDB Injection"
+cve = ["CVE-2021-22911"]
 app = "rocket chat"
 path = "rocketchat/CVE-2021-22911"
 
-  [[container.name]]
-  en = "Rocket Chat MongoDB Injection"
-  zh = "Rocket Chat MongoDB 注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-22911"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-22911"
-
-[[container]]
+[[environment]]
+name = "Apache RocketMQ Remote Command Execution"
+cve = ["CVE-2023-33246"]
 app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-33246"
 
-  [[container.name]]
-  en = "Apache RocketMQ Remote Command Execution"
-  zh = "Apache RocketMQ 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-33246"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-33246"
-
-[[container]]
+[[environment]]
+name = "rsync Unauthorized Access"
+cve = [""]
 app = "rsync"
 path = "rsync/common"
 
-  [[container.name]]
-  en = "rsync Unauthorized Access"
-  zh = "rsync 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Ruby Net::FTP Module Command Injection"
+cve = ["CVE-2017-17405"]
 app = "ruby"
 path = "ruby/CVE-2017-17405"
 
-  [[container.name]]
-  en = "Ruby Net::FTP Module Command Injection"
-  zh = "Ruby Net::FTP 模块命令注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-17405"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-17405"
-
-[[container]]
+[[environment]]
+name = "SaltStack Horizontal Privilege Bypass"
+cve = ["CVE-2020-11651"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11651"
 
-  [[container.name]]
-  en = "SaltStack Horizontal Privilege Bypass"
-  zh = "SaltStack 水平权限绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-11651"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-11651"
-
-[[container]]
+[[environment]]
+name = "SaltStack Arbitrary File Read and Write"
+cve = ["CVE-2020-11652"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
 
-  [[container.name]]
-  en = "SaltStack Arbitrary File Read and Write"
-  zh = "SaltStack 任意文件读写漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-11652"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-11652"
-
-[[container]]
+[[environment]]
+name = "SaltStack Command Injection"
+cve = ["CVE-2020-16846"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-16846"
 
-  [[container.name]]
-  en = "SaltStack Command Injection"
-  zh = "SaltStack 命令注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-16846"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-16846"
-
-[[container]]
+[[environment]]
+name = "Samba Remote Command Execution"
+cve = ["CVE-2017-7494"]
 app = "Samba"
 path = "samba/CVE-2017-7494"
 
-  [[container.name]]
-  en = "Samba Remote Command Execution"
-  zh = "Samba 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-7494"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-7494"
-
-[[container]]
+[[environment]]
+name = "Scrapyd Unauthorized Access"
+cve = [""]
 app = "Scrapyd"
 path = "scrapy/scrapyd-unacc"
 
-  [[container.name]]
-  en = "Scrapyd Unauthorized Access"
-  zh = "Scrapyd 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache Shiro Authentication Bypass"
+cve = ["CVE-2010-3863"]
 app = "shiro"
 path = "shiro/CVE-2010-3863"
 
-  [[container.name]]
-  en = "Apache Shiro Authentication Bypass"
-  zh = "Apache Shiro 认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2010-3863"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2010-3863"
-
-[[container]]
+[[environment]]
+name = "Apache Shiro 1.2.4 Deserialization"
+cve = ["CVE-2016-4437"]
 app = "shiro"
 path = "shiro/CVE-2016-4437"
 
-  [[container.name]]
-  en = "Apache Shiro 1.2.4 Deserialization"
-  zh = "Apache Shiro 1.2.4反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-4437"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-4437"
-
-[[container]]
+[[environment]]
+name = "Apache Shiro Authentication Bypass"
+cve = ["CVE-2020-1957"]
 app = "shiro"
 path = "shiro/CVE-2020-1957"
 
-  [[container.name]]
-  en = "Apache Shiro Authentication Bypass"
-  zh = "Apache Shiro 认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-1957"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-1957"
-
-[[container]]
+[[environment]]
+name = "Apache Skywalking 8.3.0 SQL Injection"
+cve = [""]
 app = "skywalking"
 path = "skywalking/8.3.0-sqli"
 
-  [[container.name]]
-  en = "Apache Skywalking 8.3.0 SQL Injection"
-  zh = "Apache Skywalking 8.3.0 SQL注入漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache Solr Remote Command Execution"
+cve = ["CVE-2017-12629"]
 app = "solr"
 path = "solr/CVE-2017-12629-RCE"
 
-  [[container.name]]
-  en = "Apache Solr Remote Command Execution"
-  zh = "Apache Solr 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12629"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12629"
-
-[[container]]
+[[environment]]
+name = "Apache Solr XML Entity Injection"
+cve = ["CVE-2017-12629"]
 app = "solr"
 path = "solr/CVE-2017-12629-XXE"
 
-  [[container.name]]
-  en = "Apache Solr XML Entity Injection"
-  zh = "Apache Solr XML 实体注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12629"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12629"
-
-[[container]]
+[[environment]]
+name = "Apache Solr Remote Command Execution"
+cve = ["CVE-2019-0193"]
 app = "solr"
 path = "solr/CVE-2019-0193"
 
-  [[container.name]]
-  en = "Apache Solr Remote Command Execution"
-  zh = "Apache Solr 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-0193"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-0193"
-
-[[container]]
+[[environment]]
+name = "Apache Solr Velocity Inject Remote Command Execution"
+cve = ["CVE-2019-17558"]
 app = "solr"
 path = "solr/CVE-2019-17558"
 
-  [[container.name]]
-  en = "Apache Solr Velocity Inject Remote Command Execution"
-  zh = "Apache Solr Velocity 注入远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-17558"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-17558"
-
-[[container]]
+[[environment]]
+name = "Apache Solr RemoteStreaming File Reading and SSRF"
+cve = [""]
 app = "solr"
 path = "solr/Remote-Streaming-Fileread"
 
-  [[container.name]]
-  en = "Apache Solr RemoteStreaming File Reading and SSRF"
-  zh = "Apache Solr RemoteStreaming 文件读取与SSRF漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache Spark Unauthorized Access Leak"
+cve = [""]
 app = "spark"
 path = "spark/unacc"
 
-  [[container.name]]
-  en = "Apache Spark Unauthorized Access Leak"
-  zh = "Apache Spark 未授权访问漏"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Spring Security Oauth2 Remote Command Execution"
+cve = ["CVE-2016-4977"]
 app = "spring security oauth2"
 path = "spring/CVE-2016-4977"
 
-  [[container.name]]
-  en = "Spring Security Oauth2 Remote Command Execution"
-  zh = "Spring Security Oauth2 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-4977"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-4977"
-
-[[container]]
+[[environment]]
+name = "Spring WebFlow Remote Code Execution"
+cve = ["CVE-2017-4971"]
 app = "spring webflow"
 path = "spring/CVE-2017-4971"
 
-  [[container.name]]
-  en = "Spring WebFlow Remote Code Execution"
-  zh = "Spring WebFlow 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-4971"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-4971"
-
-[[container]]
+[[environment]]
+name = "Spring Data Rest Remote Command Execution"
+cve = ["CVE-2017-8046"]
 app = "spring data rest"
 path = "spring/CVE-2017-8046"
 
-  [[container.name]]
-  en = "Spring Data Rest Remote Command Execution"
-  zh = "Spring Data Rest 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-8046"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-8046"
-
-[[container]]
+[[environment]]
+name = "Spring Messaging Remote Command Execution"
+cve = ["CVE-2018-1270"]
 app = "spring messaging"
 path = "spring/CVE-2018-1270"
 
-  [[container.name]]
-  en = "Spring Messaging Remote Command Execution"
-  zh = "Spring Messaging 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1270"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1270"
-
-[[container]]
+[[environment]]
+name = "Spring Data Commons Remote Command Execution"
+cve = ["CVE-2018-1273"]
 app = "spring data commons"
 path = "spring/CVE-2018-1273"
 
-  [[container.name]]
-  en = "Spring Data Commons Remote Command Execution"
-  zh = "Spring Data Commons 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-1273"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1273"
-
-[[container]]
+[[environment]]
+name = "Spring Cloud Gateway Actuator API SpEL Expression Injection Command Execution"
+cve = ["CVE-2022-22947"]
 app = "spring cloud gateway"
 path = "spring/CVE-2022-22947"
 
-  [[container.name]]
-  en = "Spring Cloud Gateway Actuator API SpEL Expression Injection Command Execution"
-  zh = "Spring Cloud Gateway Actuator API SpEL表达式注入命令执行"
-
-  [[container.cve]]
-  id = "CVE-2022-22947"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-22947"
-
-[[container]]
+[[environment]]
+name = "Spring Cloud Function SpEL Expression Command Injection"
+cve = ["CVE-2022-22963"]
 app = "spring cloud function"
 path = "spring/CVE-2022-22963"
 
-  [[container.name]]
-  en = "Spring Cloud Function SpEL Expression Command Injection"
-  zh = "Spring Cloud Function SpEL表达式命令注入"
-
-  [[container.cve]]
-  id = "CVE-2022-22963"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-22963"
-
-[[container]]
+[[environment]]
+name = "Remote Code Execution Vulnerability due to Spring Framework Data Binding and JDK 9+"
+cve = ["CVE-2022-22965"]
 app = "Spring"
 path = "spring/CVE-2022-22965"
 
-  [[container.name]]
-  en = "Remote Code Execution Vulnerability due to Spring Framework Data Binding and JDK 9+"
-  zh = "Spring框架Data Binding与JDK 9+导致的远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2022-22965"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-22965"
-
-[[container]]
+[[environment]]
+name = "Spring Security Authorization Bypass in RegexRequestMatcher"
+cve = ["CVE-2022-22978"]
 app = "Spring"
 path = "spring/CVE-2022-22978"
 
-  [[container.name]]
-  en = "Spring Security Authorization Bypass in RegexRequestMatcher"
-  zh = "Spring Security Authorization Bypass in RegexRequestMatcher"
-
-  [[container.cve]]
-  id = "CVE-2022-22978"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2022-22978"
-
-[[container]]
+[[environment]]
+name = "S2-001 Remote Code Execution"
+cve = [""]
 app = "Struts2"
 path = "struts2/s2-001"
 
-  [[container.name]]
-  en = "S2-001 Remote Code Execution"
-  zh = "S2-001 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "S2-005 Remote Code Execution"
+cve = ["CVE-2010-1870"]
 app = "Struts2"
 path = "struts2/s2-005"
 
-  [[container.name]]
-  en = "S2-005 Remote Code Execution"
-  zh = "S2-005 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2010-1870"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2010-1870"
-
-[[container]]
+[[environment]]
+name = "S2-007 Remote Code Execution"
+cve = [""]
 app = "Struts2"
 path = "struts2/s2-007"
 
-  [[container.name]]
-  en = "S2-007 Remote Code Execution"
-  zh = "S2-007 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "S2-008 Remote Code Execution"
+cve = ["CVE-2012-0391"]
 app = "Struts2"
 path = "struts2/s2-008"
 
-  [[container.name]]
-  en = "S2-008 Remote Code Execution"
-  zh = "S2-008 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2012-0391"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2012-0391"
-
-[[container]]
+[[environment]]
+name = "S2-009 Remote Code Execution"
+cve = ["CVE-2011-3923"]
 app = "Struts2"
 path = "struts2/s2-009"
 
-  [[container.name]]
-  en = "S2-009 Remote Code Execution"
-  zh = "S2-009 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2011-3923"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2011-3923"
-
-[[container]]
+[[environment]]
+name = "S2-012 Remote Code Execution"
+cve = ["CVE-2013-1965"]
 app = "Struts2"
 path = "struts2/s2-012"
 
-  [[container.name]]
-  en = "S2-012 Remote Code Execution"
-  zh = "S2-012 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2013-1965"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-1965"
-
-[[container]]
+[[environment]]
+name = "S2-013 Remote Code Execution"
+cve = ["CVE-2013-1966"]
 app = "Struts2"
 path = "struts2/s2-013"
 
-  [[container.name]]
-  en = "S2-013 Remote Code Execution"
-  zh = "S2-013 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2013-1966"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-1966"
-
-[[container]]
+[[environment]]
+name = "S2-015 Remote Code Execution"
+cve = ["CVE-2013-2134", "CVE-2013-2135"]
 app = "Struts2"
 path = "struts2/s2-015"
 
-  [[container.name]]
-  en = "S2-015 Remote Code Execution"
-  zh = "S2-015 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2013-2134"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-2134"
-  
-  [[container.cve]]
-  id = "CVE-2013-2135"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-2135"
-
-[[container]]
+[[environment]]
+name = "S2-016 Remote Code Execution"
+cve = ["CVE-2013-2251"]
 app = "Struts2"
 path = "struts2/s2-016"
 
-  [[container.name]]
-  en = "S2-016 Remote Code Execution"
-  zh = "S2-016 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2013-2251"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-2251"
-
-[[container]]
+[[environment]]
+name = "S2-032 Remote Code Execution"
+cve = ["CVE-2016-3081"]
 app = "Struts2"
 path = "struts2/s2-032"
 
-  [[container.name]]
-  en = "S2-032 Remote Code Execution"
-  zh = "S2-032 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-3081"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-3081"
-
-[[container]]
+[[environment]]
+name = "S2-045 Remote Code Execution"
+cve = ["CVE-2017-5638"]
 app = "Struts2"
 path = "struts2/s2-045"
 
-  [[container.name]]
-  en = "S2-045 Remote Code Execution"
-  zh = "S2-045 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-5638"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-5638"
-
-[[container]]
+[[environment]]
+name = "S2-046 Remote Code Execution"
+cve = ["CVE-2017-5638"]
 app = "Struts2"
 path = "struts2/s2-046"
 
-  [[container.name]]
-  en = "S2-046 Remote Code Execution"
-  zh = "S2-046 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-5638"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-5638"
-
-[[container]]
+[[environment]]
+name = "S2-048 Remote Code Execution"
+cve = ["CVE-2017-9791"]
 app = "Struts2"
 path = "struts2/s2-048"
 
-  [[container.name]]
-  en = "S2-048 Remote Code Execution"
-  zh = "S2-048 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-9791"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-9791"
-
-[[container]]
+[[environment]]
+name = "S2-052 Remote Code Execution"
+cve = ["CVE-2017-9805"]
 app = "Struts2"
 path = "struts2/s2-052"
 
-  [[container.name]]
-  en = "S2-052 Remote Code Execution"
-  zh = "S2-052 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-9805"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-9805"
-
-[[container]]
+[[environment]]
+name = "S2-053 Remote Code Execution"
+cve = ["CVE-2017-12611"]
 app = "Struts2"
 path = "struts2/s2-053"
 
-  [[container.name]]
-  en = "S2-053 Remote Code Execution"
-  zh = "S2-053 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12611"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12611"
-
-[[container]]
+[[environment]]
+name = "Struts2 S2-057 Remote Command Execution"
+cve = ["CVE-2018-11776"]
 app = "Struts2"
 path = "struts2/s2-057"
 
-  [[container.name]]
-  en = "Struts2 S2-057 Remote Command Execution"
-  zh = "Struts2 S2-057 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-11776"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-11776"
-
-[[container]]
+[[environment]]
+name = "Struts2 S2-059 Remote Command Execution"
+cve = ["CVE-2019-0230"]
 app = "Struts2"
 path = "struts2/s2-059"
 
-  [[container.name]]
-  en = "Struts2 S2-059 Remote Command Execution"
-  zh = "Struts2 S2-059 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-0230"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-0230"
-
-[[container]]
+[[environment]]
+name = "Struts2 S2-061 Remote Command Execution"
+cve = ["CVE-2020-17530"]
 app = "Struts2"
 path = "struts2/s2-061"
 
-  [[container.name]]
-  en = "Struts2 S2-061 Remote Command Execution"
-  zh = "Struts2 S2-061 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-17530"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-17530"
-
-[[container]]
+[[environment]]
+name = "Supervisord Remote Command Execution"
+cve = ["CVE-2017-11610"]
 app = "Supervisor"
 path = "supervisor/CVE-2017-11610"
 
-  [[container.name]]
-  en = "Supervisord Remote Command Execution"
-  zh = "Supervisord 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-11610"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-11610"
-
-[[container]]
+[[environment]]
+name = "ThinkPHP 2.x Arbitrary Code Execution"
+cve = [""]
 app = "ThinkPHP"
 path = "thinkphp/2-rce"
 
-  [[container.name]]
-  en = "ThinkPHP 2.x Arbitrary Code Execution"
-  zh = "ThinkPHP 2.x 任意代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
+cve = [""]
 app = "ThinkPHP"
 path = "thinkphp/5-rce"
 
-  [[container.name]]
-  en = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
-  zh = "ThinkPHP5 5.0.22/5.1.29 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "ThinkPHP5 5.0.23 Remote Code Execution"
+cve = [""]
 app = "ThinkPHP"
 path = "thinkphp/5.0.23-rce"
 
-  [[container.name]]
-  en = "ThinkPHP5 5.0.23 Remote Code Execution"
-  zh = "ThinkPHP5 5.0.23 远程代码执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
+cve = [""]
 app = "ThinkPHP"
 path = "thinkphp/in-sqlinjection"
 
-  [[container.name]]
-  en = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
-  zh = "ThinkPHP5 SQL注入漏洞/信息泄露"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "ThinkPHP Multilingual Local File Inclusion"
+cve = [""]
 app = "ThinkPHP"
 path = "thinkphp/lang-rce"
 
-  [[container.name]]
-  en = "ThinkPHP Multilingual Local File Inclusion"
-  zh = "ThinkPHP 多语言本地文件包含漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Tiki Wiki CMS Groupware Authentication Bypass"
+cve = ["CVE-2020-15906"]
 app = "Tiki Wiki"
 path = "tikiwiki/CVE-2020-15906"
 
-  [[container.name]]
-  en = "Tiki Wiki CMS Groupware Authentication Bypass"
-  zh = "Tiki Wiki CMS Groupware 认证绕过漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-15906"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-15906"
-
-[[container]]
+[[environment]]
+name = "Tomcat Arbitrary Writing of Files in the PUT Method"
+cve = ["CVE-2017-12615"]
 app = "Tomcat"
 path = "tomcat/CVE-2017-12615"
 
-  [[container.name]]
-  en = "Tomcat Arbitrary Writing of Files in the PUT Method"
-  zh = "Tomcat PUT方法任意写文件漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-12615"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-12615"
-
-[[container]]
+[[environment]]
+name = "Apache Tomcat AJP Bug"
+cve = ["CVE-2020-1938"]
 app = "Tomcat"
 path = "tomcat/CVE-2020-1938"
 
-  [[container.name]]
-  en = "Apache Tomcat AJP Bug"
-  zh = "Apache Tomcat AJP 文件包含漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-1938"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-1938"
-
-[[container]]
+[[environment]]
+name = "Tomcat Weak Password"
+cve = [""]
 app = "Tomcat"
 path = "tomcat/tomcat8"
 
-  [[container.name]]
-  en = "Tomcat Weak Password"
-  zh = "Tomcat弱口令"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Apache Unomi Remote Expression Code Execution"
+cve = ["CVE-2020-13942"]
 app = "unomi"
 path = "unomi/CVE-2020-13942"
 
-  [[container.name]]
-  en = "Apache Unomi Remote Expression Code Execution"
-  zh = "Apache Unomi 远程表达式代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-13942"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-13942"
-
-[[container]]
+[[environment]]
+name = "uWSGI PHP Directory Traversal"
+cve = ["CVE-2018-7490"]
 app = "uWSGI"
 path = "uwsgi/CVE-2018-7490"
 
-  [[container.name]]
-  en = "uWSGI PHP Directory Traversal"
-  zh = "uWSGI PHP目录穿越漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-7490"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-7490"
-
-[[container]]
+[[environment]]
+name = "uWSGI Unauthorized Access"
+cve = [""]
 app = "uWSGI"
 path = "uwsgi/unacc"
 
-  [[container.name]]
-  en = "uWSGI Unauthorized Access"
-  zh = "uWSGI 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "V2board 1.6.1 Privilege Escalation"
+cve = [""]
 app = "V2board"
 path = "v2board/1.6-privilege-escalation"
 
-  [[container.name]]
-  en = "V2board 1.6.1 Privilege Escalation"
-  zh = "V2board 1.6.1 提权漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization"
+cve = ["CVE-2017-10271"]
 app = "WebLogic"
 path = "weblogic/CVE-2017-10271"
 
-  [[container.name]]
-  en = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization"
-  zh = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder 反序列化漏洞"
-
-  [[container.cve]]
-  id = "CVE-2017-10271"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2017-10271"
-
-[[container]]
+[[environment]]
+name = "WebLogic WLS Core Components Deserialization Command Execution"
+cve = ["CVE-2018-2628"]
 app = "WebLogic"
 path = "weblogic/CVE-2018-2628"
 
-  [[container.name]]
-  en = "WebLogic WLS Core Components Deserialization Command Execution"
-  zh = "WebLogic WLS Core Components 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-2628"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-2628"
-
-[[container]]
+[[environment]]
+name = "WebLogic Arbitrary File Upload"
+cve = ["CVE-2018-2894"]
 app = "WebLogic"
 path = "weblogic/CVE-2018-2894"
 
-  [[container.name]]
-  en = "WebLogic Arbitrary File Upload"
-  zh = "WebLogic 任意文件上传漏洞"
-
-  [[container.cve]]
-  id = "CVE-2018-2894"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-2894"
-
-[[container]]
+[[environment]]
+name = "WebLogic Management Console Unauthorized Remote Command Execution"
+cve = ["CVE-2020-14882"]
 app = "WebLogic"
 path = "weblogic/CVE-2020-14882"
 
-  [[container.name]]
-  en = "WebLogic Management Console Unauthorized Remote Command Execution"
-  zh = "WebLogic 管理控制台未授权远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-14882"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-14882"
-
-[[container]]
+[[environment]]
+name = "WebLogic Unauthorized Remote Code Execution"
+cve = ["CVE-2023-21839"]
 app = "WebLogic"
 path = "weblogic/CVE-2023-21839"
 
-  [[container.name]]
-  en = "WebLogic Unauthorized Remote Code Execution"
-  zh = "WebLogic未授权远程代码执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2023-21839"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2023-21839"
-
-[[container]]
+[[environment]]
+name = "WebLogic SSRF"
+cve = [""]
 app = "WebLogic"
 path = "weblogic/ssrf"
 
-  [[container.name]]
-  en = "WebLogic SSRF"
-  zh = "WebLogic SSRF漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "WebLogic File Read"
+cve = [""]
 app = "WebLogic"
 path = "weblogic/weak_password"
 
-  [[container.name]]
-  en = "WebLogic File Read"
-  zh = "WebLogic 文件读取漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Webmin Remote Command Execution"
+cve = ["CVE-2019-15107"]
 app = "Webmin"
 path = "webmin/CVE-2019-15107"
 
-  [[container.name]]
-  en = "Webmin Remote Command Execution"
-  zh = "Webmin 远程命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2019-15107"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2019-15107"
-
-[[container]]
+[[environment]]
+name = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
+cve = [""]
 app = "Wordpress"
 path = "wordpress/pwnscriptum"
 
-  [[container.name]]
-  en = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
-  zh = "Wordpress 4.6 任意命令执行漏洞 (PwnScriptum)"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "XStream Deserialization Command Execution"
+cve = ["CVE-2021-21351"]
 app = "XStream"
 path = "xstream/CVE-2021-21351"
 
-  [[container.name]]
-  en = "XStream Deserialization Command Execution"
-  zh = "XStream 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-21351"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-21351"
-
-[[container]]
+[[environment]]
+name = "XStream Deserialization Command Execution"
+cve = ["CVE-2021-29505"]
 app = "XStream"
 path = "xstream/CVE-2021-29505"
 
-  [[container.name]]
-  en = "XStream Deserialization Command Execution"
-  zh = "XStream 反序列化命令执行漏洞"
-
-  [[container.cve]]
-  id = "CVE-2021-29505"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2021-29505"
-
-[[container]]
+[[environment]]
+name = "XXL-JOB Executor Unauthorized Access"
+cve = [""]
 app = "xxl-job"
 path = "xxl-job/unacc"
 
-  [[container.name]]
-  en = "XXL-JOB Executor Unauthorized Access"
-  zh = "XXL-JOB Executor 未授权访问漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "YApi NoSQL Injection to Remote Command Execution"
+cve = [""]
 app = "YApi"
 path = "yapi/mongodb-inj"
 
-  [[container.name]]
-  en = "YApi NoSQL Injection to Remote Command Execution"
-  zh = "YApi NoSQL注入导致远程命令执行漏洞"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "YApi Open Registration due to RCE"
+cve = [""]
 app = "YApi"
 path = "yapi/unacc"
 
-  [[container.name]]
-  en = "YApi Open Registration due to RCE"
-  zh = "YApi开放注册导致RCE"
-
-  [[container.cve]]
-  id = ""
-  nvd = ""
-
-[[container]]
+[[environment]]
+name = "Zabbix latest.php SQL Injection"
+cve = ["CVE-2016-10134"]
 app = "Zabbix"
 path = "zabbix/CVE-2016-10134"
 
-  [[container.name]]
-  en = "Zabbix latest.php SQL Injection"
-  zh = "Zabbix latest.php SQL注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2016-10134"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2016-10134"
-
-[[container]]
+[[environment]]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
-
-  [[container.name]]
-  en = "Zabbix Server Trapper Command Injection"
-  zh = "Zabbix Server Trapper命令注入漏洞"
-
-  [[container.cve]]
-  id = "CVE-2020-11800"
-  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2020-11800"
+name = "Zabbix Server Trapper Command Injection"
+cve = ["CVE-2020-11800"]
