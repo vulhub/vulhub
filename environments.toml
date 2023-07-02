@@ -36,7 +36,7 @@ path = "apache-druid/CVE-2021-25646"
 
 [[environment]]
 name = "Apereo CAS 4.1 Deserialization Command Execution"
-cve = [""]
+cve = []
 app = "Apereo CAS"
 path = "apereo-cas/4.1-rce"
 
@@ -60,7 +60,7 @@ path = "appweb/CVE-2018-8715"
 
 [[environment]]
 name = "Aria2 Arbitrary File Write"
-cve = [""]
+cve = []
 app = "Aria2"
 path = "aria2/rce"
 
@@ -78,7 +78,7 @@ path = "cacti/CVE-2022-46169"
 
 [[environment]]
 name = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
-cve = [""]
+cve = []
 app = "celery"
 path = "celery/celery3_redis_unauth"
 
@@ -138,13 +138,13 @@ path = "couchdb/CVE-2022-24706"
 
 [[environment]]
 name = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
-cve = [""]
+cve = []
 app = "Discuz"
 path = "discuz/wooyun-2010-080723"
 
 [[environment]]
 name = "Discuz!X ≤3.4 Arbitrary File Deletion"
-cve = [""]
+cve = []
 app = "Discuz"
 path = "discuz/x3.4-arbitrary-file-deletion"
 
@@ -186,13 +186,13 @@ path = "django/CVE-2022-34265"
 
 [[environment]]
 name = "DNS Domain Transfer"
-cve = [""]
+cve = []
 app = "dns"
 path = "dns/dns-zone-transfer"
 
 [[environment]]
 name = "Docker Daemon API Unauthorized Access"
-cve = [""]
+cve = []
 app = "docker"
 path = "docker/unauthorized-rce"
 
@@ -240,13 +240,13 @@ path = "dubbo/CVE-2019-17564"
 
 [[environment]]
 name = "ECShop 4.x collection_list SQL Injection"
-cve = [""]
+cve = []
 app = "ecshop"
 path = "ecshop/collection_list-sqli"
 
 [[environment]]
 name = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
-cve = [""]
+cve = []
 app = "ecshop"
 path = "ecshop/xianzhi-2017-02-82239600"
 
@@ -276,7 +276,7 @@ path = "elasticsearch/CVE-2015-5531"
 
 [[environment]]
 name = "Elasticsearch Webshell"
-cve = [""]
+cve = []
 app = "ElasticSearch"
 path = "elasticsearch/WooYun-2015-110216"
 
@@ -306,7 +306,7 @@ path = "fastjson/1.2.24-rce"
 
 [[environment]]
 name = "Fastjson 1.2.47 Remote Command Execution"
-cve = [""]
+cve = []
 app = "Fastjson"
 path = "fastjson/1.2.47-rce"
 
@@ -324,7 +324,7 @@ path = "ffmpeg/phdays"
 
 [[environment]]
 name = "Jinja2 SSTI Template Injection"
-cve = [""]
+cve = []
 app = "Jinja2"
 path = "flask/ssti"
 
@@ -372,7 +372,7 @@ path = "git/CVE-2017-8386"
 
 [[environment]]
 name = "Gitea 1.4.0 Directory Traversal to Command Execution"
-cve = [""]
+cve = []
 app = "gitea"
 path = "gitea/1.4-rce"
 
@@ -396,7 +396,7 @@ path = "gitlist/CVE-2018-1000533"
 
 [[environment]]
 name = "GlassFish Arbitrary File Read"
-cve = [""]
+cve = []
 app = "GlassFish"
 path = "glassfish/4.1.0"
 
@@ -426,19 +426,19 @@ path = "grafana/CVE-2021-43798"
 
 [[environment]]
 name = "Grafana Management Background SSRF"
-cve = [""]
+cve = []
 app = "Grafana"
 path = "grafana/admin-ssrf"
 
 [[environment]]
 name = "H2 Database Console Unauthorized Access"
-cve = [""]
+cve = []
 app = "Springboot H2 Database"
 path = "h2database/h2-console-unacc"
 
 [[environment]]
 name = "Hadoop YARN ResourceManager Unauthorized Access"
-cve = [""]
+cve = []
 app = "Hadoop YARN"
 path = "hadoop/unauthorized-yarn"
 
@@ -468,13 +468,13 @@ path = "httpd/CVE-2021-42013"
 
 [[environment]]
 name = "Apache HTTPD Unknown Suffix Parsing"
-cve = [""]
+cve = []
 app = "Apache HTTP Server"
 path = "httpd/apache_parsing_vulnerability"
 
 [[environment]]
 name = "Apache SSI Remote Command Execution"
-cve = [""]
+cve = []
 app = "Apache HTTP Server"
 path = "httpd/ssi-rce"
 
@@ -510,19 +510,19 @@ path = "jackson/CVE-2017-7525"
 
 [[environment]]
 name = "Java RMI codebase Remote Code Execution"
-cve = [""]
+cve = []
 app = "java rmi"
 path = "java/rmi-codebase"
 
 [[environment]]
 name = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
-cve = [""]
+cve = []
 app = "java rmi"
 path = "java/rmi-registry-bind-deserialization"
 
 [[environment]]
 name = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
-cve = [""]
+cve = []
 app = "java rmi"
 path = "java/rmi-registry-bind-deserialization-bypass"
 
@@ -540,7 +540,7 @@ path = "jboss/CVE-2017-7504"
 
 [[environment]]
 name = "JBoss JMXInvokerServlet Deserialization"
-cve = [""]
+cve = []
 app = "jboss"
 path = "jboss/JMXInvokerServlet-deserialization"
 
@@ -606,7 +606,7 @@ path = "joomla/CVE-2023-23752"
 
 [[environment]]
 name = "Jupyter Notebook Unauthorized Access"
-cve = [""]
+cve = []
 app = "Jupyter"
 path = "jupyter/notebook-rce"
 
@@ -660,7 +660,7 @@ path = "log4j/CVE-2021-44228"
 
 [[environment]]
 name = "Magento 2.2 SQL Injection"
-cve = [""]
+cve = []
 app = "Magento"
 path = "magento/2.2-sqli"
 
@@ -684,7 +684,7 @@ path = "minio/CVE-2023-28432"
 
 [[environment]]
 name = "Mojarra JSF ViewState Deserialization"
-cve = [""]
+cve = []
 app = "Mojarra JSF"
 path = "mojarra/jsf-viewstate-deserialization"
 
@@ -744,13 +744,13 @@ path = "nginx/CVE-2017-7529"
 
 [[environment]]
 name = "Nginx Configuration Errors"
-cve = [""]
+cve = []
 app = "Nginx"
 path = "nginx/insecure-configuration"
 
 [[environment]]
 name = "Nginx Parsing"
-cve = [""]
+cve = []
 app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
 
@@ -816,7 +816,7 @@ path = "opentsdb/CVE-2020-35476"
 
 [[environment]]
 name = "PHP 8.1.0-dev Development Version Backdoor Event"
-cve = [""]
+cve = []
 app = "PHP"
 path = "php/8.1-backdoor"
 
@@ -840,25 +840,25 @@ path = "php/CVE-2019-11043"
 
 [[environment]]
 name = "PHP-FPM FastCGI Unauthorized Access"
-cve = [""]
+cve = []
 app = "PHP-FPM"
 path = "php/fpm"
 
 [[environment]]
 name = "PHP Files Vulnerabilities (by phpinfo())"
-cve = [""]
+cve = []
 app = "PHP"
 path = "php/inclusion"
 
 [[environment]]
 name = "PHP XML Entity Injection"
-cve = [""]
+cve = []
 app = "PHP"
 path = "php/php_xxe"
 
 [[environment]]
 name = "XDebug Remote Debugging Code Execution"
-cve = [""]
+cve = []
 app = "PHP"
 path = "php/xdebug-rce"
 
@@ -882,7 +882,7 @@ path = "phpmyadmin/CVE-2018-12613"
 
 [[environment]]
 name = "phpmyadmin scripts/setup.php Deserialization"
-cve = [""]
+cve = []
 app = "phpmyadmin"
 path = "phpmyadmin/WooYun-2016-199433"
 
@@ -924,7 +924,7 @@ path = "python/PIL-CVE-2018-16509"
 
 [[environment]]
 name = "Python Unpickle Deserialization"
-cve = [""]
+cve = []
 app = "Python"
 path = "python/unpickle"
 
@@ -942,7 +942,7 @@ path = "rails/CVE-2019-5418"
 
 [[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
-cve = [""]
+cve = []
 app = "redis"
 path = "redis/4-unacc"
 
@@ -966,7 +966,7 @@ path = "rocketmq/CVE-2023-33246"
 
 [[environment]]
 name = "rsync Unauthorized Access"
-cve = [""]
+cve = []
 app = "rsync"
 path = "rsync/common"
 
@@ -1002,7 +1002,7 @@ path = "samba/CVE-2017-7494"
 
 [[environment]]
 name = "Scrapyd Unauthorized Access"
-cve = [""]
+cve = []
 app = "Scrapyd"
 path = "scrapy/scrapyd-unacc"
 
@@ -1026,7 +1026,7 @@ path = "shiro/CVE-2020-1957"
 
 [[environment]]
 name = "Apache Skywalking 8.3.0 SQL Injection"
-cve = [""]
+cve = []
 app = "skywalking"
 path = "skywalking/8.3.0-sqli"
 
@@ -1056,13 +1056,13 @@ path = "solr/CVE-2019-17558"
 
 [[environment]]
 name = "Apache Solr RemoteStreaming File Reading and SSRF"
-cve = [""]
+cve = []
 app = "solr"
 path = "solr/Remote-Streaming-Fileread"
 
 [[environment]]
 name = "Apache Spark Unauthorized Access Leak"
-cve = [""]
+cve = []
 app = "spark"
 path = "spark/unacc"
 
@@ -1122,7 +1122,7 @@ path = "spring/CVE-2022-22978"
 
 [[environment]]
 name = "S2-001 Remote Code Execution"
-cve = [""]
+cve = []
 app = "Struts2"
 path = "struts2/s2-001"
 
@@ -1134,7 +1134,7 @@ path = "struts2/s2-005"
 
 [[environment]]
 name = "S2-007 Remote Code Execution"
-cve = [""]
+cve = []
 app = "Struts2"
 path = "struts2/s2-007"
 
@@ -1236,31 +1236,31 @@ path = "supervisor/CVE-2017-11610"
 
 [[environment]]
 name = "ThinkPHP 2.x Arbitrary Code Execution"
-cve = [""]
+cve = []
 app = "ThinkPHP"
 path = "thinkphp/2-rce"
 
 [[environment]]
 name = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
-cve = [""]
+cve = []
 app = "ThinkPHP"
 path = "thinkphp/5-rce"
 
 [[environment]]
 name = "ThinkPHP5 5.0.23 Remote Code Execution"
-cve = [""]
+cve = []
 app = "ThinkPHP"
 path = "thinkphp/5.0.23-rce"
 
 [[environment]]
 name = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
-cve = [""]
+cve = []
 app = "ThinkPHP"
 path = "thinkphp/in-sqlinjection"
 
 [[environment]]
 name = "ThinkPHP Multilingual Local File Inclusion"
-cve = [""]
+cve = []
 app = "ThinkPHP"
 path = "thinkphp/lang-rce"
 
@@ -1284,7 +1284,7 @@ path = "tomcat/CVE-2020-1938"
 
 [[environment]]
 name = "Tomcat Weak Password"
-cve = [""]
+cve = []
 app = "Tomcat"
 path = "tomcat/tomcat8"
 
@@ -1302,13 +1302,13 @@ path = "uwsgi/CVE-2018-7490"
 
 [[environment]]
 name = "uWSGI Unauthorized Access"
-cve = [""]
+cve = []
 app = "uWSGI"
 path = "uwsgi/unacc"
 
 [[environment]]
 name = "V2board 1.6.1 Privilege Escalation"
-cve = [""]
+cve = []
 app = "V2board"
 path = "v2board/1.6-privilege-escalation"
 
@@ -1344,13 +1344,13 @@ path = "weblogic/CVE-2023-21839"
 
 [[environment]]
 name = "WebLogic SSRF"
-cve = [""]
+cve = []
 app = "WebLogic"
 path = "weblogic/ssrf"
 
 [[environment]]
 name = "WebLogic File Read"
-cve = [""]
+cve = []
 app = "WebLogic"
 path = "weblogic/weak_password"
 
@@ -1362,7 +1362,7 @@ path = "webmin/CVE-2019-15107"
 
 [[environment]]
 name = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
-cve = [""]
+cve = []
 app = "Wordpress"
 path = "wordpress/pwnscriptum"
 
@@ -1380,19 +1380,19 @@ path = "xstream/CVE-2021-29505"
 
 [[environment]]
 name = "XXL-JOB Executor Unauthorized Access"
-cve = [""]
+cve = []
 app = "xxl-job"
 path = "xxl-job/unacc"
 
 [[environment]]
 name = "YApi NoSQL Injection to Remote Command Execution"
-cve = [""]
+cve = []
 app = "YApi"
 path = "yapi/mongodb-inj"
 
 [[environment]]
 name = "YApi Open Registration due to RCE"
-cve = [""]
+cve = []
 app = "YApi"
 path = "yapi/unacc"
 
