@@ -2328,6 +2328,7 @@ path = "struts2/s2-013"
 
 [[container]]
 app = "Struts2"
+path = "struts2/s2-015"
 
   [[container.name]]
   en = "S2-015 Remote Code Execution"
@@ -2336,6 +2337,7 @@ app = "Struts2"
   [[container.cve]]
   id = "CVE-2013-2134"
   nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-2134"
+  
   [[container.cve]]
   id = "CVE-2013-2135"
   nvd = "https://nvd.nist.gov/vuln/detail/CVE-2013-2135"
