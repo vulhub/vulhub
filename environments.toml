@@ -787,8 +787,8 @@ path = "gitlist/CVE-2018-1000533"
   zh = "gitlist 0.6.0 远程命令执行漏洞"
 
   [[container.cve]]
-  id = ""
-  nvd = ""
+  id = "CVE-2018-1000533"
+  nvd = "https://nvd.nist.gov/vuln/detail/CVE-2018-1000533"
 
 [[container]]
 app = "GlassFish"
