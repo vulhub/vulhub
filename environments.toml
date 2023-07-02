@@ -780,7 +780,7 @@ path = "gitlab/CVE-2021-22205"
 
 [[container]]
 app = "gitlist"
-path = "gitlist/0.6.0-rce"
+path = "gitlist/CVE-2018-1000533"
 
   [[container.name]]
   en = "gitlist 0.6.0 Remote Command Execution"
