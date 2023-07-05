@@ -11,6 +11,12 @@ app = "ActiveMQ"
 path = "activemq/CVE-2016-3088"
 
 [[environment]]
+name = "Adminer Remote Arbitrary File Read"
+cve = ["CVE-2021-43008"]
+app = "Adminer"
+path = "adminer/CVE-2021-43008"
+
+[[environment]]
 name = "Apache Airflow Command Injection"
 cve = ["CVE-2020-11978"]
 app = "Airflow"
