@@ -11,6 +11,12 @@ app = "ActiveMQ"
 path = "activemq/CVE-2016-3088"
 
 [[environment]]
+name = "Adminer Server-side Request Forgery on Error Page of Elasticsearch and ClickHouse"
+cve = ["CVE-2021-21311"]
+app = "Adminer"
+path = "adminer/CVE-2021-21311"
+
+[[environment]]
 name = "Adminer Remote Arbitrary File Read"
 cve = ["CVE-2021-43008"]
 app = "Adminer"
