@@ -679,8 +679,14 @@ path = "magento/2.2-sqli"
 [[environment]]
 name = "Metabase Arbitrary File Read"
 cve = ["CVE-2021-41277"]
-app = "metabase"
+app = "Metabase"
 path = "metabase/CVE-2021-41277"
+
+[[environment]]
+name = "Metabase Pre-Auth JDBC Remote Code Execution"
+cve = ["CVE-2023-38646"]
+app = "Metabase"
+path = "metabase/CVE-2023-38646"
 
 [[environment]]
 name = "mini_httpd Arbitrary File Read"

@@ -1,0 +1,6 @@
+version: '2'
+services:
+  web:
+    image: vulhub/metabase:0.46.6
+    ports:
+      - "3000:3000"
