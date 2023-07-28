@@ -1,13 +1,13 @@
 [[environment]]
 name = "Apache ActiveMQ Deserialization"
 cve = ["CVE-2015-5254"]
-app = "ActiveMQ"
+app = "Apache ActiveMQ"
 path = "activemq/CVE-2015-5254"
 
 [[environment]]
 name = "Apache ActiveMQ Arbitrary File Write"
 cve = ["CVE-2016-3088"]
-app = "ActiveMQ"
+app = "Apache ActiveMQ"
 path = "activemq/CVE-2016-3088"
 
 [[environment]]
@@ -25,19 +25,19 @@ path = "adminer/CVE-2021-43008"
 [[environment]]
 name = "Apache Airflow Command Injection"
 cve = ["CVE-2020-11978"]
-app = "Airflow"
+app = "Apache Airflow"
 path = "airflow/CVE-2020-11978"
 
 [[environment]]
 name = "Apache Airflow Celery Message Middleware Command Execution"
 cve = ["CVE-2020-11981"]
-app = "Airflow"
+app = "Apache Airflow"
 path = "airflow/CVE-2020-11981"
 
 [[environment]]
 name = "Apache Airflow Permission Bypass"
 cve = ["CVE-2020-17526"]
-app = "Airflow"
+app = "Apache Airflow"
 path = "airflow/CVE-2020-17526"
 
 [[environment]]
@@ -79,25 +79,25 @@ path = "aria2/rce"
 [[environment]]
 name = "Bash Shellshock Shell Exploit"
 cve = ["CVE-2014-6271"]
-app = "bash"
+app = "Bash"
 path = "bash/CVE-2014-6271"
 
 [[environment]]
 name = "Cacti Foreground Command Injection"
 cve = ["CVE-2022-46169"]
-app = "cacti"
+app = "Cacti"
 path = "cacti/CVE-2022-46169"
 
 [[environment]]
 name = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
 cve = []
-app = "celery"
+app = "Celery"
 path = "celery/celery3_redis_unauth"
 
 [[environment]]
 name = "CGI HTTPoxy Flaw"
 cve = ["CVE-2016-5385"]
-app = "cgi"
+app = "CGI"
 path = "cgi/CVE-2016-5385"
 
 [[environment]]
@@ -115,49 +115,49 @@ path = "coldfusion/CVE-2017-3066"
 [[environment]]
 name = "Atlassian Confluence Path Traversal and Command Execution"
 cve = ["CVE-2019-3396"]
-app = "Atlassian Confluence"
+app = "Confluence"
 path = "confluence/CVE-2019-3396"
 
 [[environment]]
 name = "Atlassian Confluence OGNL Expression Injection Code Execution"
 cve = ["CVE-2021-26084"]
-app = "Atlassian Confluence"
+app = "Confluence"
 path = "confluence/CVE-2021-26084"
 
 [[environment]]
 name = "Atlassian Confluence OGNL Expression Injection Command Execution"
 cve = ["CVE-2022-26134"]
-app = "Atlassian Confluence"
+app = "Confluence"
 path = "confluence/CVE-2022-26134"
 
 [[environment]]
 name = "CouchDB Vertical Permission Bypass"
 cve = ["CVE-2017-12635"]
-app = "CouchDB"
+app = "Apache CouchDB"
 path = "couchdb/CVE-2017-12635"
 
 [[environment]]
 name = "CouchDB Arbitrary Command Execution"
 cve = ["CVE-2017-12636"]
-app = "CouchDB"
+app = "Apache CouchDB"
 path = "couchdb/CVE-2017-12636"
 
 [[environment]]
 name = "CouchDB Erlang Distributed Protocol Code Execution"
 cve = ["CVE-2022-24706"]
-app = "CouchDB"
+app = "Apache CouchDB"
 path = "couchdb/CVE-2022-24706"
 
 [[environment]]
 name = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
 cve = []
-app = "Discuz"
+app = "Discuz!"
 path = "discuz/wooyun-2010-080723"
 
 [[environment]]
 name = "Discuz!X ≤3.4 Arbitrary File Deletion"
 cve = []
-app = "Discuz"
+app = "Discuz!"
 path = "discuz/x3.4-arbitrary-file-deletion"
 
 [[environment]]
@@ -179,7 +179,7 @@ app = "Django"
 path = "django/CVE-2019-14234"
 
 [[environment]]
-name = "Django GIS SQL Injection"
+name = "Django GIS functions and aggregates on Oracle SQL Injection"
 cve = ["CVE-2020-9402"]
 app = "Django"
 path = "django/CVE-2020-9402"
@@ -199,67 +199,67 @@ path = "django/CVE-2022-34265"
 [[environment]]
 name = "DNS Domain Transfer"
 cve = []
-app = "dns"
+app = "DNS"
 path = "dns/dns-zone-transfer"
 
 [[environment]]
 name = "Docker Daemon API Unauthorized Access"
 cve = []
-app = "docker"
+app = "Docker"
 path = "docker/unauthorized-rce"
 
 [[environment]]
 name = "Drupal < 7.32 'Drupalgeddon' SQL Injection"
 cve = ["CVE-2014-3704"]
-app = "drupal"
+app = "Drupal"
 path = "drupal/CVE-2014-3704"
 
 [[environment]]
 name = "Drupal Core 8 PECL YAML Deserialization Arbitrary Code Execution"
 cve = ["CVE-2017-6920"]
-app = "drupal"
+app = "Drupal"
 path = "drupal/CVE-2017-6920"
 
 [[environment]]
 name = "Drupal Drupalgeddon 2 Remote Code Execution"
 cve = ["CVE-2018-7600"]
-app = "drupal"
+app = "Drupal"
 path = "drupal/CVE-2018-7600"
 
 [[environment]]
 name = "Drupal Remote Code Execution"
 cve = ["CVE-2018-7602"]
-app = "drupal"
+app = "Drupal"
 path = "drupal/CVE-2018-7602"
 
 [[environment]]
 name = "Drupal Remote Code Execution"
 cve = ["CVE-2019-6339"]
-app = "drupal"
+app = "Drupal"
 path = "drupal/CVE-2019-6339"
 
 [[environment]]
 name = "Drupal XSS"
 cve = ["CVE-2019-6341"]
-app = "drupal"
+app = "Drupal"
 path = "drupal/CVE-2019-6341"
 
 [[environment]]
 name = "Apache Dubbo Java Deserialization"
 cve = ["CVE-2019-17564"]
-app = "dubbo"
+app = "Apache Dubbo"
 path = "dubbo/CVE-2019-17564"
 
 [[environment]]
 name = "ECShop 4.x collection_list SQL Injection"
 cve = []
-app = "ecshop"
+app = "ECshop"
 path = "ecshop/collection_list-sqli"
 
 [[environment]]
 name = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
 cve = []
-app = "ecshop"
+app = "ECshop"
 path = "ecshop/xianzhi-2017-02-82239600"
 
 [[environment]]
@@ -295,13 +295,13 @@ path = "elasticsearch/WooYun-2015-110216"
 [[environment]]
 name = "Electron Remote Command Execution"
 cve = ["CVE-2018-1000006"]
-app = "electron"
+app = "Electron"
 path = "electron/CVE-2018-1000006"
 
 [[environment]]
 name = "Electron WebPreferences Remote Command Execution"
 cve = ["CVE-2018-15685"]
-app = "electron"
+app = "Electron"
 path = "electron/CVE-2018-15685"
 
 [[environment]]
@@ -325,13 +325,13 @@ path = "fastjson/1.2.47-rce"
 [[environment]]
 name = "FFmpeg Arbitrary File Read/SSRF"
 cve = ["CVE-2016-1897", "CVE-2016-1898"]
-app = "ffmpeg"
+app = "FFmpeg"
 path = "ffmpeg/CVE-2016-1897"
 
 [[environment]]
 name = "FFmpeg Arbitrary File Read"
 cve = ["CVE-2017-9993"]
-app = "ffmpeg"
+app = "FFmpeg"
 path = "ffmpeg/phdays"
 
 [[environment]]
@@ -343,13 +343,13 @@ path = "flask/ssti"
 [[environment]]
 name = "Apache Flink File Upload"
 cve = ["CVE-2020-17518"]
-app = "flink"
+app = "Apache Flink"
 path = "flink/CVE-2020-17518"
 
 [[environment]]
 name = "Apache Flink Jobmanager/Logs Directory Traversal"
 cve = ["CVE-2020-17519"]
-app = "flink"
+app = "Apache Flink"
 path = "flink/CVE-2020-17519"
 
 [[environment]]
@@ -361,49 +361,49 @@ path = "geoserver/CVE-2023-25157"
 [[environment]]
 name = "GhostScript Sandbox Bypass (Command Execution)"
 cve = ["CVE-2018-16509"]
-app = "ghostscript"
+app = "Ghostscript"
 path = "ghostscript/CVE-2018-16509"
 
 [[environment]]
 name = "GhostScript Sandbox Bypass (Command Execution)"
 cve = ["CVE-2018-19475"]
-app = "ghostscript"
+app = "Ghostscript"
 path = "ghostscript/CVE-2018-19475"
 
 [[environment]]
 name = "GhostScript Sandbox Bypass (Command Execution)"
 cve = ["CVE-2019-6116"]
-app = "ghostscript"
+app = "Ghostscript"
 path = "ghostscript/CVE-2019-6116"
 
 [[environment]]
 name = "GIT-SHELL Sandbox Bypass"
 cve = ["CVE-2017-8386"]
-app = "git"
+app = "Git"
 path = "git/CVE-2017-8386"
 
 [[environment]]
 name = "Gitea 1.4.0 Directory Traversal to Command Execution"
 cve = []
-app = "gitea"
+app = "Gitea"
 path = "gitea/1.4-rce"
 
 [[environment]]
 name = "GitLab Arbitrary File Read"
 cve = ["CVE-2016-9086"]
-app = "gitlab"
+app = "GitLab"
 path = "gitlab/CVE-2016-9086"
 
 [[environment]]
 name = "GitLab Remote Command Execution"
 cve = ["CVE-2021-22205"]
-app = "gitlab"
+app = "GitLab"
 path = "gitlab/CVE-2021-22205"
 
 [[environment]]
 name = "gitlist 0.6.0 Remote Command Execution"
 cve = ["CVE-2018-1000533"]
-app = "gitlist"
+app = "GitList"
 path = "gitlist/CVE-2018-1000533"
 
 [[environment]]
@@ -499,13 +499,13 @@ path = "imagemagick/imagetragick"
 [[environment]]
 name = "ImageMagick PDF Password Location Command Injection"
 cve = ["CVE-2020-29599"]
-app = "imagemagick"
+app = "ImageMagick"
 path = "imagemagick/CVE-2020-29599"
 
 [[environment]]
 name = "ImageMagick Arbitrary File Read"
 cve = ["CVE-2022-44268"]
-app = "imagemagick"
+app = "ImageMagick"
 path = "imagemagick/CVE-2022-44268"
 
 [[environment]]
@@ -517,43 +517,43 @@ path = "influxdb/CVE-2019-20933"
 [[environment]]
 name = "Jackson-databind Deserialization"
 cve = ["CVE-2017-7525"]
-app = "Jackson-databind"
+app = "Jackson-Databind"
 path = "jackson/CVE-2017-7525"
 
 [[environment]]
 name = "Java RMI codebase Remote Code Execution"
 cve = []
-app = "java rmi"
+app = "Java RMI"
 path = "java/rmi-codebase"
 
 [[environment]]
 name = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
 cve = []
-app = "java rmi"
+app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization"
 
 [[environment]]
 name = "Java RMI Registry Deserialization Vulnerability (<jdk8u232_b09)"
 cve = []
-app = "java rmi"
+app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization-bypass"
 
 [[environment]]
 name = "JBoss 5.x/6.x Deserialization"
 cve = ["CVE-2017-12149"]
-app = "jboss"
+app = "JBoss"
 path = "jboss/CVE-2017-12149"
 
 [[environment]]
 name = "JBoss 4.x JBossMQ JMS Deserialization"
 cve = ["CVE-2017-7504"]
-app = "jboss"
+app = "JBoss"
 path = "jboss/CVE-2017-7504"
 
 [[environment]]
 name = "JBoss JMXInvokerServlet Deserialization"
 cve = []
-app = "jboss"
+app = "JBoss"
 path = "jboss/JMXInvokerServlet-deserialization"
 
 [[environment]]
@@ -571,25 +571,25 @@ path = "jenkins/CVE-2018-1000861"
 [[environment]]
 name = "Jetty WEB-INF Sensitive Information Disclosure"
 cve = ["CVE-2021-28164"]
-app = "jetty"
+app = "Jetty"
 path = "jetty/CVE-2021-28164"
 
 [[environment]]
 name = "Jetty Common Servlets Component ConcatServlet Information Disclosure"
 cve = ["CVE-2021-28169"]
-app = "jetty"
+app = "Jetty"
 path = "jetty/CVE-2021-28169"
 
 [[environment]]
 name = "Jetty WEB-INF Sensitive Information Disclosure"
 cve = ["CVE-2021-34429"]
-app = "jetty"
+app = "Jetty"
 path = "jetty/CVE-2021-34429"
 
 [[environment]]
 name = "Atlassian Jira Template Injection"
 cve = ["CVE-2019-11581"]
-app = "jira"
+app = "Jira"
 path = "jira/CVE-2019-11581"
 
 [[environment]]
@@ -631,25 +631,25 @@ path = "kafka/CVE-2023-25194"
 [[environment]]
 name = "Kibana Local File Inclusion"
 cve = ["CVE-2018-17246"]
-app = "kibana"
+app = "Kibana"
 path = "kibana/CVE-2018-17246"
 
 [[environment]]
 name = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
 cve = ["CVE-2019-7609"]
-app = "kibana"
+app = "Kibana"
 path = "kibana/CVE-2019-7609"
 
 [[environment]]
 name = "Laravel Ignition 2.5.1 Code Execution"
 cve = ["CVE-2021-3129"]
-app = "laravel"
+app = "Laravel"
 path = "kibana/CVE-2021-3129"
 
 [[environment]]
 name = "libssh Server-side Authentication Bypass"
 cve = ["CVE-2018-10933"]
-app = "libssh"
+app = "LibSSH"
 path = "libssh/CVE-2018-10933"
 
 [[environment]]
@@ -709,7 +709,7 @@ path = "mojarra/jsf-viewstate-deserialization"
 [[environment]]
 name = "Mongo Express Remote Code Execution"
 cve = ["CVE-2019-10758"]
-app = "mongo-express"
+app = "Mongo Express"
 path = "mongo-express/CVE-2019-10758"
 
 [[environment]]
@@ -775,7 +775,7 @@ path = "nginx/nginx_parsing_vulnerability"
 [[environment]]
 name = "NodeJS Directory Traversal"
 cve = ["CVE-2017-14849"]
-app = "node"
+app = "Node.JS"
 path = "node/CVE-2017-14849"
 
 [[environment]]
@@ -889,25 +889,25 @@ path = "phpmailer/CVE-2017-5223"
 [[environment]]
 name = "phpMyAdmin 4.0.x—4.6.2 Remote Code Execution"
 cve = ["CVE-2016-5734"]
-app = "phpmyadmin"
+app = "phpMyAdmin"
 path = "phpmyadmin/CVE-2016-5734"
 
 [[environment]]
 name = "phpmyadmin 4.8.1 Remote File Inclusion"
 cve = ["CVE-2018-12613"]
-app = "phpmyadmin"
+app = "phpMyAdmin"
 path = "phpmyadmin/CVE-2018-12613"
 
 [[environment]]
 name = "phpmyadmin scripts/setup.php Deserialization"
 cve = []
-app = "phpmyadmin"
+app = "phpMyAdmin"
 path = "phpmyadmin/WooYun-2016-199433"
 
 [[environment]]
 name = "phpunit Remote Code Execution"
 cve = ["CVE-2017-9841"]
-app = "phpunit"
+app = "PHPUnit"
 path = "phpunit/CVE-2017-9841"
 
 [[environment]]
@@ -961,19 +961,19 @@ path = "rails/CVE-2019-5418"
 [[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
 cve = []
-app = "redis"
+app = "Redis"
 path = "redis/4-unacc"
 
 [[environment]]
 name = "Redis Lua Sandbox Bypass Command Execution"
 cve = ["CVE-2022-0543"]
-app = "redis"
+app = "Redis"
 path = "redis/CVE-2022-0543"
 
 [[environment]]
 name = "Rocket Chat MongoDB Injection"
 cve = ["CVE-2021-22911"]
-app = "rocket chat"
+app = "Rocket.Chat"
 path = "rocketchat/CVE-2021-22911"
 
 [[environment]]
@@ -991,7 +991,7 @@ path = "rsync/common"
 [[environment]]
 name = "Ruby Net::FTP Module Command Injection"
 cve = ["CVE-2017-17405"]
-app = "ruby"
+app = "Ruby"
 path = "ruby/CVE-2017-17405"
 
 [[environment]]
@@ -1027,103 +1027,103 @@ path = "scrapy/scrapyd-unacc"
 [[environment]]
 name = "Apache Shiro Authentication Bypass"
 cve = ["CVE-2010-3863"]
-app = "shiro"
+app = "Apache Shiro"
 path = "shiro/CVE-2010-3863"
 
 [[environment]]
 name = "Apache Shiro 1.2.4 Deserialization"
 cve = ["CVE-2016-4437"]
-app = "shiro"
+app = "Apache Shiro"
 path = "shiro/CVE-2016-4437"
 
 [[environment]]
 name = "Apache Shiro Authentication Bypass"
 cve = ["CVE-2020-1957"]
-app = "shiro"
+app = "Apache Shiro"
 path = "shiro/CVE-2020-1957"
 
 [[environment]]
 name = "Apache Skywalking 8.3.0 SQL Injection"
 cve = []
-app = "skywalking"
+app = "Apache SkyWalking"
 path = "skywalking/8.3.0-sqli"
 
 [[environment]]
 name = "Apache Solr Remote Command Execution"
 cve = ["CVE-2017-12629"]
-app = "solr"
+app = "Apache Solr"
 path = "solr/CVE-2017-12629-RCE"
 
 [[environment]]
 name = "Apache Solr XML Entity Injection"
 cve = ["CVE-2017-12629"]
-app = "solr"
+app = "Apache Solr"
 path = "solr/CVE-2017-12629-XXE"
 
 [[environment]]
 name = "Apache Solr Remote Command Execution"
 cve = ["CVE-2019-0193"]
-app = "solr"
+app = "Apache Solr"
 path = "solr/CVE-2019-0193"
 
 [[environment]]
 name = "Apache Solr Velocity Inject Remote Command Execution"
 cve = ["CVE-2019-17558"]
-app = "solr"
+app = "Apache Solr"
 path = "solr/CVE-2019-17558"
 
 [[environment]]
 name = "Apache Solr RemoteStreaming File Reading and SSRF"
 cve = []
-app = "solr"
+app = "Apache Solr"
 path = "solr/Remote-Streaming-Fileread"
 
 [[environment]]
 name = "Apache Spark Unauthorized Access Leak"
 cve = []
-app = "spark"
+app = "Apache Spark"
 path = "spark/unacc"
 
 [[environment]]
 name = "Spring Security Oauth2 Remote Command Execution"
 cve = ["CVE-2016-4977"]
-app = "spring security oauth2"
+app = "Spring Security Oauth2"
 path = "spring/CVE-2016-4977"
 
 [[environment]]
 name = "Spring WebFlow Remote Code Execution"
 cve = ["CVE-2017-4971"]
-app = "spring webflow"
+app = "Spring Webflow"
 path = "spring/CVE-2017-4971"
 
 [[environment]]
 name = "Spring Data Rest Remote Command Execution"
 cve = ["CVE-2017-8046"]
-app = "spring data rest"
+app = "Spring Data Rest"
 path = "spring/CVE-2017-8046"
 
 [[environment]]
 name = "Spring Messaging Remote Command Execution"
 cve = ["CVE-2018-1270"]
-app = "spring messaging"
+app = "Spring Messaging"
 path = "spring/CVE-2018-1270"
 
 [[environment]]
 name = "Spring Data Commons Remote Command Execution"
 cve = ["CVE-2018-1273"]
-app = "spring data commons"
+app = "Spring Data Commons"
 path = "spring/CVE-2018-1273"
 
 [[environment]]
 name = "Spring Cloud Gateway Actuator API SpEL Expression Injection Command Execution"
 cve = ["CVE-2022-22947"]
-app = "spring cloud gateway"
+app = "Spring Cloud Gateway"
 path = "spring/CVE-2022-22947"
 
 [[environment]]
 name = "Spring Cloud Function SpEL Expression Command Injection"
 cve = ["CVE-2022-22963"]
-app = "spring cloud function"
+app = "Spring Cloud Function"
 path = "spring/CVE-2022-22963"
 
 [[environment]]
@@ -1141,109 +1141,109 @@ path = "spring/CVE-2022-22978"
 [[environment]]
 name = "S2-001 Remote Code Execution"
 cve = []
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-001"
 
 [[environment]]
 name = "S2-005 Remote Code Execution"
 cve = ["CVE-2010-1870"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-005"
 
 [[environment]]
 name = "S2-007 Remote Code Execution"
 cve = []
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-007"
 
 [[environment]]
 name = "S2-008 Remote Code Execution"
 cve = ["CVE-2012-0391"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-008"
 
 [[environment]]
 name = "S2-009 Remote Code Execution"
 cve = ["CVE-2011-3923"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-009"
 
 [[environment]]
 name = "S2-012 Remote Code Execution"
 cve = ["CVE-2013-1965"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-012"
 
 [[environment]]
 name = "S2-013 Remote Code Execution"
 cve = ["CVE-2013-1966"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-013"
 
 [[environment]]
 name = "S2-015 Remote Code Execution"
 cve = ["CVE-2013-2134", "CVE-2013-2135"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-015"
 
 [[environment]]
 name = "S2-016 Remote Code Execution"
 cve = ["CVE-2013-2251"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-016"
 
 [[environment]]
 name = "S2-032 Remote Code Execution"
 cve = ["CVE-2016-3081"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-032"
 
 [[environment]]
 name = "S2-045 Remote Code Execution"
 cve = ["CVE-2017-5638"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-045"
 
 [[environment]]
 name = "S2-046 Remote Code Execution"
 cve = ["CVE-2017-5638"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-046"
 
 [[environment]]
 name = "S2-048 Remote Code Execution"
 cve = ["CVE-2017-9791"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-048"
 
 [[environment]]
 name = "S2-052 Remote Code Execution"
 cve = ["CVE-2017-9805"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-052"
 
 [[environment]]
 name = "S2-053 Remote Code Execution"
 cve = ["CVE-2017-12611"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-053"
 
 [[environment]]
 name = "Struts2 S2-057 Remote Command Execution"
 cve = ["CVE-2018-11776"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-057"
 
 [[environment]]
 name = "Struts2 S2-059 Remote Command Execution"
 cve = ["CVE-2019-0230"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-059"
 
 [[environment]]
 name = "Struts2 S2-061 Remote Command Execution"
 cve = ["CVE-2020-17530"]
-app = "Struts2"
+app = "Apache Struts2"
 path = "struts2/s2-061"
 
 [[environment]]
@@ -1291,25 +1291,25 @@ path = "tikiwiki/CVE-2020-15906"
 [[environment]]
 name = "Tomcat Arbitrary Writing of Files in the PUT Method"
 cve = ["CVE-2017-12615"]
-app = "Tomcat"
+app = "Apache Tomcat"
 path = "tomcat/CVE-2017-12615"
 
 [[environment]]
 name = "Apache Tomcat AJP Bug"
 cve = ["CVE-2020-1938"]
-app = "Tomcat"
+app = "Apache Tomcat"
 path = "tomcat/CVE-2020-1938"
 
 [[environment]]
 name = "Tomcat Weak Password"
 cve = []
-app = "Tomcat"
+app = "Apache Tomcat"
 path = "tomcat/tomcat8"
 
 [[environment]]
 name = "Apache Unomi Remote Expression Code Execution"
 cve = ["CVE-2020-13942"]
-app = "unomi"
+app = "Apache Unomi"
 path = "unomi/CVE-2020-13942"
 
 [[environment]]
@@ -1399,7 +1399,7 @@ path = "xstream/CVE-2021-29505"
 [[environment]]
 name = "XXL-JOB Executor Unauthorized Access"
 cve = []
-app = "xxl-job"
+app = "XXL-JOB"
 path = "xxl-job/unacc"
 
 [[environment]]
