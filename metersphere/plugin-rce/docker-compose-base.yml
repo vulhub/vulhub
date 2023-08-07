@@ -1,0 +1,26 @@
+version: "2.1"
+
+volumes:
+  ms-conf:
+    driver_opts:
+      type: none
+      device: ${MS_BASE}/metersphere/conf
+      o: bind
+  ms-logs:
+    driver_opts:
+      type: none
+      device: ${MS_BASE}/metersphere/logs
+      o: bind
+  ms-data:
+    driver_opts:
+      type: none
+      device: ${MS_BASE}/metersphere/data
+      o: bind
+
+networks:
+  ms-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${MS_DOCKER_SUBNET}
