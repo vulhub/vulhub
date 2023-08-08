@@ -18,7 +18,7 @@ COPY --from=frontend /usr/src /usr/src
 
 RUN set -ex \
     && cd /usr/src/backend \
-    && mvn clean package
+    && mvn clean package dependency:copy-dependencies
 
 FROM openjdk:8u292-jdk
 
@@ -30,10 +30,12 @@ RUN set -ex \
     && chmod +x /docker-entrypoint.sh \
     && rm -rf /var/lib/apt/lists/*
 
-COPY metersphere.properties /opt/metersphere/conf/metersphere.properties
-COPY --from=backend /usr/src/backend/target/backend-1.16.jar /opt/metersphere/metersphere.jar
+COPY --from=backend /usr/src/backend/target/classes/ /opt/metersphere/
 COPY --from=backend /usr/src/backend/src/main/resources/jmeter/bin/* /opt/jmeter/bin/
+COPY --from=backend /usr/src/backend/target/wars/ /opt/metersphere/lib/
+COPY metersphere.properties /opt/metersphere/conf/metersphere.properties
 WORKDIR /opt/metersphere
 
+EXPOSE 5005 8081
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD [ "java", "-jar", "/opt/metersphere/metersphere.jar" ]
+CMD [ "java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-cp", ".:./lib/*", "io.metersphere.Application" ]

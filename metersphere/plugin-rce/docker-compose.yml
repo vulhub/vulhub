@@ -4,6 +4,7 @@ services:
     image: vulhub/metersphere:1.16.3
     ports:
       - "8081:8081"
+      - "5005:5005"
     environment:
       MYSQL_SERVER: db:3306
       MYSQL_DB: metersphere
@@ -11,17 +12,13 @@ services:
       MYSQL_PASSWORD: root
       KAFKA_SERVER: kafka:9092
   db:
-    build: mysql:5.7
+    image: mysql:5.7
     command: --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" --max-connections=8000
     environment:
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_DATABASE=metersphere
-    ports:
-      - "127.0.0.1:3306:3306"
   kafka:
     image: bitnami/kafka:3.4.1
-    ports:
-      - "127.0.0.1:9092:9092"
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=0
