@@ -689,6 +689,12 @@ app = "Metabase"
 path = "metabase/CVE-2023-38646"
 
 [[environment]]
+name = "MeterSphere Plugin Endpoint Remote Code Execution"
+cve = []
+app = "MeterSphere"
+path = "metersphere/plugin-rce"
+
+[[environment]]
 name = "mini_httpd Arbitrary File Read"
 cve = ["CVE-2018-18778"]
 app = "mini_httpd"
