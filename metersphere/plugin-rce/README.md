@@ -26,7 +26,7 @@ Firstly, by visiting `http://your-ip:8081/plugin/list`, you can see that the suc
 
 ![](1.png)
 
-Then, you should create a craft evil plugin. Vulhub prepares a pre-built backdoor jar for it: <https://github.com/vulhub/metersphere-plugin-Backdoor/releases/tag/v1.0.1>.
+Then, you should create a crafted evil plugin. Vulhub prepares a pre-built backdoor jar for it: <https://github.com/vulhub/metersphere-plugin-Backdoor/releases/tag/v1.0.1>.
 
 Upload the evil jar plugin to `/plugin/add` interface:
 
@@ -52,7 +52,7 @@ Content-Disposition: form-data; name="file"; filename="metersphere-plugin-DebugS
 
 ![](2.png)
 
-Take care of bytes encoding by yourself if you use Burpsuite to send the package.
+> **Take care of bytes encoding by yourself if you use Burpsuite to send the package.**
 
 Your plugin will be in the plugin list if above processing is successful:
 
