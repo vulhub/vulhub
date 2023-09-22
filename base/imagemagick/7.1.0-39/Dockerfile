@@ -27,3 +27,7 @@ RUN set -ex \
 RUN set -ex \
     && pecl install imagick-3.7.0 \
     && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini
+
+RUN set -ex \
+    && sed -i 's|</policymap>|  <policy domain="system" name="font" value="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"/>\n</policymap>|' \
+        /usr/etc/ImageMagick-7/policy.xml
