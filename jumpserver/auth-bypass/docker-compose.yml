@@ -1,0 +1,208 @@
+version: '2.4'
+services:
+  core:
+    image: vulhub/jumpserver:3.6.4
+    ulimits:
+      core: 0
+    restart: always
+    tty: true
+    environment:
+      REDIS_HOST: $REDIS_HOST
+      REDIS_PORT: $REDIS_PORT
+      REDIS_PASSWORD: $REDIS_PASSWORD
+      MAGNUS_PORT: ${MAGNUS_PORT:-30000-30020}
+    env_file: config.env
+
+  mysql:
+    image: mariadb:10.11.5
+    command: --character-set-server=utf8 --collation-server=utf8_general_ci
+    env_file: config.env
+
+  redis:
+    image: redis:6.2.13
+    command: redis-server --requirepass $REDIS_PASSWORD --loglevel warning --maxmemory-policy allkeys-lru
+    env_file: config.env
+
+  celery:
+    image: jumpserver/core:${VERSION}
+    container_name: jms_celery
+    ulimits:
+      core: 0
+    restart: always
+    tty: true
+    command: start task
+    environment:
+      SECRET_KEY: $SECRET_KEY
+      BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      DEBUG: $DEBUG
+      LOG_LEVEL: $LOG_LEVEL
+      DB_HOST: $DB_HOST
+      DB_PORT: $DB_PORT
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      REDIS_HOST: $REDIS_HOST
+      REDIS_PORT: $REDIS_PORT
+      REDIS_PASSWORD: $REDIS_PASSWORD
+      MAGNUS_PORT: ${MAGNUS_PORT:-30000-30020}
+    depends_on:
+      core:
+        condition: service_healthy
+
+  koko:
+    image: jumpserver/koko:${VERSION}
+    container_name: jms_koko
+    ulimits:
+      core: 0
+    restart: always
+    privileged: true
+    tty: true
+    environment:
+      CORE_HOST: http://core:8080
+      BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      LOG_LEVEL: $LOG_LEVEL
+      SSHD_PORT: ${SSH_PORT:-2222}
+    depends_on:
+      core:
+        condition: service_healthy
+    healthcheck:
+      test: "curl -fsL http://localhost:5000/koko/health/ > /dev/null"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ${VOLUME_DIR}/koko/data:/opt/koko/data
+    ports:
+      - ${SSH_PORT:-2222}:${SSH_PORT}
+    networks:
+      - net
+
+  lion:
+    image: jumpserver/lion:${VERSION}
+    container_name: jms_lion
+    ulimits:
+      core: 0
+    restart: always
+    tty: true
+    environment:
+      CORE_HOST: http://core:8080
+      BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      LOG_LEVEL: $LOG_LEVEL
+    depends_on:
+      core:
+        condition: service_healthy
+    healthcheck:
+      test: "curl -fsL http://localhost:8081/lion/health/ > /dev/null"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ${VOLUME_DIR}/lion/data:/opt/lion/data
+    networks:
+      - net
+
+  magnus:
+    image: jumpserver/magnus:${VERSION}
+    container_name: jms_magnus
+    ulimits:
+      core: 0
+    restart: always
+    tty: true
+    environment:
+      CORE_HOST: http://core:8080
+      BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      LOG_LEVEL: $LOG_LEVEL
+      MAGNUS_MYSQL_PORT: ${MAGNUS_MYSQL_PORT:-33061}
+      MAGNUS_MARIADB_PORT: ${MAGNUS_MARIADB_PORT:-33062}
+      MAGNUS_REDIS_PORT: ${MAGNUS_REDIS_PORT:-63790}
+    depends_on:
+      core:
+        condition: service_healthy
+    healthcheck:
+      test: "nc -z 127.0.0.1 33061 || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ${VOLUME_DIR}/magnus/data:/opt/magnus/data
+    ports:
+      - ${MAGNUS_MYSQL_PORT:-33061}:33061
+      - ${MAGNUS_MARIADB_PORT:-33062}:33062
+      - ${MAGNUS_REDIS_PORT:-63790}:63790
+    networks:
+      - net
+
+  chen:
+    image: jumpserver/chen:${VERSION}
+    container_name: jms_chen
+    ulimits:
+      core: 0
+    restart: always
+    tty: true
+    environment:
+      - CORE_HOST: http://core:8080
+      - BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      - LOG_LEVEL: $LOG_LEVEL
+    volumes:
+      - ${VOLUME_DIR}/chen/data:/opt/chen/data
+    depends_on:
+      core:
+        condition: service_healthy
+    healthcheck:
+      test: "curl -f 127.0.0.1:8082/chen"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    networks:
+      - net
+
+  kael:
+    image: jumpserver/kael:${VERSION}
+    container_name: jms_kael
+    ulimits:
+      core: 0
+    restart: always
+    tty: true
+    environment:
+      - CORE_HOST: http://core:8080
+      - BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      - LOG_LEVEL: $LOG_LEVEL
+    volumes:
+      - ${VOLUME_DIR}/kael/data:/opt/kael/data
+    depends_on:
+      core:
+        condition: service_healthy
+    healthcheck:
+      test: "curl -fsL http://localhost:8083/kael/health/ > /dev/null"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    networks:
+      - net
+
+  web:
+    image: jumpserver/web:${VERSION}
+    container_name: jms_web
+    restart: always
+    tty: true
+    depends_on:
+      core:
+        condition: service_healthy
+    healthcheck:
+      test: "curl -fsL http://localhost/ > /dev/null"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ${VOLUME_DIR}/core/data:/opt/jumpserver/data
+      - ${VOLUME_DIR}/nginx/data/logs:/var/log/nginx
+    ports:
+      - ${HTTP_PORT:-80}:${HTTP_PORT:-80}
+    networks:
+      - net
