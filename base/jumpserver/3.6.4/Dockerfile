@@ -37,25 +37,21 @@ RUN set -ex \
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc g++ make wget ca-certificates openjdk-17-jre-headless nginx sshpass \
-        python3 python3-dev python3-pip pkg-config \
-        libxmlsec1-dev libpq-dev libffi-dev libxml2-dev libxslt-dev libldap2-dev libsasl2-dev bash-completion libmariadb-dev wait-for-it gettext
+        python3 python3-dev python3-pip pkg-config libxmlsec1-dev libpq-dev libffi-dev libxml2-dev libxslt-dev libldap2-dev \
+        libsasl2-dev bash-completion libmariadb-dev wait-for-it gettext
 
+COPY requirements.txt /tmp/requirements.txt
 RUN set -ex \
     # download jumpserver core
     && mkdir -p ${BASEDIR}/core \
     && cd ${BASEDIR}/core \
     && wget -qO- https://github.com/jumpserver/jumpserver/releases/download/v${VERSION}/jumpserver-v${VERSION}.tar.gz | \
         tar xz --strip-components 1 \
-    && pip install poetry \
-    && sed -i 's/python = "^3.11"/python = "^3.10"/' pyproject.toml \
-    && sed -i 's/pypi.tuna.tsinghua.edu.cn/pypi.org/' pyproject.toml \
-    && sed -i 's/pypi.tuna.tsinghua.edu.cn/pypi.org/' poetry.lock \
-    && poetry config virtualenvs.create false \
-    && poetry lock --no-update \
-    && poetry install --no-interaction \
+    && pip install -r /tmp/requirements.txt \
     && cp config_example.yml config.yml \
     && rm -f apps/locale/zh/LC_MESSAGES/django.mo apps/locale/zh/LC_MESSAGES/djangojs.mo \
-    && SECRET_KEY=example python3 apps/manage.py compilemessages
+    && SECRET_KEY=example python3 apps/manage.py compilemessages \
+    && rm -rf /tmp/requirements.txt
 
 RUN set -ex \
     # download jumpserver frontend (lina)

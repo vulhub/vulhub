@@ -1,4 +1,5 @@
 #!/bin/bash
 
 cd koko
+export SSHD_PORT=2222
 ./koko
