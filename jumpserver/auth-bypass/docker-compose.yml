@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   core:
-    image: vulhub/jumpserver:3.6.4
+    image: vulhub/jumpserver:3.6.3
     ulimits:
       core: 0
     restart: always
@@ -11,6 +11,7 @@ services:
     env_file: config.env
     ports:
       - "8080:80"
+      - "2222:2222"
 
   mysql:
     image: mariadb:10.11.5
@@ -19,5 +20,8 @@ services:
 
   redis:
     image: redis:6.2.13
-    command: redis-server --requirepass $REDIS_PASSWORD --loglevel warning --maxmemory-policy allkeys-lru
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass $$REDIS_PASSWORD --loglevel warning --maxmemory-policy allkeys-lru
     env_file: config.env

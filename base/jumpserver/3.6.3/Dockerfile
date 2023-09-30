@@ -2,7 +2,7 @@ FROM phusion/baseimage:jammy-1.0.1
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-ARG VERSION=3.6.4 BASEDIR=/opt/jumpserver
+ARG BASEDIR=/opt/jumpserver
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates wget \
@@ -43,6 +43,7 @@ RUN set -ex \
 COPY requirements.txt /tmp/requirements.txt
 WORKDIR ${BASEDIR}
 
+ARG VERSION=3.6.3
 RUN set -ex \
     # download jumpserver core
     && mkdir -p ${BASEDIR}/core \
