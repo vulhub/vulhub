@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /opt/jumpserver/core/ || exit 1
+
+wait-for-it -t 0 127.0.0.1:8080 -- echo "core host is up"
+./jms start task
