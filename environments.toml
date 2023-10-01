@@ -617,6 +617,12 @@ app = "Joomla"
 path = "joomla/CVE-2023-23752"
 
 [[environment]]
+name = "Jumpserver random seed leakage and account takeover"
+cve = ["CVE-2023-42820"]
+app = "Jumpserver"
+path = "jumpserver/CVE-2023-42820"
+
+[[environment]]
 name = "Jupyter Notebook Unauthorized Access"
 cve = []
 app = "Jupyter"
@@ -645,6 +651,12 @@ name = "Laravel Ignition 2.5.1 Code Execution"
 cve = ["CVE-2021-3129"]
 app = "Laravel"
 path = "kibana/CVE-2021-3129"
+
+[[environment]]
+name = "Librsvg XInclude Arbitrary file reading"
+cve = ["CVE-2023-38633"]
+app = "Librsvg"
+path = "librsvg/CVE-2023-38633"
 
 [[environment]]
 name = "libssh Server-side Authentication Bypass"
