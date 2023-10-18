@@ -131,6 +131,12 @@ app = "Confluence"
 path = "confluence/CVE-2022-26134"
 
 [[environment]]
+name = "Confluence Access Control Broken by Attributes Overwrite"
+cve = ["CVE-2023-22515"]
+app = "Confluence"
+path = "confluence/CVE-2023-22515"
+
+[[environment]]
 name = "CouchDB Vertical Permission Bypass"
 cve = ["CVE-2017-12635"]
 app = "Apache CouchDB"
@@ -555,6 +561,12 @@ name = "JBoss JMXInvokerServlet Deserialization"
 cve = []
 app = "JBoss"
 path = "jboss/JMXInvokerServlet-deserialization"
+
+[[environment]]
+name = "JeecgBoot JimuReport Template injection"
+cve = ["CVE-2023-4450]
+app = "jeecg-boot"
+path = "jeecg-boot/CVE-2023-4450"
 
 [[environment]]
 name = "Jenkins-CI Remote Code Execution"
