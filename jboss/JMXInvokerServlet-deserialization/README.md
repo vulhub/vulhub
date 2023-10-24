@@ -23,6 +23,6 @@ docker compose up -d
 
 JBoss在处理`/invoker/JMXInvokerServlet`请求的时候读取了对象，所以我们直接将[ysoserial](https://github.com/frohoff/ysoserial)生成好的POC附在POST Body中发送即可。整个过程可参考[jboss/CVE-2017-12149](https://github.com/vulhub/vulhub/tree/master/jboss/CVE-2017-12149)，我就不再赘述。
 
-网上已经有很多EXP了，比如[DeserializeExploit.jar](https://cdn.vulhub.org/deserialization/DeserializeExploit.jar)，直接用该工具执行命令、上传文件即可：
+网上已经有很多EXP了，比如[DeserializeExploit.jar](https://download.vulhub.org/download/deserialization/DeserializeExploit.jar)，直接用该工具执行命令、上传文件即可：
 
 ![](1.png)
