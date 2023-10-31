@@ -564,7 +564,7 @@ path = "jboss/JMXInvokerServlet-deserialization"
 
 [[environment]]
 name = "JeecgBoot JimuReport Template injection"
-cve = ["CVE-2023-4450]
+cve = ["CVE-2023-4450"]
 app = "jeecg-boot"
 path = "jeecg-boot/CVE-2023-4450"
 
