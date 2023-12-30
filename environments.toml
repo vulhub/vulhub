@@ -11,6 +11,18 @@ app = "Apache ActiveMQ"
 path = "activemq/CVE-2016-3088"
 
 [[environment]]
+name = "Apache ActiveMQ Jolokia Authenticated Remote Code Execution"
+cve = ["CVE-2022-41678"]
+app = "Apache ActiveMQ"
+path = "activemq/CVE-2022-41678"
+
+[[environment]]
+name = "Apache ActiveMQ OpenWire Protocol Deserialization RCE"
+cve = ["CVE-2023-46604"]
+app = "Apache ActiveMQ"
+path = "activemq/CVE-2023-46604"
+
+[[environment]]
 name = "Adminer Server-side Request Forgery on Error Page of Elasticsearch and ClickHouse"
 cve = ["CVE-2021-21311"]
 app = "Adminer"
@@ -823,8 +835,20 @@ path = "ntopng/CVE-2021-28073"
 [[environment]]
 name = "Apache OfBiz Deserialization Command Execution"
 cve = ["CVE-2020-9496"]
-app = "Apache OfBiz"
+app = "Apache OFBiz"
 path = "ofbiz/CVE-2020-9496"
+
+[[environment]]
+name = "Unsafe deserialization of XMLRPC arguments in Apache OFBiz"
+cve = ["CVE-2023-49070"]
+app = "Apache OFBiz"
+path = "ofbiz/CVE-2023-49070"
+
+[[environment]]
+name = "Apache OFBiz Authentication Bypass Leads to RCE"
+cve = ["CVE-2023-51467"]
+app = "Apache OFBiz"
+path = "ofbiz/CVE-2023-51467"
 
 [[environment]]
 name = "Openfire Management Background Authentication Bypass"
