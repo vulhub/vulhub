@@ -149,6 +149,12 @@ app = "Confluence"
 path = "confluence/CVE-2023-22515"
 
 [[environment]]
+name = "Confluence Pre-Auth Remote Code Execution via OGNL Injection"
+cve = ["CVE-2023-22527"]
+app = "Confluence"
+path = "confluence/CVE-2023-22527"
+
+[[environment]]
 name = "CouchDB Vertical Permission Bypass"
 cve = ["CVE-2017-12635"]
 app = "Apache CouchDB"
