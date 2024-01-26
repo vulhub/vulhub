@@ -593,6 +593,12 @@ app = "Jenkins"
 path = "jenkins/CVE-2018-1000861"
 
 [[environment]]
+name = "Jenkins Arbitrary File Read Vulnerability Through the CLI"
+cve = ["CVE-2024-23897"]
+app = "Jenkins"
+path = "jenkins/CVE-2024-23897"
+
+[[environment]]
 name = "Jetty WEB-INF Sensitive Information Disclosure"
 cve = ["CVE-2021-28164"]
 app = "Jetty"
