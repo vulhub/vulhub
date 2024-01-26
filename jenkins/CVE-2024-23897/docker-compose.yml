@@ -1,0 +1,11 @@
+version: '2.2'
+services:
+  jenkins:
+    image: vulhub/jenkins:2.441
+    ports:
+      - "50000:50000"
+      - "8080:8080"
+      - "5005:5005"
+    init: true
+    environment:
+      - DEBUG=1
