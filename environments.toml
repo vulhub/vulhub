@@ -125,6 +125,12 @@ app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2017-3066"
 
 [[environment]]
+name = "Adobe ColdFusion Local File Inclusion Leads to RCE"
+cve = ["CVE-2023-26360"]
+app = "Adobe ColdFusion"
+path = "coldfusion/CVE-2023-26360"
+
+[[environment]]
 name = "Atlassian Confluence Path Traversal and Command Execution"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
