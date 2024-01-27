@@ -6,7 +6,7 @@ ARG DOWNLOAD_PATH=/usr/local/src
 
 RUN set -ex \
     && docker-php-ext-install mysql \
-    && curl -#SL https://vulhub.oss-cn-shanghai.aliyuncs.com/download/ecshop/ecshop-3.6.0.tar.gz \
+    && curl -#SL https://file.vulhub.org/download/ecshop/ecshop-3.6.0.tar.gz \
         | tar zx -C ${DOWNLOAD_PATH} \
     && cp -r ${DOWNLOAD_PATH}/ecshop/* /var/www/html/ \
     && cp -r ${DOWNLOAD_PATH}/appserver /var/www/ \
