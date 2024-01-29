@@ -131,6 +131,12 @@ app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2023-26360"
 
 [[environment]]
+name = "Adobe ColdFusion XML Deserialization Leads to RCE"
+cve = ["CVE-2023-29300"]
+app = "Adobe ColdFusion"
+path = "coldfusion/CVE-2023-29300"
+
+[[environment]]
 name = "Atlassian Confluence Path Traversal and Command Execution"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
