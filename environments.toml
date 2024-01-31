@@ -1331,6 +1331,12 @@ app = "Supervisor"
 path = "supervisor/CVE-2017-11610"
 
 [[environment]]
+name = "Jetbrains TeamCity Authentication Bypass and Remote Command Execution"
+cve = ["CVE-2023-42793"]
+app = "TeamCity"
+path = "teamcity/CVE-2023-42793"
+
+[[environment]]
 name = "ThinkPHP 2.x Arbitrary Code Execution"
 cve = []
 app = "ThinkPHP"
