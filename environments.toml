@@ -119,6 +119,12 @@ app = "CMS Made Simple"
 path = "cmsms/CVE-2019-9053"
 
 [[environment]]
+name = "CMS Made Simple (CMSMS) Unauthenticated Remote Code Execution"
+cve = ["CVE-2019-9053", "CVE-2021-26120"]
+app = "CMS Made Simple"
+path = "cmsms/CVE-2021-26120"
+
+[[environment]]
 name = "Adobe ColdFusion File Read"
 cve = ["CVE-2010-2861"]
 app = "Adobe ColdFusion"
