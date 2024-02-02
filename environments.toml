@@ -113,6 +113,12 @@ app = "CGI"
 path = "cgi/CVE-2016-5385"
 
 [[environment]]
+name = "CMS Made Simple (CMSMS) < 2.2.10 Unauthenticated SQL Injection"
+cve = ["CVE-2019-9053"]
+app = "CMS Made Simple"
+path = "cmsms/CVE-2019-9053"
+
+[[environment]]
 name = "Adobe ColdFusion File Read"
 cve = ["CVE-2010-2861"]
 app = "Adobe ColdFusion"
