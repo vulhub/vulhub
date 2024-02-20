@@ -1,3 +1,4 @@
 zabbix/CVE-2016-10134/database/* linguist-vendored
 zabbix/CVE-2017-2824/database/* linguist-vendored
 zabbix/CVE-2020-11800/database/* linguist-vendored
+jumpserver/CVE-2023-42820/2.gif filter=lfs diff=lfs merge=lfs -text

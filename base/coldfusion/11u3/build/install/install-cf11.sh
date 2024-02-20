@@ -4,7 +4,7 @@
 
 cd /tmp
 if [ ! -f "ColdFusion_11_WWEJ_linux64.bin" ]; then
-        wget http://vulhub.oss-cn-shanghai.aliyuncs.com/download/coldfusion/ColdFusion_11_WWEJ_linux64.bin
+        wget https://file.vulhub.org/download/coldfusion/ColdFusion_11_WWEJ_linux64.bin
         chmod 755 ColdFusion_11_WWEJ_linux64.bin
 fi
 

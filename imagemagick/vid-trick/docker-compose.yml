@@ -1,0 +1,9 @@
+version: '2'
+services:
+ web:
+   image: vulhub/imagemagick:7.1.0-39-php
+   command: php -t /var/www/html -d error_reporting=-1 -d display_errors=On -S 0.0.0.0:8080
+   volumes:
+    - ./web:/var/www/html
+   ports:
+    - "8080:8080"

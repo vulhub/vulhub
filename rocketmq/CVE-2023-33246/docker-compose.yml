@@ -1,0 +1,6 @@
+version: '2'
+services:
+ rocketmq:
+   image: vulhub/rocketmq:5.1.0
+   ports:
+     - 10911:10911
