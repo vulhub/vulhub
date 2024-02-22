@@ -761,6 +761,12 @@ app = "Metabase"
 path = "metabase/CVE-2023-38646"
 
 [[environment]]
+name = "MeterSphere v1.15.4 Authenticated SQL Injection"
+cve = ["CVE-2021-45788"]
+app = "MeterSphere"
+path = "metersphere/CVE-2021-45788"
+
+[[environment]]
 name = "MeterSphere Plugin Endpoint Remote Code Execution"
 cve = []
 app = "MeterSphere"
