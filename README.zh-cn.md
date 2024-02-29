@@ -1,6 +1,6 @@
 <!-- markdownlint-disable first-line-heading -->
 <p align="center">
-  <img src=".github/assets/logo.svg" alt="Vulhub" height="300" />
+  <img src=".github/assets/banner.png" alt="Vulhub" height="auto" />
   <p align="center">
     <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub">
