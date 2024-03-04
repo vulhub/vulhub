@@ -2,9 +2,12 @@
 
 ## 原理
 
-参考文章：https://www.trustwave.com/Resources/Security-Advisories/Advisories/TWSL2015-016/?fid=6904
+参考链接：
 
-java语言中会把`%c0%ae`解析为`\uC0AE`，最后转义为ASCCII字符的`.`（点）。利用`%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/`来向上跳转，达到目录穿越、任意文件读取的效果。
+- <https://www.trustwave.com/Resources/Security-Advisories/Advisories/TWSL2015-016/?fid=6904>
+- <https://www.leavesongs.com/PENETRATION/utf-8-overlong-encoding.html>
+
+GlassFish在解码URL时，没有考虑UTF-8 Overlong Encoding攻击，导致将`%c0%ae`解析为ASCCII字符的`.`（点）。利用`%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/`来向上跳转，达到目录穿越、任意文件读取的效果。
 
 ## 漏洞复现
 
