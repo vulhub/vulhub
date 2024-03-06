@@ -14,7 +14,6 @@ GlassFish在解码URL时，没有考虑UTF-8 Overlong Encoding攻击，导致将
 编译、运行测试环境
 
 ```
-docker compose build
 docker compose up -d
 ```
 
