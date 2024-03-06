@@ -11,15 +11,14 @@ RUN apt-get update && \
     unzip /tmp/glassfish-4.1.zip -d /usr/local && \
     rm -f /tmp/glassfish-4.1.zip
 
-EXPOSE 8080 4848 8181
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN set -ex \
+    && sed -i 's/address=9009/address=5005/' "${GLASSFISH_HOME}/glassfish/domains/domain1/config/domain.xml" \
+    && chmod +x /entrypoint.sh
 
 WORKDIR /usr/local/glassfish4
 
-COPY docker-entrypoint.sh /entrypoint.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN chmod +x /entrypoint.sh
-
 # verbose causes the process to remain in the foreground so that docker can track it
-CMD ["asadmin", "start-domain", "--verbose"]
+CMD ["asadmin", "start-domain", "--debug=true", "--verbose"]
