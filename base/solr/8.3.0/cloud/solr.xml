@@ -23,14 +23,12 @@
 
    More information about options available in this configuration file,
    and Solr Core administration can be found online:
-   https://lucene.apache.org/solr/guide/format-of-solr-xml.html
+   http://wiki.apache.org/solr/CoreAdmin
 -->
 
 <solr>
 
   <int name="maxBooleanClauses">${solr.max.booleanClauses:1024}</int>
-  <str name="sharedLib">${solr.sharedLib:}</str>
-  <str name="allowPaths">${solr.allowPaths:}</str>
 
   <solrcloud>
 
