@@ -7,7 +7,8 @@ RUN set -ex \
     && wget --no-check-certificate -qO- https://archive.apache.org/dist/lucene/solr/8.6.1/solr-8.6.1.tgz | tar xz --strip-components=1 -C /opt/solr
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY cloud/ /opt/solr/example/cloud
 ENV PATH="$PATH:/opt/solr/bin"
 WORKDIR /opt/solr
 ENTRYPOINT [ "bash", "/docker-entrypoint.sh" ]
-CMD ["solr", "-f", "-force", "-p", "8983", "-a", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
+CMD ["solr", "-f", "-force", "-p", "8983", "-cloud", "-s", "/opt/solr/example/cloud", "-a", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
