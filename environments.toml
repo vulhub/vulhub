@@ -929,6 +929,18 @@ app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
 
 [[environment]]
+name = "pgAdmin <= 6.16 Unauthenticated Remote Command Execution"
+cve = ["CVE-2022-4223"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2022-4223"
+
+[[environment]]
+name = "pgAdmin <= 7.6 Authenticated Remote Command Execution"
+cve = ["CVE-2023-5002"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2023-5002"
+
+[[environment]]
 name = "PHP 8.1.0-dev Development Version Backdoor Event"
 cve = []
 app = "PHP"
@@ -1524,6 +1536,6 @@ path = "zabbix/CVE-2016-10134"
 
 [[environment]]
 app = "Zabbix"
+cve = ["CVE-2020-11800"]
 path = "zabbix/CVE-2020-11800"
 name = "Zabbix Server Trapper Command Injection"
-cve = ["CVE-2020-11800"]
