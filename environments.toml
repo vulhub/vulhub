@@ -707,10 +707,16 @@ app = "Kibana"
 path = "kibana/CVE-2019-7609"
 
 [[environment]]
+name = "kkFileView ZipSlip Remote Code Execution"
+cve = []
+app = "kkFileView"
+path = "kkfileview/4.3-zipslip-rce"
+
+[[environment]]
 name = "Laravel Ignition 2.5.1 Code Execution"
 cve = ["CVE-2021-3129"]
 app = "Laravel"
-path = "kibana/CVE-2021-3129"
+path = "laravel/CVE-2021-3129"
 
 [[environment]]
 name = "Librsvg XInclude Arbitrary file reading"
