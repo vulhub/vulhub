@@ -20,8 +20,8 @@ RUN set -ex \
 RUN set -ex \
     && mkdir -p /tmp/libreoffice \
     && cd /tmp/libreoffice \
-    # && wget -qO- https://downloadarchive.documentfoundation.org/libreoffice/old/7.5.3.2/deb/x86_64/LibreOffice_7.5.3.2_Linux_x86-64_deb.tar.gz | tar xz --strip-components=1 \
-    && wget -qO- https://file.vulhub.org/download/libreoffice/LibreOffice_7.5.3.2_Linux_x86-64_deb.tar.gz | tar xz --strip-components=1 \
+    && wget -qO- https://downloadarchive.documentfoundation.org/libreoffice/old/7.5.3.2/deb/x86_64/LibreOffice_7.5.3.2_Linux_x86-64_deb.tar.gz | tar xz --strip-components=1 \
+    # && wget -qO- https://file.vulhub.org/download/libreoffice/LibreOffice_7.5.3.2_Linux_x86-64_deb.tar.gz | tar xz --strip-components=1 \
     && cd DEBS \
     && dpkg -i *.deb \
     && cd / \
