@@ -29,4 +29,4 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /opt/jimureport
 ENTRYPOINT [ "bash", "/docker-entrypoint.sh" ]
-CMD [ "java", "-jar", "/opt/jimureport/jimureport-example-1.6.jar" ]
+CMD [ "java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/opt/jimureport/jimureport-example-1.6.jar" ]
