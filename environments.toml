@@ -473,7 +473,7 @@ app = "GoAhead"
 path = "goahead/CVE-2021-42342"
 
 [[environment]]
-name = "Gogs Arbitrary User Login"
+name = "Gogs Session Overwrite and Arbitrary User Forge"
 cve = ["CVE-2018-18925"]
 app = "Gogs"
 path = "gogs/CVE-2018-18925"
