@@ -1,4 +1,4 @@
-# Jupyter Notebook unauthorized Access
+# Jupyter Notebook Unauthorized Access
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
