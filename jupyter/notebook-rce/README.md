@@ -1,25 +1,27 @@
-# Jupyter Notebook 未授权访问漏洞
+# Jupyter Notebook Unauthorized Access
 
-Jupyter Notebook（此前被称为 IPython notebook）是一个交互式笔记本，支持运行 40 多种编程语言。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-如果管理员未为Jupyter Notebook配置密码，将导致未授权访问漏洞，游客可在其中创建一个console并执行任意Python代码和命令。
+The Jupyter Notebook (previous IPython notebook) is a web-based interactive computing platform.
 
-## 环境运行
+If the administrator doesn't configure a password for Jupyter Notebook, this will lead to an unauthorized access vulnerability where attackers can create a console and execute arbitrary Python code and commands.
 
-运行测试环境：
+## Vulnerable environment
+
+Execute following command to start a Jupyter Notebook server:
 
 ```
 docker compose up -d
 ```
 
-运行后，访问`http://your-ip:8888`将看到Jupyter Notebook的Web管理界面，并没有要求填写密码。
+After the server is started, you can see the index of Jupyter Notebook on `http://your-ip:8888`.
 
-## 漏洞复现
+## Vulnerability Reproduce
 
-选择 new -> terminal 即可创建一个控制台：
+Click "New" -> "Terminal" to create a console:
 
 ![](1.png)
 
-直接执行任意命令：
+Execute arbitrary commands in this console:
 
 ![](2.png)
