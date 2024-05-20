@@ -1,0 +1,101 @@
+server:
+  port: 9095
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: aj-report
+  servlet:
+    multipart:
+      max-file-size: 10MB #上传图片大小限制为10MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  messages:
+    basename: i18n/messages
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 300000  # 连接超时时间 - 默认值：30秒。
+      validation-timeout: 5000  # 连接被测试活动的最长时间 - 默认值：5秒。
+      idle-timeout: 60000  # 连接池中允许闲置的最长时间 - 默认值：10分钟
+      max-lifetime: 1800000  # 一个连接生命时长（毫秒），超时而没被使用则被释放 - 默认值：30分钟
+      maximum-pool-size: 10  #连接池中允许的最大连接数，包括闲置和使用中的连接 - 默认值：10
+      minimum-idle: 5  # 连接池中允许的最小空闲连接数 - 默认值：10。
+
+  #如果要使用redis，请参考report-core目录下的README.md文件中写的进行调整
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: root
+#    database: 1
+  flyway:
+    enabled: true    #是否开启flyway，默认true.
+    baseline-on-migrate: true
+    #数据库连接配置
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    placeholder-replacement: false
+    init-sqls:
+      - CREATE DATABASE IF NOT EXISTS `aj_report` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+  gaea:
+    subscribes:
+      oss: #文件存储 都配置的情况下优先级minio->amazonS3->nfs
+        enabled: true
+        ##允许上传的文件后缀
+        file-type-while-list: .png|.jpg|.gif|.icon|.pdf|.xlsx|.xls|.csv|.mp4|.avi|.jpeg|.aaa|.svg
+        # 用于文件上传成功后，生成文件的下载公网完整URL，http://serverip:9095/file/download，注意填写IP必须填写后端服务所在的机器IP
+        downloadPath: http://10.108.26.197:9095/file/download
+        nfs:
+          #上传对应本地全路径，注意目录不会自动创建，注意 Win是 \ 且有盘符，linux是 / 无盘符，注意目录权限问题
+          path: /app/disk/upload/
+        #若要使用minio文件存储，请启用以下配置
+        #minio:
+        #  url: http://127.0.0.1
+        #  port: 9000
+        #  access-key: minioreport
+        #  secret-key: minioreport
+        #  bucket-name: aj-report
+        #若要使用amazonS3文件存储，请启用以下配置
+        #amazonS3:
+        #  url: http://127.0.0.1
+        #  access-key: access-key
+        #  secret-key: secret-key
+        #  bucket-name: AJ-Report
+        #若minio和amazonS3都没有，使用服务器高可用的nfs共享盘
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql打印
+    call-setters-on-nulls: true
+  mapperLocations:
+    - classpath*:/mapper/**/*.xml
+    - classpath*:/modeler-mybatis-mappings/**/*.xml
+
+management:
+  endpoints:
+    web:
+      base-path: /
+logging:
+  config: classpath:logback.xml
+
+# 本应用自定义参数
+customer:
+  # 跳过token验证和权限验证的url清单
+  skip-authenticate-urls: /gaeaDict/all, /login, /static, /file/download/, /index.html, /favicon.ico, /reportShare/detailByCode, /v2/api-docs
+  file:
+    #导入导出临时文件夹 默认.代表当前目录，拼接/tmp_zip/目录
+    tmpPath: .
+  user:
+    ##新增用户默认密码
+    default:
+      password: 123456

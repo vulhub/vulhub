@@ -53,6 +53,12 @@ app = "Apache Airflow"
 path = "airflow/CVE-2020-17526"
 
 [[environment]]
+name = "AJ-Report Authentication Bypass and Remote Code Execution"
+cve = []
+app = "AJ-Report"
+path = "aj-report/CNVD-2024-15077"
+
+[[environment]]
 name = "Apache Druid Code Execution"
 cve = ["CVE-2021-25646"]
 app = "Apache Druid"
