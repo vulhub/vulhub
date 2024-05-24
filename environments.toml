@@ -851,6 +851,12 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10204"
 
 [[environment]]
+name = "Nexus Repository Manager 3 Unauthenticated Path Traversal"
+cve = ["CVE-2024-4956"]
+app = "Nexus Repository Manager"
+path = "nexus/CVE-2024-4956"
+
+[[environment]]
 name = "Nginx Filename Logic"
 cve = ["CVE-2013-4547"]
 app = "Nginx"
