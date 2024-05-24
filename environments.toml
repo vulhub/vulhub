@@ -833,7 +833,7 @@ app = "Neo4j"
 path = "neo4j/CVE-2021-34371"
 
 [[environment]]
-name = "Nexus Repository Manager 3 Remote Command Execution"
+name = "Nexus Repository Manager 3 Unauthenticated Remote Code Execution"
 cve = ["CVE-2019-7238"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2019-7238"
