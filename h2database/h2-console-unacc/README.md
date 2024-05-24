@@ -1,6 +1,6 @@
 # H2 Database Web Console Unauthorized Access
 
-[中文版本（Chinese Version）](README.zh-cn.md)
+[中文版本(Chinese version)](README.zh-cn.md)
 
 H2 database is a embedded in-memory database in Java. Springboot with h2 database comes with a web management page which has no authentication if you set the following options:
 
