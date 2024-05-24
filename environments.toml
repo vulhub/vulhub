@@ -833,22 +833,28 @@ app = "Neo4j"
 path = "neo4j/CVE-2021-34371"
 
 [[environment]]
-name = "Nexus Repository Manager 3 Remote Command Execution"
+name = "Nexus Repository Manager 3 Unauthenticated Remote Code Execution"
 cve = ["CVE-2019-7238"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2019-7238"
 
 [[environment]]
-name = "Nexus Repository Manager 3 Remote Command Execution"
+name = "Nexus Repository Manager 3 Authenticated Remote Code Execution"
 cve = ["CVE-2020-10199"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10199"
 
 [[environment]]
-name = "Nexus Repository Manager 3 Remote Command Execution"
+name = "Nexus Repository Manager 3 Authenticated Remote Code Execution"
 cve = ["CVE-2020-10204"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10204"
+
+[[environment]]
+name = "Nexus Repository Manager 3 Unauthenticated Path Traversal"
+cve = ["CVE-2024-4956"]
+app = "Nexus Repository Manager"
+path = "nexus/CVE-2024-4956"
 
 [[environment]]
 name = "Nginx Filename Logic"
