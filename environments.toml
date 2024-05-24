@@ -953,6 +953,18 @@ app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
 
 [[environment]]
+name = "OpenTSDB Arbitrary Commands Injection"
+cve = ["CVE-2023-25826"]
+app = "OpenTSDB"
+path = "opentsdb/CVE-2023-25826"
+
+[[environment]]
+name = "PDF.js Arbitrary JavaScript Code Execution"
+cve = ["CVE-2024-4367"]
+app = "PDF.js"
+path = "pdfjs/CVE-2024-4367"
+
+[[environment]]
 name = "pgAdmin <= 6.16 Unauthenticated Remote Command Execution"
 cve = ["CVE-2022-4223"]
 app = "pgAdmin"
