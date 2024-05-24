@@ -839,13 +839,13 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2019-7238"
 
 [[environment]]
-name = "Nexus Repository Manager 3 Remote Command Execution"
+name = "Nexus Repository Manager 3 Authenticated Remote Code Execution"
 cve = ["CVE-2020-10199"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10199"
 
 [[environment]]
-name = "Nexus Repository Manager 3 Remote Command Execution"
+name = "Nexus Repository Manager 3 Authenticated Remote Code Execution"
 cve = ["CVE-2020-10204"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10204"
