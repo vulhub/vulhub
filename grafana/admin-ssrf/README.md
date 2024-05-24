@@ -1,6 +1,6 @@
 # Grafana Admin Portal SSRF
 
-[中文版本（Chinese Version）](README.zh-cn.md)
+[中文版本(Chinese version)](README.zh-cn.md)
 
 Grafana is a multi-platform open source analytics and interactive visualization web application.
 
