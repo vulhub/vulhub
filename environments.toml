@@ -1001,6 +1001,12 @@ app = "PHP-FPM"
 path = "php/CVE-2019-11043"
 
 [[environment]]
+name = "PHP File Read to Remote Code Execution Through GNU C Library Iconv"
+cve = ["CVE-2024-2961"]
+app = "PHP"
+path = "php/CVE-2024-2961"
+
+[[environment]]
 name = "PHP-FPM FastCGI Unauthorized Access"
 cve = []
 app = "PHP-FPM"
