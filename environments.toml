@@ -1193,6 +1193,12 @@ app = "Apache Shiro"
 path = "shiro/CVE-2020-1957"
 
 [[environment]]
+name = "ShowDoc Unauthenticated File Upload and Remote Code Execution"
+cve = []
+app = "ShowDoc"
+path = "showdoc/CNVD-2020-26585"
+
+[[environment]]
 name = "Apache Skywalking 8.3.0 SQL Injection"
 cve = []
 app = "Apache SkyWalking"
