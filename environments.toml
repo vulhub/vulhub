@@ -1193,6 +1193,12 @@ app = "Apache Shiro"
 path = "shiro/CVE-2020-1957"
 
 [[environment]]
+name = "ShowDoc 3.2.5 SQL Injection"
+cve = []
+app = "ShowDoc"
+path = "showdoc/3.2.5-sqli"
+
+[[environment]]
 name = "ShowDoc Unauthenticated File Upload and Remote Code Execution"
 cve = []
 app = "ShowDoc"
