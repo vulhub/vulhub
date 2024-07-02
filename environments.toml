@@ -413,6 +413,12 @@ app = "GeoServer"
 path = "geoserver/CVE-2023-25157"
 
 [[environment]]
+name = "GeoServer Unauthenticated Remote Code Execution in Evaluating Property Name Expressions"
+cve = ["CVE-2024-36401"]
+app = "GeoServer"
+path = "geoserver/CVE-2024-36401"
+
+[[environment]]
 name = "GhostScript Sandbox Bypass (Command Execution)"
 cve = ["CVE-2018-16509"]
 app = "Ghostscript"
