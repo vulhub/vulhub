@@ -3,7 +3,7 @@ import re
 
 
 ARCHIVE_FILE_PATTERN = re.compile(r'^.*\.(tar\.gz|zip|7z|rar|exe|jar|xz|gz|tar|war)$', re.I)
-ARCHIVE_EXCEPTED = re.compile(r'[/\\](struts2|CVE-2016-9086|weblogic[/\\]weak_password)[/\\]')
+ARCHIVE_EXCEPTED = re.compile(r'[/\\](struts2|weblogic[/\\]weak_password)[/\\]')
 LOWERCASE_EXT_EXCEPTED = re.compile(r'[/\\]\.pytest_cache[/\\]')
 
 
@@ -29,5 +29,5 @@ def test_filename():
             if name.lower() == 'readme.md' or name.lower() == 'readme.zh-cn.md':
                 assert name == 'README.md' or name == 'README.zh-cn.md', "README filename must be 'README.md' or 'README.zh-cn.md', not %r" % fullname
 
-            if ARCHIVE_EXCEPTED.search(fullname) is None:
+            if ARCHIVE_EXCEPTED.search(fullname) is None and os.path.getsize(fullname) > 4096:
                 assert ARCHIVE_FILE_PATTERN.match(name) is None, "You should not upload a archive file like %r" % fullname

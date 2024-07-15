@@ -833,6 +833,12 @@ app = "Nacos"
 path = "nacos/CVE-2021-29441"
 
 [[environment]]
+name = "Alibaba Nacos Authentication Bypass and Remote Code Execution"
+cve = ["CVE-2021-29442"]
+app = "Nacos"
+path = "nacos/CVE-2021-29442"
+
+[[environment]]
 name = "Neo4j Shell Server Deserialization"
 cve = ["CVE-2021-34371"]
 app = "Neo4j"
