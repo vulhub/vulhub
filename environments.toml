@@ -935,6 +935,12 @@ app = "Apache OFBiz"
 path = "ofbiz/CVE-2024-38856"
 
 [[environment]]
+name = "Apache OFBiz Authentication Bypass Leads to RCE"
+cve = ["CVE-2024-45195"]
+app = "Apache OFBiz"
+path = "ofbiz/CVE-2024-45195"
+
+[[environment]]
 name = "Openfire Management Background Authentication Bypass"
 cve = ["CVE-2023-32315"]
 app = "Openfire"
