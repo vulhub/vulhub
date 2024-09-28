@@ -203,6 +203,12 @@ app = "Apache CouchDB"
 path = "couchdb/CVE-2022-24706"
 
 [[environment]]
+name = "OpenPrinting Cups-Browsed Remote Code Execution via The FoomaticRIPCommandLine PPD parameter"
+cve = ["CVE-2024-47177"]
+app = "OpenPrinting Cups-Browsed"
+path = "cups-browsed/CVE-2024-47177"
+
+[[environment]]
 name = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
 cve = []
 app = "Discuz!"
