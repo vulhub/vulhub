@@ -55,4 +55,4 @@ RUN set -ex \
 
 EXPOSE 631/tcp 631/udp
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD [ "cups-browsed", "-c", "/etc/cups/cups-browsed.conf" ]
+CMD [ "cups-browsed", "--debug" ]

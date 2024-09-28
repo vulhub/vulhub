@@ -8,7 +8,7 @@ if [ "$1" = "cups" ]; then
 elif [ "$1" = "cups-browsed" ]; then
     /etc/init.d/dbus start
     cupsd
-    exec cups-browsed --debug
+    exec "$@"
 else
     exec "$@"
 fi
