@@ -2,12 +2,11 @@ FROM debian:bookworm
 
 LABEL phith0n="phithon <root@leavesongs.com>"
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-
 RUN set -ex \
     && apt-get update \
-    && apt-get install -y --no-install-recommends build-essential gcc make pkg-config wget ca-certificates bc ghostscript mupdf-tools poppler-utils \
-        libexif-dev libglib2.0-dev liblcms2-dev libfreetype6-dev libfontconfig-dev libqpdf-dev libpoppler-cpp-dev libgnutls28-dev libdbus-1-dev libcups2-dev libavahi-glib-dev libavahi-client-dev \
+    && apt-get install -y --no-install-recommends build-essential gcc make pkg-config wget ca-certificates bc ghostscript mupdf-tools poppler-utils dbus \
+        libexif-dev libglib2.0-dev liblcms2-dev libfreetype6-dev libfontconfig-dev libqpdf-dev libpoppler-cpp-dev libgnutls28-dev libdbus-1-dev libcups2-dev \
+        libavahi-glib-dev libavahi-client-dev libqpdf-dev \
     && mkdir -p /usr/src/libcupsfilters /usr/src/cups-filters /usr/src/libppd /usr/src/cups-browsed /usr/src/cups \
     # install libcupsfilters
     && wget -qO- https://github.com/OpenPrinting/libcupsfilters/releases/download/2.1b1/libcupsfilters-2.1b1.tar.gz | tar xz -C /usr/src/libcupsfilters --strip-components=1 \
@@ -43,13 +42,16 @@ RUN set -ex \
     # modify default cups config
     && sed -i 's/Listen localhost:631/Listen 0.0.0.0:631/g' /etc/cups/cupsd.conf \
     && sed -i 's/Order allow,deny/Order allow,deny\n  Allow from all/g' /etc/cups/cupsd.conf \
-    && chmod +x /docker-entrypoint.sh \
     # clean
     && rm -rf /usr/src/* \
     && apt-get remove -y --purge build-essential gcc make pkg-config bc \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN set -ex \
+    && chmod +x /docker-entrypoint.sh
 
 EXPOSE 631/tcp 631/udp
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
