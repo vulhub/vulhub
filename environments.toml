@@ -203,6 +203,12 @@ app = "Apache CouchDB"
 path = "couchdb/CVE-2022-24706"
 
 [[environment]]
+name = "OpenPrinting Cups-Browsed Remote Code Execution via The FoomaticRIPCommandLine PPD parameter"
+cve = ["CVE-2024-47177"]
+app = "OpenPrinting Cups-Browsed"
+path = "cups-browsed/CVE-2024-47177"
+
+[[environment]]
 name = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
 cve = []
 app = "Discuz!"
@@ -411,6 +417,12 @@ name = "GeoServer OGC Filter SQL Injection"
 cve = ["CVE-2023-25157"]
 app = "GeoServer"
 path = "geoserver/CVE-2023-25157"
+
+[[environment]]
+name = "GeoServer Unauthenticated Remote Code Execution in Evaluating Property Name Expressions"
+cve = ["CVE-2024-36401"]
+app = "GeoServer"
+path = "geoserver/CVE-2024-36401"
 
 [[environment]]
 name = "GhostScript Sandbox Bypass (Command Execution)"
@@ -827,6 +839,12 @@ app = "Nacos"
 path = "nacos/CVE-2021-29441"
 
 [[environment]]
+name = "Alibaba Nacos Authentication Bypass and Remote Code Execution"
+cve = ["CVE-2021-29442"]
+app = "Nacos"
+path = "nacos/CVE-2021-29442"
+
+[[environment]]
 name = "Neo4j Shell Server Deserialization"
 cve = ["CVE-2021-34371"]
 app = "Neo4j"
@@ -917,6 +935,24 @@ app = "Apache OFBiz"
 path = "ofbiz/CVE-2023-51467"
 
 [[environment]]
+name = "Apache OFBiz Authentication Bypass Leads to RCE"
+cve = ["CVE-2024-38856"]
+app = "Apache OFBiz"
+path = "ofbiz/CVE-2024-38856"
+
+[[environment]]
+name = "Apache OFBiz Authentication Bypass Leads to RCE"
+cve = ["CVE-2024-45195"]
+app = "Apache OFBiz"
+path = "ofbiz/CVE-2024-45195"
+
+[[environment]]
+name = "Apache OFBiz SSRF and Remote Code Execution Vulnerability"
+cve = ["CVE-2024-45507"]
+app = "Apache OFBiz"
+path = "ofbiz/CVE-2024-45507"
+
+[[environment]]
 name = "Openfire Management Background Authentication Bypass"
 cve = ["CVE-2023-32315"]
 app = "Openfire"
@@ -999,6 +1035,12 @@ name = "PHP-FPM Remote Command Execution"
 cve = ["CVE-2019-11043"]
 app = "PHP-FPM"
 path = "php/CVE-2019-11043"
+
+[[environment]]
+name = "PHP File Read to Remote Code Execution Through GNU C Library Iconv"
+cve = ["CVE-2024-2961"]
+app = "PHP"
+path = "php/CVE-2024-2961"
 
 [[environment]]
 name = "PHP-FPM FastCGI Unauthorized Access"
@@ -1185,6 +1227,18 @@ name = "Apache Shiro Authentication Bypass"
 cve = ["CVE-2020-1957"]
 app = "Apache Shiro"
 path = "shiro/CVE-2020-1957"
+
+[[environment]]
+name = "ShowDoc 3.2.5 SQL Injection"
+cve = []
+app = "ShowDoc"
+path = "showdoc/3.2.5-sqli"
+
+[[environment]]
+name = "ShowDoc Unauthenticated File Upload and Remote Code Execution"
+cve = []
+app = "ShowDoc"
+path = "showdoc/CNVD-2020-26585"
 
 [[environment]]
 name = "Apache Skywalking 8.3.0 SQL Injection"
