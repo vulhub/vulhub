@@ -6,7 +6,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends build-essential gcc make pkg-config wget ca-certificates bc ghostscript mupdf-tools poppler-utils dbus \
         libexif-dev libglib2.0-dev liblcms2-dev libfreetype6-dev libfontconfig-dev libqpdf-dev libpoppler-cpp-dev libgnutls28-dev libdbus-1-dev libcups2-dev \
-        libavahi-glib-dev libavahi-client-dev libqpdf-dev \
+        libavahi-glib-dev libavahi-client-dev \
     && mkdir -p /usr/src/libcupsfilters /usr/src/cups-filters /usr/src/libppd /usr/src/cups-browsed /usr/src/cups \
     # install libcupsfilters
     && wget -qO- https://github.com/OpenPrinting/libcupsfilters/releases/download/2.1b1/libcupsfilters-2.1b1.tar.gz | tar xz -C /usr/src/libcupsfilters --strip-components=1 \
@@ -33,7 +33,6 @@ RUN set -ex \
     && make -j$(nproc) \
     && make install \
     # install CUPS
-    && cd /usr/src/cups \
     && wget -qO-  https://github.com/OpenPrinting/cups/releases/download/v2.4.7/cups-2.4.7-source.tar.gz | tar xz -C /usr/src/cups --strip-components=1 \
     && cd /usr/src/cups \
     && CXXFLAGS="-std=c++17" ./configure \
@@ -54,5 +53,5 @@ RUN set -ex \
     && chmod +x /docker-entrypoint.sh
 
 EXPOSE 631/tcp 631/udp
-ENTRYPOINT [ "/docker-entrypoint.sh" ]
+ENTRYPOINT [ "bash", "/docker-entrypoint.sh" ]
 CMD [ "cups-browsed", "--debug" ]
