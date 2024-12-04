@@ -11,4 +11,4 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 
 COPY --from=builder /usr/src/target/spring-cloud-gateway-0.0.1-SNAPSHOT.jar /spring-cloud-gateway-0.0.1-SNAPSHOT.jar
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/spring-cloud-gateway-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-jar", "/spring-cloud-gateway-0.0.1-SNAPSHOT.jar"]
