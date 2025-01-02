@@ -1629,3 +1629,9 @@ app = "Zabbix"
 cve = ["CVE-2020-11800"]
 path = "zabbix/CVE-2020-11800"
 name = "Zabbix Server Trapper Command Injection"
+
+[[environment]]
+app = "Apache HugeGraph"
+cve = ["CVE-2024-27348"]
+path = "hugegraph/CVE-2024-27348"
+name = "Apache HugeGraph Remote Command Execution Vulnerability"
