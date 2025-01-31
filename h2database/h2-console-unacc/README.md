@@ -13,6 +13,7 @@ This management page supports to use JNDI to load the JDBC driver, which can lea
 
 References:
 
+- <https://mthbernardes.github.io/rce/2018/03/14/abusing-h2-database-alias.html>
 - <https://mp.weixin.qq.com/s?__biz=MzI2NTM1MjQ3OA==&mid=2247483658&idx=1&sn=584710da0fbe56c1246755147bcec48e>
 - <https://www.exploit-db.com/exploits/45506>
 - <https://github.com/h2database/h2database/pull/1580>
