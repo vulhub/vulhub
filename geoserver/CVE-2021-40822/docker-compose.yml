@@ -1,0 +1,6 @@
+services:
+ web:
+   image: vulhub/geoserver:2.19.1
+   ports:
+    - "8080:8080"
+    - "5005:5005"
