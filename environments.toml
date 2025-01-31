@@ -203,6 +203,12 @@ app = "Apache CouchDB"
 path = "couchdb/CVE-2022-24706"
 
 [[environment]]
+name = "CraftCMS register_argc_argv Leads to Remote Code Execution"
+cve = ["CVE-2024-56145"]
+app = "CraftCMS"
+path = "craftcms/CVE-2024-56145"
+
+[[environment]]
 name = "OpenPrinting Cups-Browsed Remote Code Execution via The FoomaticRIPCommandLine PPD parameter"
 cve = ["CVE-2024-47177"]
 app = "OpenPrinting Cups-Browsed"
@@ -411,6 +417,12 @@ name = "Apache Flink Jobmanager/Logs Directory Traversal"
 cve = ["CVE-2020-17519"]
 app = "Apache Flink"
 path = "flink/CVE-2020-17519"
+
+[[environment]]
+name = "GeoServer Unauthenticated SSRF Vulnerability"
+cve = ["CVE-2021-40822"]
+app = "GeoServer"
+path = "geoserver/CVE-2021-40822"
 
 [[environment]]
 name = "GeoServer OGC Filter SQL Injection"
