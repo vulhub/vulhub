@@ -29,7 +29,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
-            <version>1.4.200</version>
+            <version>1.4.197</version>
         </dependency>
     </dependencies>
 

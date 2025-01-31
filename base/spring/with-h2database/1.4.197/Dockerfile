@@ -15,6 +15,6 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 
 COPY --from=builder /usr/src/target/h2-console-demo-0.0.1-SNAPSHOT.jar /h2-console-demo-0.0.1-SNAPSHOT.jar
 
-EXPOSE 8080
+EXPOSE 8080 5005
 
-CMD ["java", "-jar", "/h2-console-demo-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-jar", "/h2-console-demo-0.0.1-SNAPSHOT.jar"]
