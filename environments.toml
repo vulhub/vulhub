@@ -425,6 +425,12 @@ app = "GeoServer"
 path = "geoserver/CVE-2021-40822"
 
 [[environment]]
+name = "GeoServer Remote Code Injection caused by JAI-EXT"
+cve = ["CVE-2022-24816", "CVE-2023-35042"]
+app = "GeoServer"
+path = "geoserver/CVE-2022-24816"
+
+[[environment]]
 name = "GeoServer OGC Filter SQL Injection"
 cve = ["CVE-2023-25157"]
 app = "GeoServer"
