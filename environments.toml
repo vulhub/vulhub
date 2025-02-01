@@ -575,6 +575,12 @@ app = "Apache HTTP Server"
 path = "httpd/ssi-rce"
 
 [[environment]]
+name = "Apache HugeGraph Unauthenticated Remote Code Execution"
+cve = ["CVE-2024-27348"]
+app = "Apache HugeGraph"
+path = "hugegraph/CVE-2024-27348"
+
+[[environment]]
 name = "Imagetragick Command Execution"
 cve = ["CVE-2016-3714"]
 app = "ImageMagick"
