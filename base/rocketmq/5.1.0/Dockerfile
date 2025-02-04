@@ -3,14 +3,25 @@ FROM eclipse-temurin:8-jre
 LABEL MAINTAINER="4ra1n"
 
 RUN set -ex; \
-        wget -qO/rocketmq.zip https://archive.apache.org/dist/rocketmq/5.1.0/rocketmq-all-5.1.0-bin-release.zip; \
+        apt-get update; \
+        apt-get install --no-install-recommends -y ca-certificates wget unzip; \
+        wget -O /rocketmq.zip https://archive.apache.org/dist/rocketmq/5.1.0/rocketmq-all-5.1.0-bin-release.zip; \
         unzip /rocketmq.zip; \
-        rm -f /rocketmq.zip; \
-        sed -i 's/Xms8g/Xms1g/g' /rocketmq-all-5.1.0-bin-release/bin/runbroker.sh; \
-        sed -i 's/Xmx8g/Xmx1g/g' /rocketmq-all-5.1.0-bin-release/bin/runbroker.sh
+        rm -rf /rocketmq.zip /var/lib/apt/lists/*;
 
 WORKDIR /rocketmq-all-5.1.0-bin-release
-ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-EXPOSE 10911 5005
+RUN set -ex; \
+        sed -i 's/Xms8g/Xms1g/g' ./bin/runbroker.sh; \
+        sed -i 's/Xmx8g/Xmx1g/g' ./bin/runbroker.sh; \
+        sed -i 's/Xmn4g/Xmn512m/g' ./bin/runbroker.sh; \
+        sed -i 's/Xms4g/Xms1g/g' ./bin/runserver.sh; \
+        sed -i 's/Xmx4g/Xmx1g/g' ./bin/runserver.sh; \
+        sed -i 's/Xmn2g/Xmn512m/g' ./bin/runserver.sh; \
+        sed -i 's/which javac/which java/g' ./bin/runserver.sh; \
+        sed -i 's/which javac/which java/g' ./bin/runbroker.sh; \
+        sed -i 's/which javac/which java/g' ./bin/tools.sh;
 
-CMD sh -c /rocketmq-all-5.1.0-bin-release/bin/mqbroker -n localhost:9876 --enable-proxy
+ENV JAVA_OPT="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+EXPOSE 10911 5005 8080 8081
+
+CMD ["/rocketmq-all-5.1.0-bin-release/bin/mqbroker", "-n", "localhost:9876", "--enable-proxy"]
