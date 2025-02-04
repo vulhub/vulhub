@@ -1187,7 +1187,7 @@ app = "Rocket.Chat"
 path = "rocketchat/CVE-2021-22911"
 
 [[environment]]
-name = "Apache RocketMQ Remote Command Execution"
+name = "Apache RocketMQ Broker Remote Command Execution"
 cve = ["CVE-2023-33246"]
 app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-33246"
