@@ -10,6 +10,7 @@ RUN set -ex; \
         rm -rf /rocketmq.zip /var/lib/apt/lists/*;
 
 WORKDIR /rocketmq-all-5.1.0-bin-release
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN set -ex; \
         sed -i 's/Xms8g/Xms1g/g' ./bin/runbroker.sh; \
         sed -i 's/Xmx8g/Xmx1g/g' ./bin/runbroker.sh; \
@@ -19,9 +20,11 @@ RUN set -ex; \
         sed -i 's/Xmn2g/Xmn512m/g' ./bin/runserver.sh; \
         sed -i 's/which javac/which java/g' ./bin/runserver.sh; \
         sed -i 's/which javac/which java/g' ./bin/runbroker.sh; \
-        sed -i 's/which javac/which java/g' ./bin/tools.sh;
+        sed -i 's/which javac/which java/g' ./bin/tools.sh; \
+        chmod +x /docker-entrypoint.sh
 
 ENV JAVA_OPT="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-EXPOSE 10911 5005 8080 8081
+EXPOSE 9876 10911 5005 8080 8081
 
-CMD ["/rocketmq-all-5.1.0-bin-release/bin/mqbroker", "-n", "localhost:9876", "--enable-proxy"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["mqbroker", "-n", "localhost:9876", "--enable-proxy"]
