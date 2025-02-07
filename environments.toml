@@ -1193,6 +1193,12 @@ app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-33246"
 
 [[environment]]
+name = "Apache RocketMQ NameServer Arbitrary File Write Vulnerability"
+cve = ["CVE-2023-37582"]
+app = "Apache RocketMQ"
+path = "rocketmq/CVE-2023-37582"
+
+[[environment]]
 name = "rsync Unauthorized Access"
 cve = []
 app = "rsync"
