@@ -581,6 +581,12 @@ app = "Apache HugeGraph"
 path = "hugegraph/CVE-2024-27348"
 
 [[environment]]
+name = "Apache HugeGraph JWT Token Secret Hardcoding Vulnerability"
+cve = ["CVE-2024-43441"]
+app = "Apache HugeGraph"
+path = "hugegraph/CVE-2024-43441"
+
+[[environment]]
 name = "Imagetragick Command Execution"
 cve = ["CVE-2016-3714"]
 app = "ImageMagick"
