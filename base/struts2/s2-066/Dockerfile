@@ -1,5 +1,9 @@
-FROM tomcat:9.0.98-jre17-temurin
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
 
-COPY target/struts-1.0-SNAPSHOT.war /usr/local/tomcat/webapps
+COPY . /usr/src
 
-RUN /usr/local/tomcat/bin/catalina.sh start
+RUN cd /usr/src && mvn clean package -DskipTests
+
+FROM tomcat:9.0.99-jdk17-temurin
+
+COPY --from=builder /usr/src/target/struts2-sample-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
