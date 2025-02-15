@@ -1,8 +1,8 @@
 # Struts2 S2-066 Path Traversal Vulnerability (CVE-2023-50164)
 
-Apache Struts2 is a popular open-source web application framework for developing Java EE web applications. It uses and extends the Java Servlet API to encourage developers to adopt a model–view–controller (MVC) architecture. The framework provides developers with a rich set of tags and utilities to create enterprise-ready web applications that are easy to maintain and extend.
-
 [中文版本(Chinese version)](README.zh-cn.md)
+
+Apache Struts2 is a popular open-source web application framework for developing Java EE web applications. It uses and extends the Java Servlet API to encourage developers to adopt a model–view–controller (MVC) architecture. The framework provides developers with a rich set of tags and utilities to create enterprise-ready web applications that are easy to maintain and extend.
 
 Apache Struts2 S2-066 is a path traversal vulnerability that exists in the file upload functionality. The vulnerability allows attackers to upload files outside the intended upload directory by manipulating the form field name case.
 
@@ -26,7 +26,7 @@ docker compose up -d
 
 After the environment is started, visit `http://your-ip:8080` to access the application, which is a simple file upload page.
 
-## Exploitation Steps
+## Vulnerability Reproduce
 
 First, try to upload a JSP script to the normal upload directory:
 
