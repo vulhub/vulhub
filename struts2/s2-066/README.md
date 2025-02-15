@@ -20,6 +20,8 @@ References:
 
 ## Environment Setup
 
+Execute the following command to start a web server written in Struts2 2.5.32:
+
 ```
 docker compose up -d
 ```

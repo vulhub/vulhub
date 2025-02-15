@@ -18,6 +18,8 @@ Apache Struts2 S2-066 是一个存在于文件上传功能中的路径穿越漏�
 
 ## 环境搭建
 
+执行以下命令启动一个用 Struts2 2.5.32 编写的 Web 服务器：
+
 ```
 docker compose up -d
 ```
