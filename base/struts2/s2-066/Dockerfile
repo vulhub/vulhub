@@ -6,4 +6,4 @@ RUN cd /usr/src && mvn clean package -DskipTests
 
 FROM tomcat:9.0.99-jdk17-temurin
 
-COPY --from=builder /usr/src/target/struts2-sample-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=builder /usr/src/target/struts2-s2-066.war /usr/local/tomcat/webapps/ROOT.war
