@@ -1481,6 +1481,18 @@ app = "Apache Struts2"
 path = "struts2/s2-061"
 
 [[environment]]
+name = "Struts2 S2-066 Upload Path Traversal"
+cve = ["CVE-2023-50164"]
+app = "Apache Struts2"
+path = "struts2/s2-066"
+
+[[environment]]
+name = "Struts2 S2-067 Upload Path Traversal"
+cve = ["CVE-2024-53677"]
+app = "Apache Struts2"
+path = "struts2/s2-067"
+
+[[environment]]
 name = "Supervisord Remote Command Execution"
 cve = ["CVE-2017-11610"]
 app = "Supervisor"

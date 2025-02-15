@@ -1,4 +1,4 @@
-# Struts2 S2-066 Path Traversal Vulnerability (CVE-2023-50164)
+# Struts2 S2-066 Upload Path Traversal (CVE-2023-50164)
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
