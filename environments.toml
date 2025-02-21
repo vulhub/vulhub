@@ -1313,7 +1313,7 @@ app = "Apache Solr"
 path = "solr/Remote-Streaming-Fileread"
 
 [[environment]]
-name = "Apache Spark Unauthorized Access Leak"
+name = "Apache Spark Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "Apache Spark"
 path = "spark/unacc"
