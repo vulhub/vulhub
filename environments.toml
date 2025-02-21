@@ -785,7 +785,7 @@ app = "LibSSH"
 path = "libssh/CVE-2018-10933"
 
 [[environment]]
-name = "Liferay Portal CE Deserialization Command Execution"
+name = "Liferay Portal CE Deserialization Remote Code Execution"
 cve = ["CVE-2020-7961"]
 app = "Liferay Portal"
 path = "liferay-portal/CVE-2020-7961"
