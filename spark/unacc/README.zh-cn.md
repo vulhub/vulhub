@@ -126,4 +126,4 @@ bin/spark-submit --master spark://your-ip:7077 --deploy-mode cluster --class Exp
 
 如果你指定的master参数是rest服务器，这个脚本会先尝试使用rest api来提交应用；如果发现不是rest服务器，则会降级到使用submission gateway来提交应用。
 
-查看结果的方式与前面一致。 
+查看结果的方式与前面一致。
