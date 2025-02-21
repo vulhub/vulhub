@@ -767,7 +767,7 @@ app = "kkFileView"
 path = "kkfileview/4.3-zipslip-rce"
 
 [[environment]]
-name = "Laravel Ignition 2.5.1 Code Execution"
+name = "Laravel Ignition 2.5.1 Remote Code Execution"
 cve = ["CVE-2021-3129"]
 app = "Laravel"
 path = "laravel/CVE-2021-3129"
