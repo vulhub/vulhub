@@ -857,7 +857,7 @@ app = "Mongo Express"
 path = "mongo-express/CVE-2019-10758"
 
 [[environment]]
-name = "MySQL Authentication Bypass"
+name = "MySQL Authentication Bypass Vulnerability"
 cve = ["CVE-2012-2122"]
 app = "MySQL"
 path = "mysql/CVE-2012-2122"
