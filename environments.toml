@@ -635,19 +635,19 @@ app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization-bypass"
 
 [[environment]]
-name = "JBoss 5.x/6.x Deserialization"
+name = "JBoss 5.x/6.x Deserialization Remote Code Execution"
 cve = ["CVE-2017-12149"]
 app = "JBoss"
 path = "jboss/CVE-2017-12149"
 
 [[environment]]
-name = "JBoss 4.x JBossMQ JMS Deserialization"
+name = "JBoss 4.x JBossMQ JMS Deserialization Remote Code Execution"
 cve = ["CVE-2017-7504"]
 app = "JBoss"
 path = "jboss/CVE-2017-7504"
 
 [[environment]]
-name = "JBoss JMXInvokerServlet Deserialization"
+name = "JBoss JMXInvokerServlet Deserialization Remote Code Execution"
 cve = []
 app = "JBoss"
 path = "jboss/JMXInvokerServlet-deserialization"

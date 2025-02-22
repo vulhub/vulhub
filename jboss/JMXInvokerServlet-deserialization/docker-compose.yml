@@ -1,4 +1,3 @@
-version: '2'
 services:
   jboss:
     image: vulhub/jboss:as-6.1.0
