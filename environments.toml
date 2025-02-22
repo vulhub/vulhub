@@ -935,7 +935,7 @@ app = "Node.JS"
 path = "node/CVE-2017-14849"
 
 [[environment]]
-name = "node-postgres Code Execution"
+name = "Node-Postgres Remote Code Execution"
 cve = ["CVE-2017-16082"]
 app = "node-postgres"
 path = "node/CVE-2017-16082"
