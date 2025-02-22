@@ -1,18 +1,24 @@
-# Nginx 配置错误导致漏洞
+# Nginx Misconfiguration Vulnerabilities
 
-## 运行测试环境
+[中文版本(Chinese version)](README.zh-cn.md)
+
+Nginx is a web server that can be used as a reverse proxy, load balancer, mail proxy, and HTTP cache. This environment contains three vulnerabilities caused by Nginx misconfiguration.
+
+## Environment Setup
+
+Execute the following command to start a Nginx server with multiple vulnerabilities:
 
 ```
 docker compose up -d
 ```
 
-运行成功后，Nginx将会监听8080/8081/8082三个端口，分别对应三种漏洞。
+After successful execution, Nginx will listen on three ports: 8080/8081/8082, corresponding to three different vulnerabilities.
 
-## Mistake 1. CRLF注入漏洞
+## Mistake 1. CRLF Injection Vulnerability
 
-Nginx会将`$uri`进行解码，导致传入%0d%0a即可引入换行符，造成CRLF注入漏洞。
+Nginx decodes `$uri`, which means inputting %0d%0a can introduce line breaks, leading to CRLF injection vulnerabilities.
 
-错误的配置文件示例（原本的目的是为了让http的请求跳转到https上）：
+Example of incorrect configuration (originally intended to redirect HTTP requests to HTTPS):
 
 ```
 location / {
@@ -20,19 +26,19 @@ location / {
 }
 ```
 
-Payload: `http://your-ip:8080/%0d%0aSet-Cookie:%20a=1`，可注入Set-Cookie头。
+Payload: `http://your-ip:8080/%0d%0aSet-Cookie:%20a=1`, which can inject a Set-Cookie header.
 
 ![](5.png)  
 
-利用《[Bottle HTTP 头注入漏洞探究](https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html)》中的技巧，即可构造一个XSS漏洞：
+Using techniques from the article "[Bottle HTTP Header Injection Vulnerability Analysis](https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html)", you can construct an XSS vulnerability:
 
 ![](1.png)
 
-## Mistake 2. 目录穿越漏洞
+## Mistake 2. Directory Traversal Vulnerability
 
-Nginx在配置别名（Alias）的时候，如果忘记加`/`，将造成一个目录穿越漏洞。
+When configuring aliases in Nginx, forgetting to add a `/` will create a directory traversal vulnerability.
 
-错误的配置文件示例（原本的目的是为了让用户访问到/home/目录下的文件）：
+Example of incorrect configuration (originally intended to allow users to access files in the /home/ directory):
 
 ```
 location /files {
@@ -40,15 +46,15 @@ location /files {
 }
 ```
 
-Payload: `http://your-ip:8081/files../` ，成功穿越到根目录：
+Payload: `http://your-ip:8081/files../`, successfully traversing to the root directory:
 
 ![](2.png)
 
-## Mistake 3. add_header被覆盖
+## Mistake 3. add_header Override
 
-Nginx配置文件子块（server、location、if）中的`add_header`，将会覆盖父块中的`add_header`添加的HTTP头，造成一些安全隐患。
+The `add_header` directive in Nginx configuration child blocks (server, location, if) will override HTTP headers added by `add_header` in the parent block, potentially creating security risks.
 
-如下列代码，整站（父块中）添加了CSP头：
+For example, in the following code, CSP headers are added site-wide (in the parent block):
 
 ```
 add_header Content-Security-Policy "default-src 'self'";
@@ -64,10 +70,10 @@ location = /test2 {
 }
 ```
 
-但`/test2`的location中又添加了`X-Content-Type-Options`头，导致父块中的`add_header`全部失效：
+However, because the `/test2` location block adds an `X-Content-Type-Options` header, all `add_header` directives in the parent block become ineffective:
 
 ![](3.png)
 
-XSS可被触发：
+XSS can be triggered:
 
 ![](4.png)

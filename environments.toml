@@ -917,7 +917,7 @@ app = "Nginx"
 path = "nginx/CVE-2017-7529"
 
 [[environment]]
-name = "Nginx Configuration Errors"
+name = "Nginx Misconfiguration Vulnerabilities"
 cve = []
 app = "Nginx"
 path = "nginx/insecure-configuration"
