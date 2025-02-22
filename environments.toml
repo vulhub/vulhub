@@ -1583,13 +1583,13 @@ app = "V2board"
 path = "v2board/1.6-privilege-escalation"
 
 [[environment]]
-name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization"
+name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
 cve = ["CVE-2017-10271"]
 app = "WebLogic"
 path = "weblogic/CVE-2017-10271"
 
 [[environment]]
-name = "WebLogic WLS Core Components Deserialization Command Execution"
+name = "Weblogic WLS Core Components Deserialization Remote Command Execution"
 cve = ["CVE-2018-2628"]
 app = "WebLogic"
 path = "weblogic/CVE-2018-2628"
