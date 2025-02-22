@@ -467,7 +467,7 @@ app = "Git"
 path = "git/CVE-2017-8386"
 
 [[environment]]
-name = "Gitea 1.4.0 Directory Traversal to Command Execution"
+name = "Gitea 1.4.0 Directory Traversal Leading to Remote Command Execution"
 cve = []
 app = "Gitea"
 path = "gitea/1.4-rce"
