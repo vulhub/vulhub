@@ -929,13 +929,13 @@ app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
 
 [[environment]]
-name = "NodeJS Directory Traversal"
+name = "Node.js 8.5.0 Path Traversal"
 cve = ["CVE-2017-14849"]
 app = "Node.JS"
 path = "node/CVE-2017-14849"
 
 [[environment]]
-name = "node-postgres Code Execution"
+name = "Node-Postgres Remote Code Execution"
 cve = ["CVE-2017-16082"]
 app = "node-postgres"
 path = "node/CVE-2017-16082"
