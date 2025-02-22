@@ -641,7 +641,7 @@ app = "JBoss"
 path = "jboss/CVE-2017-12149"
 
 [[environment]]
-name = "JBoss 4.x JBossMQ JMS Deserialization"
+name = "JBoss 4.x JBossMQ JMS Deserialization Remote Code Execution"
 cve = ["CVE-2017-7504"]
 app = "JBoss"
 path = "jboss/CVE-2017-7504"
