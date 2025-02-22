@@ -647,7 +647,7 @@ app = "JBoss"
 path = "jboss/CVE-2017-7504"
 
 [[environment]]
-name = "JBoss JMXInvokerServlet Deserialization"
+name = "JBoss JMXInvokerServlet Deserialization Remote Code Execution"
 cve = []
 app = "JBoss"
 path = "jboss/JMXInvokerServlet-deserialization"
