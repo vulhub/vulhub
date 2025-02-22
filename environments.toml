@@ -905,7 +905,7 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2024-4956"
 
 [[environment]]
-name = "Nginx Filename Logic"
+name = "Nginx Filename Logic Vulnerability"
 cve = ["CVE-2013-4547"]
 app = "Nginx"
 path = "nginx/CVE-2013-4547"
