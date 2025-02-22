@@ -791,7 +791,7 @@ app = "Liferay Portal"
 path = "liferay-portal/CVE-2020-7961"
 
 [[environment]]
-name = "Apache Log4j Server Deserialization Command Execution"
+name = "Apache Log4j TCP Server Deserialization Remote Code Execution"
 cve = ["CVE-2017-5645"]
 app = "Apache Log4j"
 path = "log4j/CVE-2017-5645"
