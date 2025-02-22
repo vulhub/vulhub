@@ -905,25 +905,25 @@ app = "Nexus Repository Manager"
 path = "nexus/CVE-2024-4956"
 
 [[environment]]
-name = "Nginx Filename Logic"
+name = "Nginx Filename Logic Vulnerability"
 cve = ["CVE-2013-4547"]
 app = "Nginx"
 path = "nginx/CVE-2013-4547"
 
 [[environment]]
-name = "Nginx Out-of-Bounds Read Cache"
+name = "Nginx Cache Leak by Integer Overflow"
 cve = ["CVE-2017-7529"]
 app = "Nginx"
 path = "nginx/CVE-2017-7529"
 
 [[environment]]
-name = "Nginx Configuration Errors"
+name = "Nginx Misconfiguration Vulnerabilities"
 cve = []
 app = "Nginx"
 path = "nginx/insecure-configuration"
 
 [[environment]]
-name = "Nginx Parsing"
+name = "Nginx Parsing Vulnerability"
 cve = []
 app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
