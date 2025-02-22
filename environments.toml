@@ -923,7 +923,7 @@ app = "Nginx"
 path = "nginx/insecure-configuration"
 
 [[environment]]
-name = "Nginx Parsing"
+name = "Nginx Parsing Vulnerability"
 cve = []
 app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
