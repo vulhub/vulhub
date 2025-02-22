@@ -911,7 +911,7 @@ app = "Nginx"
 path = "nginx/CVE-2013-4547"
 
 [[environment]]
-name = "Nginx Out-of-Bounds Read Cache"
+name = "Nginx Cache Leak by Integer Overflow"
 cve = ["CVE-2017-7529"]
 app = "Nginx"
 path = "nginx/CVE-2017-7529"
