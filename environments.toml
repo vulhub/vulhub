@@ -1205,7 +1205,7 @@ app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-37582"
 
 [[environment]]
-name = "rsync Unauthorized Access"
+name = "Rsync Unauthorized Access"
 cve = []
 app = "rsync"
 path = "rsync/common"
