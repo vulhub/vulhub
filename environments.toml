@@ -1493,7 +1493,7 @@ app = "Apache Struts2"
 path = "struts2/s2-067"
 
 [[environment]]
-name = "Supervisord Remote Command Execution"
+name = "Supervisord XML-RPC Remote Command Execution"
 cve = ["CVE-2017-11610"]
 app = "Supervisor"
 path = "supervisor/CVE-2017-11610"
