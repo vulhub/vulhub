@@ -1223,7 +1223,7 @@ app = "SaltStack"
 path = "saltstack/CVE-2020-11651"
 
 [[environment]]
-name = "SaltStack Arbitrary File Read and Write"
+name = "SaltStack Arbitrary File Read/Write Vulnerability"
 cve = ["CVE-2020-11652"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
