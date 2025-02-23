@@ -1253,7 +1253,7 @@ app = "Apache Shiro"
 path = "shiro/CVE-2010-3863"
 
 [[environment]]
-name = "Apache Shiro 1.2.4 Deserialization"
+name = "Apache Shiro 1.2.4 Deserialization Remote Code Execution"
 cve = ["CVE-2016-4437"]
 app = "Apache Shiro"
 path = "shiro/CVE-2016-4437"
