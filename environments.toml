@@ -1673,7 +1673,13 @@ app = "Zabbix"
 path = "zabbix/CVE-2016-10134"
 
 [[environment]]
+name = "Zabbix Server Active Proxy Trapper Command Injection"
+cve = ["CVE-2017-2824"]
 app = "Zabbix"
+path = "zabbix/CVE-2017-2824"
+
+[[environment]]
+name = "Zabbix Server Active Proxy Trapper Command Injection Bypass"
 cve = ["CVE-2020-11800"]
+app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
-name = "Zabbix Server Trapper Command Injection"
