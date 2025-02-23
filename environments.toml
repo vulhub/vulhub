@@ -833,7 +833,7 @@ app = "MeterSphere"
 path = "metersphere/plugin-rce"
 
 [[environment]]
-name = "mini_httpd Arbitrary File Read"
+name = "ACME mini_httpd Arbitrary File Read"
 cve = ["CVE-2018-18778"]
 app = "mini_httpd"
 path = "mini_httpd/CVE-2018-18778"
