@@ -23,6 +23,7 @@ docker compose up -d
 环境启动后，可以在浏览器中访问`http://your-ip:8000`。页面将显示`Hello {username}!`，其中username是从'user' cookie中获取的。应用程序对此cookie执行base64解码和反序列化以提取"username"变量。如果没有找到有效的cookie，则默认为"Guest"。
 
 app.py中的漏洞代码如下：
+
 ```python
 @app.route("/")
 def index():
