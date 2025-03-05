@@ -58,7 +58,7 @@ Execute the following command to start a Example server v1.2.3:
 docker compose up -d
 ```
 
-After the environment is started, ...
+After the server starts, ...
 
 ## Vulnerability Reproduction
 

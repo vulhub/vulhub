@@ -1145,19 +1145,19 @@ app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
 
 [[environment]]
-name = "Python PIL Remote Command Execution (GhostButt)"
+name = "Python PIL/Pillow Remote Command Execution by GhostScript GhostButt"
 cve = ["CVE-2017-8291"]
 app = "Python"
 path = "python/PIL-CVE-2017-8291"
 
 [[environment]]
-name = "Python PIL Remote Command Execution (via Ghostscript)"
+name = "Python PIL/Pillow Remote Command Execution by GhostScript"
 cve = ["CVE-2018-16509"]
 app = "Python"
 path = "python/PIL-CVE-2018-16509"
 
 [[environment]]
-name = "Python Unpickle Deserialization"
+name = "Python Unpickle Deserialization Remote Code Execution"
 cve = []
 app = "Python"
 path = "python/unpickle"
