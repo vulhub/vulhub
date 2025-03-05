@@ -33,7 +33,39 @@ Vulhub项目的文件结构如下：
 
 用户在阅读该文档后，就可以在自己的电脑上使用docker compose命令启动存在漏洞的环境，并参考README来复现该漏洞，学习漏洞的原理。
 
-下面是一些Vulhub项目中写的比较优秀的文档，请你学习并参考：
+一个文档的完整格式如下：
+
+```markdown
+# Title (CVE ID if exist)
+
+Link to Chinese README
+
+Example is a ...
+
+description of the issue...
+
+References:
+
+- link1
+- link2
+- ...
+
+## Environment Setup
+
+Execute the following command to start a Example server v1.2.3:
+
+```
+docker compose up -d
+```
+
+After the environment is started, ...
+
+## Vulnerability Reproduction
+
+Steps to reproduce the vulnerability...
+```
+
+下面是一些Vulhub项目中写的比较优秀的案例，请你学习并参考：
 
 - Struts2 S2-067 Upload Path Traversal (CVE-2024-53677) [README.md](mdc:struts2/s2-067/README.md)
 - Kibana Local File Inclusion (CVE-2018-17246) [README.md](mdc:kibana/CVE-2018-17246/README.md)
