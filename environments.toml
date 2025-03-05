@@ -539,7 +539,7 @@ app = "Hadoop YARN"
 path = "hadoop/unauthorized-yarn"
 
 [[environment]]
-name = "Apache HTTPD Newline Parsing"
+name = "Apache HTTPD Newline Parsing Vulnerability"
 cve = ["CVE-2017-15715"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2017-15715"
