@@ -659,7 +659,7 @@ app = "jeecg-boot"
 path = "jeecg-boot/CVE-2023-4450"
 
 [[environment]]
-name = "Jenkins-CI Remote Code Execution"
+name = "Jenkins Remote Code Execution"
 cve = ["CVE-2017-1000353"]
 app = "Jenkins"
 path = "jenkins/CVE-2017-1000353"
