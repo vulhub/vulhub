@@ -62,7 +62,9 @@ After the environment is started, ...
 
 ## Vulnerability Reproduction
 
-Steps to reproduce the vulnerability...
+...
+
+(Describe the steps to reproduce the vulnerability using natural language, do not use list)
 ```
 
 下面是一些Vulhub项目中写的比较优秀的案例，请你学习并参考：
