@@ -1,32 +1,36 @@
-# Apache SSI 远程命令执行漏洞
+# Apache HTTP Server SSI Remote Command Execution
 
-在测试任意文件上传漏洞的时候，目标服务端可能不允许上传php后缀的文件。如果目标服务器开启了SSI与CGI支持，我们可以上传一个shtml文件，并利用`<!--#exec cmd="id" -->`语法执行任意命令。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+Apache HTTP Server with Server Side Includes (SSI) enabled allows server-side execution of commands through special SSI directives in HTML files. When misconfigured, this feature can be exploited through file upload vulnerabilities.
 
-- https://httpd.apache.org/docs/2.4/howto/ssi.html
-- https://www.w3.org/Jigsaw/Doc/User/SSI.html
+When testing arbitrary file upload vulnerabilities, the target server might block files with PHP extensions. However, if the server has SSI and CGI support enabled, attackers can upload an SHTML file and execute arbitrary commands using the `<!--#exec cmd="command" -->` syntax.
 
-## 漏洞环境
+References:
 
-运行一个支持SSI与CGI的Apache服务器：
+- [Apache SSI Documentation](https://httpd.apache.org/docs/2.4/howto/ssi.html)
+- [W3 SSI Directives](https://www.w3.org/Jigsaw/Doc/User/SSI.html)
+
+## Environment Setup
+
+Execute the following command to start an Apache HTTP Server with SSI and CGI support:
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080/upload.php`，即可看到一个上传表单。
+After the server is started, visit `http://your-ip:8080/upload.php` to access the upload form.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-正常上传PHP文件是不允许的，我们可以上传一个shell.shtml文件：
+While uploading PHP files is not allowed, we can upload a file named `shell.shtml` with the following content:
 
 ```shtml
 <!--#exec cmd="ls" -->
 ```
 
-![](1.png)
+![Upload Interface](1.png)
 
-成功上传，然后访问shell.shtml，可见命令已成功执行：
+After successful upload, visiting the shell.shtml file will execute the command, demonstrating the vulnerability:
 
-![](2.png)
+![Command Execution Result](2.png)
