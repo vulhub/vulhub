@@ -281,7 +281,7 @@ app = "Drupal"
 path = "drupal/CVE-2014-3704"
 
 [[environment]]
-name = "Drupal Core 8 PECL YAML Deserialization Arbitrary Code Execution"
+name = "Drupal Core 8 PECL YAML Deserialization Remote Code Execution"
 cve = ["CVE-2017-6920"]
 app = "Drupal"
 path = "drupal/CVE-2017-6920"
