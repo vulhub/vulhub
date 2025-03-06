@@ -275,7 +275,7 @@ app = "Docker"
 path = "docker/unauthorized-rce"
 
 [[environment]]
-name = "Drupal < 7.32 'Drupalgeddon' SQL Injection"
+name = 'Drupal < 7.32 "Drupalgeddon" SQL Injection'
 cve = ["CVE-2014-3704"]
 app = "Drupal"
 path = "drupal/CVE-2014-3704"
