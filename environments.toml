@@ -1139,7 +1139,7 @@ app = "PostgreSQL"
 path = "postgres/CVE-2018-1058"
 
 [[environment]]
-name = "PostgreSQL High Privilege Command Execution"
+name = "PostgreSQL Arbitrary Command Execution with Admin Privileges"
 cve = ["CVE-2019-9193"]
 app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
