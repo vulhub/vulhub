@@ -227,13 +227,13 @@ app = "Discuz!"
 path = "discuz/x3.4-arbitrary-file-deletion"
 
 [[environment]]
-name = "Django debug page XSS Flaw"
+name = "Django 500 Debug Page Cross-Site Scripting (XSS)"
 cve = ["CVE-2017-12794"]
 app = "Django"
 path = "django/CVE-2017-12794"
 
 [[environment]]
-name = "Django < 2.0.8 Arbitrary URL Redirection"
+name = "Django < 2.0.8 Open Redirect in CommonMiddleware"
 cve = ["CVE-2018-14574"]
 app = "Django"
 path = "django/CVE-2018-14574"
