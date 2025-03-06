@@ -305,7 +305,7 @@ app = "Drupal"
 path = "drupal/CVE-2019-6339"
 
 [[environment]]
-name = "Drupal XSS"
+name = "# Drupal Cross-Site Scripting by File Upload"
 cve = ["CVE-2019-6341"]
 app = "Drupal"
 path = "drupal/CVE-2019-6341"
