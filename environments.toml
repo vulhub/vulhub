@@ -299,7 +299,7 @@ app = "Drupal"
 path = "drupal/CVE-2018-7602"
 
 [[environment]]
-name = "Drupal Remote Code Execution"
+name = "Drupal Remote Code Execution by phar deserialization"
 cve = ["CVE-2019-6339"]
 app = "Drupal"
 path = "drupal/CVE-2019-6339"
