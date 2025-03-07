@@ -26,6 +26,7 @@ After the server starts, the PHP-FPM server will listen on port 9000.
 A proof-of-concept exploit script is available at: https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75
 
 The script allows you to:
+
 1. Connect directly to the PHP-FPM port
 2. Send crafted FastCGI requests
 3. Execute arbitrary PHP code on the target server
