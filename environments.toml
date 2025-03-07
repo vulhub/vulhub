@@ -443,7 +443,7 @@ app = "GeoServer"
 path = "geoserver/CVE-2024-36401"
 
 [[environment]]
-name = "GhostScript Sandbox Bypass (Command Execution)"
+name = "GhostScript Sandbox Bypass Command Execution"
 cve = ["CVE-2018-16509"]
 app = "Ghostscript"
 path = "ghostscript/CVE-2018-16509"
