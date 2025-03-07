@@ -383,7 +383,7 @@ app = "Fastjson"
 path = "fastjson/1.2.24-rce"
 
 [[environment]]
-name = "Fastjson 1.2.47 Remote Command Execution"
+name = "Fastjson 1.2.47 Deserialization Remote Command Execution"
 cve = []
 app = "Fastjson"
 path = "fastjson/1.2.47-rce"

