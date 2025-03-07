@@ -1289,7 +1289,7 @@ app = "Apache Solr"
 path = "solr/CVE-2017-12629-RCE"
 
 [[environment]]
-name = "Apache Solr XML Entity Injection"
+name = "Apache Solr XML External Entity Injection"
 cve = ["CVE-2017-12629"]
 app = "Apache Solr"
 path = "solr/CVE-2017-12629-XXE"
@@ -1301,13 +1301,13 @@ app = "Apache Solr"
 path = "solr/CVE-2019-0193"
 
 [[environment]]
-name = "Apache Solr Velocity Inject Remote Command Execution"
+name = "Apache Solr Remote Code Execution Via Velocity Template"
 cve = ["CVE-2019-17558"]
 app = "Apache Solr"
 path = "solr/CVE-2019-17558"
 
 [[environment]]
-name = "Apache Solr RemoteStreaming File Reading and SSRF"
+name = "Apache Solr RemoteStreaming Arbitrary File Reading and SSRF"
 cve = []
 app = "Apache Solr"
 path = "solr/Remote-Streaming-Fileread"
