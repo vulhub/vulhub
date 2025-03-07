@@ -1073,7 +1073,7 @@ app = "PHP"
 path = "php/CVE-2024-2961"
 
 [[environment]]
-name = "PHP-FPM FastCGI Unauthorized Access"
+name = "PHP-FPM FastCGI Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "PHP-FPM"
 path = "php/fpm"
