@@ -1301,7 +1301,7 @@ app = "Apache Solr"
 path = "solr/CVE-2019-0193"
 
 [[environment]]
-name = "Apache Solr Velocity Inject Remote Command Execution"
+name = "Apache Solr Remote Code Execution Via Velocity Template"
 cve = ["CVE-2019-17558"]
 app = "Apache Solr"
 path = "solr/CVE-2019-17558"
