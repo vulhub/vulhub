@@ -1613,13 +1613,13 @@ app = "WebLogic"
 path = "weblogic/CVE-2023-21839"
 
 [[environment]]
-name = "WebLogic SSRF"
+name = "Weblogic UDDI Explorer Server-Side Request Forgery (SSRF)"
 cve = []
 app = "WebLogic"
 path = "weblogic/ssrf"
 
 [[environment]]
-name = "WebLogic File Read"
+name = "WebLogic Weak Password, Arbitrary File Read and Remote Code Execution"
 cve = []
 app = "WebLogic"
 path = "weblogic/weak_password"

@@ -1,78 +1,86 @@
-# Weblogic 常规渗透测试环境
+# WebLogic Weak Password, Arbitrary File Read and Remote Code Execution
 
-## 测试环境
+[中文版本(Chinese version)](README.zh-cn.md)
 
-本环境模拟了一个真实的weblogic环境，其后台存在一个弱口令，并且前台存在任意文件读取漏洞。分别通过这两种漏洞，模拟对weblogic场景的渗透。
+Oracle WebLogic Server is a Java-based enterprise application server.
 
-Weblogic版本：10.3.6(11g)
+This environment simulates a realistic WebLogic setup with two vulnerabilities: a weak password in the admin console and an arbitrary file read vulnerability in the frontend. These vulnerabilities demonstrate common penetration testing scenarios for WebLogic servers.
 
-Java版本：1.6
+## Environment Setup
 
-启动本环境：
+Execute the following command to start the WebLogic server, this server based on WebLogic 10.3.6 (11g) and Java 1.6.
 
 ```
 docker compose up -d
 ```
 
-## 弱口令
+After the environment starts, visit `http://your-ip:7001/console` to access the WebLogic admin console.
 
-环境启动后，访问`http://your-ip:7001/console`，即为weblogic后台。
+## Vulnerability Exploitation
 
-本环境存在弱口令：
+The environment contains the following default credentials:
 
- - weblogic
- - Oracle@123
+- Username: weblogic
+- Password: Oracle@123
 
-weblogic常用弱口令： http://cirt.net/passwords?criteria=weblogic
+For a comprehensive list of common WebLogic default credentials, visit: <http://cirt.net/passwords?criteria=weblogic>
 
-## 任意文件读取漏洞的利用
+If weak credentials are not available, how can we penetrate the WebLogic server? This environment simulates an arbitrary file download vulnerability. Visit `http://your-ip:7001/hello/file.jsp?path=/etc/passwd` to verify that we can successfully read the passwd file.
 
-假设不存在弱口令，如何对weblogic进行渗透？
+To leverage this vulnerability effectively, we can extract the admin password by following these steps:
 
-本环境前台模拟了一个任意文件下载漏洞，访问`http://your-ip:7001/hello/file.jsp?path=/etc/passwd`可见成功读取passwd文件。那么，该漏洞如何利用？
+### Reading Backend User Password Hash and Key Files
 
-### 读取后台用户密文与密钥文件
+WebLogic passwords are encrypted using AES (older versions used 3DES). Since this is symmetric encryption, we can decrypt the password if we obtain both the ciphertext and the encryption key. These files are located in the base_domain directory:
 
-weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。这两个文件均位于base_domain下，名为`SerializedSystemIni.dat`和`config.xml`，在本环境中为`./security/SerializedSystemIni.dat`和`./config/config.xml`（基于当前目录`/root/Oracle/Middleware/user_projects/domains/base_domain`）。
+- `SerializedSystemIni.dat`: The encryption key file
+- `config.xml`: The configuration file containing encrypted passwords
 
-`SerializedSystemIni.dat`是一个二进制文件，所以一定要用burpsuite来读取，用浏览器直接下载可能引入一些干扰字符。在burp里选中读取到的那一串乱码，右键copy to file就可以保存成一个文件：
+In this environment, these files are located at:
+
+- `./security/SerializedSystemIni.dat`
+- `./config/config.xml`
+
+(relative to `/root/Oracle/Middleware/user_projects/domains/base_domain`)
+
+When downloading `SerializedSystemIni.dat`, use Burp Suite as it's a binary file. Browser downloads might introduce unwanted characters. In Burp Suite, select the binary content and use "Copy to File" to save it correctly:
 
 ![](img/05.png)
 
-`config.xml`是base_domain的全局配置文件，所以乱七八糟的内容比较多，找到其中的`<node-manager-password-encrypted>`的值，即为加密后的管理员密码，不要找错了：
+In `config.xml`, locate the `<node-manager-password-encrypted>` value, which contains the encrypted administrator password:
 
 ![](img/06.png)
 
-### 解密密文
+### Decrypting the Password
 
-然后使用本环境的decrypt目录下的weblogic_decrypt.jar，解密密文（或者参考这篇文章：http://cb.drops.wiki/drops/tips-349.html ，自己编译一个解密的工具）：
+Use the `weblogic_decrypt.jar` tool (provided in the decrypt directory) to decrypt the password. For more details on building your own decryption tool, refer to: <http://cb.drops.wiki/drops/tips-349.html>
 
 ![](img/07.png)
 
-可见，解密后和我预设的密码一致，说明成功。
+The decrypted password matches our preset password, confirming successful exploitation.
 
-## 后台上传webshell
+### Deploying a WebShell
 
-获取到管理员密码后，登录后台。点击左侧的部署，可见一个应用列表：
+After obtaining administrator credentials, log into the admin console. Click "Deployments" in the left navigation panel to view the application list:
 
 ![](img/01.png)
 
-点击安装，选择“上载文件”：
+Click "Install" and select "Upload your files":
 
 ![](img/02.png)
 
-上传war包。值得注意的是，我们平时tomcat用的war包不一定能够成功，你可以将你的webshell放到本项目的`web/hello.war`这个压缩包中，再上传。上传成功后点下一步。
+Upload a WAR package. Note that standard Tomcat WAR files might not work properly. You can use the `web/hello.war` package from this project as a template. After uploading, click "Next".
 
-填写应用名称：
+Enter the application name:
 
 ![](img/03.png)
 
-继续一直下一步，最后点完成。
+Continue through the remaining steps and click "Finish".
 
-应用目录在war包中WEB-INF/weblogic.xml里指定（因为本测试环境已经使用了`/hello`这个目录，所以你要在本测试环境下部署shell，需要修改这个目录，比如修改成`/jspspy`）：
+The application path is specified in `WEB-INF/weblogic.xml` within the WAR package. Since this test environment already uses the `/hello` path, modify this path (e.g., to `/jspspy`) when deploying your shell:
 
 ![](img/08.png)
 
-成功获取webshell：
+Successfully accessing the webshell:
 
 ![](img/04.png)
