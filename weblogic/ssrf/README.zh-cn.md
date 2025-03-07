@@ -86,6 +86,7 @@ Connection: close
 ![](5.png)
 
 需要注意的是，可以利用的cron位置有以下几处：
+
 - `/etc/crontab`（系统默认定时任务文件）
 - `/etc/cron.d/*`（系统定时任务目录）
 - `/var/spool/cron/root`（CentOS系统下root用户的定时任务文件）
