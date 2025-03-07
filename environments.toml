@@ -449,7 +449,7 @@ app = "Ghostscript"
 path = "ghostscript/CVE-2018-16509"
 
 [[environment]]
-name = "GhostScript Sandbox Bypass (Command Execution)"
+name = "GhostScript Sandbox Bypass Command Execution"
 cve = ["CVE-2018-19475"]
 app = "Ghostscript"
 path = "ghostscript/CVE-2018-19475"
