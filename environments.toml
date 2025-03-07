@@ -1061,7 +1061,7 @@ app = "PHP-IMAP"
 path = "php/CVE-2018-19518"
 
 [[environment]]
-name = "PHP-FPM Remote Command Execution"
+name = "PHP-FPM Remote Code Execution"
 cve = ["CVE-2019-11043"]
 app = "PHP-FPM"
 path = "php/CVE-2019-11043"
