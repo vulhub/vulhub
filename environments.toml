@@ -353,7 +353,7 @@ app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-5531"
 
 [[environment]]
-name = "Elasticsearch Webshell"
+name = "ElasticSearch Arbitrary File Upload"
 cve = []
 app = "ElasticSearch"
 path = "elasticsearch/WooYun-2015-110216"
