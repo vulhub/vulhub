@@ -1289,7 +1289,7 @@ app = "Apache Solr"
 path = "solr/CVE-2017-12629-RCE"
 
 [[environment]]
-name = "Apache Solr XML Entity Injection"
+name = "Apache Solr XML External Entity Injection"
 cve = ["CVE-2017-12629"]
 app = "Apache Solr"
 path = "solr/CVE-2017-12629-XXE"
