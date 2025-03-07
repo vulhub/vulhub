@@ -1307,7 +1307,7 @@ app = "Apache Solr"
 path = "solr/CVE-2019-17558"
 
 [[environment]]
-name = "Apache Solr RemoteStreaming File Reading and SSRF"
+name = "Apache Solr RemoteStreaming Arbitrary File Reading and SSRF"
 cve = []
 app = "Apache Solr"
 path = "solr/Remote-Streaming-Fileread"

