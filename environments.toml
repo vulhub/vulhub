@@ -1085,7 +1085,7 @@ app = "PHP"
 path = "php/inclusion"
 
 [[environment]]
-name = "PHP XML Entity Injection"
+name = "PHP XML External Entity Injection (XXE)"
 cve = []
 app = "PHP"
 path = "php/php_xxe"
