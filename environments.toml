@@ -1055,7 +1055,7 @@ app = "PHP-CGI"
 path = "php/CVE-2012-1823"
 
 [[environment]]
-name = "PHP-IMAP Remote Command Execution"
+name = "PHP IMAP Remote Command Execution"
 cve = ["CVE-2018-19518"]
 app = "PHP-IMAP"
 path = "php/CVE-2018-19518"
