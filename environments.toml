@@ -287,7 +287,7 @@ app = "Drupal"
 path = "drupal/CVE-2017-6920"
 
 [[environment]]
-name = "Drupal Drupalgeddon 2 Remote Code Execution"
+name = "Drupal Drupalgeddon 2 Unauthenticated Remote Code Execution"
 cve = ["CVE-2018-7600"]
 app = "Drupal"
 path = "drupal/CVE-2018-7600"
