@@ -492,7 +492,7 @@ path = "gitlist/CVE-2018-1000533"
 
 [[environment]]
 name = "GlassFish Arbitrary File Read"
-cve = []
+cve = ["CVE-2017-1000028"]
 app = "GlassFish"
 path = "glassfish/4.1.0"
 
