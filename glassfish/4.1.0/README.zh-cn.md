@@ -11,15 +11,13 @@ GlassFish是一个用于Java EE平台的开源应用服务器。在GlassFish中�
 
 ## 环境搭建
 
-执行如下命令构建并启动环境：
+执行如下命令启动一个GlassFish 4.1.0服务器：
 
 ```
 docker compose up -d
 ```
 
-环境启动后，你可以访问：
-- `http://your-ip:8080` - 网站内容
-- `http://your-ip:4848` - GlassFish管理控制台
+环境启动后，你可以通过`http://your-ip:4848`访问GlassFish管理控制台：
 
 ## 漏洞复现
 
@@ -31,6 +29,6 @@ https://your-ip:4848/theme/META-INF/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%a
 
 ![](1.png)
 
-## 补充说明
+### 补充说明
 
-超级管理员密码在`docker-compose.yml`中设置，默认值为`vulhub_default_password`。你可以使用此密码在4848端口登录管理员账户。 
+超级管理员密码在`docker-compose.yml`中设置，默认值为`vulhub_default_password`。你可以使用此密码在4848端口登录管理员账户。
