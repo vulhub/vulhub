@@ -1,4 +1,3 @@
-version: '2'
 services:
   discuz:
     image: vulhub/discuz:7.2

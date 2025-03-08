@@ -215,7 +215,7 @@ app = "OpenPrinting Cups-Browsed"
 path = "cups-browsed/CVE-2024-47177"
 
 [[environment]]
-name = "Discuz 7.x/6.x Global Variable Defense Bypass to Code Execution"
+name = "Discuz 7.x/6.x Remote Code Execution via Global Variable Override"
 cve = []
 app = "Discuz!"
 path = "discuz/wooyun-2010-080723"
