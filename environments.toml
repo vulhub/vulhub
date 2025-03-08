@@ -407,13 +407,13 @@ app = "Jinja2"
 path = "flask/ssti"
 
 [[environment]]
-name = "Apache Flink File Upload"
+name = "Apache Flink Upload Path Traversal"
 cve = ["CVE-2020-17518"]
 app = "Apache Flink"
 path = "flink/CVE-2020-17518"
 
 [[environment]]
-name = "Apache Flink Jobmanager/Logs Directory Traversal"
+name = "Apache Flink `jobmanager/logs` Path Traversal"
 cve = ["CVE-2020-17519"]
 app = "Apache Flink"
 path = "flink/CVE-2020-17519"
