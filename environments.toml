@@ -401,7 +401,7 @@ app = "FFmpeg"
 path = "ffmpeg/CVE-2017-9993"
 
 [[environment]]
-name = "Jinja2 SSTI Template Injection"
+name = "Flask (Jinja2) Server-Side Template Injection"
 cve = []
 app = "Jinja2"
 path = "flask/ssti"
