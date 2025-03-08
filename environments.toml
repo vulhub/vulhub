@@ -761,6 +761,12 @@ app = "Kibana"
 path = "kibana/CVE-2019-7609"
 
 [[environment]]
+name = "Kibana 7.6.2 upgrade-assistant-telemetry Prototype Pollution Leads to RCE"
+cve = ["CVE-2020-7012"]
+app = "Kibana"
+path = "kibana/CVE-2020-7012"
+
+[[environment]]
 name = "kkFileView ZipSlip Remote Code Execution"
 cve = []
 app = "kkFileView"
