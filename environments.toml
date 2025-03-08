@@ -623,7 +623,7 @@ app = "Java RMI"
 path = "java/rmi-codebase"
 
 [[environment]]
-name = "Java RMI Registry Deserialization Vulnerability (<=jdk8u111)"
+name = "Java ≤JDK 8u111 RMI Registry Deserialization Remote Code Execution"
 cve = []
 app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization"

