@@ -1,37 +1,44 @@
-# ffmpeg 任意文件读取漏洞环境
+# FFmpeg AVI Arbitrary File Read (CVE-2017-9993)
 
-参考资料：
+[中文版本(Chinese version)](README.zh-cn.md)
 
- - http://bobao.360.cn/learning/detail/4032.html
- - https://hackerone.com/reports/242831
- - https://github.com/neex/ffmpeg-avi-m3u-xbin
+FFmpeg is a free and open-source software project consisting of a suite of libraries and programs for handling video, audio, and other multimedia files and streams.
 
-## 环境搭建
+FFmpeg 2.4.x before 2.4.14, 2.8.x before 2.8.12, 3.0.x before 3.0.9, 3.1.x before 3.1.9, 3.2.x before 3.2.6, and 3.3.x before 3.3.2 does not properly restrict HTTP Live Streaming filename extensions and demuxer names, which allows attackers to read arbitrary files via crafted playlist data.
 
-编译及启动环境
+This issue was featured in PHDays conference 2017, and it is actually an incomplete fix for [CVE-2016-1897](../CVE-2016-1897/). FFmpeg officially patched file reading and SSRF vulnerabilities in m3u playlists. However, by crafting malicious AVI files, similar vulnerabilities still exist in the playlist, leading to CVE-2017-9993.
+
+References:
+
+- <https://docs.google.com/presentation/d/1yqWy_aE3dQNXAhW8kxMxRqtP7qMHaIfMzUDpEqFneos/>
+- <https://github.com/neex/ffmpeg-avi-m3u-xbin>
+- <https://www.anquanke.com/post/id/86337>
+
+## Environment Setup
+
+Execute the following commands to build and start the environment:
 
 ```
-docker compose build
 docker compose up -d
 ```
 
-环境启动后监听8080端口，访问`http://your-ip:8080/`即可查看。
+After the server starts, it will listen on port 8080. Visit `http://your-ip:8080/` to access the application, the application is a simple video player that allows users to upload and play videos.
 
-## 漏洞利用
+## Vulnerability Reproduction
 
-漏洞原理不再赘述，直接下载exp，并生成payload：
+First, download the exploit tool and generate a malicious payload:
 
-```
-# 下载exp
+```bash
+# Clone the exploit repository
 git clone https://github.com/neex/ffmpeg-avi-m3u-xbin
 cd ffmpeg-avi-m3u-xbin
 
-# 生成payload
+# Generate payload
 ./gen_xbin_avi.py file:///etc/passwd exp.avi
 ```
 
-生成exp.avi，在`http://your-ip:8080/`上传。后端将会将你上传的视频用ffmpeg转码后显示，转码时因为ffmpeg的任意文件读取漏洞，可将文件信息读取到视频中：
+Upload the generated `exp.avi` file at `http://your-ip:8080/`. The backend will attempt to transcode your uploaded video using FFmpeg. During this process, due to the arbitrary file read vulnerability, the file content will be embedded in the transcoded video:
 
 ![](01.png)
 
-你也可以执行`docker compose exec web bash`进入本环境内部，测试ffmpeg。
+You can also execute `docker compose exec web bash` to enter the environment and test FFmpeg directly.

@@ -395,7 +395,7 @@ app = "FFmpeg"
 path = "ffmpeg/CVE-2016-1897"
 
 [[environment]]
-name = "FFmpeg Arbitrary File Read"
+name = "FFmpeg AVI Arbitrary File Read"
 cve = ["CVE-2017-9993"]
 app = "FFmpeg"
 path = "ffmpeg/phdays"
