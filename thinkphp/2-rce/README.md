@@ -1,27 +1,29 @@
-# ThinkPHP 2.x 任意代码执行漏洞
+# ThinkPHP 2.x Remote Code Execution
 
-ThinkPHP 2.x版本中，使用`preg_replace`的`/e`模式匹配路由：
+[中文版本(Chinese version)](README.zh-cn.md)
+
+ThinkPHP is a popular PHP framework widely used in China. ThinkPHP versions 2.x contain a remote code execution that caused by the `preg_replace`.
+
+In ThinkPHP 2.x, the framework uses `preg_replace` with `/e` modifier to match routes:
 
 ```php
 $res = preg_replace('@(\w+)'.$depr.'([^'.$depr.'\/]+)@e', '$var[\'\\1\']="\\2";', implode($depr,$paths));
 ```
 
-导致用户的输入参数被插入双引号中执行，造成任意代码执行漏洞。
+This implementation causes user input parameters to be executed within double quotes, leading to arbitrary code execution. The vulnerability also exists in ThinkPHP 3.0 when running in Lite mode, as this issue wasn't patched in that specific mode.
 
-ThinkPHP 3.0版本因为Lite模式下没有修复该漏洞，也存在这个漏洞。
+## Environment Setup
 
-## 环境搭建
-
-执行如下命令启动ThinkPHP 2.1的Demo应用：
+Execute the following command to start a ThinkPHP 2.1 demo application:
 
 ```bash
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8080/Index/Index`即可查看到默认页面。
+After the server is started, you can visit `http://your-ip:8080/Index/Index` to see the default page.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-直接访问`http://your-ip:8080/index.php?s=/index/index/name/$%7B@phpinfo()%7D`即可执行`phpinfo()`：
+To exploit this vulnerability, we can inject PHP code through the URL parameters. By visiting `http://your-ip:8080/index.php?s=/index/index/name/${@phpinfo()}`, the `phpinfo()` function will be executed on the target server, demonstrating the successful exploitation of the remote code execution vulnerability:
 
 ![](1.png)

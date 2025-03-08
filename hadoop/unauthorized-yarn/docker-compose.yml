@@ -1,5 +1,3 @@
-version: '2'
-
 services:
   namenode:
     image: vulhub/hadoop:2.8.1

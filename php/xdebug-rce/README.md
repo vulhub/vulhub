@@ -1,41 +1,53 @@
-# XDebug 远程调试漏洞（代码执行）
+# XDebug Remote Debugging Code Execution
 
-XDebug是PHP的一个扩展，用于调试PHP代码。如果目标开启了远程调试模式，并设置`remote_connect_back = 1`：
+[中文版本(Chinese version)](README.zh-cn.md)
 
-```
+XDebug is a PHP extension used for debugging PHP code. When remote debugging mode is enabled with `remote_connect_back = 1`, an attacker can execute arbitrary PHP code on the target server by exploiting the debug protocol.
+
+The vulnerability occurs when the following XDebug configuration is enabled:
+
+```ini
 xdebug.remote_connect_back = 1
 xdebug.remote_enable = 1
 ```
 
-这个配置下，我们访问`http://target/index.php?XDEBUG_SESSION_START=phpstorm`，目标服务器的XDebug将会连接访问者的IP（或`X-Forwarded-For`头指定的地址）并通过dbgp协议与其通信，我们通过dbgp中提供的eval方法即可在目标服务器上执行任意PHP代码。
+With the above configuration, XDebug will attempt to connect back to the attacker's IP when a client visits `http://target/index.php?XDEBUG_SESSION_START=phpstorm` through the DBGp protocol, it provide a `eval` function that can be used to execute arbitrary PHP code.
 
-更多说明可参考：
+References:
 
- - https://ricterz.me/posts/Xdebug%3A%20A%20Tiny%20Attack%20Surface
- - https://xdebug.org
+- <https://ricterz.me/posts/Xdebug%3A%20A%20Tiny%20Attack%20Surface>
+- <https://xdebug.org>
 
-## 测试环境
+## Environment Setup
 
-编译及启动测试环境
+Execute the following command to build and start the vulnerable environment:
 
 ```
 docker compose build
 docker compose up -d
 ```
 
-启动完成后，访问`http://your-ip:8080/`即可发现主页是一个简单的phpinfo，在其中可以找到xdebug的配置，可见开启了远程调试。
+After the environment is started, visit `http://your-ip:8080/` to see a simple phpinfo page. You can verify that XDebug is enabled and configured for remote debugging in the PHP configuration section.
 
-## 漏洞利用
+## Vulnerability Reproduction
 
-因为需要使用dbgp协议与目标服务器通信，所以无法用http协议复现漏洞。
+Since the vulnerability requires communication using the DBGp protocol with the target server, it cannot be reproduced using HTTP protocol alone.
 
-我编写了一个[漏洞复现脚本](exp.py)，指定目标web地址、待执行的php代码即可：
+A [proof-of-concept exploit script](exp.py) is provided that can execute arbitrary PHP code on the target server:
 
+```bash
+# Requires Python 3 and the requests library
+python3 exp.py -t http://127.0.0.1:8080/index.php -c 'shell_exec("id");'
 ```
-# 要求用python3并安装requests库
-python3 exp.py -t http://127.0.0.1:8080/index.php -c 'shell_exec('id');'
-```
+
+Successful exploitation will execute the command and return its output:
 
 ![](1.png)
 
-**重要说明：因为该通信是一个反向连接的过程，exp.py启动后其实是会监听本地的9000端口（可通过-l参数指定）并等待XDebug前来连接，所以执行该脚本的服务器必须有外网IP（或者与目标服务器处于同一内网）。**
+### Important Notes
+
+The exploitation process involves a reverse connection:
+
+1. The exploit script listens on port 9000 (configurable with `-l` parameter)
+2. When the target visits a URL with `XDEBUG_SESSION_START=phpstorm`, XDebug attempts to connect back to the visitor's IP
+3. You have to have a public IP address or be in the same network as the target

