@@ -1,20 +1,27 @@
-# Java RMI codebase 远程代码执行漏洞
+# Java RMI Codebase Remote Code Execution
 
-Java Remote Method Invocation 用于在Java中进行远程调用，在满足一定条件的情况下，RMI客户端通过指定`java.rmi.server.codebase`可以让服务端远程加载对象，进而加载远程java字节码执行任意代码。
+[中文版本(Chinese version)](README.zh-cn.md)
 
-## 漏洞环境
+Java Remote Method Invocation (RMI) is used for remote procedure calls in Java. Under certain conditions, an RMI client can specify `java.rmi.server.codebase` to make the server load remote objects, leading to the execution of arbitrary Java bytecode on the server.
 
-执行如下命令编译及启动RMI Registry和服务器：
+References:
+
+- <https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/codebase.html>
+- <https://paper.seebug.org/1091/>
+
+## Environment Setup
+
+Execute the following commands to compile and start the RMI Registry and server:
 
 ```
 docker compose build
 docker compose run -e RMIIP=your-ip -p 1099:1099 -p 64000:64000 rmi
 ```
 
-其中，`your-ip`是服务器IP，客户端会根据这个IP来连接服务器。
+Replace `your-ip` with your server's IP address. The client will use this IP to connect to the server.
 
-环境启动后，RMI Registry监听在1099端口。
+After startup, the RMI Registry will be listening on port 1099.
 
-## 漏洞复现
+## Vulnerability Reproduction
 
-待完善。
+To be completed.
