@@ -1,7 +1,7 @@
 import os
 
 # Directories that should be skipped as they are not vulnerability documentation
-SKIP_DIRS = {'gitlist/0.6.0-rce', 'struts2', 'fastjson/vuln', 'openssl/heartbleed'}
+SKIP_DIRS = {'.pytest_cache', 'gitlist/0.6.0-rce', 'struts2', 'fastjson/vuln', 'openssl/heartbleed', 'base/weblogic/12.2.1.3', 'base/httpd/bad-http'}
 
 
 def is_skip_dir(dir_path):
