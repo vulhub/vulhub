@@ -389,7 +389,7 @@ app = "Fastjson"
 path = "fastjson/1.2.47-rce"
 
 [[environment]]
-name = "FFmpeg Arbitrary File Read/SSRF"
+name = "FFmpeg Arbitrary File Read and SSRF"
 cve = ["CVE-2016-1897", "CVE-2016-1898"]
 app = "FFmpeg"
 path = "ffmpeg/CVE-2016-1897"
