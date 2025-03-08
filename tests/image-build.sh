@@ -9,5 +9,5 @@ fi
 
 echo "Preparing test image $image_name"
 
-cd "$image_path"
+cd "$image_path" || exit 1
 docker build -t "$image_name" .
