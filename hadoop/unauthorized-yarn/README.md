@@ -1,28 +1,32 @@
-# Hadoop YARN ResourceManager 未授权访问
+# Hadoop YARN ResourceManager Unauthorized Access
 
-## 原理
+[中文版本(Chinese version)](README.zh-cn.md)
 
-参考 http://archive.hack.lu/2016/Wavestone%20-%20Hack.lu%202016%20-%20Hadoop%20safari%20-%20Hunting%20for%20vulnerabilities%20-%20v1.0.pdf
+Hadoop YARN (Yet Another Resource Negotiator) is Apache Hadoop's cluster resource management system. If the YARN ResourceManager is exposed to the public internet without proper access controls, an attacker can submit and execute arbitrary applications on the cluster.
 
-## 测试环境
+References:
 
-运行测试环境
+- <http://archive.hack.lu/2016/Wavestone%20-%20Hack.lu%202016%20-%20Hadoop%20safari%20-%20Hunting%20for%20vulnerabilities%20-%20v1.0.pdf>
+- <https://hadoop.apache.org/docs/r2.7.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html>
+
+## Environment Setup
+
+Execute the following command to start vulnerable Hadoop YARN environment:
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://your-ip:8088`即可看到Hadoop YARN ResourceManager WebUI页面。
+After the environment starts, visit `http://your-ip:8088` to access the Hadoop YARN ResourceManager WebUI.
 
-## 利用
+## Vulnerability Reproduction
 
-利用方法和原理中有一些不同。在没有 hadoop client 的情况下，直接通过 REST API
- (https://hadoop.apache.org/docs/r2.7.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html) 也可以提交任务执行。
+The exploitation method differs slightly from the original presentation. Even without a Hadoop client, you can submit tasks directly through the REST API (https://hadoop.apache.org/docs/r2.7.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html).
 
-利用过程如下：
+The exploitation process is as follows:
 
-1. 在本地监听等待反弹 shell 连接
-1. 调用 New Application API 创建 Application
-1. 调用 Submit Application API 提交
+1. Set up a listener on your local machine to receive the reverse shell connection
+2. Call the New Application API to create an Application
+3. Call the Submit Application API to submit the malicious application
 
-参考 [exp 脚本](exploit.py)
+For detailed implementation, refer to the [exploit script](exploit.py).
