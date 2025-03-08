@@ -413,7 +413,7 @@ app = "Apache Flink"
 path = "flink/CVE-2020-17518"
 
 [[environment]]
-name = "Apache Flink Jobmanager/Logs Directory Traversal"
+name = "Apache Flink `jobmanager/logs` Path Traversal"
 cve = ["CVE-2020-17519"]
 app = "Apache Flink"
 path = "flink/CVE-2020-17519"
