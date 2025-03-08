@@ -1,7 +1,16 @@
 import os
 
 # Directories that should be skipped as they are not vulnerability documentation
-SKIP_DIRS = {'tests', 'base', '.git', '.github', '.cursor'}
+SKIP_DIRS = {'gitlist/0.6.0-rce', 'struts2', 'fastjson/vuln', 'openssl/heartbleed'}
+
+
+def is_skip_dir(dir_path):
+    dir_path = dir_path.replace('\\', '/')
+    for skip in SKIP_DIRS:
+        if dir_path.endswith("/" + skip):
+            return True
+
+    return False
 
 
 def test_translate():
@@ -10,13 +19,9 @@ def test_translate():
     basedir = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..'))
     
     # Walk through all directories
-    for root, dirs, files in os.walk(basedir):
-        # Skip directories that should be ignored
-        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-        
+    for root, _, files in os.walk(basedir):
         if 'README.md' in files:
-            # Skip root README which doesn't need translation checking
-            if os.path.samefile(root, basedir):
+            if is_skip_dir(root):
                 continue
                 
             # Check if translation exists
