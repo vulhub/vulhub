@@ -1505,7 +1505,7 @@ app = "TeamCity"
 path = "teamcity/CVE-2023-42793"
 
 [[environment]]
-name = "ThinkPHP 2.x Arbitrary Code Execution"
+name = "ThinkPHP 2.x Remote Code Execution"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/2-rce"
