@@ -539,6 +539,12 @@ app = "Hadoop YARN"
 path = "hadoop/unauthorized-yarn"
 
 [[environment]]
+name = "Apache HertzBeat SnakeYaml Deserialization Remote Code Execution"
+cve = ["CVE-2024-42323"]
+app = "Apache HertzBeat"
+path = "hertzbeat/CVE-2024-42323"
+
+[[environment]]
 name = "Apache HTTPD Newline Parsing Vulnerability"
 cve = ["CVE-2017-15715"]
 app = "Apache HTTP Server"
