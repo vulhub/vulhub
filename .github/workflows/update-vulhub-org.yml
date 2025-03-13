@@ -58,7 +58,7 @@ jobs:
           git --no-pager diff --staged
           
           # Check if there are changes to commit
-          if [ git diff --staged --quiet ]; then
+          if git diff --staged --quiet; then
             echo "No changes to commit"
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
