@@ -305,7 +305,7 @@ app = "Drupal"
 path = "drupal/CVE-2019-6339"
 
 [[environment]]
-name = "# Drupal Cross-Site Scripting by File Upload"
+name = "Drupal Cross-Site Scripting by File Upload"
 cve = ["CVE-2019-6341"]
 app = "Drupal"
 path = "drupal/CVE-2019-6341"
@@ -657,12 +657,6 @@ name = "JBoss JMXInvokerServlet Deserialization Remote Code Execution"
 cve = []
 app = "JBoss"
 path = "jboss/JMXInvokerServlet-deserialization"
-
-[[environment]]
-name = "JeecgBoot JimuReport Template injection"
-cve = ["CVE-2023-4450"]
-app = "jeecg-boot"
-path = "jeecg-boot/CVE-2023-4450"
 
 [[environment]]
 name = "Jenkins Remote Code Execution"
