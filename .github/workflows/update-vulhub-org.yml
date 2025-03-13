@@ -7,6 +7,12 @@ on:
     paths:
       - 'environments.toml'
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run mode (no push to repository)'
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   update-environments:
@@ -60,10 +66,20 @@ jobs:
           fi
 
       - name: Push changes
-        if: steps.commit.outputs.has_changes == 'true'
+        if: steps.commit.outputs.has_changes == 'true' && (github.event_name != 'workflow_dispatch' || !inputs.dry_run)
         uses: ad-m/github-push-action@master
         with:
           repository: vulhub/vulhub-org
           github_token: ${{ secrets.VULHUB_ORG_TOKEN }}
           branch: main
           directory: vulhub-org
+          
+      - name: Dry run summary
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run
+        run: |
+          echo "### Dry Run Mode - Changes Not Pushed" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.commit.outputs.has_changes }}" == "true" ]; then
+            echo "✅ Changes were detected and would have been pushed to the repository" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No changes were detected" >> $GITHUB_STEP_SUMMARY
+          fi
