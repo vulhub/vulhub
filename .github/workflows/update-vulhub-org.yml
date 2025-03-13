@@ -22,6 +22,7 @@ jobs:
         with:
           repository: vulhub/vulhub-org
           path: vulhub-org
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -47,9 +48,10 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add lib/environments.json
+          git --no-pager diff --staged
           
           # Check if there are changes to commit
-          if git diff --staged --quiet; then
+          if [ $? -eq 0 ]; then
             echo "No changes to commit"
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
