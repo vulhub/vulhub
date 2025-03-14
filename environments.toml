@@ -419,7 +419,7 @@ app = "Apache Flink"
 path = "flink/CVE-2020-17519"
 
 [[environment]]
-name = "GeoServer Unauthenticated SSRF Vulnerability"
+name = "GeoServer Unauthenticated Server-Side Request Forgery"
 cve = ["CVE-2021-40822"]
 app = "GeoServer"
 path = "geoserver/CVE-2021-40822"
@@ -587,7 +587,7 @@ app = "Apache HugeGraph"
 path = "hugegraph/CVE-2024-27348"
 
 [[environment]]
-name = "Apache HugeGraph JWT Token Secret Hardcoding Vulnerability"
+name = "Apache HugeGraph JWT Token Secret Hardcoding Leads to Authentication Bypass"
 cve = ["CVE-2024-43441"]
 app = "Apache HugeGraph"
 path = "hugegraph/CVE-2024-43441"
@@ -671,7 +671,7 @@ app = "Jenkins"
 path = "jenkins/CVE-2018-1000861"
 
 [[environment]]
-name = "Jenkins Arbitrary File Read Vulnerability Through the CLI"
+name = "Jenkins Arbitrary File Read Through the CLI"
 cve = ["CVE-2024-23897"]
 app = "Jenkins"
 path = "jenkins/CVE-2024-23897"
@@ -863,7 +863,7 @@ app = "Mongo Express"
 path = "mongo-express/CVE-2019-10758"
 
 [[environment]]
-name = "MySQL Authentication Bypass Vulnerability"
+name = "MySQL Authentication Bypass"
 cve = ["CVE-2012-2122"]
 app = "MySQL"
 path = "mysql/CVE-2012-2122"
@@ -983,7 +983,7 @@ app = "Apache OFBiz"
 path = "ofbiz/CVE-2024-45195"
 
 [[environment]]
-name = "Apache OFBiz SSRF and Remote Code Execution Vulnerability"
+name = "Apache OFBiz SSRF and Remote Code Execution"
 cve = ["CVE-2024-45507"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2024-45507"
@@ -1205,7 +1205,7 @@ app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-33246"
 
 [[environment]]
-name = "Apache RocketMQ NameServer Arbitrary File Write Vulnerability"
+name = "Apache RocketMQ NameServer Arbitrary File Write"
 cve = ["CVE-2023-37582"]
 app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-37582"
@@ -1367,7 +1367,7 @@ app = "Spring Cloud Function"
 path = "spring/CVE-2022-22963"
 
 [[environment]]
-name = "Remote Code Execution Vulnerability due to Spring Framework Data Binding and JDK 9+"
+name = "Spring Framework Data Binding Remote Code Execution on JDK 9+"
 cve = ["CVE-2022-22965"]
 app = "Spring"
 path = "spring/CVE-2022-22965"

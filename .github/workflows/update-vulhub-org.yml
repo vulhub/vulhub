@@ -5,11 +5,11 @@ on:
     branches:
       - master
     paths:
-      - 'environments.toml'
+      - "environments.toml"
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry run mode (no push to repository)'
+        description: "Dry run mode (no push to repository)"
         type: boolean
         default: false
         required: false
@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Update environments.json
         run: |
@@ -56,7 +56,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add lib/environments.json
           git --no-pager diff --staged
-          
+
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit"
@@ -74,7 +74,7 @@ jobs:
           github_token: ${{ secrets.VULHUB_ORG_TOKEN }}
           branch: main
           directory: vulhub-org
-          
+
       - name: Dry run summary
         if: github.event_name == 'workflow_dispatch' && inputs.dry_run
         run: |
