@@ -1559,6 +1559,12 @@ app = "Apache Tomcat"
 path = "tomcat/CVE-2020-1938"
 
 [[environment]]
+name = "Tomcat Session Deserialization Remote Code Execution"
+cve = ["CVE-2025-24813"]
+app = "Apache Tomcat"
+path = "tomcat/CVE-2025-24813"
+
+[[environment]]
 name = "Tomcat Weak Password"
 cve = []
 app = "Apache Tomcat"
