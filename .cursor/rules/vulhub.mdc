@@ -1,5 +1,5 @@
 ---
-description: 编写Vulhub漏洞文档所使用的prompt
+description: 
 globs: *
 alwaysApply: false
 ---
@@ -13,7 +13,7 @@ Vulhub项目的文件结构如下：
 
 - [README.md](mdc:README.md) 和 [README.zh-cn.md](mdc:README.zh-cn.md) 是整个项目的英文和中文介绍文档
 - base/ 这个目录中包含所有漏洞环境的Dockerfile与其相关文件，目录结构是 `base/[软件名]/[版本号]/[文件名]`
-  - 比如 `base/activemq/6.1.1/Dockerfile` [Dockerfile](mdc:base/activemq/6.1.1/Dockerfile) 这个文件就是ActiveMQ 6.1.1版本的Dockerfile，通过编译这个Dockerfile，我们就可以获得一个6.1.1版本的Apache ActiveMQ服务，以供后面的漏洞环境所使用
+  - 比如 `base/activemq/5.17.3/Dockerfile` [Dockerfile](mdc:base/activemq/5.17.3/Dockerfile) 这个文件就是ActiveMQ 5.17.3版本的Dockerfile，通过编译这个Dockerfile，我们就可以获得一个5.17.3版本的Apache ActiveMQ服务，以供后面的漏洞环境所使用
 - tests/ 这个目录下包含一些用于测试项目代码是否正确的脚本和配置文件，这些文件将会在Github Action中被用到
 - 剩余的所有目录，用于存储漏洞docker-compose.yml，和对应漏洞相关的说明，目录结构是 `[软件名]/[漏洞编号或名字]/[文件名]`
   - 比如 `activemq/CVE-2023-46604`，这个目录下保存着与CVE-2023-46604这个漏洞相关的所有文件，包括漏洞环境的docker-compose.yml文件 [docker-compose.yml](mdc:activemq/CVE-2023-46604/docker-compose.yml) ，CVE-2023-46604漏洞的英文说明 [README.md](mdc:activemq/CVE-2023-46604/README.md) ，中文说明 [README.zh-cn.md](mdc:activemq/CVE-2023-46604/README.zh-cn.md) 还有一些复现漏洞所需要的POC脚本等
