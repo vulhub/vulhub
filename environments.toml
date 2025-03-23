@@ -95,7 +95,7 @@ app = "Aria2"
 path = "aria2/rce"
 
 [[environment]]
-name = "Bash Shellshock Shell Exploit"
+name = "Bash Shellshock Remote Command Injection"
 cve = ["CVE-2014-6271"]
 app = "Bash"
 path = "bash/CVE-2014-6271"
