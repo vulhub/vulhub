@@ -155,31 +155,31 @@ app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2023-29300"
 
 [[environment]]
-name = "Atlassian Confluence Path Traversal and Command Execution"
+name = "Atlassian Confluence Path Traversal Leads to RCE"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
 path = "confluence/CVE-2019-3396"
 
 [[environment]]
-name = "Atlassian Confluence OGNL Expression Injection Code Execution"
+name = "Atlassian Confluence Webwork Pre-Auth OGNL Injection Leads to RCE"
 cve = ["CVE-2021-26084"]
 app = "Confluence"
 path = "confluence/CVE-2021-26084"
 
 [[environment]]
-name = "Atlassian Confluence OGNL Expression Injection Command Execution"
+name = "Atlassian Confluence Pre-Auth Remote Code Execution via OGNL Injection"
 cve = ["CVE-2022-26134"]
 app = "Confluence"
 path = "confluence/CVE-2022-26134"
 
 [[environment]]
-name = "Confluence Access Control Broken by Attributes Overwrite"
+name = "Atlassian Confluence Access Control Broken by Attributes Overwrite"
 cve = ["CVE-2023-22515"]
 app = "Confluence"
 path = "confluence/CVE-2023-22515"
 
 [[environment]]
-name = "Confluence Pre-Auth Remote Code Execution via OGNL Injection"
+name = "Atlassian Confluence Pre-Auth Remote Code Execution via OGNL Injection"
 cve = ["CVE-2023-22527"]
 app = "Confluence"
 path = "confluence/CVE-2023-22527"
