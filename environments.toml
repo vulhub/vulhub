@@ -59,7 +59,7 @@ app = "AJ-Report"
 path = "aj-report/CNVD-2024-15077"
 
 [[environment]]
-name = "Apache Druid Code Execution"
+name = "Apache Druid Embedded Javascript Remote Code Execution"
 cve = ["CVE-2021-25646"]
 app = "Apache Druid"
 path = "apache-druid/CVE-2021-25646"
@@ -71,7 +71,7 @@ app = "Apereo CAS"
 path = "apereo-cas/4.1-rce"
 
 [[environment]]
-name = "Apache APISIX Default Key"
+name = "Apache APISIX Hardcoded API Token Leads to RCE"
 cve = ["CVE-2020-13945"]
 app = "Apache APISIX"
 path = "apisix/CVE-2020-13945"
@@ -95,7 +95,7 @@ app = "Aria2"
 path = "aria2/rce"
 
 [[environment]]
-name = "Bash Shellshock Shell Exploit"
+name = "Bash Shellshock Remote Command Injection"
 cve = ["CVE-2014-6271"]
 app = "Bash"
 path = "bash/CVE-2014-6271"
@@ -113,7 +113,7 @@ app = "Celery"
 path = "celery/celery3_redis_unauth"
 
 [[environment]]
-name = "CGI HTTPoxy Flaw"
+name = "CGI Application Environment Variable Injection by HTTPoxy"
 cve = ["CVE-2016-5385"]
 app = "CGI"
 path = "cgi/CVE-2016-5385"
@@ -155,31 +155,31 @@ app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2023-29300"
 
 [[environment]]
-name = "Atlassian Confluence Path Traversal and Command Execution"
+name = "Atlassian Confluence Path Traversal Leads to RCE"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
 path = "confluence/CVE-2019-3396"
 
 [[environment]]
-name = "Atlassian Confluence OGNL Expression Injection Code Execution"
+name = "Atlassian Confluence Webwork Pre-Auth OGNL Injection Leads to RCE"
 cve = ["CVE-2021-26084"]
 app = "Confluence"
 path = "confluence/CVE-2021-26084"
 
 [[environment]]
-name = "Atlassian Confluence OGNL Expression Injection Command Execution"
+name = "Atlassian Confluence Pre-Auth Remote Code Execution via OGNL Injection"
 cve = ["CVE-2022-26134"]
 app = "Confluence"
 path = "confluence/CVE-2022-26134"
 
 [[environment]]
-name = "Confluence Access Control Broken by Attributes Overwrite"
+name = "Atlassian Confluence Access Control Broken by Attributes Overwrite"
 cve = ["CVE-2023-22515"]
 app = "Confluence"
 path = "confluence/CVE-2023-22515"
 
 [[environment]]
-name = "Confluence Pre-Auth Remote Code Execution via OGNL Injection"
+name = "Atlassian Confluence Pre-Auth Remote Code Execution via OGNL Injection"
 cve = ["CVE-2023-22527"]
 app = "Confluence"
 path = "confluence/CVE-2023-22527"
@@ -461,7 +461,7 @@ app = "Ghostscript"
 path = "ghostscript/CVE-2019-6116"
 
 [[environment]]
-name = "GIT-SHELL Sandbox Bypass"
+name = "GIT-SHELL Sandbox Bypass Leads to RCE"
 cve = ["CVE-2017-8386"]
 app = "Git"
 path = "git/CVE-2017-8386"
@@ -497,13 +497,13 @@ app = "GlassFish"
 path = "glassfish/CVE-2017-1000028"
 
 [[environment]]
-name = "GoAhead Remote Command Execution"
+name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
 cve = ["CVE-2017-17562"]
 app = "GoAhead"
 path = "goahead/CVE-2017-17562"
 
 [[environment]]
-name = "GoAhead Server Environment Variable Injection"
+name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
 cve = ["CVE-2021-42342"]
 app = "GoAhead"
 path = "goahead/CVE-2021-42342"
@@ -1013,25 +1013,25 @@ app = "OpenSSH"
 path = "openssh/CVE-2018-15473"
 
 [[environment]]
-name = "OpenSSL Heartbleed"
+name = "OpenSSL Heartbleed Memory Leak Leads to Information Disclosure"
 cve = ["CVE-2014-0160"]
 app = "OpenSSL"
 path = "openssl/CVE-2014-0160"
 
 [[environment]]
-name = "OpenSSL Infinite Loop DoS"
+name = "OpenSSL Infinite Loop Leads to DoS"
 cve = ["CVE-2022-0778"]
 app = "OpenSSL"
 path = "openssl/CVE-2022-0778"
 
 [[environment]]
-name = "OpenTSDB Command Injection"
+name = "OpenTSDB Arbitrary Command Injection Remote Code Execution"
 cve = ["CVE-2020-35476"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
 
 [[environment]]
-name = "OpenTSDB Arbitrary Commands Injection"
+name = "OpenTSDB Arbitrary Command Injection Remote Code Execution"
 cve = ["CVE-2023-25826"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2023-25826"
@@ -1055,7 +1055,7 @@ app = "pgAdmin"
 path = "pgadmin/CVE-2023-5002"
 
 [[environment]]
-name = "PHP 8.1.0-dev Development Version Backdoor Event"
+name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
 path = "php/8.1-backdoor"
@@ -1091,7 +1091,7 @@ app = "PHP-FPM"
 path = "php/fpm"
 
 [[environment]]
-name = "PHP Files Vulnerabilities (by phpinfo())"
+name = "PHP Local File Inclusion RCE with PHPINFO"
 cve = []
 app = "PHP"
 path = "php/inclusion"
@@ -1199,7 +1199,7 @@ app = "Redis"
 path = "redis/CVE-2022-0543"
 
 [[environment]]
-name = "Rocket Chat MongoDB Injection"
+name = "Rocket Chat Pre-Auth Blind NoSQL Injection"
 cve = ["CVE-2021-22911"]
 app = "Rocket.Chat"
 path = "rocketchat/CVE-2021-22911"
@@ -1229,7 +1229,7 @@ app = "Ruby"
 path = "ruby/CVE-2017-17405"
 
 [[environment]]
-name = "SaltStack Horizontal Privilege Bypass"
+name = "SaltStack Information Disclosure Leads to Privilege Escalation"
 cve = ["CVE-2020-11651"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11651"
@@ -1241,7 +1241,7 @@ app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
 
 [[environment]]
-name = "SaltStack Command Injection"
+name = "SaltStack Command Injection Remote Code Execution"
 cve = ["CVE-2020-16846"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-16846"
@@ -1577,7 +1577,7 @@ app = "Apache Tomcat"
 path = "tomcat/tomcat8"
 
 [[environment]]
-name = "Apache Unomi Remote Expression Code Execution"
+name = "Apache Unomi Expression Language Injection RCE"
 cve = ["CVE-2020-13942"]
 app = "Apache Unomi"
 path = "unomi/CVE-2020-13942"
