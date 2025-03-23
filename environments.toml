@@ -1577,7 +1577,7 @@ app = "Apache Tomcat"
 path = "tomcat/tomcat8"
 
 [[environment]]
-name = "Apache Unomi Remote Expression Code Execution"
+name = "Apache Unomi Expression Language Injection RCE"
 cve = ["CVE-2020-13942"]
 app = "Apache Unomi"
 path = "unomi/CVE-2020-13942"
