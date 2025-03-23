@@ -113,7 +113,7 @@ app = "Celery"
 path = "celery/celery3_redis_unauth"
 
 [[environment]]
-name = "CGI HTTPoxy Flaw"
+name = "CGI Application Environment Variable Injection by HTTPoxy"
 cve = ["CVE-2016-5385"]
 app = "CGI"
 path = "cgi/CVE-2016-5385"
