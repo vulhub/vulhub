@@ -71,7 +71,7 @@ app = "Apereo CAS"
 path = "apereo-cas/4.1-rce"
 
 [[environment]]
-name = "Apache APISIX Default Key"
+name = "Apache APISIX Hardcoded API Token Leads to RCE"
 cve = ["CVE-2020-13945"]
 app = "Apache APISIX"
 path = "apisix/CVE-2020-13945"
