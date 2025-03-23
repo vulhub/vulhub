@@ -1229,7 +1229,7 @@ app = "Ruby"
 path = "ruby/CVE-2017-17405"
 
 [[environment]]
-name = "SaltStack Horizontal Privilege Bypass"
+name = "SaltStack Information Disclosure Leads to Privilege Escalation"
 cve = ["CVE-2020-11651"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11651"
@@ -1241,7 +1241,7 @@ app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
 
 [[environment]]
-name = "SaltStack Command Injection"
+name = "SaltStack Command Injection Remote Code Execution"
 cve = ["CVE-2020-16846"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-16846"
