@@ -59,7 +59,7 @@ app = "AJ-Report"
 path = "aj-report/CNVD-2024-15077"
 
 [[environment]]
-name = "Apache Druid Code Execution"
+name = "Apache Druid Embedded Javascript Remote Code Execution"
 cve = ["CVE-2021-25646"]
 app = "Apache Druid"
 path = "apache-druid/CVE-2021-25646"
