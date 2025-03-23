@@ -1013,13 +1013,13 @@ app = "OpenSSH"
 path = "openssh/CVE-2018-15473"
 
 [[environment]]
-name = "OpenSSL Heartbleed"
+name = "OpenSSL Heartbleed Memory Leak Leads to Information Disclosure"
 cve = ["CVE-2014-0160"]
 app = "OpenSSL"
 path = "openssl/CVE-2014-0160"
 
 [[environment]]
-name = "OpenSSL Infinite Loop DoS"
+name = "OpenSSL Infinite Loop Leads to DoS"
 cve = ["CVE-2022-0778"]
 app = "OpenSSL"
 path = "openssl/CVE-2022-0778"
