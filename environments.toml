@@ -1025,13 +1025,13 @@ app = "OpenSSL"
 path = "openssl/CVE-2022-0778"
 
 [[environment]]
-name = "OpenTSDB Command Injection"
+name = "OpenTSDB Arbitrary Command Injection Remote Code Execution"
 cve = ["CVE-2020-35476"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
 
 [[environment]]
-name = "OpenTSDB Arbitrary Commands Injection"
+name = "OpenTSDB Arbitrary Command Injection Remote Code Execution"
 cve = ["CVE-2023-25826"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2023-25826"
