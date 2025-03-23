@@ -497,13 +497,13 @@ app = "GlassFish"
 path = "glassfish/CVE-2017-1000028"
 
 [[environment]]
-name = "GoAhead Remote Command Execution"
+name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
 cve = ["CVE-2017-17562"]
 app = "GoAhead"
 path = "goahead/CVE-2017-17562"
 
 [[environment]]
-name = "GoAhead Server Environment Variable Injection"
+name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
 cve = ["CVE-2021-42342"]
 app = "GoAhead"
 path = "goahead/CVE-2021-42342"
