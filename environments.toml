@@ -1055,7 +1055,7 @@ app = "pgAdmin"
 path = "pgadmin/CVE-2023-5002"
 
 [[environment]]
-name = "PHP 8.1.0-dev Development Version Backdoor Event"
+name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
 path = "php/8.1-backdoor"
@@ -1091,7 +1091,7 @@ app = "PHP-FPM"
 path = "php/fpm"
 
 [[environment]]
-name = "PHP Files Vulnerabilities (by phpinfo())"
+name = "PHP Local File Inclusion RCE with PHPINFO"
 cve = []
 app = "PHP"
 path = "php/inclusion"
