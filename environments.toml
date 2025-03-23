@@ -1199,7 +1199,7 @@ app = "Redis"
 path = "redis/CVE-2022-0543"
 
 [[environment]]
-name = "Rocket Chat MongoDB Injection"
+name = "Rocket Chat Pre-Auth Blind NoSQL Injection"
 cve = ["CVE-2021-22911"]
 app = "Rocket.Chat"
 path = "rocketchat/CVE-2021-22911"
