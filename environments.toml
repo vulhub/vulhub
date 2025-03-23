@@ -461,7 +461,7 @@ app = "Ghostscript"
 path = "ghostscript/CVE-2019-6116"
 
 [[environment]]
-name = "GIT-SHELL Sandbox Bypass"
+name = "GIT-SHELL Sandbox Bypass Leads to RCE"
 cve = ["CVE-2017-8386"]
 app = "Git"
 path = "git/CVE-2017-8386"
