@@ -1601,6 +1601,12 @@ app = "V2board"
 path = "v2board/1.6-privilege-escalation"
 
 [[environment]]
+name = "Vite Development Server Arbitrary File Read"
+cve = ["CVE-2025-30208"]
+app = "Vite"
+path = "vite/CVE-2025-30208"
+
+[[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
 cve = ["CVE-2017-10271"]
 app = "WebLogic"
