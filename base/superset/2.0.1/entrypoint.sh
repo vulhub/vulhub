@@ -26,7 +26,9 @@ if [[ ! -e /app/superset_home/superset.db ]]; then
 
     echo "Initializing Superset..."
     superset init
+fi
 
+if [[ "${SUPERSET_LOAD_EXAMPLES}" == "yes" ]]; then
     # Start loading examples in background
     load_examples_async &
 fi
