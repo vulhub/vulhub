@@ -1602,6 +1602,12 @@ path = "v2board/1.6-privilege-escalation"
 
 [[environment]]
 name = "Vite Development Server Arbitrary File Read"
+cve = []
+app = "Vite"
+path = "vite/CNVD-2022-44615"
+
+[[environment]]
+name = "Vite Development Server Arbitrary File Read Bypass"
 cve = ["CVE-2025-30208"]
 app = "Vite"
 path = "vite/CVE-2025-30208"
