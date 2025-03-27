@@ -1511,6 +1511,12 @@ app = "Apache Superset"
 path = "superset/CVE-2023-27524"
 
 [[environment]]
+name = "Apache Superset Python Pickle Deserialization Leads to RCE"
+cve = ["CVE-2023-37941"]
+app = "Apache Superset"
+path = "superset/CVE-2023-37941"
+
+[[environment]]
 name = "Supervisord XML-RPC Remote Command Execution"
 cve = ["CVE-2017-11610"]
 app = "Supervisor"
