@@ -72,6 +72,10 @@ It is recommended to use a VPS of at least 1GB memory to build a vulnerability e
 1. To prevent permission errors, please ensure that the docker container has permission to access all files in the current directory.
 2. Vulhub does not support running on machines with non-x86 architecture such as ARM for now.
 
+## Dockerfile
+
+The `Dockerfile` from each images are available in the [`base/`](https://github.com/vulhub/vulhub/tree/master/base) directory. And the container registry is available at [docker hub](https://hub.docker.com/u/vulhub/).
+
 ## Contribution
 
 This project relies on docker. So any error during compilation and running are thrown by docker and related programs. Please find the cause of the error by yourself first. If it is determined that the dockerfile is written incorrectly (or the code is wrong in vulhub), then submit the issue. More details please 👉[Common reasons for compilation failure](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0), hope it can help you.
