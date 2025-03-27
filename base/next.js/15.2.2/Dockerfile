@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY . .
 RUN yarn \
-    && yarn build
+    && yarn build \
+    && rm -rf /usr/local/share/.cache/yarn
 
 EXPOSE 3000
 
