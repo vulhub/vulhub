@@ -4,8 +4,9 @@ WORKDIR /usr/src
 
 COPY . .
 
-RUN yarn
+RUN yarn \
+    && rm -rf /usr/local/share/.cache/yarn
 
-EXPOSE 5173
+EXPOSE 3000
 
-CMD ["yarn", "dev", "--host", "0.0.0.0", "--strictPort", "--port", "5173"]
+CMD ["yarn", "dev", "--host", "0.0.0.0", "--strictPort"]

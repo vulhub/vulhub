@@ -4,7 +4,8 @@ WORKDIR /usr/src
 
 COPY . .
 
-RUN yarn
+RUN yarn \
+    && rm -rf /usr/local/share/.cache/yarn
 
 EXPOSE 5173
 
