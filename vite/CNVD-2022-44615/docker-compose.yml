@@ -1,0 +1,5 @@
+services:
+  web:
+    image: vulhub/vite:2.1.5
+    ports:
+      - "5173:5173"
