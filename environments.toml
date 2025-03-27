@@ -1505,6 +1505,12 @@ app = "Apache Struts2"
 path = "struts2/s2-067"
 
 [[environment]]
+name = "Apache Superset Hardcoded JWT Secret Key Leads to Authentication Bypass"
+cve = ["CVE-2023-27524"]
+app = "Apache Superset"
+path = "superset/CVE-2023-27524"
+
+[[environment]]
 name = "Supervisord XML-RPC Remote Command Execution"
 cve = ["CVE-2017-11610"]
 app = "Supervisor"
