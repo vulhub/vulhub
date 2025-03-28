@@ -1,6 +1,6 @@
 tags = [
     # Vulnerability type
-    "Auth Bypass", "Backdoor", "Deserialization", "DoS", "Environment Injection", "Expression Injection", "File Inclusion", "File Operation", "Hard Coding", "Info Disclosure", "Path Traversal", "Privilege Escalation", "RCE", "SQL Injection", "SSRF", "SSTI", "XXE", "XSS", "SSRF",
+    "Auth Bypass", "Backdoor", "Deserialization", "DoS", "Environment Injection", "Expression Injection", "File Upload", "File Deletion", "Hard Coding", "Info Disclosure", "Path Traversal", "Privilege Escalation", "RCE", "SQL Injection", "SSRF", "SSTI", "XXE", "XSS", "SSRF",
     # Application type
     "CMS", "Database", "Framework", "Message Queue", "Webserver",
     # Other
@@ -20,7 +20,7 @@ name = "Apache ActiveMQ Arbitrary File Write"
 cve = ["CVE-2016-3088"]
 app = "Apache ActiveMQ"
 path = "activemq/CVE-2016-3088"
-tags = ["File Operation", "RCE", "Message Queue"]
+tags = ["File Upload", "RCE", "Message Queue"]
 
 [[environment]]
 name = "Apache ActiveMQ Jolokia Authenticated Remote Code Execution"
@@ -48,7 +48,7 @@ name = "Adminer Remote Arbitrary File Read"
 cve = ["CVE-2021-43008"]
 app = "Adminer"
 path = "adminer/CVE-2021-43008"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Apache Airflow Command Injection"
@@ -118,7 +118,7 @@ name = "Aria2 Arbitrary File Write"
 cve = []
 app = "Aria2"
 path = "aria2/rce"
-tags = ["File Operation"]
+tags = ["File Upload", "RCE"]
 
 [[environment]]
 name = "Bash Shellshock Remote Command Injection"
@@ -167,7 +167,7 @@ name = "Adobe ColdFusion File Read"
 cve = ["CVE-2010-2861"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2010-2861"
-tags = ["File Operation", "Webserver"]
+tags = ["Path Traversal", "Webserver"]
 
 [[environment]]
 name = "Adobe ColdFusion Deserialization"
@@ -181,7 +181,7 @@ name = "Adobe ColdFusion Local File Inclusion Leads to RCE"
 cve = ["CVE-2023-26360"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2023-26360"
-tags = ["RCE", "File Inclusion", "Webserver"]
+tags = ["RCE", "Path Traversal", "Webserver"]
 
 [[environment]]
 name = "Adobe ColdFusion XML Deserialization Leads to RCE"
@@ -272,7 +272,7 @@ name = "Discuz!X <= 3.4 Arbitrary File Deletion"
 cve = []
 app = "Discuz!"
 path = "discuz/x3.4-arbitrary-file-deletion"
-tags = ["File Operation"]
+tags = ["File Deletion"]
 
 [[environment]]
 name = "Django 500 Debug Page Cross-Site Scripting (XSS)"
@@ -370,7 +370,7 @@ name = "Drupal Cross-Site Scripting by File Upload"
 cve = ["CVE-2019-6341"]
 app = "Drupal"
 path = "drupal/CVE-2019-6341"
-tags = ["XSS", "File Operation", "CMS"]
+tags = ["XSS", "File Upload", "CMS"]
 
 [[environment]]
 name = "Apache Dubbo Java Deserialization"
@@ -426,7 +426,7 @@ name = "ElasticSearch Arbitrary File Upload"
 cve = []
 app = "ElasticSearch"
 path = "elasticsearch/WooYun-2015-110216"
-tags = ["File Operation", "Database"]
+tags = ["File Upload", "Database"]
 
 [[environment]]
 name = "Electron Remote Command Execution"
@@ -468,14 +468,14 @@ name = "FFmpeg Arbitrary File Read and SSRF"
 cve = ["CVE-2016-1897", "CVE-2016-1898"]
 app = "FFmpeg"
 path = "ffmpeg/CVE-2016-1897"
-tags = ["File Operation", "SSRF"]
+tags = ["Path Traversal", "SSRF"]
 
 [[environment]]
 name = "FFmpeg AVI Arbitrary File Read"
 cve = ["CVE-2017-9993"]
 app = "FFmpeg"
 path = "ffmpeg/CVE-2017-9993"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Flask (Jinja2) Server-Side Template Injection"
@@ -566,7 +566,7 @@ name = "GitLab Arbitrary File Read"
 cve = ["CVE-2016-9086"]
 app = "GitLab"
 path = "gitlab/CVE-2016-9086"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "GitLab Remote Command Execution"
@@ -587,7 +587,7 @@ name = "GlassFish 4.1.0 Arbitrary File Read"
 cve = ["CVE-2017-1000028"]
 app = "GlassFish"
 path = "glassfish/CVE-2017-1000028"
-tags = ["File Operation", "Webserver"]
+tags = ["Path Traversal", "Webserver"]
 
 [[environment]]
 name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
@@ -720,7 +720,7 @@ name = "ImageMagick Arbitrary File Read"
 cve = ["CVE-2022-44268"]
 app = "ImageMagick"
 path = "imagemagick/CVE-2022-44268"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "InfluxDB Empty JWT Secret Key Authentication Bypass"
@@ -797,7 +797,7 @@ name = "Jenkins Arbitrary File Read Through the CLI"
 cve = ["CVE-2024-23897"]
 app = "Jenkins"
 path = "jenkins/CVE-2024-23897"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Jetty WEB-INF Sensitive Information Disclosure"
@@ -888,7 +888,7 @@ name = "Kibana Local File Inclusion"
 cve = ["CVE-2018-17246"]
 app = "Kibana"
 path = "kibana/CVE-2018-17246"
-tags = ["File Inclusion"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
@@ -923,7 +923,7 @@ name = "Librsvg XInclude Arbitrary file reading"
 cve = ["CVE-2023-38633"]
 app = "Librsvg"
 path = "librsvg/CVE-2023-38633"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "libssh Server-side Authentication Bypass"
@@ -965,7 +965,7 @@ name = "Metabase Arbitrary File Read"
 cve = ["CVE-2021-41277"]
 app = "Metabase"
 path = "metabase/CVE-2021-41277"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Metabase Pre-Auth JDBC Remote Code Execution"
@@ -993,7 +993,7 @@ name = "ACME mini_httpd Arbitrary File Read"
 cve = ["CVE-2018-18778"]
 app = "mini_httpd"
 path = "mini_httpd/CVE-2018-18778"
-tags = ["File Operation", "Webserver"]
+tags = ["Path Traversal", "Webserver"]
 
 [[environment]]
 name = "MinIO Cluster Mode Information Disclosure"
@@ -1273,7 +1273,7 @@ name = "PHP File Read to Remote Code Execution Through GNU C Library Iconv"
 cve = ["CVE-2024-2961"]
 app = "PHP"
 path = "php/CVE-2024-2961"
-tags = ["RCE", "File Operation"]
+tags = ["RCE", "Path Traversal"]
 
 [[environment]]
 name = "PHP-FPM FastCGI Unauthorized Access Leads to Remote Code Execution"
@@ -1287,7 +1287,7 @@ name = "PHP Local File Inclusion RCE with PHPINFO"
 cve = []
 app = "PHP"
 path = "php/inclusion"
-tags = ["RCE", "File Inclusion"]
+tags = ["RCE", "Path Traversal"]
 
 [[environment]]
 name = "PHP XML External Entity Injection (XXE)"
@@ -1308,7 +1308,7 @@ name = "PHPMailer Arbitrary File Read"
 cve = ["CVE-2017-5223"]
 app = "PHPMailer"
 path = "phpmailer/CVE-2017-5223"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "phpMyAdmin 4.0.x-4.6.2 Remote Code Execution"
@@ -1322,7 +1322,7 @@ name = "phpmyadmin 4.8.1 Remote File Inclusion"
 cve = ["CVE-2018-12613"]
 app = "phpMyAdmin"
 path = "phpmyadmin/CVE-2018-12613"
-tags = ["File Inclusion"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "phpmyadmin scripts/setup.php Deserialization"
@@ -1392,7 +1392,7 @@ name = "Ruby on Rails Path Traversal and Arbitrary File Read"
 cve = ["CVE-2019-5418"]
 app = "Ruby on Rails"
 path = "rails/CVE-2019-5418"
-tags = ["File Operation", "Path Traversal", "Framework"]
+tags = ["Path Traversal", "Framework"]
 
 [[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
@@ -1427,7 +1427,7 @@ name = "Apache RocketMQ NameServer Arbitrary File Write"
 cve = ["CVE-2023-37582"]
 app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-37582"
-tags = ["File Operation", "Message Queue"]
+tags = ["File Upload", "Message Queue"]
 
 [[environment]]
 name = "Rsync Unauthorized Access"
@@ -1455,7 +1455,7 @@ name = "SaltStack Arbitrary File Read and Write"
 cve = ["CVE-2020-11652"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
-tags = ["File Operation"]
+tags = ["File Upload", "Path Traversal"]
 
 [[environment]]
 name = "SaltStack Command Injection Remote Code Execution"
@@ -1553,7 +1553,7 @@ name = "Apache Solr RemoteStreaming Arbitrary File Reading and SSRF"
 cve = []
 app = "Apache Solr"
 path = "solr/Remote-Streaming-Fileread"
-tags = ["File Operation", "SSRF"]
+tags = ["Path Traversal", "SSRF"]
 
 [[environment]]
 name = "Apache Spark Unauthorized Access Leads to Remote Code Execution"
@@ -1826,7 +1826,7 @@ name = "ThinkPHP Multilingual Local File Inclusion"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/lang-rce"
-tags = ["File Inclusion"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Tiki Wiki CMS Groupware Authentication Bypass"
@@ -1840,14 +1840,14 @@ name = "Tomcat Arbitrary Writing of Files in the PUT Method"
 cve = ["CVE-2017-12615"]
 app = "Apache Tomcat"
 path = "tomcat/CVE-2017-12615"
-tags = ["File Operation", "Webserver"]
+tags = ["File Upload", "Webserver"]
 
 [[environment]]
 name = "Apache Tomcat AJP Bug"
 cve = ["CVE-2020-1938"]
 app = "Apache Tomcat"
 path = "tomcat/CVE-2020-1938"
-tags = ["Auth Bypass", "File Inclusion", "Webserver"]
+tags = ["Auth Bypass", "Path Traversal", "Webserver"]
 
 [[environment]]
 name = "Tomcat Session Deserialization Remote Code Execution"
@@ -1896,14 +1896,14 @@ name = "Vite Development Server Arbitrary File Read"
 cve = []
 app = "Vite"
 path = "vite/CNVD-2022-44615"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Vite Development Server Arbitrary File Read Bypass"
 cve = ["CVE-2025-30208"]
 app = "Vite"
 path = "vite/CVE-2025-30208"
-tags = ["File Operation"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
@@ -1924,7 +1924,7 @@ name = "WebLogic Arbitrary File Upload"
 cve = ["CVE-2018-2894"]
 app = "WebLogic"
 path = "weblogic/CVE-2018-2894"
-tags = ["File Operation", "Webserver"]
+tags = ["File Upload", "Webserver"]
 
 [[environment]]
 name = "WebLogic Management Console Unauthorized Remote Command Execution"
@@ -1952,7 +1952,7 @@ name = "WebLogic Weak Password, Arbitrary File Read and Remote Code Execution"
 cve = []
 app = "WebLogic"
 path = "weblogic/weak_password"
-tags = ["RCE", "File Operation", "Webserver"]
+tags = ["RCE", "Path Traversal", "Webserver"]
 
 [[environment]]
 name = "Webmin Remote Command Execution"
