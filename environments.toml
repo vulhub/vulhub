@@ -1,1727 +1,2025 @@
+tags = [
+    # Vulnerability type
+    "Auth Bypass", "Backdoor", "Deserialization", "DoS", "Environment Injection", "Expression Injection", "File Inclusion", "File Operation", "Hard Coding", "Info Disclosure", "Path Traversal", "Privilege Escalation", "RCE", "SQL Injection", "SSRF", "SSTI", "XXE", "XSS", "SSRF",
+    # Application type
+    "CMS", "Database", "Framework", "Message Queue", "Webserver",
+    # Other
+    "Other",  
+]
+
+
 [[environment]]
 name = "Apache ActiveMQ Deserialization"
 cve = ["CVE-2015-5254"]
 app = "Apache ActiveMQ"
 path = "activemq/CVE-2015-5254"
+tags = ["Deserialization", "RCE", "Message Queue"]
 
 [[environment]]
 name = "Apache ActiveMQ Arbitrary File Write"
 cve = ["CVE-2016-3088"]
 app = "Apache ActiveMQ"
 path = "activemq/CVE-2016-3088"
+tags = ["File Operation", "RCE", "Message Queue"]
 
 [[environment]]
 name = "Apache ActiveMQ Jolokia Authenticated Remote Code Execution"
 cve = ["CVE-2022-41678"]
 app = "Apache ActiveMQ"
 path = "activemq/CVE-2022-41678"
+tags = ["RCE", "Message Queue"]
 
 [[environment]]
 name = "Apache ActiveMQ OpenWire Protocol Deserialization RCE"
 cve = ["CVE-2023-46604"]
 app = "Apache ActiveMQ"
 path = "activemq/CVE-2023-46604"
+tags = ["RCE", "Deserialization", "Message Queue"]
 
 [[environment]]
 name = "Adminer Server-side Request Forgery on Error Page of Elasticsearch and ClickHouse"
 cve = ["CVE-2021-21311"]
 app = "Adminer"
 path = "adminer/CVE-2021-21311"
+tags = ["SSRF", "Database"]
 
 [[environment]]
 name = "Adminer Remote Arbitrary File Read"
 cve = ["CVE-2021-43008"]
 app = "Adminer"
 path = "adminer/CVE-2021-43008"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Apache Airflow Command Injection"
 cve = ["CVE-2020-11978"]
 app = "Apache Airflow"
 path = "airflow/CVE-2020-11978"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apache Airflow Celery Message Middleware Command Execution"
 cve = ["CVE-2020-11981"]
 app = "Apache Airflow"
 path = "airflow/CVE-2020-11981"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apache Airflow Permission Bypass"
 cve = ["CVE-2020-17526"]
 app = "Apache Airflow"
 path = "airflow/CVE-2020-17526"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "AJ-Report Authentication Bypass and Remote Code Execution"
 cve = []
 app = "AJ-Report"
 path = "aj-report/CNVD-2024-15077"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Apache Druid Embedded Javascript Remote Code Execution"
 cve = ["CVE-2021-25646"]
 app = "Apache Druid"
 path = "apache-druid/CVE-2021-25646"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apereo CAS 4.1 Deserialization Command Execution"
 cve = []
 app = "Apereo CAS"
 path = "apereo-cas/4.1-rce"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Apache APISIX Hardcoded API Token Leads to RCE"
 cve = ["CVE-2020-13945"]
 app = "Apache APISIX"
 path = "apisix/CVE-2020-13945"
+tags = ["RCE", "Hard Coding", "Webserver"]
 
 [[environment]]
 name = "Apache APISIX Dashboard API Permission Bypass to RCE"
 cve = ["CVE-2021-45232"]
 app = "Apache APISIX"
 path = "apisix/CVE-2021-45232"
+tags = ["RCE", "Auth Bypass", "Webserver"]
 
 [[environment]]
 name = "AppWeb Authentication Bypass"
 cve = ["CVE-2018-8715"]
 app = "AppWeb"
 path = "appweb/CVE-2018-8715"
+tags = ["Auth Bypass", "Webserver"]
 
 [[environment]]
 name = "Aria2 Arbitrary File Write"
 cve = []
 app = "Aria2"
 path = "aria2/rce"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Bash Shellshock Remote Command Injection"
 cve = ["CVE-2014-6271"]
 app = "Bash"
 path = "bash/CVE-2014-6271"
+tags = ["RCE"]
 
 [[environment]]
 name = "Cacti Foreground Command Injection"
 cve = ["CVE-2022-46169"]
 app = "Cacti"
 path = "cacti/CVE-2022-46169"
+tags = ["RCE"]
 
 [[environment]]
 name = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
 cve = []
 app = "Celery"
 path = "celery/celery3_redis_unauth"
+tags = ["Deserialization", "Auth Bypass"]
 
 [[environment]]
 name = "CGI Application Environment Variable Injection by HTTPoxy"
 cve = ["CVE-2016-5385"]
 app = "CGI"
 path = "cgi/CVE-2016-5385"
+tags = ["Environment Injection"]
 
 [[environment]]
 name = "CMS Made Simple (CMSMS) < 2.2.10 Unauthenticated SQL Injection"
 cve = ["CVE-2019-9053"]
 app = "CMS Made Simple"
 path = "cmsms/CVE-2019-9053"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "CMS Made Simple (CMSMS) Unauthenticated Remote Code Execution"
 cve = ["CVE-2019-9053", "CVE-2021-26120"]
 app = "CMS Made Simple"
 path = "cmsms/CVE-2021-26120"
+tags = ["RCE"]
 
 [[environment]]
 name = "Adobe ColdFusion File Read"
 cve = ["CVE-2010-2861"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2010-2861"
+tags = ["File Operation", "Webserver"]
 
 [[environment]]
 name = "Adobe ColdFusion Deserialization"
 cve = ["CVE-2017-3066"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2017-3066"
+tags = ["Deserialization", "RCE", "Webserver"]
 
 [[environment]]
 name = "Adobe ColdFusion Local File Inclusion Leads to RCE"
 cve = ["CVE-2023-26360"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2023-26360"
+tags = ["RCE", "File Inclusion", "Webserver"]
 
 [[environment]]
 name = "Adobe ColdFusion XML Deserialization Leads to RCE"
 cve = ["CVE-2023-29300"]
 app = "Adobe ColdFusion"
 path = "coldfusion/CVE-2023-29300"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "Atlassian Confluence Path Traversal Leads to RCE"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
 path = "confluence/CVE-2019-3396"
+tags = ["RCE", "Path Traversal"]
 
 [[environment]]
 name = "Atlassian Confluence Webwork Pre-Auth OGNL Injection Leads to RCE"
 cve = ["CVE-2021-26084"]
 app = "Confluence"
 path = "confluence/CVE-2021-26084"
+tags = ["RCE", "Expression Injection"]
 
 [[environment]]
 name = "Atlassian Confluence Pre-Auth Remote Code Execution via OGNL Injection"
 cve = ["CVE-2022-26134"]
 app = "Confluence"
 path = "confluence/CVE-2022-26134"
+tags = ["RCE", "Expression Injection"]
 
 [[environment]]
 name = "Atlassian Confluence Access Control Broken by Attributes Overwrite"
 cve = ["CVE-2023-22515"]
 app = "Confluence"
 path = "confluence/CVE-2023-22515"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Atlassian Confluence Pre-Auth Remote Code Execution via OGNL Injection"
 cve = ["CVE-2023-22527"]
 app = "Confluence"
 path = "confluence/CVE-2023-22527"
+tags = ["RCE", "Expression Injection"]
 
 [[environment]]
 name = "CouchDB Vertical Permission Bypass"
 cve = ["CVE-2017-12635"]
 app = "Apache CouchDB"
 path = "couchdb/CVE-2017-12635"
+tags = ["Auth Bypass", "Database"]
 
 [[environment]]
 name = "CouchDB Arbitrary Command Execution"
 cve = ["CVE-2017-12636"]
 app = "Apache CouchDB"
 path = "couchdb/CVE-2017-12636"
+tags = ["RCE", "Database"]
 
 [[environment]]
 name = "CouchDB Erlang Distributed Protocol Code Execution"
 cve = ["CVE-2022-24706"]
 app = "Apache CouchDB"
 path = "couchdb/CVE-2022-24706"
+tags = ["RCE", "Database"]
 
 [[environment]]
 name = "CraftCMS register_argc_argv Leads to Remote Code Execution"
 cve = ["CVE-2024-56145"]
 app = "CraftCMS"
 path = "craftcms/CVE-2024-56145"
+tags = ["RCE", "CMS"]
 
 [[environment]]
 name = "OpenPrinting Cups-Browsed Remote Code Execution via The FoomaticRIPCommandLine PPD parameter"
 cve = ["CVE-2024-47177"]
 app = "OpenPrinting Cups-Browsed"
 path = "cups-browsed/CVE-2024-47177"
+tags = ["RCE"]
 
 [[environment]]
 name = "Discuz 7.x/6.x Remote Code Execution via Global Variable Override"
 cve = []
 app = "Discuz!"
 path = "discuz/wooyun-2010-080723"
+tags = ["RCE"]
 
 [[environment]]
-name = "Discuz!X ≤3.4 Arbitrary File Deletion"
+name = "Discuz!X <= 3.4 Arbitrary File Deletion"
 cve = []
 app = "Discuz!"
 path = "discuz/x3.4-arbitrary-file-deletion"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Django 500 Debug Page Cross-Site Scripting (XSS)"
 cve = ["CVE-2017-12794"]
 app = "Django"
 path = "django/CVE-2017-12794"
+tags = ["XSS", "Framework"]
 
 [[environment]]
 name = "Django < 2.0.8 Open Redirect in CommonMiddleware"
 cve = ["CVE-2018-14574"]
 app = "Django"
 path = "django/CVE-2018-14574"
+tags = ["Framework"]
 
 [[environment]]
 name = "Django JSONField/HStoreField SQL Injection"
 cve = ["CVE-2019-14234"]
 app = "Django"
 path = "django/CVE-2019-14234"
+tags = ["SQL Injection", "Framework"]
 
 [[environment]]
 name = "Django GIS functions and aggregates on Oracle SQL Injection"
 cve = ["CVE-2020-9402"]
 app = "Django"
 path = "django/CVE-2020-9402"
+tags = ["SQL Injection", "Framework"]
 
 [[environment]]
 name = "Django QuerySet.order_by() SQL Injection"
 cve = ["CVE-2021-35042"]
 app = "Django"
 path = "django/CVE-2021-35042"
+tags = ["SQL Injection", "Framework"]
 
 [[environment]]
 name = "Django Trunc(kind) and Extract(lookup_name) SQL Injection"
 cve = ["CVE-2022-34265"]
 app = "Django"
 path = "django/CVE-2022-34265"
+tags = ["SQL Injection", "Framework"]
 
 [[environment]]
 name = "DNS Domain Transfer"
 cve = []
 app = "DNS"
 path = "dns/dns-zone-transfer"
+tags = ["Other"]
 
 [[environment]]
 name = "Docker Remote API Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "Docker"
 path = "docker/unauthorized-rce"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = 'Drupal < 7.32 "Drupalgeddon" SQL Injection'
 cve = ["CVE-2014-3704"]
 app = "Drupal"
 path = "drupal/CVE-2014-3704"
+tags = ["SQL Injection", "CMS"]
 
 [[environment]]
 name = "Drupal Core 8 PECL YAML Deserialization Remote Code Execution"
 cve = ["CVE-2017-6920"]
 app = "Drupal"
 path = "drupal/CVE-2017-6920"
+tags = ["RCE", "Deserialization", "CMS"]
 
 [[environment]]
 name = "Drupal Drupalgeddon 2 Unauthenticated Remote Code Execution"
 cve = ["CVE-2018-7600"]
 app = "Drupal"
 path = "drupal/CVE-2018-7600"
+tags = ["RCE", "CMS"]
 
 [[environment]]
 name = "Drupal Drupalgeddon 3 Authenticated Remote Code Execution"
 cve = ["CVE-2018-7602"]
 app = "Drupal"
 path = "drupal/CVE-2018-7602"
+tags = ["RCE", "CMS"]
 
 [[environment]]
 name = "Drupal Remote Code Execution by phar deserialization"
 cve = ["CVE-2019-6339"]
 app = "Drupal"
 path = "drupal/CVE-2019-6339"
+tags = ["RCE", "Deserialization", "CMS"]
 
 [[environment]]
 name = "Drupal Cross-Site Scripting by File Upload"
 cve = ["CVE-2019-6341"]
 app = "Drupal"
 path = "drupal/CVE-2019-6341"
+tags = ["XSS", "File Operation", "CMS"]
 
 [[environment]]
 name = "Apache Dubbo Java Deserialization"
 cve = ["CVE-2019-17564"]
 app = "Apache Dubbo"
 path = "dubbo/CVE-2019-17564"
+tags = ["Deserialization", "RCE"]
 
 [[environment]]
 name = "ECShop 4.x collection_list SQL Injection"
 cve = []
 app = "ECshop"
 path = "ecshop/collection_list-sqli"
+tags = ["SQL Injection", "CMS"]
 
 [[environment]]
 name = "ECShop 2.x/3.x SQL Injection/Arbitrary Code Execution"
 cve = []
 app = "ECshop"
 path = "ecshop/xianzhi-2017-02-82239600"
+tags = ["SQL Injection", "RCE", "CMS"]
 
 [[environment]]
 name = "ElasticSearch Remote Code Execution"
 cve = ["CVE-2014-3120"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2014-3120"
+tags = ["RCE", "Database"]
 
 [[environment]]
 name = "ElasticSearch Groovy Sandbox Bypass and Remote Code Execution"
 cve = ["CVE-2015-1427"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-1427"
+tags = ["RCE", "Expression Injection", "Database"]
 
 [[environment]]
 name = "ElasticSearch Plug-in Directory Traversal"
 cve = ["CVE-2015-3337"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-3337"
+tags = ["Path Traversal", "Database"]
 
 [[environment]]
 name = "ElasticSearch Snapshot and Restore Directory Traversal"
 cve = ["CVE-2015-5531"]
 app = "ElasticSearch"
 path = "elasticsearch/CVE-2015-5531"
+tags = ["Path Traversal", "Database"]
 
 [[environment]]
 name = "ElasticSearch Arbitrary File Upload"
 cve = []
 app = "ElasticSearch"
 path = "elasticsearch/WooYun-2015-110216"
+tags = ["File Operation", "Database"]
 
 [[environment]]
 name = "Electron Remote Command Execution"
 cve = ["CVE-2018-1000006"]
 app = "Electron"
 path = "electron/CVE-2018-1000006"
+tags = ["RCE"]
 
 [[environment]]
 name = "Electron WebPreferences Remote Command Execution"
 cve = ["CVE-2018-15685"]
 app = "Electron"
 path = "electron/CVE-2018-15685"
+tags = ["RCE"]
 
 [[environment]]
 name = "elFinder ZIP Parameter and Arbitrary Command Injection"
 cve = ["CVE-2021-32682"]
 app = "elFinder"
 path = "elfinder/CVE-2021-32682"
+tags = ["RCE"]
 
 [[environment]]
 name = "Fastjson 1.2.24 Deserialization Remote Command Execution"
 cve = ["CVE-2017-18349"]
 app = "Fastjson"
 path = "fastjson/1.2.24-rce"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Fastjson 1.2.47 Deserialization Remote Command Execution"
 cve = []
 app = "Fastjson"
 path = "fastjson/1.2.47-rce"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "FFmpeg Arbitrary File Read and SSRF"
 cve = ["CVE-2016-1897", "CVE-2016-1898"]
 app = "FFmpeg"
 path = "ffmpeg/CVE-2016-1897"
+tags = ["File Operation", "SSRF"]
 
 [[environment]]
 name = "FFmpeg AVI Arbitrary File Read"
 cve = ["CVE-2017-9993"]
 app = "FFmpeg"
 path = "ffmpeg/CVE-2017-9993"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Flask (Jinja2) Server-Side Template Injection"
 cve = []
 app = "Jinja2"
 path = "flask/ssti"
+tags = ["SSTI", "RCE", "Framework"]
 
 [[environment]]
 name = "Apache Flink Upload Path Traversal"
 cve = ["CVE-2020-17518"]
 app = "Apache Flink"
 path = "flink/CVE-2020-17518"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Apache Flink `jobmanager/logs` Path Traversal"
 cve = ["CVE-2020-17519"]
 app = "Apache Flink"
 path = "flink/CVE-2020-17519"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "GeoServer Unauthenticated Server-Side Request Forgery"
 cve = ["CVE-2021-40822"]
 app = "GeoServer"
 path = "geoserver/CVE-2021-40822"
+tags = ["SSRF"]
 
 [[environment]]
 name = "GeoServer Remote Code Injection caused by JAI-EXT"
 cve = ["CVE-2022-24816", "CVE-2023-35042"]
 app = "GeoServer"
 path = "geoserver/CVE-2022-24816"
+tags = ["RCE"]
 
 [[environment]]
 name = "GeoServer OGC Filter SQL Injection"
 cve = ["CVE-2023-25157"]
 app = "GeoServer"
 path = "geoserver/CVE-2023-25157"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "GeoServer Unauthenticated Remote Code Execution in Evaluating Property Name Expressions"
 cve = ["CVE-2024-36401"]
 app = "GeoServer"
 path = "geoserver/CVE-2024-36401"
+tags = ["RCE", "Expression Injection"]
 
 [[environment]]
 name = "GhostScript Sandbox Bypass Command Execution"
 cve = ["CVE-2018-16509"]
 app = "Ghostscript"
 path = "ghostscript/CVE-2018-16509"
+tags = ["RCE"]
 
 [[environment]]
 name = "GhostScript Sandbox Bypass Command Execution"
 cve = ["CVE-2018-19475"]
 app = "Ghostscript"
 path = "ghostscript/CVE-2018-19475"
+tags = ["RCE"]
 
 [[environment]]
 name = "GhostScript Sandbox Bypass Command Execution"
 cve = ["CVE-2019-6116"]
 app = "Ghostscript"
 path = "ghostscript/CVE-2019-6116"
+tags = ["RCE"]
 
 [[environment]]
 name = "GIT-SHELL Sandbox Bypass Leads to RCE"
 cve = ["CVE-2017-8386"]
 app = "Git"
 path = "git/CVE-2017-8386"
+tags = ["RCE"]
 
 [[environment]]
 name = "Gitea 1.4.0 Directory Traversal Leading to Remote Command Execution"
 cve = []
 app = "Gitea"
 path = "gitea/1.4-rce"
+tags = ["RCE", "Path Traversal"]
 
 [[environment]]
 name = "GitLab Arbitrary File Read"
 cve = ["CVE-2016-9086"]
 app = "GitLab"
 path = "gitlab/CVE-2016-9086"
+tags = ["File Operation"]
 
 [[environment]]
 name = "GitLab Remote Command Execution"
 cve = ["CVE-2021-22205"]
 app = "GitLab"
 path = "gitlab/CVE-2021-22205"
+tags = ["RCE"]
 
 [[environment]]
 name = "gitlist 0.6.0 Remote Command Execution"
 cve = ["CVE-2018-1000533"]
 app = "GitList"
 path = "gitlist/CVE-2018-1000533"
+tags = ["RCE"]
 
 [[environment]]
 name = "GlassFish 4.1.0 Arbitrary File Read"
 cve = ["CVE-2017-1000028"]
 app = "GlassFish"
 path = "glassfish/CVE-2017-1000028"
+tags = ["File Operation", "Webserver"]
 
 [[environment]]
 name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
 cve = ["CVE-2017-17562"]
 app = "GoAhead"
 path = "goahead/CVE-2017-17562"
+tags = ["RCE", "Environment Injection"]
 
 [[environment]]
 name = "GoAhead Web Server Environment Variables Injection and `LD_PRELOAD` Remote Code Execution"
 cve = ["CVE-2021-42342"]
 app = "GoAhead"
 path = "goahead/CVE-2021-42342"
+tags = ["RCE", "Environment Injection"]
 
 [[environment]]
 name = "Gogs Session Overwrite and Arbitrary User Forge"
 cve = ["CVE-2018-18925"]
 app = "Gogs"
 path = "gogs/CVE-2018-18925"
+tags = ["Auth Bypass", "Path Traversal"]
 
 [[environment]]
 name = "Grafana 8.x Plug-in Module Directory Traversal"
 cve = ["CVE-2021-43798"]
 app = "Grafana"
 path = "grafana/CVE-2021-43798"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Grafana Management Background SSRF"
 cve = []
 app = "Grafana"
 path = "grafana/admin-ssrf"
+tags = ["SSRF"]
 
 [[environment]]
 name = "H2 Database Console Unauthorized Access"
 cve = []
 app = "Springboot H2 Database"
 path = "h2database/h2-console-unacc"
+tags = ["Auth Bypass", "Database"]
 
 [[environment]]
 name = "Hadoop YARN ResourceManager Unauthorized Access"
 cve = []
 app = "Hadoop YARN"
 path = "hadoop/unauthorized-yarn"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Apache HertzBeat SnakeYaml Deserialization Remote Code Execution"
 cve = ["CVE-2024-42323"]
 app = "Apache HertzBeat"
 path = "hertzbeat/CVE-2024-42323"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Apache HTTPD Newline Parsing Vulnerability"
 cve = ["CVE-2017-15715"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2017-15715"
+tags = ["Webserver"]
 
 [[environment]]
 name = "Apache HTTP Server 2.4.48 mod_proxy SSRF"
 cve = ["CVE-2021-40438"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2021-40438"
+tags = ["SSRF", "Webserver"]
 
 [[environment]]
 name = "Apache HTTP Server 2.4.49 Path Traversal"
 cve = ["CVE-2021-41773"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2021-41773"
+tags = ["Path Traversal", "Webserver"]
 
 [[environment]]
 name = "Apache HTTP Server 2.4.50 Path Traversal"
 cve = ["CVE-2021-42013"]
 app = "Apache HTTP Server"
 path = "httpd/CVE-2021-42013"
+tags = ["Path Traversal", "Webserver"]
 
 [[environment]]
 name = "Apache HTTPD Multiple Extension Parsing Vulnerability"
 cve = []
 app = "Apache HTTP Server"
 path = "httpd/apache_parsing_vulnerability"
+tags = ["Webserver"]
 
 [[environment]]
 name = "Apache HTTP Server SSI Remote Command Execution"
 cve = []
 app = "Apache HTTP Server"
 path = "httpd/ssi-rce"
+tags = ["RCE", "Webserver"]
 
 [[environment]]
 name = "Apache HugeGraph Unauthenticated Remote Code Execution"
 cve = ["CVE-2024-27348"]
 app = "Apache HugeGraph"
 path = "hugegraph/CVE-2024-27348"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apache HugeGraph JWT Token Secret Hardcoding Leads to Authentication Bypass"
 cve = ["CVE-2024-43441"]
 app = "Apache HugeGraph"
 path = "hugegraph/CVE-2024-43441"
+tags = ["Auth Bypass", "Hard Coding"]
 
 [[environment]]
 name = "Imagetragick Command Execution"
 cve = ["CVE-2016-3714"]
 app = "ImageMagick"
 path = "imagemagick/imagetragick"
+tags = ["RCE"]
 
 [[environment]]
 name = "ImageMagick PDF Password Location Command Injection"
 cve = ["CVE-2020-29599"]
 app = "ImageMagick"
 path = "imagemagick/CVE-2020-29599"
+tags = ["RCE"]
 
 [[environment]]
 name = "ImageMagick Arbitrary File Read"
 cve = ["CVE-2022-44268"]
 app = "ImageMagick"
 path = "imagemagick/CVE-2022-44268"
+tags = ["File Operation"]
 
 [[environment]]
 name = "InfluxDB Empty JWT Secret Key Authentication Bypass"
 cve = ["CVE-2019-20933"]
 app = "InfluxDB"
 path = "influxdb/CVE-2019-20933"
+tags = ["Auth Bypass", "Hard Coding"]
 
 [[environment]]
 name = "Jackson-databind Deserialization Remote Command Execution"
 cve = ["CVE-2017-7525"]
 app = "Jackson-Databind"
 path = "jackson/CVE-2017-7525"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Java RMI codebase Remote Code Execution"
 cve = []
 app = "Java RMI"
 path = "java/rmi-codebase"
+tags = ["RCE"]
 
 [[environment]]
-name = "Java ≤JDK 8u111 RMI Registry Deserialization Remote Code Execution"
+name = "Java <= JDK 8u111 RMI Registry Deserialization Remote Code Execution"
 cve = []
 app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Java < JDK8u232_b09 RMI Registry Deserialization Remote Code Execution Bypass"
 cve = []
 app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization-bypass"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "JBoss 5.x/6.x Deserialization Remote Code Execution"
 cve = ["CVE-2017-12149"]
 app = "JBoss"
 path = "jboss/CVE-2017-12149"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "JBoss 4.x JBossMQ JMS Deserialization Remote Code Execution"
 cve = ["CVE-2017-7504"]
 app = "JBoss"
 path = "jboss/CVE-2017-7504"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "JBoss JMXInvokerServlet Deserialization Remote Code Execution"
 cve = []
 app = "JBoss"
 path = "jboss/JMXInvokerServlet-deserialization"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "Jenkins Remote Code Execution"
 cve = ["CVE-2017-1000353"]
 app = "Jenkins"
 path = "jenkins/CVE-2017-1000353"
+tags = ["RCE"]
 
 [[environment]]
 name = "Jenkins Remote Command Execution"
 cve = ["CVE-2018-1000861"]
 app = "Jenkins"
 path = "jenkins/CVE-2018-1000861"
+tags = ["RCE"]
 
 [[environment]]
 name = "Jenkins Arbitrary File Read Through the CLI"
 cve = ["CVE-2024-23897"]
 app = "Jenkins"
 path = "jenkins/CVE-2024-23897"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Jetty WEB-INF Sensitive Information Disclosure"
 cve = ["CVE-2021-28164"]
 app = "Jetty"
 path = "jetty/CVE-2021-28164"
+tags = ["Info Disclosure", "Webserver"]
 
 [[environment]]
 name = "Jetty Common Servlets Component ConcatServlet Information Disclosure"
 cve = ["CVE-2021-28169"]
 app = "Jetty"
 path = "jetty/CVE-2021-28169"
+tags = ["Info Disclosure", "Webserver"]
 
 [[environment]]
 name = "Jetty WEB-INF Sensitive Information Disclosure"
 cve = ["CVE-2021-34429"]
 app = "Jetty"
 path = "jetty/CVE-2021-34429"
+tags = ["Info Disclosure", "Webserver"]
 
 [[environment]]
 name = "JimuReport FreeMarker Server Side Template Injection RCE"
 cve = ["CVE-2023-4450"]
 app = "JimuReport"
 path = "jimureport/CVE-2023-4450"
+tags = ["RCE", "SSTI"]
 
 [[environment]]
 name = "Atlassian Jira Template Injection"
 cve = ["CVE-2019-11581"]
 app = "Jira"
 path = "jira/CVE-2019-11581"
+tags = ["SSTI", "RCE"]
 
 [[environment]]
 name = "Apache JMeter RMI Deserialization Remote Code Execution"
 cve = ["CVE-2018-1297"]
 app = "Apache Jmeter"
 path = "jmeter/CVE-2018-1297"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Joomla 3.4.5 Deserialization"
 cve = ["CVE-2015-8562"]
 app = "Joomla"
 path = "joomla/CVE-2015-8562"
+tags = ["Deserialization", "RCE", "CMS"]
 
 [[environment]]
 name = "Joomla 3.7.0 SQL Injection"
 cve = ["CVE-2017-8917"]
 app = "Joomla"
 path = "joomla/CVE-2017-8917"
+tags = ["SQL Injection", "CMS"]
 
 [[environment]]
 name = "Joomla 4.2.7 Permission Bypass"
 cve = ["CVE-2023-23752"]
 app = "Joomla"
 path = "joomla/CVE-2023-23752"
+tags = ["Auth Bypass", "CMS"]
 
 [[environment]]
 name = "Jumpserver random seed leakage and account takeover"
 cve = ["CVE-2023-42820"]
 app = "Jumpserver"
 path = "jumpserver/CVE-2023-42820"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Jupyter Notebook Unauthorized Access"
 cve = []
 app = "Jupyter"
 path = "jupyter/notebook-rce"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Apache Kafka Clients JNDI Injection"
 cve = ["CVE-2023-25194"]
 app = "Apache Kafka"
 path = "kafka/CVE-2023-25194"
+tags = ["RCE", "Message Queue"]
 
 [[environment]]
 name = "Kibana Local File Inclusion"
 cve = ["CVE-2018-17246"]
 app = "Kibana"
 path = "kibana/CVE-2018-17246"
+tags = ["File Inclusion"]
 
 [[environment]]
 name = "Kibana Prototype Chain Pollution to Arbitrary Code Execution"
 cve = ["CVE-2019-7609"]
 app = "Kibana"
 path = "kibana/CVE-2019-7609"
+tags = ["RCE"]
 
 [[environment]]
 name = "Kibana 7.6.2 upgrade-assistant-telemetry Prototype Pollution Leads to RCE"
 cve = ["CVE-2020-7012"]
 app = "Kibana"
 path = "kibana/CVE-2020-7012"
+tags = ["RCE"]
 
 [[environment]]
 name = "kkFileView ZipSlip Remote Code Execution"
 cve = []
 app = "kkFileView"
 path = "kkfileview/4.3-zipslip-rce"
+tags = ["RCE", "Path Traversal"]
 
 [[environment]]
 name = "Laravel Ignition 2.5.1 Remote Code Execution"
 cve = ["CVE-2021-3129"]
 app = "Laravel"
 path = "laravel/CVE-2021-3129"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Librsvg XInclude Arbitrary file reading"
 cve = ["CVE-2023-38633"]
 app = "Librsvg"
 path = "librsvg/CVE-2023-38633"
+tags = ["File Operation"]
 
 [[environment]]
 name = "libssh Server-side Authentication Bypass"
 cve = ["CVE-2018-10933"]
 app = "LibSSH"
 path = "libssh/CVE-2018-10933"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Liferay Portal CE Deserialization Remote Code Execution"
 cve = ["CVE-2020-7961"]
 app = "Liferay Portal"
 path = "liferay-portal/CVE-2020-7961"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Apache Log4j TCP Server Deserialization Remote Code Execution"
 cve = ["CVE-2017-5645"]
 app = "Apache Log4j"
 path = "log4j/CVE-2017-5645"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Apache Log4j2 lookup JNDI Injection"
 cve = ["CVE-2021-44228"]
 app = "Apache Log4j"
 path = "log4j/CVE-2021-44228"
+tags = ["RCE"]
 
 [[environment]]
 name = "Magento 2.2 SQL Injection"
 cve = []
 app = "Magento"
 path = "magento/2.2-sqli"
+tags = ["SQL Injection", "CMS"]
 
 [[environment]]
 name = "Metabase Arbitrary File Read"
 cve = ["CVE-2021-41277"]
 app = "Metabase"
 path = "metabase/CVE-2021-41277"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Metabase Pre-Auth JDBC Remote Code Execution"
 cve = ["CVE-2023-38646"]
 app = "Metabase"
 path = "metabase/CVE-2023-38646"
+tags = ["RCE"]
 
 [[environment]]
 name = "MeterSphere v1.15.4 Authenticated SQL Injection"
 cve = ["CVE-2021-45788"]
 app = "MeterSphere"
 path = "metersphere/CVE-2021-45788"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "MeterSphere Plugin Endpoint Remote Code Execution"
 cve = []
 app = "MeterSphere"
 path = "metersphere/plugin-rce"
+tags = ["RCE"]
 
 [[environment]]
 name = "ACME mini_httpd Arbitrary File Read"
 cve = ["CVE-2018-18778"]
 app = "mini_httpd"
 path = "mini_httpd/CVE-2018-18778"
+tags = ["File Operation", "Webserver"]
 
 [[environment]]
 name = "MinIO Cluster Mode Information Disclosure"
 cve = ["CVE-2023-28432"]
 app = "MinIO"
 path = "minio/CVE-2023-28432"
+tags = ["Info Disclosure"]
 
 [[environment]]
 name = "Mojarra JSF ViewState Deserialization"
 cve = []
 app = "Mojarra JSF"
 path = "mojarra/jsf-viewstate-deserialization"
+tags = ["Deserialization", "RCE"]
 
 [[environment]]
 name = "Mongo Express Remote Code Execution"
 cve = ["CVE-2019-10758"]
 app = "Mongo Express"
 path = "mongo-express/CVE-2019-10758"
+tags = ["RCE"]
 
 [[environment]]
 name = "MySQL Authentication Bypass"
 cve = ["CVE-2012-2122"]
 app = "MySQL"
 path = "mysql/CVE-2012-2122"
+tags = ["Auth Bypass", "Database"]
 
 [[environment]]
 name = "Nacos Authentication Bypass"
 cve = ["CVE-2021-29441"]
 app = "Nacos"
 path = "nacos/CVE-2021-29441"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Alibaba Nacos Authentication Bypass and Remote Code Execution"
 cve = ["CVE-2021-29442"]
 app = "Nacos"
 path = "nacos/CVE-2021-29442"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Neo4j Shell Server Deserialization"
 cve = ["CVE-2021-34371"]
 app = "Neo4j"
 path = "neo4j/CVE-2021-34371"
+tags = ["Deserialization", "RCE"]
 
 [[environment]]
 name = "Next.js Middleware Authorization Bypass"
 cve = ["CVE-2025-29927"]
 app = "Next.js"
 path = "next.js/CVE-2025-29927"
+tags = ["Auth Bypass", "Framework"]
 
 [[environment]]
 name = "Nexus Repository Manager 3 Unauthenticated Remote Code Execution"
 cve = ["CVE-2019-7238"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2019-7238"
+tags = ["RCE"]
 
 [[environment]]
 name = "Nexus Repository Manager 3 Authenticated Remote Code Execution"
 cve = ["CVE-2020-10199"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10199"
+tags = ["RCE"]
 
 [[environment]]
 name = "Nexus Repository Manager 3 Authenticated Remote Code Execution"
 cve = ["CVE-2020-10204"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2020-10204"
+tags = ["RCE"]
 
 [[environment]]
 name = "Nexus Repository Manager 3 Unauthenticated Path Traversal"
 cve = ["CVE-2024-4956"]
 app = "Nexus Repository Manager"
 path = "nexus/CVE-2024-4956"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Nginx Filename Logic Vulnerability"
 cve = ["CVE-2013-4547"]
 app = "Nginx"
 path = "nginx/CVE-2013-4547"
+tags = ["Webserver"]
 
 [[environment]]
 name = "Nginx Cache Leak by Integer Overflow"
 cve = ["CVE-2017-7529"]
 app = "Nginx"
 path = "nginx/CVE-2017-7529"
+tags = ["Info Disclosure", "Webserver"]
 
 [[environment]]
 name = "Nginx Misconfiguration Vulnerabilities"
 cve = []
 app = "Nginx"
 path = "nginx/insecure-configuration"
+tags = ["Webserver"]
 
 [[environment]]
 name = "Nginx Parsing Vulnerability"
 cve = []
 app = "Nginx"
 path = "nginx/nginx_parsing_vulnerability"
+tags = ["Webserver"]
 
 [[environment]]
 name = "Node.js 8.5.0 Path Traversal"
 cve = ["CVE-2017-14849"]
 app = "Node.JS"
 path = "node/CVE-2017-14849"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Node-Postgres Remote Code Execution"
 cve = ["CVE-2017-16082"]
 app = "node-postgres"
 path = "node/CVE-2017-16082"
+tags = ["RCE"]
 
 [[environment]]
 name = "ntopng Permission Bypass"
 cve = ["CVE-2021-28073"]
 app = "ntopng"
 path = "ntopng/CVE-2021-28073"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Apache OfBiz Deserialization Command Execution"
 cve = ["CVE-2020-9496"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2020-9496"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Unsafe deserialization of XMLRPC arguments in Apache OFBiz"
 cve = ["CVE-2023-49070"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2023-49070"
+tags = ["Deserialization", "RCE"]
 
 [[environment]]
 name = "Apache OFBiz Authentication Bypass Leads to RCE"
 cve = ["CVE-2023-51467"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2023-51467"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Apache OFBiz Authentication Bypass Leads to RCE"
 cve = ["CVE-2024-38856"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2024-38856"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Apache OFBiz Authentication Bypass Leads to RCE"
 cve = ["CVE-2024-45195"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2024-45195"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Apache OFBiz SSRF and Remote Code Execution"
 cve = ["CVE-2024-45507"]
 app = "Apache OFBiz"
 path = "ofbiz/CVE-2024-45507"
+tags = ["RCE", "SSRF"]
 
 [[environment]]
 name = "Openfire Management Background Authentication Bypass"
 cve = ["CVE-2023-32315"]
 app = "Openfire"
 path = "openfire/CVE-2023-32315"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "OpenSMTPD Remote Command Execution"
 cve = ["CVE-2020-7247"]
 app = "OpenSMTPD"
 path = "opensmtpd/CVE-2020-7247"
+tags = ["RCE"]
 
 [[environment]]
 name = "OpenSSH Username Enumeration"
 cve = ["CVE-2018-15473"]
 app = "OpenSSH"
 path = "openssh/CVE-2018-15473"
+tags = ["Info Disclosure"]
 
 [[environment]]
 name = "OpenSSL Heartbleed Memory Leak Leads to Information Disclosure"
 cve = ["CVE-2014-0160"]
 app = "OpenSSL"
 path = "openssl/CVE-2014-0160"
+tags = ["Info Disclosure"]
 
 [[environment]]
 name = "OpenSSL Infinite Loop Leads to DoS"
 cve = ["CVE-2022-0778"]
 app = "OpenSSL"
 path = "openssl/CVE-2022-0778"
+tags = ["DoS"]
 
 [[environment]]
 name = "OpenTSDB Arbitrary Command Injection Remote Code Execution"
 cve = ["CVE-2020-35476"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2020-35476"
+tags = ["RCE"]
 
 [[environment]]
 name = "OpenTSDB Arbitrary Command Injection Remote Code Execution"
 cve = ["CVE-2023-25826"]
 app = "OpenTSDB"
 path = "opentsdb/CVE-2023-25826"
+tags = ["RCE"]
 
 [[environment]]
 name = "PDF.js Arbitrary JavaScript Code Execution"
 cve = ["CVE-2024-4367"]
 app = "PDF.js"
 path = "pdfjs/CVE-2024-4367"
+tags = ["RCE"]
 
 [[environment]]
 name = "pgAdmin <= 6.16 Unauthenticated Remote Command Execution"
 cve = ["CVE-2022-4223"]
 app = "pgAdmin"
 path = "pgadmin/CVE-2022-4223"
+tags = ["RCE"]
 
 [[environment]]
 name = "pgAdmin <= 7.6 Authenticated Remote Command Execution"
 cve = ["CVE-2023-5002"]
 app = "pgAdmin"
 path = "pgadmin/CVE-2023-5002"
+tags = ["RCE"]
 
 [[environment]]
 name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
 path = "php/8.1-backdoor"
+tags = ["RCE", "Backdoor"]
 
 [[environment]]
 name = "PHP-CGI Remote Code Execution"
 cve = ["CVE-2012-1823"]
 app = "PHP-CGI"
 path = "php/CVE-2012-1823"
+tags = ["RCE"]
 
 [[environment]]
 name = "PHP IMAP Remote Command Execution"
 cve = ["CVE-2018-19518"]
 app = "PHP-IMAP"
 path = "php/CVE-2018-19518"
+tags = ["RCE"]
 
 [[environment]]
 name = "PHP-FPM Remote Code Execution"
 cve = ["CVE-2019-11043"]
 app = "PHP-FPM"
 path = "php/CVE-2019-11043"
+tags = ["RCE"]
 
 [[environment]]
 name = "PHP File Read to Remote Code Execution Through GNU C Library Iconv"
 cve = ["CVE-2024-2961"]
 app = "PHP"
 path = "php/CVE-2024-2961"
+tags = ["RCE", "File Operation"]
 
 [[environment]]
 name = "PHP-FPM FastCGI Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "PHP-FPM"
 path = "php/fpm"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "PHP Local File Inclusion RCE with PHPINFO"
 cve = []
 app = "PHP"
 path = "php/inclusion"
+tags = ["RCE", "File Inclusion"]
 
 [[environment]]
 name = "PHP XML External Entity Injection (XXE)"
 cve = []
 app = "PHP"
 path = "php/php_xxe"
+tags = ["XXE"]
 
 [[environment]]
 name = "XDebug Remote Debugging Code Execution"
 cve = []
 app = "PHP"
 path = "php/xdebug-rce"
+tags = ["RCE"]
 
 [[environment]]
 name = "PHPMailer Arbitrary File Read"
 cve = ["CVE-2017-5223"]
 app = "PHPMailer"
 path = "phpmailer/CVE-2017-5223"
+tags = ["File Operation"]
 
 [[environment]]
-name = "phpMyAdmin 4.0.x—4.6.2 Remote Code Execution"
+name = "phpMyAdmin 4.0.x-4.6.2 Remote Code Execution"
 cve = ["CVE-2016-5734"]
 app = "phpMyAdmin"
 path = "phpmyadmin/CVE-2016-5734"
+tags = ["RCE"]
 
 [[environment]]
 name = "phpmyadmin 4.8.1 Remote File Inclusion"
 cve = ["CVE-2018-12613"]
 app = "phpMyAdmin"
 path = "phpmyadmin/CVE-2018-12613"
+tags = ["File Inclusion"]
 
 [[environment]]
 name = "phpmyadmin scripts/setup.php Deserialization"
 cve = []
 app = "phpMyAdmin"
 path = "phpmyadmin/WooYun-2016-199433"
+tags = ["Deserialization", "RCE"]
 
 [[environment]]
 name = "phpunit Remote Code Execution"
 cve = ["CVE-2017-9841"]
 app = "PHPUnit"
 path = "phpunit/CVE-2017-9841"
+tags = ["RCE"]
 
 [[environment]]
 name = "Polkit pkexec Privilege Escalation"
 cve = ["CVE-2021-4034"]
 app = "Polkit Pkexec"
 path = "polkit/CVE-2021-4034"
+tags = ["Privilege Escalation"]
 
 [[environment]]
 name = "PostgreSQL Privilege Escalation"
 cve = ["CVE-2018-1058"]
 app = "PostgreSQL"
 path = "postgres/CVE-2018-1058"
+tags = ["Privilege Escalation", "Database"]
 
 [[environment]]
 name = "PostgreSQL Arbitrary Command Execution with Admin Privileges"
 cve = ["CVE-2019-9193"]
 app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
+tags = ["RCE", "Database"]
 
 [[environment]]
 name = "Python PIL/Pillow Remote Command Execution by GhostScript GhostButt"
 cve = ["CVE-2017-8291"]
 app = "Python"
 path = "python/PIL-CVE-2017-8291"
+tags = ["RCE"]
 
 [[environment]]
 name = "Python PIL/Pillow Remote Command Execution by GhostScript"
 cve = ["CVE-2018-16509"]
 app = "Python"
 path = "python/PIL-CVE-2018-16509"
+tags = ["RCE"]
 
 [[environment]]
 name = "Python Unpickle Deserialization Remote Code Execution"
 cve = []
 app = "Python"
 path = "python/unpickle"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Ruby on Rails Path Traversal"
 cve = ["CVE-2018-3760"]
 app = "Ruby on Rails"
 path = "rails/CVE-2018-3760"
+tags = ["Path Traversal", "Framework"]
 
 [[environment]]
 name = "Ruby on Rails Path Traversal and Arbitrary File Read"
 cve = ["CVE-2019-5418"]
 app = "Ruby on Rails"
 path = "rails/CVE-2019-5418"
+tags = ["File Operation", "Path Traversal", "Framework"]
 
 [[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
 cve = []
 app = "Redis"
 path = "redis/4-unacc"
+tags = ["RCE", "Database"]
 
 [[environment]]
 name = "Redis Lua Sandbox Bypass Command Execution"
 cve = ["CVE-2022-0543"]
 app = "Redis"
 path = "redis/CVE-2022-0543"
+tags = ["RCE", "Database"]
 
 [[environment]]
 name = "Rocket Chat Pre-Auth Blind NoSQL Injection"
 cve = ["CVE-2021-22911"]
 app = "Rocket.Chat"
 path = "rocketchat/CVE-2021-22911"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "Apache RocketMQ Broker Remote Command Execution"
 cve = ["CVE-2023-33246"]
 app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-33246"
+tags = ["RCE", "Message Queue"]
 
 [[environment]]
 name = "Apache RocketMQ NameServer Arbitrary File Write"
 cve = ["CVE-2023-37582"]
 app = "Apache RocketMQ"
 path = "rocketmq/CVE-2023-37582"
+tags = ["File Operation", "Message Queue"]
 
 [[environment]]
 name = "Rsync Unauthorized Access"
 cve = []
 app = "rsync"
 path = "rsync/common"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Ruby Net::FTP Module Command Injection"
 cve = ["CVE-2017-17405"]
 app = "Ruby"
 path = "ruby/CVE-2017-17405"
+tags = ["RCE"]
 
 [[environment]]
 name = "SaltStack Information Disclosure Leads to Privilege Escalation"
 cve = ["CVE-2020-11651"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11651"
+tags = ["Privilege Escalation", "Info Disclosure"]
 
 [[environment]]
 name = "SaltStack Arbitrary File Read and Write"
 cve = ["CVE-2020-11652"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-11652"
+tags = ["File Operation"]
 
 [[environment]]
 name = "SaltStack Command Injection Remote Code Execution"
 cve = ["CVE-2020-16846"]
 app = "SaltStack"
 path = "saltstack/CVE-2020-16846"
+tags = ["RCE"]
 
 [[environment]]
 name = "Samba Remote Command Execution"
 cve = ["CVE-2017-7494"]
 app = "Samba"
 path = "samba/CVE-2017-7494"
+tags = ["RCE"]
 
 [[environment]]
 name = "Scrapyd Unauthorized Access"
 cve = []
 app = "Scrapyd"
 path = "scrapy/scrapyd-unacc"
+tags = ["Auth Bypass", "RCE"]
 
 [[environment]]
 name = "Apache Shiro Authentication Bypass"
 cve = ["CVE-2010-3863"]
 app = "Apache Shiro"
 path = "shiro/CVE-2010-3863"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Apache Shiro 1.2.4 Deserialization Remote Code Execution"
 cve = ["CVE-2016-4437"]
 app = "Apache Shiro"
 path = "shiro/CVE-2016-4437"
+tags = ["RCE", "Deserialization", "Hard Coding"]
 
 [[environment]]
 name = "Apache Shiro Authentication Bypass"
 cve = ["CVE-2020-1957"]
 app = "Apache Shiro"
 path = "shiro/CVE-2020-1957"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "ShowDoc 3.2.5 SQL Injection"
 cve = []
 app = "ShowDoc"
 path = "showdoc/3.2.5-sqli"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "ShowDoc Unauthenticated File Upload and Remote Code Execution"
 cve = []
 app = "ShowDoc"
 path = "showdoc/CNVD-2020-26585"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apache Skywalking 8.3.0 SQL Injection"
 cve = []
 app = "Apache SkyWalking"
 path = "skywalking/8.3.0-sqli"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "Apache Solr Remote Command Execution"
 cve = ["CVE-2017-12629"]
 app = "Apache Solr"
 path = "solr/CVE-2017-12629-RCE"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apache Solr XML External Entity Injection"
 cve = ["CVE-2017-12629"]
 app = "Apache Solr"
 path = "solr/CVE-2017-12629-XXE"
+tags = ["XXE"]
 
 [[environment]]
 name = "Apache Solr Remote Command Execution"
 cve = ["CVE-2019-0193"]
 app = "Apache Solr"
 path = "solr/CVE-2019-0193"
+tags = ["RCE"]
 
 [[environment]]
 name = "Apache Solr Remote Code Execution Via Velocity Template"
 cve = ["CVE-2019-17558"]
 app = "Apache Solr"
 path = "solr/CVE-2019-17558"
+tags = ["RCE", "Expression Injection"]
 
 [[environment]]
 name = "Apache Solr RemoteStreaming Arbitrary File Reading and SSRF"
 cve = []
 app = "Apache Solr"
 path = "solr/Remote-Streaming-Fileread"
+tags = ["File Operation", "SSRF"]
 
 [[environment]]
 name = "Apache Spark Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "Apache Spark"
 path = "spark/unacc"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "Spring Security Oauth2 Remote Command Execution"
 cve = ["CVE-2016-4977"]
 app = "Spring Security Oauth2"
 path = "spring/CVE-2016-4977"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Spring WebFlow Remote Code Execution"
 cve = ["CVE-2017-4971"]
 app = "Spring Webflow"
 path = "spring/CVE-2017-4971"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Spring Data Rest Remote Command Execution"
 cve = ["CVE-2017-8046"]
 app = "Spring Data Rest"
 path = "spring/CVE-2017-8046"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Spring Messaging Remote Command Execution"
 cve = ["CVE-2018-1270"]
 app = "Spring Messaging"
 path = "spring/CVE-2018-1270"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Spring Data Commons Remote Command Execution"
 cve = ["CVE-2018-1273"]
 app = "Spring Data Commons"
 path = "spring/CVE-2018-1273"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Spring Cloud Gateway Actuator API SpEL Expression Injection Command Execution"
 cve = ["CVE-2022-22947"]
 app = "Spring Cloud Gateway"
 path = "spring/CVE-2022-22947"
+tags = ["RCE", "Expression Injection", "Framework"]
 
 [[environment]]
 name = "Spring Cloud Function SpEL Expression Command Injection"
 cve = ["CVE-2022-22963"]
 app = "Spring Cloud Function"
 path = "spring/CVE-2022-22963"
+tags = ["RCE", "Expression Injection", "Framework"]
 
 [[environment]]
 name = "Spring Framework Data Binding Remote Code Execution on JDK 9+"
 cve = ["CVE-2022-22965"]
 app = "Spring"
 path = "spring/CVE-2022-22965"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Spring Security Authorization Bypass in RegexRequestMatcher"
 cve = ["CVE-2022-22978"]
 app = "Spring"
 path = "spring/CVE-2022-22978"
+tags = ["Auth Bypass", "Framework"]
 
 [[environment]]
 name = "S2-001 Remote Code Execution"
 cve = []
 app = "Apache Struts2"
 path = "struts2/s2-001"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-005 Remote Code Execution"
 cve = ["CVE-2010-1870"]
 app = "Apache Struts2"
 path = "struts2/s2-005"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-007 Remote Code Execution"
 cve = []
 app = "Apache Struts2"
 path = "struts2/s2-007"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-008 Remote Code Execution"
 cve = ["CVE-2012-0391"]
 app = "Apache Struts2"
 path = "struts2/s2-008"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-009 Remote Code Execution"
 cve = ["CVE-2011-3923"]
 app = "Apache Struts2"
 path = "struts2/s2-009"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-012 Remote Code Execution"
 cve = ["CVE-2013-1965"]
 app = "Apache Struts2"
 path = "struts2/s2-012"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-013 Remote Code Execution"
 cve = ["CVE-2013-1966"]
 app = "Apache Struts2"
 path = "struts2/s2-013"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-015 Remote Code Execution"
 cve = ["CVE-2013-2134", "CVE-2013-2135"]
 app = "Apache Struts2"
 path = "struts2/s2-015"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-016 Remote Code Execution"
 cve = ["CVE-2013-2251"]
 app = "Apache Struts2"
 path = "struts2/s2-016"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-032 Remote Code Execution"
 cve = ["CVE-2016-3081"]
 app = "Apache Struts2"
 path = "struts2/s2-032"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-045 Remote Code Execution"
 cve = ["CVE-2017-5638"]
 app = "Apache Struts2"
 path = "struts2/s2-045"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-046 Remote Code Execution"
 cve = ["CVE-2017-5638"]
 app = "Apache Struts2"
 path = "struts2/s2-046"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-048 Remote Code Execution"
 cve = ["CVE-2017-9791"]
 app = "Apache Struts2"
 path = "struts2/s2-048"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-052 Remote Code Execution"
 cve = ["CVE-2017-9805"]
 app = "Apache Struts2"
 path = "struts2/s2-052"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "S2-053 Remote Code Execution"
 cve = ["CVE-2017-12611"]
 app = "Apache Struts2"
 path = "struts2/s2-053"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Struts2 S2-057 Remote Command Execution"
 cve = ["CVE-2018-11776"]
 app = "Apache Struts2"
 path = "struts2/s2-057"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Struts2 S2-059 Remote Command Execution"
 cve = ["CVE-2019-0230"]
 app = "Apache Struts2"
 path = "struts2/s2-059"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Struts2 S2-061 Remote Command Execution"
 cve = ["CVE-2020-17530"]
 app = "Apache Struts2"
 path = "struts2/s2-061"
+tags = ["RCE", "Framework"]
 
 [[environment]]
 name = "Struts2 S2-066 Upload Path Traversal"
 cve = ["CVE-2023-50164"]
 app = "Apache Struts2"
 path = "struts2/s2-066"
+tags = ["Path Traversal", "Framework"]
 
 [[environment]]
 name = "Struts2 S2-067 Upload Path Traversal"
 cve = ["CVE-2024-53677"]
 app = "Apache Struts2"
 path = "struts2/s2-067"
+tags = ["Path Traversal", "Framework"]
 
 [[environment]]
 name = "Apache Superset Hardcoded JWT Secret Key Leads to Authentication Bypass"
 cve = ["CVE-2023-27524"]
 app = "Apache Superset"
 path = "superset/CVE-2023-27524"
+tags = ["Auth Bypass", "Hard Coding"]
 
 [[environment]]
 name = "Apache Superset Python Pickle Deserialization Leads to RCE"
 cve = ["CVE-2023-37941"]
 app = "Apache Superset"
 path = "superset/CVE-2023-37941"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "Supervisord XML-RPC Remote Command Execution"
 cve = ["CVE-2017-11610"]
 app = "Supervisor"
 path = "supervisor/CVE-2017-11610"
+tags = ["RCE"]
 
 [[environment]]
 name = "Jetbrains TeamCity Authentication Bypass and Remote Command Execution"
 cve = ["CVE-2023-42793"]
 app = "TeamCity"
 path = "teamcity/CVE-2023-42793"
+tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
 name = "ThinkPHP 2.x Remote Code Execution"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/2-rce"
+tags = ["RCE"]
 
 [[environment]]
 name = "ThinkPHP5 5.0.22/5.1.29 Remote Code Execution"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/5-rce"
+tags = ["RCE"]
 
 [[environment]]
 name = "ThinkPHP5 5.0.23 Remote Code Execution"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/5.0.23-rce"
+tags = ["RCE"]
 
 [[environment]]
 name = "ThinkPHP5 SQL Injection Vulnerabilities/Information Leakage"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/in-sqlinjection"
+tags = ["SQL Injection", "Info Disclosure"]
 
 [[environment]]
 name = "ThinkPHP Multilingual Local File Inclusion"
 cve = []
 app = "ThinkPHP"
 path = "thinkphp/lang-rce"
+tags = ["File Inclusion"]
 
 [[environment]]
 name = "Tiki Wiki CMS Groupware Authentication Bypass"
 cve = ["CVE-2020-15906"]
 app = "Tiki Wiki"
 path = "tikiwiki/CVE-2020-15906"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "Tomcat Arbitrary Writing of Files in the PUT Method"
 cve = ["CVE-2017-12615"]
 app = "Apache Tomcat"
 path = "tomcat/CVE-2017-12615"
+tags = ["File Operation", "Webserver"]
 
 [[environment]]
 name = "Apache Tomcat AJP Bug"
 cve = ["CVE-2020-1938"]
 app = "Apache Tomcat"
 path = "tomcat/CVE-2020-1938"
+tags = ["Auth Bypass", "File Inclusion", "Webserver"]
 
 [[environment]]
 name = "Tomcat Session Deserialization Remote Code Execution"
 cve = ["CVE-2025-24813"]
 app = "Apache Tomcat"
 path = "tomcat/CVE-2025-24813"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "Tomcat Weak Password"
 cve = []
 app = "Apache Tomcat"
 path = "tomcat/tomcat8"
+tags = ["Auth Bypass", "Webserver"]
 
 [[environment]]
 name = "Apache Unomi Expression Language Injection RCE"
 cve = ["CVE-2020-13942"]
 app = "Apache Unomi"
 path = "unomi/CVE-2020-13942"
+tags = ["RCE", "Expression Injection"]
 
 [[environment]]
 name = "uWSGI PHP Directory Traversal"
 cve = ["CVE-2018-7490"]
 app = "uWSGI"
 path = "uwsgi/CVE-2018-7490"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "uWSGI Unauthorized Access"
 cve = []
 app = "uWSGI"
 path = "uwsgi/unacc"
+tags = ["Auth Bypass", "RCE"]
 
 [[environment]]
 name = "V2board 1.6.1 Privilege Escalation"
 cve = []
 app = "V2board"
 path = "v2board/1.6-privilege-escalation"
+tags = ["Privilege Escalation"]
 
 [[environment]]
 name = "Vite Development Server Arbitrary File Read"
 cve = []
 app = "Vite"
 path = "vite/CNVD-2022-44615"
+tags = ["File Operation"]
 
 [[environment]]
 name = "Vite Development Server Arbitrary File Read Bypass"
 cve = ["CVE-2025-30208"]
 app = "Vite"
 path = "vite/CVE-2025-30208"
+tags = ["File Operation"]
 
 [[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
 cve = ["CVE-2017-10271"]
 app = "WebLogic"
 path = "weblogic/CVE-2017-10271"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "Weblogic WLS Core Components Deserialization Remote Command Execution"
 cve = ["CVE-2018-2628"]
 app = "WebLogic"
 path = "weblogic/CVE-2018-2628"
+tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
 name = "WebLogic Arbitrary File Upload"
 cve = ["CVE-2018-2894"]
 app = "WebLogic"
 path = "weblogic/CVE-2018-2894"
+tags = ["File Operation", "Webserver"]
 
 [[environment]]
 name = "WebLogic Management Console Unauthorized Remote Command Execution"
 cve = ["CVE-2020-14882"]
 app = "WebLogic"
 path = "weblogic/CVE-2020-14882"
+tags = ["RCE", "Webserver"]
 
 [[environment]]
 name = "WebLogic Unauthorized Remote Code Execution"
 cve = ["CVE-2023-21839"]
 app = "WebLogic"
 path = "weblogic/CVE-2023-21839"
+tags = ["RCE", "Webserver"]
 
 [[environment]]
 name = "Weblogic UDDI Explorer Server-Side Request Forgery (SSRF)"
 cve = []
 app = "WebLogic"
 path = "weblogic/ssrf"
+tags = ["SSRF", "Webserver"]
 
 [[environment]]
 name = "WebLogic Weak Password, Arbitrary File Read and Remote Code Execution"
 cve = []
 app = "WebLogic"
 path = "weblogic/weak_password"
+tags = ["RCE", "File Operation", "Webserver"]
 
 [[environment]]
 name = "Webmin Remote Command Execution"
 cve = ["CVE-2019-15107"]
 app = "Webmin"
 path = "webmin/CVE-2019-15107"
+tags = ["RCE"]
 
 [[environment]]
 name = "Wordpress 4.6 Arbitrary Command Execution (PwnScriptum)"
 cve = []
 app = "Wordpress"
 path = "wordpress/pwnscriptum"
+tags = ["RCE", "CMS"]
 
 [[environment]]
 name = "XStream Deserialization Command Execution"
 cve = ["CVE-2021-21351"]
 app = "XStream"
 path = "xstream/CVE-2021-21351"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "XStream Deserialization Command Execution"
 cve = ["CVE-2021-29505"]
 app = "XStream"
 path = "xstream/CVE-2021-29505"
+tags = ["RCE", "Deserialization"]
 
 [[environment]]
 name = "XXL-JOB Executor Unauthorized Access"
 cve = []
 app = "XXL-JOB"
 path = "xxl-job/unacc"
+tags = ["Auth Bypass"]
 
 [[environment]]
 name = "YApi NoSQL Injection to Remote Command Execution"
 cve = []
 app = "YApi"
 path = "yapi/mongodb-inj"
+tags = ["SQL Injection", "RCE"]
 
 [[environment]]
 name = "YApi Open Registration due to RCE"
 cve = []
 app = "YApi"
 path = "yapi/unacc"
+tags = ["RCE"]
 
 [[environment]]
 name = "Zabbix latest.php SQL Injection"
 cve = ["CVE-2016-10134"]
 app = "Zabbix"
 path = "zabbix/CVE-2016-10134"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "Zabbix Server Active Proxy Trapper Command Injection"
 cve = ["CVE-2017-2824"]
 app = "Zabbix"
 path = "zabbix/CVE-2017-2824"
+tags = ["RCE"]
 
 [[environment]]
 name = "Zabbix Server Active Proxy Trapper Command Injection Bypass"
 cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
+tags = ["RCE"]
