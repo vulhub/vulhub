@@ -702,10 +702,10 @@ path = "hugegraph/CVE-2024-43441"
 tags = ["Auth Bypass", "Hard Coding"]
 
 [[environment]]
-name = "Imagetragick Command Execution"
+name = "ImageMagick Imagetragick Command Injection"
 cve = ["CVE-2016-3714"]
 app = "ImageMagick"
-path = "imagemagick/imagetragick"
+path = "imagemagick/CVE-2016-3714"
 tags = ["RCE"]
 
 [[environment]]
