@@ -135,7 +135,7 @@ path = "cacti/CVE-2022-46169"
 tags = ["RCE"]
 
 [[environment]]
-name = "Cacti Pre-Auth SQL Injection Leads to RCE"
+name = "Cacti rfilter SQL Injection Leads to RCE"
 cve = ["CVE-2023-39361", "CVE-2024-31459"]
 app = "Cacti"
 path = "cacti/CVE-2023-39361"
