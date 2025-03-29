@@ -135,6 +135,13 @@ path = "cacti/CVE-2022-46169"
 tags = ["RCE"]
 
 [[environment]]
+name = "Cacti Pre-Auth SQL Injection Leads to RCE"
+cve = ["CVE-2023-39361"]
+app = "Cacti"
+path = "cacti/CVE-2023-39361"
+tags = ["SQL Injection", "RCE"]
+
+[[environment]]
 name = "Celery <4.0 Redis Unauthorized Access and Pickle Deserialization"
 cve = []
 app = "Celery"
