@@ -38,7 +38,7 @@ def test_environments_files():
     with open(os.path.join(basedir, 'environments.toml'), 'rb') as f:
         data = tomllib.load(f)
 
-    compose_files = [name.replace('\\', '/') for name in glob.glob("**/docker-compose.yml", recursive=True)]
+    compose_files = [name.replace('\\', '/') for name in sorted(glob.glob("**/docker-compose.yml", recursive=True))]
     env_files = []
     for env in data['environment']:
         files = os.listdir(os.path.join(basedir, env['path']))
