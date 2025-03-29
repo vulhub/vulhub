@@ -136,7 +136,7 @@ tags = ["RCE"]
 
 [[environment]]
 name = "Cacti Pre-Auth SQL Injection Leads to RCE"
-cve = ["CVE-2023-39361"]
+cve = ["CVE-2023-39361", "CVE-2024-31459"]
 app = "Cacti"
 path = "cacti/CVE-2023-39361"
 tags = ["SQL Injection", "RCE"]
