@@ -27,18 +27,21 @@ def test_filename_format():
             # check if extension is lowercase
             fullname = os.path.join(root, name)
             _, ext = os.path.splitext(name)
-            assert ext == ext.lower(), 'file extension must be lowercase, not %r' % fullname
+            assert ext == ext.lower(), 'file extension must be lowercase, not %r' % name
 
             # check if docker-compose.yaml is used
             assert name != "docker-compose.yaml", "docker-compose.yaml is not allowed, use docker-compose.yml instead"
 
             # check if readme file name is correct
             if name.lower() == 'readme.md':
-                assert name == 'README.md', "README filename must be 'README.md', not %r" % fullname
+                assert name == 'README.md', "README filename must be 'README.md', not %r" % name
 
             # check if readme.zh-cn.md file name is correct
             if name.lower() == 'readme.zh-cn.md':
-                assert name == 'README.zh-cn.md', "README.zh-cn filename must be 'README.zh-cn.md', not %r" % fullname
+                assert name == 'README.zh-cn.md', "README.zh-cn filename must be 'README.zh-cn.md', not %r" % name
+
+            if name.lower().startswith('cve-'):
+                assert name == name.upper(), "CVE filename must be uppercase, not %r" % name
 
             # check if archive file size is lower than 4096 bytes
             if ARCHIVE_FILE_PATTERN.match(name) is not None and ARCHIVE_EXCEPTED.search(fullname) is None:
