@@ -128,7 +128,7 @@ path = "bash/CVE-2014-6271"
 tags = ["RCE"]
 
 [[environment]]
-name = "Cacti Foreground Command Injection"
+name = "Cacti remote_agent.php Pre-Auth Command Injection"
 cve = ["CVE-2022-46169"]
 app = "Cacti"
 path = "cacti/CVE-2022-46169"
