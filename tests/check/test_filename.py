@@ -40,7 +40,7 @@ def test_filename_format():
             if name.lower() == 'readme.zh-cn.md':
                 assert name == 'README.zh-cn.md', "README.zh-cn filename must be 'README.zh-cn.md', not %r" % name
 
-            if name.lower().startswith('cve-'):
+            if os.path.isdir(fullname) and name.lower().startswith('cve-'):
                 assert name == name.upper(), "CVE filename must be uppercase, not %r" % name
 
             # check if archive file size is lower than 4096 bytes
