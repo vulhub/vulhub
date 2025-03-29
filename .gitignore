@@ -3,6 +3,7 @@
 .settings
 .classpath
 .project
+.pytest_cache
 
 node_modules
 .vscode

@@ -30,10 +30,10 @@ Please see the [USER MANUAL](https://github.com/vulhub/vulhub) from the Vulhub p
 
 ## Usage
 
-Do not use this image directly, use it through [docker-compose](https://docs.docker.com/compose/).
+Do not use this image directly, use it through [docker compose](https://docs.docker.com/compose/).
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Following environments are using this image, you can find the `docker-compose.yml` file on these folders:
@@ -116,7 +116,7 @@ def main():
             update_description(name, vuln.get(name, []))
             logging.info("Success to update readme for %s", name)
     except Exception as e:
-        logging.error("error: %r", e)
+        logging.error("error: %r", e, exc_info=True)
 
 
 if __name__ == '__main__':

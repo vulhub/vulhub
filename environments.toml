@@ -702,10 +702,10 @@ path = "hugegraph/CVE-2024-43441"
 tags = ["Auth Bypass", "Hard Coding"]
 
 [[environment]]
-name = "Imagetragick Command Execution"
+name = "ImageMagick Imagetragick Command Injection"
 cve = ["CVE-2016-3714"]
 app = "ImageMagick"
-path = "imagemagick/imagetragick"
+path = "imagemagick/CVE-2016-3714"
 tags = ["RCE"]
 
 [[environment]]
@@ -744,17 +744,17 @@ path = "java/rmi-codebase"
 tags = ["RCE"]
 
 [[environment]]
-name = "Java <= JDK 8u111 RMI Registry Deserialization Remote Code Execution"
-cve = []
-app = "Java RMI"
-path = "java/rmi-registry-bind-deserialization"
-tags = ["RCE", "Deserialization"]
-
-[[environment]]
 name = "Java < JDK8u232_b09 RMI Registry Deserialization Remote Code Execution Bypass"
 cve = []
 app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization-bypass"
+tags = ["RCE", "Deserialization"]
+
+[[environment]]
+name = "Java <= JDK 8u111 RMI Registry Deserialization Remote Code Execution"
+cve = []
+app = "Java RMI"
+path = "java/rmi-registry-bind-deserialization"
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
@@ -821,7 +821,7 @@ path = "jetty/CVE-2021-34429"
 tags = ["Info Disclosure", "Webserver"]
 
 [[environment]]
-name = "JimuReport FreeMarker Server Side Template Injection RCE"
+name = "JeecgBoot JimuReport FreeMarker Server Side Template Injection RCE"
 cve = ["CVE-2023-4450"]
 app = "JimuReport"
 path = "jimureport/CVE-2023-4450"
