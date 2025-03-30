@@ -12,6 +12,7 @@ RUN set -ex \
 
 RUN set -ex \
     && cd /usr/src/apache-ofbiz \
+    && sed -i '/throw new RequestHandlerException.*not accepted to prevent host header injection/,/You need to set host-headers-allowed property in security.properties file.")/s/^/\/\/ /' framework/webapp/src/main/java/org/apache/ofbiz/webapp/control/RequestHandler.java \
     && ./gradle/init-gradle-wrapper.sh \
     && ./gradlew loadAll
     # && ./gradlew "ofbiz --load-data readers=seed,seed-initial,ext"

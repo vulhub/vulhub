@@ -2,7 +2,7 @@ FROM openjdk:8-jdk
 
 LABEL maintainer="phith0n <root@leavesongs.com>"
 
-ARG VERSION=18.12.14
+ARG VERSION=18.12.15
 RUN set -ex \
     && cd /usr/src \
     && wget -q http://archive.apache.org/dist/ofbiz/apache-ofbiz-${VERSION}.zip \
