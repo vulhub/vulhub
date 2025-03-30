@@ -1311,7 +1311,7 @@ path = "php/php_xxe"
 tags = ["XXE"]
 
 [[environment]]
-name = "XDebug Remote Debugging Code Execution"
+name = "PHP XDebug Remote Debugging Code Execution"
 cve = []
 app = "PHP"
 path = "php/xdebug-rce"
