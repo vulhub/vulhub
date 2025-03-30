@@ -1,6 +1,6 @@
 services:
  web:
-   image: vulhub/php:xxe
+   image: vulhub/php:7.0.30
    volumes:
     - ./www:/var/www/html
    ports:
