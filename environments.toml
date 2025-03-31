@@ -261,6 +261,13 @@ path = "couchdb/CVE-2022-24706"
 tags = ["RCE", "Database"]
 
 [[environment]]
+name = "CraftCMS ConditionsController Pre-Auth Remote Code Execution"
+cve = ["CVE-2023-41892"]
+app = "CraftCMS"
+path = "craftcms/CVE-2023-41892"
+tags = ["RCE", "CMS"]
+
+[[environment]]
 name = "CraftCMS register_argc_argv Leads to Remote Code Execution"
 cve = ["CVE-2024-56145"]
 app = "CraftCMS"
