@@ -72,7 +72,6 @@ When the server deserializes the malicious pickle object, it will execute the co
 
 ![Reverse Shell Demonstration](1.png)
 
-
 Test on Mac:
 
 ![Reverse Shell Demonstration on Mac](mac.png)
