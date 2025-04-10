@@ -1,0 +1,137 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - CGI How To</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>CGI How To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Installation">Installation</a></li><li><a href="#Configuration">Configuration</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+<p>The CGI (Common Gateway Interface) defines a way for a web server to
+interact with external content-generating programs, which are often
+referred to as CGI programs or CGI scripts.
+</p>
+
+<p>Within Tomcat, CGI support can be added when you are using Tomcat as your
+HTTP server and require CGI support.  Typically this is done
+during development when you don't want to run a web server like
+Apache httpd.
+Tomcat's CGI support is largely compatible with Apache httpd's,
+but there are some limitations (e.g., only one cgi-bin directory).
+</p>
+
+<p>CGI support is implemented using the servlet class
+<code>org.apache.catalina.servlets.CGIServlet</code>.  Traditionally,
+this servlet is mapped to the URL pattern "/cgi-bin/*".</p>
+
+<p>By default CGI support is disabled in Tomcat.</p>
+</div><h3 id="Installation">Installation</h3><div class="text">
+
+<p><strong>CAUTION</strong> - CGI scripts are used to execute programs
+external to the Tomcat JVM. If you are using the Java SecurityManager this
+will bypass your security policy configuration in <code>catalina.policy.</code></p>
+
+<p>To enable CGI support:</p>
+
+<ol>
+<li><p>There are commented-out sample servlet and servlet-mapping elements for
+CGI servlet in the default <code>$CATALINA_BASE/conf/web.xml</code> file.
+To enable CGI support in your web application, copy that servlet and
+servlet-mapping declarations into <code>WEB-INF/web.xml</code> file of your
+web application.</p>
+
+<p>Uncommenting the servlet and servlet-mapping in
+<code>$CATALINA_BASE/conf/web.xml</code> file enables CGI for all installed
+web applications at once.</p>
+</li>
+
+<li><p>Set <code>privileged="true"</code> on the Context element for your
+web application.</p>
+
+<p>Only Contexts which are marked as privileged are allowed to use the
+CGI servlet. Note that modifying the global <code>$CATALINA_BASE/conf/context.xml</code>
+file affects all web applications. See
+<a href="config/context.html">Context documentation</a> for details.</p>
+</li>
+</ol>
+
+</div><h3 id="Configuration">Configuration</h3><div class="text">
+
+<p>There are several servlet init parameters which can be used to
+configure the behaviour of the CGI servlet.</p>
+<ul>
+<li><strong>cgiMethods</strong> - Comma separated list of HTTP methods. Requests
+using one of these methods will be passed to the CGI script for the script to
+generate the response. The default value is <code>GET,POST</code>. Use
+<code>*</code> for the script to handle all requests regardless of method.
+Unless over-ridden by the configuration of this parameter, requests using HEAD,
+OPTIONS or TRACE will have handled by the superclass.</li>
+<li><strong>cgiPathPrefix</strong> - The CGI search path will start at
+the web application root directory + File.separator + this prefix.
+By default there is no value, which results in the web application root
+directory being used as the search path. The recommended value is
+<code>WEB-INF/cgi</code></li>
+<li><strong>cmdLineArgumentsDecoded</strong> - If command line arguments
+are enabled (via <strong>enableCmdLineArguments</strong>) and Tomcat is running
+on Windows then each individual decoded command line argument must match this
+pattern else the request will be rejected. This is to protect against known
+issues passing command line arguments from Java to Windows. These issues can
+lead to remote code execution. For more information on these issues see
+<a href="https://codewhitesec.blogspot.com/2016/02/java-and-command-line-injections-in-windows.html">Markus
+Wulftange's blog</a> and this archived
+<a href="https://web.archive.org/web/20161228144344/https://blogs.msdn.microsoft.com/twistylittlepassagesallalike/2011/04/23/everyone-quotes-command-line-arguments-the-wrong-way/">blog
+by Daniel Colascione</a>.</li>
+<li><strong>cmdLineArgumentsEncoded</strong> - If command line arguments
+are enabled (via <strong>enableCmdLineArguments</strong>) individual encoded
+command line argument must match this pattern else the request will be rejected.
+The default matches the allowed values defined by RFC3875 and is
+<code>[\w\Q%;/?:@&amp;,$-.!~*'()\E]+</code></li>
+<li><strong>enableCmdLineArguments</strong> - Are command line arguments
+generated from the query string as per section 4.4 of 3875 RFC? The default is
+<code>false</code>.</li>
+<li><strong>environment-variable-</strong> - An environment to be set for the
+execution environment of the CGI script. The name of variable is taken from the
+parameter name. To configure an environment variable named FOO, configure a
+parameter named environment-variable-FOO. The parameter value is used as the
+environment variable value. The default is no environment variables.</li>
+<li><strong>executable</strong> - The name of the executable to be used to
+run the script. You may explicitly set this parameter to be an empty string
+if your script is itself executable (e.g. an exe file). Default is
+<code>perl</code>.</li>
+<li><strong>executable-arg-1</strong>, <strong>executable-arg-2</strong>,
+and so on - additional arguments for the executable. These precede the
+CGI script name. By default there are no additional arguments.</li>
+<li><strong>envHttpHeaders</strong> - A regular expression used to select the
+HTTP headers passed to the CGI process as environment variables. Note that
+headers are converted to upper case before matching and that the entire header
+name must match the pattern. Default is
+<code>ACCEPT[-0-9A-Z]*|CACHE-CONTROL|COOKIE|HOST|IF-[-0-9A-Z]*|REFERER|USER-AGENT</code>
+</li>
+<li><strong>parameterEncoding</strong> - Name of the parameter encoding
+to be used with the CGI servlet. Default is
+<code>System.getProperty("file.encoding","UTF-8")</code>. That is the system
+default encoding, or UTF-8 if that system property is not available.</li>
+<li><strong>passShellEnvironment</strong> - Should the shell environment
+variables from Tomcat process (if any) be passed to the CGI script? Default is
+<code>false</code>.</li>
+<li><strong>stderrTimeout</strong> - The time (in milliseconds) to wait for
+the reading of stderr to complete before terminating the CGI process. Default
+is <code>2000</code>.</li>
+</ul>
+
+<p>The CGI script executed depends on the configuration of the CGI Servlet and
+how the request is mapped to the CGI Servlet. The CGI search path starts at the
+web application root directory + File.separator + cgiPathPrefix. The
+<strong>pathInfo</strong> is then searched unless it is <code>null</code> - in
+which case the <strong>servletPath</strong> is searched.</p>
+
+<p>The search starts with the first path segment and expands one path segment
+at a time until no path segments are left (resulting in a 404) or a script is
+found. Any remaining path segments are passed to the script in the
+<strong>PATH_INFO</strong> environment variable.</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

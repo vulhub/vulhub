@@ -1,0 +1,499 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Tomcat Web Application Manager How To</title><meta name="author" content="Glenn L. Nielsen"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Tomcat Web Application Manager How To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Message">Message</a></li><li><a href="#Manager">Manager</a></li><li><a href="#Applications">Applications</a><ol><li><a href="#Start">Start</a></li><li><a href="#Stop">Stop</a></li><li><a href="#Reload">Reload</a></li><li><a href="#Undeploy">Undeploy</a></li></ol></li><li><a href="#Deploy">Deploy</a><ol><li><a href="#Deploy_directory_or_WAR_file_located_on_server">Deploy directory or WAR file located on server</a><ol><li><a href="#Deploy_a_Directory_or_WAR_by_URL">Deploy a Directory or WAR by URL</a></li><li><a href="#Deploy_a_Directory_or_War_from_the_Host_appBase">Deploy a Directory or War from the Host appBase</a></li><li><a href="#Deploy_using_a_Context_configuration_%22.xml%22_file">Deploy using a Context configuration ".xml" file</a></li></ol></li><li><a href="#Upload_a_WAR_file_to_install">Upload a WAR file to install</a></li><li><a href="#Deployment_Notes">Deployment Notes</a></li><li><a href="#Deploy_Message">Deploy Message</a></li></ol></li><li><a href="#Diagnostics">Diagnostics</a><ol><li><a href="#Finding_memory_leaks">Finding memory leaks</a></li></ol></li><li><a href="#Server_Information">Server Information</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+<p>In many production environments it is very useful to have the capability
+to manage your web applications without having to shut down and restart
+Tomcat.  This document is for the HTML web interface to the web application
+<a href="manager-howto.html">manager</a>.</p>
+
+<p>The interface is divided into six sections:</p>
+<ul>
+  <li><strong>Message</strong> - Displays success and failure messages.</li>
+  <li><strong>Manager</strong> - General manager operations like list and
+      help.</li>
+  <li><strong>Applications</strong> - List of web applications and
+      commands.</li>
+  <li><strong>Deploy</strong> - Deploying web applications.</li>
+  <li><strong>Diagnostics</strong> - Identifying potential problems.</li>
+  <li><strong>Server Information</strong> - Information about the Tomcat
+      server.</li>
+</ul>
+
+</div><h3 id="Message">Message</h3><div class="text">
+
+<p>
+Displays information about the success or failure of the last web application
+manager command you performed. If it succeeded <strong>OK</strong> is displayed
+and may be followed by a success message. If it failed <strong>FAIL</strong>
+is displayed followed by an error message. Common failure messages are
+documented below for each command.  The complete list of failure messages for
+each command can be found in the <a href="manager-howto.html">manager</a> web
+application documentation.
+</p>
+
+</div><h3 id="Manager">Manager</h3><div class="text">
+
+<p>The Manager section has three links:</p>
+<ul>
+  <li><strong>List Applications</strong> - Redisplay a list of web
+      applications.</li>
+  <li><strong>HTML Manager Help</strong> - A link to this document.</li>
+  <li><strong>Manager Help</strong> - A link to the comprehensive Manager
+      App HOW TO.</li>
+</ul>
+
+</div><h3 id="Applications">Applications</h3><div class="text">
+
+<p>The Applications section lists information about all the installed web
+applications and provides links for managing them. For each web application
+the following is displayed:</p>
+<ul>
+  <li><strong>Path</strong> - The web application context path.</li>
+  <li><strong>Display Name</strong> - The display name for the web application
+      if it has one configured in its "web.xml" file.</li>
+  <li><strong>Running</strong> - Whether the web application is running and
+      available (true), or not running and unavailable (false).</li>
+  <li><strong>Sessions</strong> - The number of active sessions for remote
+      users of this web application.  The number of sessions is a link which
+      when submitted displays more details about session usage by the web
+      application in the Message box.</li>
+  <li><strong>Commands</strong> - Lists all commands which can be performed on
+      the web application. Only those commands which can be performed will be
+      listed as a link which can be submitted. No commands can be performed on
+      the manager web application itself. The following commands can be
+      performed:
+      <ul>
+        <li><strong>Start</strong> - Start a web application which had been
+            stopped.</li>
+        <li><strong>Stop</strong> - Stop a web application which is currently
+            running and make it unavailable.</li>
+        <li><strong>Reload</strong> - Reload the web application so that new
+            ".jar" files in <code>/WEB-INF/lib/</code> or new classes in
+            <code>/WEB-INF/classes/</code> can be used.</li>
+        <li><strong>Undeploy</strong> - Stop and then remove this web
+             application from the server.</li>
+      </ul>
+  </li>
+</ul>
+
+<div class="subsection"><h4 id="Start">Start</h4><div class="text">
+
+<p>Signal a stopped application to restart, and make itself available again.
+Stopping and starting is useful, for example, if the database required by
+your application becomes temporarily unavailable.  It is usually better to
+stop the web application that relies on this database rather than letting
+users continuously encounter database exceptions.</p>
+
+<p>If this command succeeds, you will see a Message like this:</p>
+<div class="codeBox"><pre><code>OK - Started application at context path /examples</code></pre></div>
+
+<p>Otherwise, the Message will start with <code>FAIL</code> and include an
+error message.  Possible causes for problems include:</p>
+<ul>
+<li><em>Encountered exception</em>
+    <p>An exception was encountered trying to start the web application.
+    Check the Tomcat logs for the details.</p>
+    </li>
+<li><em>Invalid context path was specified</em>
+    <p>The context path must start with a slash character, unless you are
+    referencing the ROOT web application -- in which case the context path
+    must be a zero-length string.</p>
+    </li>
+<li><em>No context exists for path /foo</em>
+    <p>There is no deployed application on the context path
+    that you specified.</p>
+    </li>
+<li><em>No context path was specified</em>
+    <p>
+    The <code>path</code> parameter is required.
+    </p>
+</li>
+</ul>
+
+</div></div>
+
+<div class="subsection"><h4 id="Stop">Stop</h4><div class="text">
+
+<p>Signal an existing application to make itself unavailable, but leave it
+deployed.  Any request that comes in while an application is
+stopped will see an HTTP error 404, and this application will show as
+"stopped" on a list applications command.</p>
+
+<p>If this command succeeds, you will see a Message like this:</p>
+<div class="codeBox"><pre><code>OK - Stopped application at context path /examples</code></pre></div>
+
+<p>Otherwise, the Message will start with <code>FAIL</code> and include an
+error message.  Possible causes for problems include:</p>
+<ul>
+<li><em>Encountered exception</em>
+    <p>An exception was encountered trying to stop the web application.
+    Check the Tomcat logs for the details.</p>
+    </li>
+<li><em>Invalid context path was specified</em>
+    <p>The context path must start with a slash character, unless you are
+    referencing the ROOT web application -- in which case the context path
+    must be a zero-length string.</p>
+    </li>
+<li><em>No context exists for path /foo</em>
+    <p>There is no deployed application on the context path
+    that you specified.</p>
+    </li>
+<li><em>No context path was specified</em>
+    <p>
+    The <code>path</code> parameter is required.
+    </p>
+</li>
+</ul>
+
+</div></div>
+
+<div class="subsection"><h4 id="Reload">Reload</h4><div class="text">
+
+<p>Signal an existing application to shut itself down and reload.  This can
+be useful when the web application context is not reloadable and you have
+updated classes or property files in the <code>/WEB-INF/classes</code>
+directory or when you have added or updated jar files in the
+<code>/WEB-INF/lib</code> directory.
+</p>
+<p><strong>NOTE:</strong> The <code>/WEB-INF/web.xml</code>
+web application configuration file is not checked on a reload;
+the previous web.xml configuration is used.
+If you have made changes to your web.xml file you must stop
+then start the web application.
+</p>
+
+<p>If this command succeeds, you will see a Message like this:</p>
+<div class="codeBox"><pre><code>
+OK - Reloaded application at context path /examples
+</code></pre></div>
+
+<p>Otherwise, the Message will start with <code>FAIL</code> and include an
+error message.  Possible causes for problems include:</p>
+<ul>
+<li><em>Encountered exception</em>
+    <p>An exception was encountered trying to restart the web application.
+    Check the Tomcat logs for the details.</p>
+    </li>
+<li><em>Invalid context path was specified</em>
+    <p>The context path must start with a slash character, unless you are
+    referencing the ROOT web application -- in which case the context path
+    must be a zero-length string.</p>
+    </li>
+<li><em>No context exists for path /foo</em>
+    <p>There is no deployed application on the context path
+    that you specified.</p>
+    </li>
+<li><em>No context path was specified</em>
+    <p>The <code>path</code> parameter is required.</p>
+    </li>
+<li><em>Reload not supported on WAR deployed at path /foo</em>
+    <p>Currently, application reloading (to pick up changes to the classes or
+    <code>web.xml</code> file) is not supported when a web application is
+    installed directly from a WAR file, which happens when the host is
+    configured to not unpack WAR files. As it only works when the web
+    application is installed from an unpacked directory, if you are using
+    a WAR file, you should <code>undeploy</code> and then <code>deploy</code>
+    the application again to pick up your changes.</p>
+    </li>
+</ul>
+
+</div></div>
+
+<div class="subsection"><h4 id="Undeploy">Undeploy</h4><div class="text">
+
+<p><strong><span style="color: red;">WARNING</span> - This command will delete the
+contents of the web application directory and/or ".war" file if it exists within
+the <code>appBase</code> directory (typically "webapps") for this virtual host
+</strong>.  The web application temporary work directory is also deleted.  If
+you simply want to take an application out of service, you should use the
+<code>/stop</code> command instead.</p>
+
+<p>Signal an existing application to gracefully shut itself down, and then
+remove it from Tomcat (which also makes this context path available for
+reuse later).  This command is the logical opposite of the
+<code>/deploy</code> Ant command, and the related deploy features available
+in the HTML manager.</p>
+
+<p>If this command succeeds, you will see a Message like this:</p>
+<div class="codeBox"><pre><code>OK - Undeployed application at context path /examples</code></pre></div>
+
+<p>Otherwise, the Message will start with <code>FAIL</code> and include an
+error message.  Possible causes for problems include:</p>
+<ul>
+<li><em>Encountered exception</em>
+    <p>An exception was encountered trying to undeploy the web application.
+    Check the Tomcat logs for the details.</p>
+    </li>
+<li><em>Invalid context path was specified</em>
+    <p>The context path must start with a slash character, unless you are
+    referencing the ROOT web application -- in which case the context path
+    must be a zero-length string.</p>
+    </li>
+<li><em>No context exists for path /foo</em>
+    <p>There is no deployed application on the context path
+    that you specified.</p>
+    </li>
+<li><em>No context path was specified</em>
+    The <code>path</code> parameter is required.
+    </li>
+</ul>
+
+</div></div>
+
+</div><h3 id="Deploy">Deploy</h3><div class="text">
+
+<p>Web applications can be deployed using files or directories located
+on the Tomcat server or you can upload a web application archive (WAR)
+file to the server.</p>
+
+<p>To install an application, fill in the appropriate fields for the type
+of install you want to do and then submit it using the <i>Install</i>
+button.</p>
+
+<div class="subsection"><h4 id="Deploy_directory_or_WAR_file_located_on_server">Deploy directory or WAR file located on server</h4><div class="text">
+
+<p>Deploy and start a new web application, attached to the specified <i>Context
+Path:</i> (which must not be in use by any other web application).
+This command is the logical opposite of the <em>Undeploy</em> command.</p>
+
+<p>There are a number of different ways the deploy command can be used.</p>
+
+<div class="subsection"><h4 id="Deploy_a_Directory_or_WAR_by_URL">Deploy a Directory or WAR by URL</h4><div class="text">
+
+<p>Install a web application directory or ".war" file located on the Tomcat
+server. If no <i>Context Path</i> is specified, the directory name or the
+war file name without the ".war" extension is used as the path. The
+<i>WAR or Directory URL</i> specifies a URL (including the <code>file:</code>
+scheme) for either a directory or a web application archive (WAR) file. The
+supported syntax for a URL referring to a WAR file is described on the Javadocs
+page for the <code>java.net.JarURLConnection</code> class.  Use only URLs that
+refer to the entire WAR file.</p>
+
+<p>In this example the web application located in the directory
+<code>C:\path\to\foo</code> on the Tomcat server (running on Windows)
+is deployed as the web application context named <code>/footoo</code>.</p>
+<div class="codeBox"><pre><code>Context Path: /footoo
+WAR or Directory URL: file:C:/path/to/foo
+</code></pre></div>
+
+
+<p>In this example the ".war" file <code>/path/to/bar.war</code> on the
+Tomcat server (running on Unix) is deployed as the web application
+context named <code>/bar</code>. Notice that there is no <code>path</code>
+parameter so the context path defaults to the name of the web application
+archive file without the ".war" extension.</p>
+<div class="codeBox"><pre><code>WAR or Directory URL: jar:file:/path/to/bar.war!/</code></pre></div>
+
+</div></div>
+
+<div class="subsection"><h4 id="Deploy_a_Directory_or_War_from_the_Host_appBase">Deploy a Directory or War from the Host appBase</h4><div class="text">
+
+<p>Install a web application directory or ".war" file located in your Host
+appBase directory. If no <i>Context Path</i> is specified the directory name
+or the war file name without the ".war" extension is used as the path.</p>
+
+<p>In this example the web application located in a subdirectory named
+<code>foo</code> in the Host appBase directory of the Tomcat server is
+deployed as the web application context named <code>/foo</code>. Notice
+that there is no <code>path</code> parameter so the context path defaults
+to the name of the web application directory.</p>
+<div class="codeBox"><pre><code>WAR or Directory URL: foo</code></pre></div>
+
+
+<p>In this example the ".war" file <code>bar.war</code> located in your
+Host appBase directory on the Tomcat server is deployed as the web
+application context named <code>/bartoo</code>.</p>
+<div class="codeBox"><pre><code>Context Path: /bartoo
+WAR or Directory URL: bar.war</code></pre></div>
+
+</div></div>
+
+<div class="subsection"><h4 id="Deploy_using_a_Context_configuration_&quot;.xml&quot;_file">Deploy using a Context configuration ".xml" file</h4><div class="text">
+
+<p>If the Host deployXML flag is set to true, you can install a web
+application using a Context configuration ".xml" file and an optional
+".war" file or web application directory. The <i>Context Path</i>
+is not used when installing a web application using a context ".xml"
+configuration file.</p>
+
+<p>A Context configuration ".xml" file can contain valid XML for a
+web application Context just as if it were configured in your
+Tomcat <code>server.xml</code> configuration file. Here is an
+example for Tomcat running on Windows:</p>
+<div class="codeBox"><pre><code>&lt;Context path="/foobar" docBase="C:\path\to\application\foobar"&gt;
+&lt;/Context&gt;</code></pre></div>
+
+
+<p>Use of the <i>WAR or Directory URL</i> is optional. When used
+to select a web application ".war" file or directory it overrides any
+docBase configured in the context configuration ".xml" file.</p>
+
+<p>Here is an example of installing an application using a Context
+configuration ".xml" file for Tomcat running on Windows.</p>
+<div class="codeBox"><pre><code>XML Configuration file URL: file:C:/path/to/context.xml</code></pre></div>
+
+
+<p>Here is an example of installing an application using a Context
+configuration ".xml" file and a web application ".war" file located
+on the server (Tomcat running on Unix).</p>
+<div class="codeBox"><pre><code>XML Configuration file URL: file:/path/to/context.xml
+WAR or Directory URL: jar:file:/path/to/bar.war!/</code></pre></div>
+
+</div></div>
+</div></div>
+
+<div class="subsection"><h4 id="Upload_a_WAR_file_to_install">Upload a WAR file to install</h4><div class="text">
+
+<p>Upload a WAR file from your local system and install it into the
+appBase for your Host. The name of the WAR file without the ".war"
+extension is used as the context path name.</p>
+
+<p>Use the <i>Browse</i> button to select a WAR file to upload to the
+server from your local desktop system.</p>
+
+<p>The .WAR file may include Tomcat specific deployment configuration, by
+including a Context configuration XML file in
+<code>/META-INF/context.xml</code>.</p>
+
+<p>Upload of a WAR file could fail for the following reasons:</p>
+<ul>
+<li><em>File uploaded must be a .war</em>
+    <p>The upload install will only accept files which have the filename
+    extension of ".war".</p>
+    </li>
+<li><em>War file already exists on server</em>
+    <p>If a war file of the same name already exists in your Host's
+    appBase the upload will fail. Either undeploy the existing war file
+    from your Host's appBase or upload the new war file using a different
+    name.</p>
+    </li>
+<li><em>File upload failed, no file</em>
+    <p>The file upload failed, no file was received by the server.</p>
+    </li>
+<li><em>Install Upload Failed, Exception:</em>
+    <p>The war file upload or install failed with a Java Exception.
+    The exception message will be listed.</p>
+    </li>
+</ul>
+
+</div></div>
+
+<div class="subsection"><h4 id="Deployment_Notes">Deployment Notes</h4><div class="text">
+
+<p>If the Host is configured with unpackWARs=true and you install a war
+file, the war will be unpacked into a directory in your Host appBase
+directory.</p>
+
+<p>If the application war or directory is deployed in your Host appBase
+directory and either the Host is configured with autoDeploy=true the Context
+path must match the directory name or war file name without the ".war"
+extension.</p>
+
+<p>For security when untrusted users can manage web applications, the
+Host deployXML flag can be set to false.  This prevents untrusted users
+from installing web applications using a configuration XML file and
+also prevents them from installing application directories or ".war"
+files located outside of their Host appBase.</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="Deploy_Message">Deploy Message</h4><div class="text">
+
+<p>If deployment and startup is successful, you will receive a Message
+like this:</p>
+<div class="codeBox"><pre><code>OK - Deployed application at context path /foo</code></pre></div>
+
+<p>Otherwise, the Message will start with <code>FAIL</code> and include an
+error message.  Possible causes for problems include:</p>
+<ul>
+<li><em>Application already exists at path /foo</em>
+    <p>The context paths for all currently running web applications must be
+    unique.  Therefore, you must either undeploy the existing web
+    application using this context path, or choose a different context path
+    for the new one.</p>
+    </li>
+<li><em>Document base does not exist or is not a readable directory</em>
+    <p>The URL specified by the <i>WAR or Directory URL:</i> field must
+    identify a directory on this server that contains the "unpacked" version
+    of a web application, or the absolute URL of a web application archive
+    (WAR) file that contains this application.  Correct the value entered for
+    the <i>WAR or Directory URL:</i> field.</p>
+    </li>
+<li><em>Encountered exception</em>
+    <p>An exception was encountered trying to start the new web application.
+    Check the Tomcat logs for the details, but likely explanations include
+    problems parsing your <code>/WEB-INF/web.xml</code> file, or missing
+    classes encountered when initializing application event listeners and
+    filters.</p>
+    </li>
+<li><em>Invalid application URL was specified</em>
+    <p>The URL for the <i>WAR or Directory URL:</i> field that you specified
+    was not valid.  Such URLs must start with <code>file:</code>, and URLs
+    for a WAR file must end in ".war".</p>
+    </li>
+<li><em>Invalid context path was specified</em>
+    <p>The context path must start with a slash character, unless you are
+    referencing the ROOT web application -- in which case the context path
+    must be a "/" string.</p>
+    </li>
+<li><em>Context path must match the directory or WAR file name:</em>
+    <p>If the application war or directory is deployed in your Host appBase
+    directory and either the Host is configured with autoDeploy=true the Context
+    path must match the directory name or war file name without the ".war"
+    extension.</p>
+    </li>
+<li><em>Only web applications in the Host web application directory can
+     be deployed</em>
+     <p>
+     If the Host deployXML flag is set to false this error will happen
+     if an attempt is made to install a web application directory or
+      ".war" file outside of the Host appBase directory.
+     </p></li>
+</ul>
+
+</div></div>
+</div><h3 id="Diagnostics">Diagnostics</h3><div class="text">
+
+<div class="subsection"><h4 id="Finding_memory_leaks">Finding memory leaks</h4><div class="text">
+
+<p><strong>The find leaks diagnostic triggers a full garbage collection. It
+should be used with extreme caution on production systems.</strong></p>
+
+<p>The find leaks diagnostic attempts to identify web applications that have
+caused memory leaks when they were stopped, reloaded or undeployed. Results
+should always be confirmed
+with a profiler. The diagnostic uses additional functionality provided by the
+StandardHost implementation. It will not work if a custom host is used that
+does not extend StandardHost.</p>
+
+<p>This diagnostic will list context paths for the web applications that were
+stopped, reloaded or undeployed, but which classes from the previous runs
+are still present in memory, thus being a memory leak. If an application
+has been reloaded several times, it may be listed several times.</p>
+
+<p>Explicitly triggering a full garbage collection from Java code is documented
+to be unreliable. Furthermore, depending on the JVM used, there are options to
+disable explicit GC triggering, like <code>-XX:+DisableExplicitGC</code>.
+If you want to make sure, that the diagnostics were successfully running a full GC,
+you will need to check using tools like GC logging, JConsole or similar.</p>
+
+</div></div>
+</div><h3 id="Server_Information">Server Information</h3><div class="text">
+
+<p>This section displays information about Tomcat, the operating system of the
+server Tomcat is hosted on, the Java Virtual Machine Tomcat is running in, the
+primary host name of the server (may not be the host name used to access Tomcat)
+and the primary IP address of the server (may not be the IP address used to
+access Tomcat).</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

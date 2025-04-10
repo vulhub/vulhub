@@ -1,0 +1,2323 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Valve Component</title><meta name="author" content="Craig R. McClanahan"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Valve Component</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Access_Logging">Access Logging</a><ol><li><a href="#Access_Log_Valve">Access Log Valve</a><ol><li><a href="#Access_Log_Valve/Introduction">Introduction</a></li><li><a href="#Access_Log_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Extended_Access_Log_Valve">Extended Access Log Valve</a><ol><li><a href="#Extended_Access_Log_Valve/Introduction">Introduction</a></li><li><a href="#Extended_Access_Log_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#JSON_Access_Log_Valve">JSON Access Log Valve</a><ol><li><a href="#JSON_Access_Log_Valve/Introduction">Introduction</a></li><li><a href="#JSON_Access_Log_Valve/Attributes">Attributes</a></li></ol></li></ol></li><li><a href="#Access_Control">Access Control</a><ol><li><a href="#Remote_Address_Valve">Remote Address Valve</a><ol><li><a href="#Remote_Address_Valve/Introduction">Introduction</a></li><li><a href="#Remote_Address_Valve/Attributes">Attributes</a></li><li><a href="#Remote_Address_Valve/Example_localhost">Example 1</a></li><li><a href="#Remote_Address_Valve/Example_localhost_port">Example 2</a></li><li><a href="#Remote_Address_Valve/Example_port_auth">Example 3</a></li></ol></li><li><a href="#Remote_Host_Valve">Remote Host Valve</a><ol><li><a href="#Remote_Host_Valve/Introduction">Introduction</a></li><li><a href="#Remote_Host_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Remote_CIDR_Valve">Remote CIDR Valve</a><ol><li><a href="#Remote_CIDR_Valve/Introduction">Introduction</a></li><li><a href="#Remote_CIDR_Valve/Attributes">Attributes</a></li><li><a href="#Remote_CIDR_Valve/Example_localhost">Example 1</a></li><li><a href="#Remote_CIDR_Valve/Example_localhost_port">Example 2</a></li><li><a href="#Remote_CIDR_Valve/Example_port_auth">Example 3</a></li></ol></li></ol></li><li><a href="#Proxies_Support">Proxies Support</a><ol><li><a href="#Load_Balancer_Draining_Valve">Load Balancer Draining Valve</a><ol><li><a href="#Load_Balancer_Draining_Valve/Introduction">Introduction</a></li><li><a href="#Load_Balancer_Draining_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Remote_IP_Valve">Remote IP Valve</a><ol><li><a href="#Remote_IP_Valve/Introduction">Introduction</a></li><li><a href="#Remote_IP_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#SSL_Valve">SSL Valve</a><ol><li><a href="#SSL_Valve/Introduction">Introduction</a></li><li><a href="#SSL_Valve/Attributes">Attributes</a></li></ol></li></ol></li><li><a href="#Single_Sign_On_Valve">Single Sign On Valve</a><ol><li><a href="#Single_Sign_On_Valve/Introduction">Introduction</a></li><li><a href="#Single_Sign_On_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Authentication">Authentication</a><ol><li><a href="#Basic_Authenticator_Valve">Basic Authenticator Valve</a><ol><li><a href="#Basic_Authenticator_Valve/Introduction">Introduction</a></li><li><a href="#Basic_Authenticator_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Digest_Authenticator_Valve">Digest Authenticator Valve</a><ol><li><a href="#Digest_Authenticator_Valve/Introduction">Introduction</a></li><li><a href="#Digest_Authenticator_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Form_Authenticator_Valve">Form Authenticator Valve</a><ol><li><a href="#Form_Authenticator_Valve/Introduction">Introduction</a></li><li><a href="#Form_Authenticator_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#SSL_Authenticator_Valve">SSL Authenticator Valve</a><ol><li><a href="#SSL_Authenticator_Valve/Introduction">Introduction</a></li><li><a href="#SSL_Authenticator_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#SPNEGO_Valve">SPNEGO Valve</a><ol><li><a href="#SPNEGO_Valve/Introduction">Introduction</a></li><li><a href="#SPNEGO_Valve/Attributes">Attributes</a></li></ol></li></ol></li><li><a href="#Error_Report_Valve">Error Report Valve</a><ol><li><a href="#Error_Report_Valve/Introduction">Introduction</a></li><li><a href="#Error_Report_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Json_Error_Report_Valve">Json Error Report Valve</a><ol><li><a href="#Json_Error_Report_Valve/Introduction">Introduction</a></li><li><a href="#Json_Error_Report_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Proxy_Error_Report_Valve">Proxy Error Report Valve</a><ol><li><a href="#Proxy_Error_Report_Valve/Introduction">Introduction</a></li><li><a href="#Proxy_Error_Report_Valve/Attributes">Attributes</a></li><li><a href="#Configuration">Configuration</a></li></ol></li><li><a href="#Crawler_Session_Manager_Valve">Crawler Session Manager Valve</a><ol><li><a href="#Crawler_Session_Manager_Valve/Introduction">Introduction</a></li><li><a href="#Crawler_Session_Manager_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Stuck_Thread_Detection_Valve">Stuck Thread Detection Valve</a><ol><li><a href="#Stuck_Thread_Detection_Valve/Introduction">Introduction</a></li><li><a href="#Stuck_Thread_Detection_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Semaphore_Valve">Semaphore Valve</a><ol><li><a href="#Semaphore_Valve/Introduction">Introduction</a></li><li><a href="#Semaphore_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Health_Check_Valve">Health Check Valve</a><ol><li><a href="#Health_Check_Valve/Introduction">Introduction</a></li><li><a href="#Health_Check_Valve/Attributes">Attributes</a></li></ol></li><li><a href="#Persistent_Valve">Persistent Valve</a><ol><li><a href="#Persistent_Valve/Introduction">Introduction</a></li><li><a href="#Persistent_Valve/Attributes">Attributes</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>A <strong>Valve</strong> element represents a component that will be
+  inserted into the request processing pipeline for the associated
+  Catalina container (<a href="engine.html">Engine</a>,
+  <a href="host.html">Host</a>, or <a href="context.html">Context</a>).
+  Individual Valves have distinct processing capabilities, and are
+  described individually below.</p>
+
+    <p><em>The description below uses the variable name $CATALINA_BASE to refer the
+    base directory against which most relative paths are resolved. If you have
+    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
+    the directory into which you have installed Tomcat.</em></p>
+
+</div><h3 id="Access_Logging">Access Logging</h3><div class="text">
+
+<p>Access logging is performed by valves that implement
+<strong>org.apache.catalina.AccessLog</strong> interface.</p>
+
+<div class="subsection"><h4 id="Access_Log_Valve">Access Log Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Access_Log_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Access Log Valve</strong> creates log files in the
+    same format as those created by standard web servers.  These logs
+    can later be analyzed by standard log analysis tools to track page
+    hit counts, user session activity, and so on.  This <code>Valve</code>
+    uses self-contained logic to write its log files, which can be
+    automatically rolled over at midnight each day.  (The essential
+    requirement for access logging is to handle a large continuous
+    stream of data with low overhead. This <code>Valve</code> does not
+    use Apache Commons Logging, thus avoiding additional overhead and
+    potentially complex configuration).</p>
+
+    <p>This <code>Valve</code> may be associated with any Catalina container
+    (<code>Context</code>, <code>Host</code>, or <code>Engine</code>), and
+    will record ALL requests processed by that container.</p>
+
+    <p>Some requests may be handled by Tomcat before they are passed to a
+    container. These include redirects from /foo to /foo/ and the rejection of
+    invalid requests. Where Tomcat can identify the <code>Context</code> that
+    would have handled the request, the request/response will be logged in the
+    <code>AccessLog</code>(s) associated <code>Context</code>, <code>Host</code>
+    and <code>Engine</code>. Where Tomcat cannot identify the
+    <code>Context</code> that would have handled the request, e.g. in cases
+    where the URL is invalid, Tomcat will look first in the <code>Engine</code>,
+    then the default <code>Host</code> for the <code>Engine</code> and finally
+    the ROOT (or default) <code>Context</code> for the default <code>Host</code>
+    for an <code>AccessLog</code> implementation. Tomcat will use the first
+    <code>AccessLog</code> implementation found to log those requests that are
+    rejected before they are passed to a container.</p>
+
+    <p>The output file will be placed in the directory given by the
+    <code>directory</code> attribute. The name of the file is composed
+    by concatenation of the configured <code>prefix</code>, timestamp and
+    <code>suffix</code>. The format of the timestamp in the file name can be
+    set using the <code>fileDateFormat</code> attribute. This timestamp will
+    be omitted if the file rotation is switched off by setting
+    <code>rotatable</code> to <code>false</code>.</p>
+
+    <p><strong>Warning:</strong> If multiple AccessLogValve instances
+    are used, they should be configured to use different output files.</p>
+
+    <p>If sendfile is used, the response bytes will be written asynchronously
+    in a separate thread and the access log valve will not know how many bytes
+    were actually written. In this case, the number of bytes that was passed to
+    the sendfile thread for writing will be recorded in the access log valve.
+    </p>
+  </div></div>
+
+  <div class="subsection"><h4 id="Access_Log_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Access Log Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Access Log Valve_Attributes_buffered"><td><code class="attributeName">buffered</code></td><td>
+        <p>Flag to determine if logging will be buffered.
+           If set to <code>false</code>, then access logging will be written after each
+           request. Default value: <code>true</code>
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.AccessLogValve</strong> to use the
+        default access log valve.</p>
+      </td></tr><tr id="Access Log Valve_Attributes_condition"><td><code class="attributeName">condition</code></td><td>
+        <p>The same as <code>conditionUnless</code>. This attribute is
+           provided for backwards compatibility.
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_conditionIf"><td><code class="attributeName">conditionIf</code></td><td>
+        <p>Turns on conditional logging. If set, requests will be
+           logged only if <code>ServletRequest.getAttribute()</code> is
+           not null. For example, if this value is set to
+           <code>important</code>, then a particular request will only be logged
+           if <code>ServletRequest.getAttribute("important") != null</code>.
+           The use of Filters is an easy way to set/unset the attribute
+           in the ServletRequest on many different requests.
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_conditionUnless"><td><code class="attributeName">conditionUnless</code></td><td>
+        <p>Turns on conditional logging. If set, requests will be
+           logged only if <code>ServletRequest.getAttribute()</code> is
+           null. For example, if this value is set to
+           <code>junk</code>, then a particular request will only be logged
+           if <code>ServletRequest.getAttribute("junk") == null</code>.
+           The use of Filters is an easy way to set/unset the attribute
+           in the ServletRequest on many different requests.
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_directory"><td><code class="attributeName">directory</code></td><td>
+        <p>Absolute or relative pathname of a directory in which log files
+        created by this valve will be placed.  If a relative path is
+        specified, it is interpreted as relative to $CATALINA_BASE.  If
+        no directory attribute is specified, the default value is "logs"
+        (relative to $CATALINA_BASE).</p>
+      </td></tr><tr id="Access Log Valve_Attributes_encoding"><td><code class="attributeName">encoding</code></td><td>
+        <p>Character set used to write the log file. An empty string means
+        to use the default character set. Default value: UTF-8.
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_fileDateFormat"><td><code class="attributeName">fileDateFormat</code></td><td>
+        <p>Allows a customized timestamp in the access log file name.
+           The file is rotated whenever the formatted timestamp changes.
+           The default value is <code>.yyyy-MM-dd</code>.
+           If you wish to rotate every hour, then set this value
+           to <code>.yyyy-MM-dd.HH</code>.
+           The date format will always be localized
+           using the locale <code>en_US</code>.
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_ipv6Canonical"><td><code class="attributeName">ipv6Canonical</code></td><td>
+        <p>Flag to determine if IPv6 addresses should be represented in canonical
+           representation format as defined by RFC 5952. If set to <code>true</code>,
+           then IPv6 addresses will be written in canonical format (e.g.
+           <code>2001:db8::1:0:0:1</code>, <code>::1</code>), otherwise it will be
+           represented in full form (e.g. <code>2001:db8:0:0:1:0:0:1</code>,
+           <code>0:0:0:0:0:0:0:1</code>). Default value: <code>false</code>
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_locale"><td><code class="attributeName">locale</code></td><td>
+        <p>The locale used to format timestamps in the access log
+           lines. Any timestamps configured using an
+           explicit SimpleDateFormat pattern (<code>%{xxx}t</code>)
+           are formatted in this locale. By default the
+           default locale of the Java process is used. Switching the
+           locale after the AccessLogValve is initialized is not supported.
+           Any timestamps using the common log format
+           (<code>CLF</code>) are always formatted in the locale
+           <code>en_US</code>.
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_maxDays"><td><code class="attributeName">maxDays</code></td><td>
+        <p>The maximum number of days rotated access logs will be retained for
+           before being deleted. If not specified, the default value of
+           <code>-1</code> will be used which means never delete old files.</p>
+      </td></tr><tr id="Access Log Valve_Attributes_maxLogMessageBufferSize"><td><code class="attributeName">maxLogMessageBufferSize</code></td><td>
+        <p>Log message buffers are usually recycled and re-used. To prevent
+           excessive memory usage, if a buffer grows beyond this size it will be
+           discarded. The default is <code>256</code> characters. This should be
+           set to larger than the typical access log message size.</p>
+      </td></tr><tr id="Access Log Valve_Attributes_pattern"><td><code class="attributeName">pattern</code></td><td>
+        <p>A formatting layout identifying the various information fields
+        from the request and response to be logged, or the word
+        <code>common</code> or <code>combined</code> to select a
+        standard format.  See below for more information on configuring
+        this attribute.</p>
+      </td></tr><tr id="Access Log Valve_Attributes_prefix"><td><code class="attributeName">prefix</code></td><td>
+        <p>The prefix added to the start of each log file's name.  If not
+        specified, the default value is "access_log".</p>
+      </td></tr><tr id="Access Log Valve_Attributes_renameOnRotate"><td><code class="attributeName">renameOnRotate</code></td><td>
+        <p>By default for a rotatable log the active access log file name
+           will contain the current timestamp in <code>fileDateFormat</code>.
+           During rotation the file is closed and a new file with the next
+           timestamp in the name is created and used. When setting
+           <code>renameOnRotate</code> to <code>true</code>, the timestamp
+           is no longer part of the active log file name. Only during rotation
+           the file is closed and then renamed to include the timestamp.
+           This is similar to the behavior of most log frameworks when
+           doing time based rotation.
+           Default value: <code>false</code>
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_requestAttributesEnabled"><td><code class="attributeName">requestAttributesEnabled</code></td><td>
+        <p>Set to <code>true</code> to check for the existence of request
+        attributes (typically set by the RemoteIpValve and similar) that should
+        be used to override the values returned by the request for remote
+        address, remote host, server port and protocol. If the attributes are
+        not set, or this attribute is set to <code>false</code> then the values
+        from the request will be used. If not set, the default value of
+        <code>false</code> will be used.</p>
+      </td></tr><tr id="Access Log Valve_Attributes_resolveHosts"><td><code class="attributeName">resolveHosts</code></td><td>
+        <p>This attribute is no longer supported. Use the connector
+        attribute <code>enableLookups</code> instead.</p>
+        <p>If you have <code>enableLookups</code> on the connector set to
+        <code>true</code> and want to ignore it, use <b>%a</b> instead of
+        <b>%h</b> in the value of <code>pattern</code>.</p>
+      </td></tr><tr id="Access Log Valve_Attributes_rotatable"><td><code class="attributeName">rotatable</code></td><td>
+        <p>Flag to determine if log rotation should occur.
+           If set to <code>false</code>, then this file is never rotated and
+           <code>fileDateFormat</code> is ignored.
+           Default value: <code>true</code>
+        </p>
+      </td></tr><tr id="Access Log Valve_Attributes_suffix"><td><code class="attributeName">suffix</code></td><td>
+        <p>The suffix added to the end of each log file's name.  If not
+        specified, the default value is "" (a zero-length string),
+        meaning that no suffix will be added.</p>
+      </td></tr></table>
+
+    <p>Values for the <code>pattern</code> attribute are made up of literal
+    text strings, combined with pattern identifiers prefixed by the "%"
+    character to cause replacement by the corresponding variable value from
+    the current request and response.  The following pattern codes are
+    supported:</p>
+    <ul>
+    <li><b><code>%a</code></b> - Remote IP address.
+        See also <code>%{xxx}a</code> below.</li>
+    <li><b><code>%A</code></b> - Local IP address</li>
+    <li><b><code>%b</code></b> - Bytes sent, excluding HTTP headers, or '-' if zero</li>
+    <li><b><code>%B</code></b> - Bytes sent, excluding HTTP headers</li>
+    <li><b><code>%D</code></b> - Time taken to process the request in millis. Note: In
+        httpd %D is microseconds. Behaviour will be aligned to httpd
+        in Tomcat 10 onwards.</li>
+    <li><b><code>%F</code></b> - Time taken to commit the response, in milliseconds</li>
+    <li><b><code>%h</code></b> - Remote host name (or IP address if
+        <code>enableLookups</code> for the connector is false)</li>
+    <li><b><code>%H</code></b> - Request protocol</li>
+    <li><b><code>%I</code></b> - Current request thread name (can compare later with stacktraces)</li>
+    <li><b><code>%l</code></b> - Remote logical username from identd (always returns
+        '-')</li>
+    <li><b><code>%m</code></b> - Request method (GET, POST, etc.)</li>
+    <li><b><code>%p</code></b> - Local port on which this request was received.
+        See also <code>%{xxx}p</code> below.</li>
+    <li><b><code>%q</code></b> - Query string (prepended with a '?' if it exists)</li>
+    <li><b><code>%r</code></b> - First line of the request (method and request URI)</li>
+    <li><b><code>%s</code></b> - HTTP status code of the response</li>
+    <li><b><code>%S</code></b> - User session ID</li>
+    <li><b><code>%t</code></b> - Date and time, in Common Log Format</li>
+    <li><b><code>%T</code></b> - Time taken to process the request, in seconds. Note: This
+        value has millisecond resolution whereas in httpd it has
+        second resolution. Behaviour will be align to httpd
+        in Tomcat 10 onwards.</li>
+    <li><b><code>%u</code></b> - Remote user that was authenticated (if any), else '-' (escaped if required)</li>
+    <li><b><code>%U</code></b> - Requested URL path</li>
+    <li><b><code>%v</code></b> - Local server name</li>
+    <li><b><code>%X</code></b> - Connection status when response is completed:
+      <ul>
+        <li><code>X</code> = Connection aborted before the response completed.</li>
+        <li><code>+</code> = Connection may be kept alive after the response is sent.</li>
+        <li><code>-</code> = Connection will be closed after the response is sent.</li>
+      </ul>
+    </li>
+    </ul>
+
+    <p>
+    There is also support to write information incoming or outgoing
+    headers, cookies, session or request attributes and special
+    timestamp formats.
+    It is modeled after the
+    <a href="https://httpd.apache.org/">Apache HTTP Server</a> log configuration
+    syntax. Each of them can be used multiple times with different <code>xxx</code> keys:
+    </p>
+    <ul>
+    <li><b><code>%{xxx}a</code></b> write remote address (client) (<code>xxx==remote</code>) or
+        connection peer address (<code>xxx=peer</code>)</li>
+    <li><b><code>%{xxx}i</code></b> write value of incoming header with name <code>xxx</code> (escaped if required)</li>
+    <li><b><code>%{xxx}o</code></b> write value of outgoing header with name <code>xxx</code> (escaped if required)</li>
+    <li><b><code>%{xxx}c</code></b> write value of cookie(s) with name <code>xxx</code> (comma separated and escaped if required)</li>
+    <li><b><code>%{xxx}r</code></b> write value of ServletRequest attribute with name <code>xxx</code> (escaped if required, value <code>??</code> if request is null)</li>
+    <li><b><code>%{xxx}s</code></b> write value of HttpSession attribute with name <code>xxx</code> (escaped if required, value <code>??</code> if request is null)</li>
+    <li><b><code>%{xxx}p</code></b> write local (server) port (<code>xxx==local</code>) or
+        remote (client) port (<code>xxx=remote</code>)</li>
+    <li><b><code>%{xxx}t</code></b> write timestamp at the end of the request formatted using the
+        enhanced SimpleDateFormat pattern <code>xxx</code></li>
+    </ul>
+
+    <p>All formats supported by SimpleDateFormat are allowed in <code>%{xxx}t</code>.
+    In addition the following extensions have been added:</p>
+    <ul>
+    <li><b><code>sec</code></b> - number of seconds since the epoch</li>
+    <li><b><code>msec</code></b> - number of milliseconds since the epoch</li>
+    <li><b><code>msec_frac</code></b> - millisecond fraction</li>
+    </ul>
+    <p>These formats cannot be mixed with SimpleDateFormat formats in the same format
+    token.</p>
+
+    <p>Furthermore one can define whether to log the timestamp for the request start
+    time or the response finish time:</p>
+    <ul>
+    <li><b><code>begin</code></b> or prefix <b><code>begin:</code></b> chooses
+    the request start time</li>
+    <li><b><code>end</code></b> or prefix <b><code>end:</code></b> chooses
+    the response finish time</li>
+    </ul>
+    <p>By adding multiple <code>%{xxx}t</code> tokens to the pattern, one can
+    also log both timestamps.</p>
+
+    <p>Escaping is applied as follows:</p>
+    <ul>
+    <li><code>"</code> is escaped as <code>\"</code></li>
+    <li><code>\</code> is escaped as <code>\\</code></li>
+    <li>Standard C escaping are used for <code>\f</code>, <code>\n</code>,
+        <code>\r</code> and <code>\t</code></li>
+    <li>Any other control characters or characters with code points above 127
+        are encoded using the standard Java unicode escaping
+        (<code>\uXXXX</code>)</li>
+    </ul>
+
+    <p>The shorthand pattern <code>pattern="common"</code>
+    corresponds to the Common Log Format defined by
+    <strong>'%h %l %u %t "%r" %s %b'</strong>.</p>
+
+    <p>The shorthand pattern <code>pattern="combined"</code>
+    appends the values of the <code>Referer</code> and <code>User-Agent</code>
+    headers, each in double quotes, to the <code>common</code> pattern.</p>
+
+    <p>Fields using unknown pattern identifiers will be logged as <code>???X???</code>
+    where <code>X</code> is the unknown identifier. Fields with unknown pattern identifier
+    plus <code>{xxx}</code> key will be logged as <code>???</code>.</p>
+
+    <p>When Tomcat is operating behind a reverse proxy, the client information
+    logged by the Access Log Valve may represent the reverse proxy, the browser
+    or some combination of the two depending on the configuration of Tomcat and
+    the reverse proxy. For Tomcat configuration options see
+    <a href="#Proxies_Support">Proxies Support</a> and the
+    <a href="../proxy-howto.html">Proxy How-To</a>. For reverse proxies that
+    use mod_jk, see the <a href="https://tomcat.apache.org/connectors-doc/generic_howto/proxy.html">generic
+    proxy</a> documentation. For other reverse proxies, consult their
+    documentation.</p>
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="Extended_Access_Log_Valve">Extended Access Log Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Extended_Access_Log_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Extended Access Log Valve</strong> extends the
+    <a href="#Access_Log_Valve">Access Log Valve</a> class, and so
+    uses the same self-contained logging logic.  This means it
+    implements many of the same file handling attributes.  The main
+    difference to the standard <code>AccessLogValve</code> is that
+    <code>ExtendedAccessLogValve</code> creates log files which
+    conform to the Working Draft for the
+    <a href="https://www.w3.org/TR/WD-logfile.html">Extended Log File Format</a>
+    defined by the W3C.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Extended_Access_Log_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Extended Access Log Valve</strong> supports all
+    configuration attributes of the standard
+    <a href="#Access_Log_Valve">Access Log Valve.</a> Only the
+    values used for <code>className</code> and <code>pattern</code> differ.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Extended Access Log Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.ExtendedAccessLogValve</strong> to
+        use the extended access log valve.</p>
+      </td></tr><tr id="Extended Access Log Valve_Attributes_pattern"><td><code class="attributeName">pattern</code></td><td>
+        <p>A formatting layout identifying the various information fields
+        from the request and response to be logged.
+        See below for more information on configuring this attribute.</p>
+      </td></tr></table>
+
+    <p>Values for the <code>pattern</code> attribute are made up of
+    format tokens. Some of the tokens need an additional prefix. Possible
+    prefixes are <code>c</code> for "client", <code>s</code> for "server",
+    <code>cs</code> for "client to server", <code>sc</code> for
+    "server to client" or <code>x</code> for "application specific".
+    Furthermore some tokens are completed by an additional selector.
+    See the <a href="https://www.w3.org/TR/WD-logfile.html">W3C specification</a>
+    for more information about the format.</p>
+
+    <p>The following format tokens are supported:</p>
+    <ul>
+    <li><b>bytes</b> - Bytes sent, excluding HTTP headers, or '-' if zero</li>
+    <li><b>c-dns</b> - Remote host name (or IP address if
+        <code>enableLookups</code> for the connector is false)</li>
+    <li><b>c-ip</b> - Remote IP address</li>
+    <li><b>cs-method</b> - Request method (GET, POST, etc.)</li>
+    <li><b>cs-uri</b> - Request URI</li>
+    <li><b>cs-uri-query</b> - Query string (prepended with a '?' if it exists)</li>
+    <li><b>cs-uri-stem</b> - Requested URL path</li>
+    <li><b>date</b> - The date in yyyy-mm-dd format for GMT</li>
+    <li><b>s-dns</b> - Local host name</li>
+    <li><b>s-ip</b> - Local IP address</li>
+    <li><b>sc-status</b> - HTTP status code of the response</li>
+    <li><b>time</b> - Time the request was served in HH:mm:ss format for GMT</li>
+    <li><b>time-taken</b> - Time (in seconds as floating point) taken to serve the request</li>
+    <li><b>x-threadname</b> - Current request thread name (can compare later with stacktraces)</li>
+    </ul>
+
+    <p>For any of the <code>x-H(XXX)</code> the following method will be called from the
+    HttpServletRequest object:</p>
+    <ul>
+    <li><b><code>x-H(authType)</code></b>: getAuthType </li>
+    <li><b><code>x-H(characterEncoding)</code></b>: getCharacterEncoding </li>
+    <li><b><code>x-H(contentLength)</code></b>: getContentLength </li>
+    <li><b><code>x-H(locale)</code></b>:  getLocale</li>
+    <li><b><code>x-H(protocol)</code></b>: getProtocol </li>
+    <li><b><code>x-H(remoteUser)</code></b>:  getRemoteUser</li>
+    <li><b><code>x-H(requestedSessionId)</code></b>: getRequestedSessionId</li>
+    <li><b><code>x-H(requestedSessionIdFromCookie)</code></b>:
+                     isRequestedSessionIdFromCookie </li>
+    <li><b><code>x-H(requestedSessionIdValid)</code></b>:
+                     isRequestedSessionIdValid</li>
+    <li><b><code>x-H(scheme)</code></b>:  getScheme</li>
+    <li><b><code>x-H(secure)</code></b>:  isSecure</li>
+    </ul>
+
+    <p>
+    There is also support to write information about headers
+    cookies, context, request or session attributes and request
+    parameters.
+    </p>
+    <ul>
+    <li><b><code>cs(XXX)</code></b> for incoming request headers with name XXX</li>
+    <li><b><code>sc(XXX)</code></b> for outgoing response headers with name XXX</li>
+    <li><b><code>x-A(XXX)</code></b> for the servlet context attribute with name XXX</li>
+    <li><b><code>x-C(XXX)</code></b> for the cookie(s) with name XXX (comma separated if required)</li>
+    <li><b><code>x-O(XXX)</code></b> for a concatenation of all outgoing response headers with name XXX</li>
+    <li><b><code>x-P(XXX)</code></b> for the URL encoded (using UTF-8) request parameter with name XXX</li>
+    <li><b><code>x-R(XXX)</code></b> for the request attribute with name XXX</li>
+    <li><b><code>x-S(XXX)</code></b> for the session attribute with name XXX</li>
+    </ul>
+
+  </div></div>
+
+</div></div>
+
+<div class="subsection"><h4 id="JSON_Access_Log_Valve">JSON Access Log Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="JSON_Access_Log_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>JSON Access Log Valve</strong> extends the
+    <a href="#Access_Log_Valve">Access Log Valve</a>, and so
+    uses the same self-contained logging logic.  This means it
+    implements the same file handling attributes.  The main
+    difference to the standard <code>AccessLogValve</code> is that
+    <code>JsonAccessLogValve</code> creates log files which
+    follow the JSON syntax as defined by
+    <a href="https://www.rfc-editor.org/rfc/rfc8259.html">RFC 8259</a>.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="JSON_Access_Log_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>JSON Access Log Valve</strong> supports all
+    configuration attributes of the standard
+    <a href="#Access_Log_Valve">Access Log Valve.</a> Only the
+    values used for <code>className</code> differ.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="JSON Access Log Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.JsonAccessLogValve</strong> to
+        use the extended access log valve.</p>
+      </td></tr></table>
+
+    <p>While the patterns supported are the same as for the regular
+    <a href="#Access_Log_Valve">Access Log Valve</a>,
+    there are a few differences:
+    <ul>
+    <li>requests are logged as JSON objects.</li>
+    <li>each supported "%X" single character pattern
+        identifier results in a key value pair in this object.
+        See below for the list of keys used for the respective pattern
+        identifiers.</li>
+    <li>each pattern identifiers using a subkey of the form <code>%{xxx}X</code>
+        where "X" is one of "a", "p" or "t"
+        results in a key value pair of the form "key-xxx".
+        See below for the list of keys used for the respective pattern
+        identifiers.</li>
+    <li>each pattern identifiers using a subkey of the form <code>%{xxx}X</code>
+        where "X" is one of "c", "i", "o", "r" or "s"
+        results in a sub object. See below for the key pointing at this
+        sub object. The keys in the sub object are the "xxx" subkeys in the pattern.</li>
+    <li>each unsupported "%X" character pattern
+        identifier results in a key value pair using the key "other-X".</li>
+    <li>the values logged are the same as the ones logged by
+        the standard <a href="#Access_Log_Valve">Access Log Valve</a>
+        for the same pattern identifiers.</li>
+    <li>any "xxx" subkeys get Json escaped.</li>
+    <li>any verbatim text between pattern identifiers gets silently ignored.</li>
+    </ul>
+    The JSON object keys used for the pattern identifiers which
+    do not generate a sub object are the following:
+    <ul>
+    <li><b><code>%a</code></b>: remoteAddr</li>
+    <li><b><code>%A</code></b>: localAddr</li>
+    <li><b><code>%b</code></b>: size</li>
+    <li><b><code>%B</code></b>: byteSentNC</li>
+    <li><b><code>%D</code></b>: elapsedTime</li>
+    <li><b><code>%F</code></b>: firstByteTime</li>
+    <li><b><code>%h</code></b>: host</li>
+    <li><b><code>%H</code></b>: protocol</li>
+    <li><b><code>%I</code></b>: threadName</li>
+    <li><b><code>%l</code></b>: logicalUserName</li>
+    <li><b><code>%m</code></b>: method</li>
+    <li><b><code>%p</code></b>: port</li>
+    <li><b><code>%q</code></b>: query</li>
+    <li><b><code>%r</code></b>: request</li>
+    <li><b><code>%s</code></b>: statusCode</li>
+    <li><b><code>%S</code></b>: sessionId</li>
+    <li><b><code>%t</code></b>: time</li>
+    <li><b><code>%T</code></b>: elapsedTimeS</li>
+    <li><b><code>%u</code></b>: user</li>
+    <li><b><code>%U</code></b>: path</li>
+    <li><b><code>%v</code></b>: localServerName</li>
+    <li><b><code>%X</code></b>: connectionStatus</li>
+    </ul>
+    The JSON object keys used for the pattern identifiers which
+    generate a sub object are the following:
+    <ul>
+    <li><b><code>%c</code></b>: cookies</li>
+    <li><b><code>%i</code></b>: requestHeaders</li>
+    <li><b><code>%o</code></b>: responseHeaders</li>
+    <li><b><code>%r</code></b>: requestAttributes</li>
+    <li><b><code>%s</code></b>: sessionAttributes</li>
+    </ul>
+    </p>
+
+  </div></div>
+
+</div></div>
+
+</div><h3 id="Access_Control">Access Control</h3><div class="text">
+
+
+<div class="subsection"><h4 id="Remote_Address_Valve">Remote Address Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Remote_Address_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Remote Address Valve</strong> allows you to compare the
+    IP address of the client that submitted this request against one or more
+    <em>regular expressions</em>, and either allow the request to continue
+    or refuse to process the request from this client.  A Remote Address
+    Valve can be associated with any Catalina container
+    (<a href="engine.html">Engine</a>, <a href="host.html">Host</a>, or
+    <a href="context.html">Context</a>), and must accept any request
+    presented to this container for processing before it will be passed on.</p>
+
+    <p>The syntax for <em>regular expressions</em> is different than that for
+    'standard' wildcard matching. Tomcat uses the <code>java.util.regex</code>
+    package. Please consult the Java documentation for details of the
+    expressions supported.</p>
+
+    <p>After setting the attribute <code>addConnectorPort</code> to
+    <code>true</code>, one can append the server connector port separated with a
+    semicolon (";") to allow different expressions for each connector.</p>
+
+    <p>By setting the attribute <code>usePeerAddress</code> to
+    <code>true</code>, the valve will use the connection peer address in its
+    checks. This will differ from the client IP, if a reverse proxy is used
+    in front of Tomcat in combination with either the AJP protocol, or the
+    HTTP protocol plus the <code>RemoteIp(Valve|Filter)</code>.</p>
+
+    <p>A refused request will be answered a response with status code
+    <code>403</code>. This status code can be overwritten using the attribute
+    <code>denyStatus</code>.</p>
+
+    <p>By setting the attribute <code>invalidAuthenticationWhenDeny</code> to
+    <code>true</code>, the behavior when a request is refused can be changed
+    to not deny but instead set an invalid <code>authentication</code>
+    header. This is useful in combination with the context attribute
+    <code>preemptiveAuthentication="true"</code>.</p>
+
+    <p><strong>Note:</strong> There is a caveat when using this valve with
+    IPv6 addresses. Format of the IP address that this valve is processing
+    depends on the API that was used to obtain it. If the address was obtained
+    from Java socket using Inet6Address class, its format will be
+    <code>x:x:x:x:x:x:x:x</code>. That is, the IP address for localhost
+    will be <code>0:0:0:0:0:0:0:1</code> instead of the more widely used
+    <code>::1</code>. Consult your access logs for the actual value.</p>
+
+    <p>See also: <a href="#Remote_Host_Valve">Remote Host Valve</a>,
+    <a href="#Remote_CIDR_Valve">Remote CIDR Valve</a>,
+    <a href="#Remote_IP_Valve">Remote IP Valve</a>,
+    <a href="http.html">HTTP Connector</a> configuration.</p>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_Address_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Remote Address Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Remote Address Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.RemoteAddrValve</strong>.</p>
+      </td></tr><tr id="Remote Address Valve_Attributes_allow"><td><code class="attributeName">allow</code></td><td>
+        <p>A regular expression (using <code>java.util.regex</code>) that the
+        remote client's IP address is compared to.  If this attribute
+        is specified, the remote address MUST match for this request to be
+        accepted.  If this attribute is not specified, all requests will be
+        accepted UNLESS the remote address matches a <code>deny</code>
+        pattern.</p>
+      </td></tr><tr id="Remote Address Valve_Attributes_deny"><td><code class="attributeName">deny</code></td><td>
+        <p>A regular expression (using <code>java.util.regex</code>) that the
+        remote client's IP address is compared to.  If this attribute
+        is specified, the remote address MUST NOT match for this request to be
+        accepted.  If this attribute is not specified, request acceptance is
+        governed solely by the <code>allow</code> attribute.</p>
+      </td></tr><tr id="Remote Address Valve_Attributes_denyStatus"><td><code class="attributeName">denyStatus</code></td><td>
+        <p>HTTP response status code that is used when rejecting denied
+        request. The default value is <code>403</code>. For example,
+        it can be set to the value <code>404</code>.</p>
+      </td></tr><tr id="Remote Address Valve_Attributes_addConnectorPort"><td><code class="attributeName">addConnectorPort</code></td><td>
+        <p>Append the server connector port to the client IP address separated
+        with a semicolon (";"). If this is set to <code>true</code>, the
+        expressions configured with <code>allow</code> and
+        <code>deny</code> is compared against <code>ADDRESS;PORT</code>
+        where <code>ADDRESS</code> is the client IP address and
+        <code>PORT</code> is the Tomcat connector port which received the
+        request. The default value is <code>false</code>.</p>
+      </td></tr><tr id="Remote Address Valve_Attributes_invalidAuthenticationWhenDeny"><td><code class="attributeName">invalidAuthenticationWhenDeny</code></td><td>
+        <p>When a request should be denied, do not deny but instead
+        set an invalid <code>authentication</code> header. This only works
+        if the context has the attribute <code>preemptiveAuthentication="true"</code>
+        set. An already existing <code>authentication</code> header will not be
+        overwritten. In effect this will trigger authentication instead of deny
+        even if the application does not have a security constraint configured.</p>
+        <p>This can be combined with <code>addConnectorPort</code> to trigger authentication
+        depending on the client and the connector that is used to access an application.</p>
+      </td></tr><tr id="Remote Address Valve_Attributes_usePeerAddress"><td><code class="attributeName">usePeerAddress</code></td><td>
+        <p>Use the connection peer address instead of the client IP address.
+        They will differ, if a reverse proxy is used in front of Tomcat in
+        combination with either the AJP protocol, or the HTTP protocol plus
+        the <code>RemoteIp(Valve|Filter)</code>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_Address_Valve/Example_localhost">Example 1</h4><div class="text">
+    <p>To allow access only for the clients connecting from localhost:</p>
+    <div class="codeBox"><pre><code>&lt;Valve className="org.apache.catalina.valves.RemoteAddrValve"
+   allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1"/&gt;</code></pre></div>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_Address_Valve/Example_localhost_port">Example 2</h4><div class="text">
+    <p>To allow unrestricted access for the clients connecting from localhost
+    but for all other clients only to port 8443:</p>
+    <div class="codeBox"><pre><code>&lt;Valve className="org.apache.catalina.valves.RemoteAddrValve"
+   addConnectorPort="true"
+   allow="127\.\d+\.\d+\.\d+;\d*|::1;\d*|0:0:0:0:0:0:0:1;\d*|.*;8443"/&gt;</code></pre></div>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_Address_Valve/Example_port_auth">Example 3</h4><div class="text">
+    <p>To allow unrestricted access to port 8009, but trigger basic
+    authentication if the application is accessed on another port:</p>
+<div class="codeBox"><pre><code>&lt;Context&gt;
+  ...
+  &lt;Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         addConnectorPort="true"
+         invalidAuthenticationWhenDeny="true"
+         allow=".*;8009"/&gt;
+  &lt;Valve className="org.apache.catalina.authenticator.BasicAuthenticator" /&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="Remote_Host_Valve">Remote Host Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Remote_Host_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Remote Host Valve</strong> allows you to compare the
+    hostname of the client that submitted this request against one or more
+    <em>regular expressions</em>, and either allow the request to continue
+    or refuse to process the request from this client.  A Remote Host
+    Valve can be associated with any Catalina container
+    (<a href="engine.html">Engine</a>, <a href="host.html">Host</a>, or
+    <a href="context.html">Context</a>), and must accept any request
+    presented to this container for processing before it will be passed on.</p>
+
+    <p>The syntax for <em>regular expressions</em> is different than that for
+    'standard' wildcard matching. Tomcat uses the <code>java.util.regex</code>
+    package. Please consult the Java documentation for details of the
+    expressions supported.</p>
+
+    <p>After setting the attribute <code>addConnectorPort</code> to
+    <code>true</code>, one can append the server connector port separated with a
+    semicolon (";") to allow different expressions for each connector.</p>
+
+    <p>A refused request will be answered a response with status code
+    <code>403</code>. This status code can be overwritten using the attribute
+    <code>denyStatus</code>.</p>
+
+    <p>By setting the attribute <code>invalidAuthenticationWhenDeny</code> to
+    <code>true</code>, the behavior when a request is refused can be changed
+    to not deny but instead set an invalid <code>authentication</code>
+    header. This is useful in combination with the context attribute
+    <code>preemptiveAuthentication="true"</code>.</p>
+
+    <p><strong>Note:</strong> This valve processes the value returned by
+    method <code>ServletRequest.getRemoteHost()</code>. To allow the method
+    to return proper host names, you have to enable "DNS lookups" feature on
+    a <strong>Connector</strong>.</p>
+
+    <p>See also: <a href="#Remote_Address_Valve">Remote Address Valve</a>,
+    <a href="#Remote_CIDR_Valve">Remote CIDR Valve</a>,
+    <a href="#Remote_IP_Valve">Remote IP Valve</a>,
+    <a href="http.html">HTTP Connector</a> configuration.</p>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_Host_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Remote Host Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Remote Host Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.RemoteHostValve</strong>.</p>
+      </td></tr><tr id="Remote Host Valve_Attributes_allow"><td><code class="attributeName">allow</code></td><td>
+        <p>A regular expression (using <code>java.util.regex</code>) that the
+        remote client's hostname is compared to.  If this attribute
+        is specified, the remote hostname MUST match for this request to be
+        accepted.  If this attribute is not specified, all requests will be
+        accepted UNLESS the remote hostname matches a <code>deny</code>
+        pattern.</p>
+      </td></tr><tr id="Remote Host Valve_Attributes_deny"><td><code class="attributeName">deny</code></td><td>
+        <p>A regular expression (using <code>java.util.regex</code>) that the
+        remote client's hostname is compared to.  If this attribute
+        is specified, the remote hostname MUST NOT match for this request to be
+        accepted.  If this attribute is not specified, request acceptance is
+        governed solely by the <code>allow</code> attribute.</p>
+      </td></tr><tr id="Remote Host Valve_Attributes_denyStatus"><td><code class="attributeName">denyStatus</code></td><td>
+        <p>HTTP response status code that is used when rejecting denied
+        request. The default value is <code>403</code>. For example,
+        it can be set to the value <code>404</code>.</p>
+      </td></tr><tr id="Remote Host Valve_Attributes_addConnectorPort"><td><code class="attributeName">addConnectorPort</code></td><td>
+        <p>Append the server connector port to the client hostname separated
+        with a semicolon (";"). If this is set to <code>true</code>, the
+        expressions configured with <code>allow</code> and
+        <code>deny</code> is compared against <code>HOSTNAME;PORT</code>
+        where <code>HOSTNAME</code> is the client hostname and
+        <code>PORT</code> is the Tomcat connector port which received the
+        request. The default value is <code>false</code>.</p>
+      </td></tr><tr id="Remote Host Valve_Attributes_invalidAuthenticationWhenDeny"><td><code class="attributeName">invalidAuthenticationWhenDeny</code></td><td>
+        <p>When a request should be denied, do not deny but instead
+        set an invalid <code>authentication</code> header. This only works
+        if the context has the attribute <code>preemptiveAuthentication="true"</code>
+        set. An already existing <code>authentication</code> header will not be
+        overwritten. In effect this will trigger authentication instead of deny
+        even if the application does not have a security constraint configured.</p>
+        <p>This can be combined with <code>addConnectorPort</code> to trigger authentication
+        depending on the client and the connector that is used to access an application.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+<div class="subsection"><h4 id="Remote_CIDR_Valve">Remote CIDR Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Remote_CIDR_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Remote CIDR Valve</strong> allows you to compare the
+      IP address of the client that submitted this request against one or more
+      netmasks following the CIDR notation, and either allow the request to
+      continue or refuse to process the request from this client. IPv4 and
+      IPv6 are both fully supported. A Remote CIDR Valve can be associated
+      with any Catalina container (<a href="engine.html">Engine</a>,
+      <a href="host.html">Host</a>, or <a href="context.html">Context</a>), and
+      must accept any request presented to this container for processing before
+      it will be passed on.
+    </p>
+
+    <p>This valve mimics Apache's <code>Order</code>,
+      <code>Allow from</code> and <code>Deny from</code> directives,
+      with the following limitations:
+    </p>
+
+    <ul>
+      <li><code>Order</code> will always be <code>allow, deny</code>;</li>
+      <li>dotted quad notations for netmasks are not supported (that is, you
+        cannot write <code>192.168.1.0/255.255.255.0</code>, you must write
+        <code>192.168.1.0/24</code>;
+      </li>
+      <li>shortcuts, like <code>10.10.</code>, which is equivalent to
+        <code>10.10.0.0/16</code>, are not supported;
+      </li>
+      <li>as the valve name says, this is a CIDR only valve,
+        therefore subdomain notations like <code>.mydomain.com</code> are not
+        supported either.
+      </li>
+    </ul>
+
+    <p>After setting the attribute <code>addConnectorPort</code> to
+    <code>true</code>, one can append the server connector port separated with a
+    semicolon (";") to allow different expressions for each connector.</p>
+
+    <p>By setting the attribute <code>usePeerAddress</code> to
+    <code>true</code>, the valve will use the connection peer address in its
+    checks. This will differ from the client IP, if a reverse proxy is used
+    in front of Tomcat in combination with either the AJP protocol, or the
+    HTTP protocol plus the <code>RemoteIp(Valve|Filter)</code>.</p>
+
+    <p>A refused request will be answered a response with status code
+    <code>403</code>. This status code can be overwritten using the attribute
+    <code>denyStatus</code>.</p>
+
+    <p>By setting the attribute <code>invalidAuthenticationWhenDeny</code> to
+    <code>true</code>, the behavior when a request is refused can be changed
+    to not deny but instead set an invalid <code>authentication</code>
+    header. This is useful in combination with the context attribute
+    <code>preemptiveAuthentication="true"</code>.</p>
+
+    <p>Some more features of this valve are:
+    </p>
+
+    <ul>
+      <li>if you omit the CIDR prefix, this valve becomes a single IP
+        valve;</li>
+      <li>unlike the <a href="#Remote_Host_Valve">Remote Host Valve</a>,
+      it can handle IPv6 addresses in condensed form (<code>::1</code>,
+      <code>fe80::/71</code>, etc).</li>
+    </ul>
+
+    <p>See also: <a href="#Remote_Address_Valve">Remote Address Valve</a>,
+    <a href="#Remote_Host_Valve">Remote Host Valve</a>,
+    <a href="#Remote_IP_Valve">Remote IP Valve</a>,
+    <a href="http.html">HTTP Connector</a> configuration.</p>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_CIDR_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Remote CIDR Valve</strong> supports the following
+      configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Remote CIDR Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+          <strong>org.apache.catalina.valves.RemoteCIDRValve</strong>.</p>
+      </td></tr><tr id="Remote CIDR Valve_Attributes_allow"><td><code class="attributeName">allow</code></td><td>
+        <p>A comma-separated list of IPv4 or IPv6 netmasks or addresses
+          that the remote client's IP address is matched against.
+          If this attribute is specified, the remote address MUST match
+          for this request to be accepted. If this attribute is not specified,
+          all requests will be accepted UNLESS the remote IP is matched by a
+          netmask in the <code>deny</code> attribute.
+        </p>
+      </td></tr><tr id="Remote CIDR Valve_Attributes_deny"><td><code class="attributeName">deny</code></td><td>
+        <p>A comma-separated list of IPv4 or IPv6 netmasks or addresses
+          that the remote client's IP address is matched against.
+          If this attribute is specified, the remote address MUST NOT match
+          for this request to be accepted. If this attribute is not specified,
+          request acceptance is governed solely by the <code>accept</code>
+          attribute.
+        </p>
+      </td></tr><tr id="Remote CIDR Valve_Attributes_denyStatus"><td><code class="attributeName">denyStatus</code></td><td>
+        <p>HTTP response status code that is used when rejecting denied
+        request. The default value is <code>403</code>. For example,
+        it can be set to the value <code>404</code>.</p>
+      </td></tr><tr id="Remote CIDR Valve_Attributes_addConnectorPort"><td><code class="attributeName">addConnectorPort</code></td><td>
+        <p>Append the server connector port to the client IP address separated
+        with a semicolon (";"). If this is set to <code>true</code>, the
+        expressions configured with <code>allow</code> and
+        <code>deny</code> is compared against <code>ADDRESS;PORT</code>
+        where <code>ADDRESS</code> is the client IP address and
+        <code>PORT</code> is the Tomcat connector port which received the
+        request. The default value is <code>false</code>.</p>
+      </td></tr><tr id="Remote CIDR Valve_Attributes_invalidAuthenticationWhenDeny"><td><code class="attributeName">invalidAuthenticationWhenDeny</code></td><td>
+        <p>When a request should be denied, do not deny but instead
+        set an invalid <code>authentication</code> header. This only works
+        if the context has the attribute <code>preemptiveAuthentication="true"</code>
+        set. An already existing <code>authentication</code> header will not be
+        overwritten. In effect this will trigger authentication instead of deny
+        even if the application does not have a security constraint configured.</p>
+        <p>This can be combined with <code>addConnectorPort</code> to trigger authentication
+        depending on the client and the connector that is used to access an application.</p>
+      </td></tr><tr id="Remote CIDR Valve_Attributes_usePeerAddress"><td><code class="attributeName">usePeerAddress</code></td><td>
+        <p>Use the connection peer address instead of the client IP address.
+        They will differ, if a reverse proxy is used in front of Tomcat in
+        combination with either the AJP protocol, or the HTTP protocol plus
+        the <code>RemoteIp(Valve|Filter)</code>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_CIDR_Valve/Example_localhost">Example 1</h4><div class="text">
+    <p>To allow access only for the clients connecting from localhost:</p>
+    <div class="codeBox"><pre><code>&lt;Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+   allow="127.0.0.1, ::1"/&gt;</code></pre></div>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_CIDR_Valve/Example_localhost_port">Example 2</h4><div class="text">
+    <p>To allow unrestricted access for the clients connecting from the local network
+    but for all clients in network 10. only to port 8443:</p>
+    <div class="codeBox"><pre><code>&lt;Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+   addConnectorPort="true"
+   allow="127.0.0.1;\d*|::1;\d*|10.0.0.0/8;8443"/&gt;</code></pre></div>
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_CIDR_Valve/Example_port_auth">Example 3</h4><div class="text">
+    <p>To allow access to port 8009 from network 10., but trigger basic
+    authentication if the application is accessed on another port:</p>
+<div class="codeBox"><pre><code>&lt;Context&gt;
+  ...
+  &lt;Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+         addConnectorPort="true"
+         invalidAuthenticationWhenDeny="true"
+         allow="10.0.0.0/8;8009"/&gt;
+  &lt;Valve className="org.apache.catalina.authenticator.BasicAuthenticator" /&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+  </div></div>
+
+</div></div>
+
+</div><h3 id="Proxies_Support">Proxies Support</h3><div class="text">
+  <div class="subsection"><h4 id="Load_Balancer_Draining_Valve">Load Balancer Draining Valve</h4><div class="text">
+    <div class="subsection"><h4 id="Load_Balancer_Draining_Valve/Introduction">Introduction</h4><div class="text">
+      <p>
+        When using mod_jk or mod_proxy_ajp, the client's session id is used to
+        determine which back-end server will be used to serve the request. If the
+        target node is being "drained" (in mod_jk, this is the <i>DISABLED</i>
+        state; in mod_proxy_ajp, this is the <i>Drain (N)</i> state), requests
+        for expired sessions can actually cause the draining node to fail to
+        drain.
+      </p>
+      <p>
+        Unfortunately, AJP-based load-balancers cannot prove whether the
+        client-provided session id is valid or not and therefore will send any
+        requests for a session that appears to be targeted to that node to the
+        disabled (or "draining") node, causing the "draining" process to take
+        longer than necessary.
+      </p>
+      <p>
+        This Valve detects requests for invalid sessions, strips the session
+        information from the request, and redirects back to the same URL, where
+        the load-balancer should choose a different (active)  node to handle the
+        request. This will accelerate the "draining" process for the disabled
+        node(s).
+      </p>
+
+      <p>
+        The activation state of the node is sent by the load-balancer in the
+        request, so no state change on the node being disabled is necessary. Simply
+        configure this Valve in your valve pipeline and it will take action when
+        the activation state is set to "disabled".
+      </p>
+
+      <p>
+        You should take care to register this Valve earlier in the Valve pipeline
+        than any authentication Valves, because this Valve should be able to
+        redirect a request before any authentication Valve saves a request to a
+        protected resource. If this happens, a new session will be created and
+        the draining process will stall because a new, valid session will be
+        established.
+      </p>
+    </div></div>
+
+    <div class="subsection"><h4 id="Load_Balancer_Draining_Valve/Attributes">Attributes</h4><div class="text">
+      <p>The <strong>Load Balancer Draining Valve</strong> supports the
+      following configuration attributes:</p>
+
+      <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Load Balancer Draining Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+          <p>Java class name of the implementation to use. This MUST be set to
+          <strong>org.apache.catalina.valves.LoadBalancerDrainingValve</strong>.
+          </p>
+        </td></tr><tr id="Load Balancer Draining Valve_Attributes_redirectStatusCode"><td><code class="attributeName">redirectStatusCode</code></td><td>
+          <p>Allows setting a custom redirect code to be used when the client
+          is redirected to be re-balanced by the load-balancer. The default is
+          307 TEMPORARY_REDIRECT.</p>
+        </td></tr><tr id="Load Balancer Draining Valve_Attributes_ignoreCookieName"><td><code class="attributeName">ignoreCookieName</code></td><td>
+          <p>When used with <code>ignoreCookieValue</code>, a client can present
+          this cookie (and accompanying value) that will cause this Valve to
+          do nothing. This will allow you to probe your <i>disabled</i> node
+          before re-enabling it to make sure that it is working as expected.</p>
+        </td></tr><tr id="Load Balancer Draining Valve_Attributes_ignoreCookieValue"><td><code class="attributeName">ignoreCookieValue</code></td><td>
+          <p>When used with <code>ignoreCookieName</code>, a client can present
+          a cookie (and accompanying value) that will cause this Valve to
+          do nothing. This will allow you to probe your <i>disabled</i> node
+          before re-enabling it to make sure that it is working as expected.</p>
+        </td></tr></table>
+    </div></div>
+  </div></div>
+
+<div class="subsection"><h4 id="Remote_IP_Valve">Remote IP Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Remote_IP_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>Tomcat port of
+    <a href="https://httpd.apache.org/docs/trunk/mod/mod_remoteip.html">mod_remoteip</a>,
+    this valve replaces the apparent client remote IP address and hostname for
+    the request with the IP address list presented by a proxy or a load balancer
+    via a request headers (e.g. "X-Forwarded-For").</p>
+
+    <p>Another feature of this valve is to replace the apparent scheme
+    (http/https), server port and <code>request.secure</code> with the scheme presented
+    by a proxy or a load balancer via a request header
+    (e.g. "X-Forwarded-Proto").</p>
+
+    <p>This Valve may be used at the <code>Engine</code>, <code>Host</code> or
+    <code>Context</code> level as required. Normally, this Valve would be used
+    at the <code>Engine</code> level.</p>
+
+    <p>If used in conjunction with Remote Address/Host valves then this valve
+    should be defined first to ensure that the correct client IP address is
+    presented to the Remote Address/Host valves.</p>
+
+    <p><strong>Note:</strong> By default this valve has no effect on the
+    values that are written into access log. The original values are restored
+    when request processing leaves the valve and that always happens earlier
+    than access logging. To pass the remote address, remote host, server port
+    and protocol values set by this valve to the access log,
+    they are put into request attributes. Publishing these values here
+    is enabled by default, but <code>AccessLogValve</code> should be explicitly
+    configured to use them. See documentation for
+    <code>requestAttributesEnabled</code> attribute of
+    <code>AccessLogValve</code>.</p>
+
+    <p>The names of request attributes that are set by this valve
+    and can be used by access logging are the following:</p>
+
+    <ul>
+      <li><code>org.apache.catalina.AccessLog.RemoteAddr</code></li>
+      <li><code>org.apache.catalina.AccessLog.RemoteHost</code></li>
+      <li><code>org.apache.catalina.AccessLog.Protocol</code></li>
+      <li><code>org.apache.catalina.AccessLog.ServerPort</code></li>
+      <li><code>org.apache.tomcat.remoteAddr</code></li>
+    </ul>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Remote_IP_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Remote IP Valve</strong> supports the
+    following configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Remote IP Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.RemoteIpValve</strong>.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_remoteIpHeader"><td><code class="attributeName">remoteIpHeader</code></td><td>
+        <p>Name of the HTTP Header read by this valve that holds the list of
+        traversed IP addresses starting from the requesting client. If not
+        specified, the default of <code>x-forwarded-for</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_internalProxies"><td><code class="attributeName">internalProxies</code></td><td>
+        <p>Regular expression (using <code>java.util.regex</code>) that a
+        proxy's IP address must match to be considered an internal proxy.
+        Internal proxies that appear in the <strong>remoteIpHeader</strong> will
+        be trusted and will not appear in the <strong>proxiesHeader</strong>
+        value. If not specified the default value of <code>
+        10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|169\.254\.\d{1,3}\.\d{1,3}|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|100\.6[4-9]{1}\.\d{1,3}\.\d{1,3}|100\.[7-9]{1}\d{1}\.\d{1,3}\.\d{1,3}|100\.1[0-1]{1}\d{1}\.\d{1,3}\.\d{1,3}|100\.12[0-7]{1}\.\d{1,3}\.\d{1,3}|172\.1[6-9]{1}\.\d{1,3}\.\d{1,3}|172\.2[0-9]{1}\.\d{1,3}\.\d{1,3}|172\.3[0-1]{1}\.\d{1,3}\.\d{1,3}|0:0:0:0:0:0:0:1
+        </code> will be used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_proxiesHeader"><td><code class="attributeName">proxiesHeader</code></td><td>
+        <p>Name of the HTTP header created by this valve to hold the list of
+        proxies that have been processed in the incoming
+        <strong>remoteIpHeader</strong>. If not specified, the default of
+        <code>x-forwarded-by</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_requestAttributesEnabled"><td><code class="attributeName">requestAttributesEnabled</code></td><td>
+        <p>Set to <code>true</code> to set the request attributes used by
+        AccessLog implementations to override the values returned by the
+        request for remote address, remote host, server port and protocol.
+        Request attributes are also used to enable the forwarded remote address
+        to be displayed on the status page of the Manager web application.
+        If not set, the default value of <code>true</code> will be used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_trustedProxies"><td><code class="attributeName">trustedProxies</code></td><td>
+        <p>Regular expression (using <code>java.util.regex</code>) that a
+        proxy's IP address must match to be considered an trusted proxy.
+        Trusted proxies that appear in the <strong>remoteIpHeader</strong> will
+        be trusted and will appear in the <strong>proxiesHeader</strong> value.
+        If not specified, no proxies will be trusted.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_protocolHeader"><td><code class="attributeName">protocolHeader</code></td><td>
+        <p>Name of the HTTP Header read by this valve that holds the protocol
+        used by the client to connect to the proxy. If not specified, the
+        default of <code>X-Forwarded-Proto</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_hostHeader"><td><code class="attributeName">hostHeader</code></td><td>
+        <p>Name of the HTTP Header read by this valve that holds the host
+        used by the client to connect to the proxy. If not specified, the
+        default of <code>null</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_portHeader"><td><code class="attributeName">portHeader</code></td><td>
+        <p>Name of the HTTP Header read by this valve that holds the port
+        used by the client to connect to the proxy. If not specified, the
+        default of <code>null</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_protocolHeaderHttpsValue"><td><code class="attributeName">protocolHeaderHttpsValue</code></td><td>
+        <p>Value of the <strong>protocolHeader</strong> to indicate that it is
+        an HTTPS request. If not specified, the default of <code>https</code> is
+        used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_httpServerPort"><td><code class="attributeName">httpServerPort</code></td><td>
+         <p>Value returned by <code>ServletRequest.getServerPort()</code>
+         when the <strong>protocolHeader</strong> indicates <code>http</code>
+         protocol and no <strong>portHeader</strong> is present. If not
+         specified, the default of <code>80</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_httpsServerPort"><td><code class="attributeName">httpsServerPort</code></td><td>
+         <p>Value returned by <code>ServletRequest.getServerPort()</code>
+         when the <strong>protocolHeader</strong> indicates <code>https</code>
+         protocol and no <strong>portHeader</strong> is present. If not
+         specified, the default of <code>443</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_changeLocalName"><td><code class="attributeName">changeLocalName</code></td><td>
+        <p>If <code>true</code>, the value returned by
+        <code>ServletRequest.getLocalHost()</code> and
+        <code>ServletRequest.getServerHost()</code> is modified by the this
+        valve. If not specified, the default of <code>false</code> is used.</p>
+      </td></tr><tr id="Remote IP Valve_Attributes_changeLocalPort"><td><code class="attributeName">changeLocalPort</code></td><td>
+        <p>If <code>true</code>, the value returned by
+        <code>ServletRequest.getLocalPort()</code> and
+        <code>ServletRequest.getServerPort()</code> is modified by the this
+        valve. If not specified, the default of <code>false</code> is used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="SSL_Valve">SSL Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="SSL_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>When using mod_proxy_http, the client SSL information is not included in
+    the protocol (unlike mod_jk and mod_proxy_ajp). To make the client SSL
+    information available to Tomcat, some additional configuration is required.
+    In httpd, mod_headers is used to add the SSL information as HTTP headers. In
+    Tomcat, this valve is used to read the information from the HTTP headers and
+    insert it into the request.</p>
+
+    <p>Note: Ensure that the headers are always set by httpd for all requests to
+    prevent a client spoofing SSL information by sending fake headers.</p>
+
+    <p>To configure httpd to set the necessary headers, add the following:</p>
+<div class="codeBox"><pre><code>&lt;IfModule ssl_module&gt;
+  RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
+  RequestHeader set SSL_CIPHER "%{SSL_CIPHER}s"
+  RequestHeader set SSL_SESSION_ID "%{SSL_SESSION_ID}s"
+  RequestHeader set SSL_CIPHER_USEKEYSIZE "%{SSL_CIPHER_USEKEYSIZE}s"
+&lt;/IfModule&gt;</code></pre></div>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="SSL_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>SSL Valve</strong> supports the following configuration
+    attribute:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="SSL Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.SSLValve</strong>.
+        </p>
+      </td></tr><tr id="SSL Valve_Attributes_sslClientCertHeader"><td><code class="attributeName">sslClientCertHeader</code></td><td>
+        <p>Allows setting a custom name for the ssl_client_cert header.
+        If not specified, the default of <code>ssl_client_cert</code> is
+        used.</p>
+      </td></tr><tr id="SSL Valve_Attributes_sslClientEscapedCertHeader"><td><code class="attributeName">sslClientEscapedCertHeader</code></td><td>
+        <p>Allows setting a custom name for the ssl_client_escaped_cert header.
+        If not specified, the default of <code>ssl_client_escaped_cert</code> is
+        used.</p>
+        <p>This header is useful for Nginx proxying, and takes precedence over
+        the ssl_client_cert header.</p>
+      </td></tr><tr id="SSL Valve_Attributes_sslCipherHeader"><td><code class="attributeName">sslCipherHeader</code></td><td>
+        <p>Allows setting a custom name for the ssl_cipher header.
+        If not specified, the default of <code>ssl_cipher</code> is
+        used.</p>
+      </td></tr><tr id="SSL Valve_Attributes_sslSessionIdHeader"><td><code class="attributeName">sslSessionIdHeader</code></td><td>
+        <p>Allows setting a custom name for the ssl_session_id header.
+        If not specified, the default of <code>ssl_session_id</code> is
+        used.</p>
+      </td></tr><tr id="SSL Valve_Attributes_sslCipherUserKeySizeHeader"><td><code class="attributeName">sslCipherUserKeySizeHeader</code></td><td>
+        <p>Allows setting a custom name for the ssl_cipher_usekeysize header.
+        If not specified, the default of <code>ssl_cipher_usekeysize</code> is
+        used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+</div><h3 id="Single_Sign_On_Valve">Single Sign On Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Single_Sign_On_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <em>Single Sign On Valve</em> is utilized when you wish to give users
+    the ability to sign on to any one of the web applications associated with
+    your virtual host, and then have their identity recognized by all other
+    web applications on the same virtual host.</p>
+
+    <p>See the <a href="host.html#Single_Sign_On">Single Sign On</a> special
+    feature on the <strong>Host</strong> element for more information.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Single_Sign_On_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Single Sign On</strong> Valve supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Single Sign On Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.authenticator.SingleSignOn</strong>.</p>
+      </td></tr><tr id="Single Sign On Valve_Attributes_requireReauthentication"><td><code class="attributeName">requireReauthentication</code></td><td>
+        <p>Default false. Flag to determine whether each request needs to be
+        reauthenticated to the security <strong>Realm</strong>. If "true", this
+        Valve uses cached security credentials (username and password) to
+        reauthenticate to the <strong>Realm</strong> each request associated
+        with an SSO session.  If "false", the Valve can itself authenticate
+        requests based on the presence of a valid SSO cookie, without
+        rechecking with the <strong>Realm</strong>.</p>
+      </td></tr><tr id="Single Sign On Valve_Attributes_cookieDomain"><td><code class="attributeName">cookieDomain</code></td><td>
+        <p>Sets the host domain to be used for sso cookies.</p>
+      </td></tr><tr id="Single Sign On Valve_Attributes_cookieName"><td><code class="attributeName">cookieName</code></td><td>
+        <p>Sets the cookie name to be used for sso cookies. The default value
+        is <code>JSESSIONIDSSO</code></p>
+      </td></tr></table>
+
+  </div></div>
+
+
+</div><h3 id="Authentication">Authentication</h3><div class="text">
+
+<p>The valves in this section implement
+<strong>org.apache.catalina.Authenticator</strong> interface.</p>
+
+<div class="subsection"><h4 id="Basic_Authenticator_Valve">Basic Authenticator Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Basic_Authenticator_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Basic Authenticator Valve</strong> is automatically added to
+    any <a href="context.html">Context</a> that is configured to use BASIC
+    authentication.</p>
+
+    <p>If any non-default settings are required, the valve may be configured
+    within <a href="context.html">Context</a> element with the required
+    values.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Basic_Authenticator_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Basic Authenticator Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Basic Authenticator Valve_Attributes_allowCorsPreflight"><td><code class="attributeName">allowCorsPreflight</code></td><td>
+        <p>Are requests that appear to be CORS preflight requests allowed to
+        bypass the authenticator as required by the CORS specification. The
+        allowed values are <code>never</code>, <code>filter</code> and
+        <code>always</code>. <code>never</code> means that a request will never
+        bypass authentication even if it appears to be a CORS preflight request.
+        <code>filter</code> means that a request will bypass authentication if
+        it appears to be a CORS preflight request; it is mapped to a web
+        application that has the <a href="filter.html#CORS_Filter">CORS
+        Filter</a> enabled; and the request matches the URLPatterns for the CORS
+        fitler mapper.
+        <code>always</code> means that all requests that appear to be CORS
+        preflight requests will bypass authentication. If not set, the default
+        value is <code>never</code>.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_alwaysUseSession"><td><code class="attributeName">alwaysUseSession</code></td><td>
+        <p>Should a session always be used once a user is authenticated? This
+        may offer some performance benefits since the session can then be used
+        to cache the authenticated Principal, hence removing the need to
+        authenticate the user via the Realm on every request. This may be of
+        help for combinations such as BASIC authentication used with the
+        JNDIRealm or DataSourceRealms. However there will also be the
+        performance cost of creating and GC'ing the session. If not set, the
+        default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_cache"><td><code class="attributeName">cache</code></td><td>
+        <p>Should we cache authenticated Principals if the request is part of an
+        HTTP session? If not specified, the default value of <code>true</code>
+        will be used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_changeSessionIdOnAuthentication"><td><code class="attributeName">changeSessionIdOnAuthentication</code></td><td>
+        <p>Controls if the session ID is changed if a session exists at the
+        point where users are authenticated. This is to prevent session fixation
+        attacks. If not set, the default value of <code>true</code> will be
+        used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_charset"><td><code class="attributeName">charset</code></td><td>
+        <p>Controls if the <code>WWW-Authenticate</code> HTTP header includes a
+        <code>charset</code> authentication parameter as per RFC 7617. The only
+        permitted options are <code>null</code>, the empty string and
+        <code>UTF-8</code>. If <code>UTF-8</code> is specified then the
+        <code>charset</code> authentication parameter will be sent with that
+        value and the provided user name and optional password will be converted
+        from bytes to characters using UTF-8. Otherwise, no <code>charset</code>
+        authentication parameter will be sent and the provided user name and
+        optional password will be converted from bytes to characters using
+        ISO-8859-1. The default value is <code>null</code></p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.authenticator.BasicAuthenticator</strong>.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_disableProxyCaching"><td><code class="attributeName">disableProxyCaching</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers but will also cause secured pages to be
+        cached by proxies which will almost certainly be a security issue.
+        <code>securePagesWithPragma</code> offers an alternative, secure,
+        workaround for browser caching issues. If not set, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_jaspicCallbackHandlerClass"><td><code class="attributeName">jaspicCallbackHandlerClass</code></td><td>
+        <p>Name of the Java class of the
+        <code>javax.security.auth.callback.CallbackHandler</code> implementation
+        which should be used by JASPIC. If none is specified the default
+        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        will be used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_securePagesWithPragma"><td><code class="attributeName">securePagesWithPragma</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers by using
+        <code>Cache-Control: private</code> rather than the default of
+        <code>Pragma: No-cache</code> and <code>Cache-control: No-cache</code>.
+        If not set, the default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>Name of the algorithm to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the platform
+        default provider and the default algorithm will be used. If not
+        specified, the default algorithm of SHA1PRNG will be used. If the
+        default algorithm is not supported, the platform default will be used.
+        To specify that the platform default should be used, do not set the
+        secureRandomProvider attribute and set this attribute to the empty
+        string.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>Name of the Java class that extends
+        <code>java.security.SecureRandom</code> to use to generate SSO session
+        IDs. If not specified, the default value is
+        <code>java.security.SecureRandom</code>.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>Name of the provider to use to create the
+        <code>java.security.SecureRandom</code> instances that generate SSO
+        session IDs. If an invalid algorithm and/or provider is specified, the
+        platform default provider and the default algorithm will be used. If not
+        specified, the platform default provider will be used.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_sendAuthInfoResponseHeaders"><td><code class="attributeName">sendAuthInfoResponseHeaders</code></td><td>
+        <p>Controls whether the auth information (remote user and auth type)
+        shall be returned as response headers for a forwarded/proxied request.
+        When the <code>RemoteIpValve</code> or <code>RemoteIpFilter</code> mark
+        a forwarded request with the <code>Globals.REQUEST_FORWARDED_ATTRIBUTE</code>
+        this authenticator can return the values of
+        <code>HttpServletRequest.getRemoteUser()</code> and
+        <code>HttpServletRequest.getAuthType()</code> as response headers
+        <code>remote-user</code> and <code>auth-type</code> to a reverse proxy.
+        This is useful, e.g., for access log consistency or other decisions to make.
+        If not specified, the default value is <code>false</code>.</p>
+      </td></tr><tr id="Basic Authenticator Valve_Attributes_trimCredentials"><td><code class="attributeName">trimCredentials</code></td><td>
+        <p>Controls whether leading and/or trailing whitespace is removed from
+        the parsed credentials. If not specified, the default value is
+        <code>false</code>.
+        </p>
+        <p>Note: This attribute will be removed from Tomcat 11 onwards.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="Digest_Authenticator_Valve">Digest Authenticator Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Digest_Authenticator_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Digest Authenticator Valve</strong> is automatically added to
+    any <a href="context.html">Context</a> that is configured to use DIGEST
+    authentication.</p>
+
+    <p>If any non-default settings are required, the valve may be configured
+    within <a href="context.html">Context</a> element with the required
+    values.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Digest_Authenticator_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Digest Authenticator Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Digest Authenticator Valve_Attributes_algorithms"><td><code class="attributeName">algorithms</code></td><td>
+        <p>A comma-separated list of digest algorithms to be used for the
+        authentication process. Algorithms may be specified using the Java
+        Standard names or the names used by RFC 7616. If not specified, the
+        default value of <code>SHA-256,MD5</code> will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_allowCorsPreflight"><td><code class="attributeName">allowCorsPreflight</code></td><td>
+        <p>Are requests that appear to be CORS preflight requests allowed to
+        bypass the authenticator as required by the CORS specification. The
+        allowed values are <code>never</code>, <code>filter</code> and
+        <code>always</code>. <code>never</code> means that a request will never
+        bypass authentication even if it appears to be a CORS preflight request.
+        <code>filter</code> means that a request will bypass authentication if
+        it appears to be a CORS preflight request; it is mapped to a web
+        application that has the <a href="filter.html#CORS_Filter">CORS
+        Filter</a> enabled; and the request matches the URLPatterns for the CORS
+        fitler mapper.
+        <code>always</code> means that all requests that appear to be CORS
+        preflight requests will bypass authentication. If not set, the default
+        value is <code>never</code>.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_alwaysUseSession"><td><code class="attributeName">alwaysUseSession</code></td><td>
+        <p>Should a session always be used once a user is authenticated? This
+        may offer some performance benefits since the session can then be used
+        to cache the authenticated Principal, hence removing the need to
+        authenticate the user via the Realm on every request. This may be of
+        help for combinations such as BASIC authentication used with the
+        JNDIRealm or DataSourceRealms. However there will also be the
+        performance cost of creating and GC'ing the session. If not set, the
+        default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_cache"><td><code class="attributeName">cache</code></td><td>
+        <p>Should we cache authenticated Principals if the request is part of an
+        HTTP session? If not specified, the default value of <code>false</code>
+        will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_changeSessionIdOnAuthentication"><td><code class="attributeName">changeSessionIdOnAuthentication</code></td><td>
+        <p>Controls if the session ID is changed if a session exists at the
+        point where users are authenticated. This is to prevent session fixation
+        attacks. If not set, the default value of <code>true</code> will be
+        used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.authenticator.DigestAuthenticator</strong>.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_disableProxyCaching"><td><code class="attributeName">disableProxyCaching</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers but will also cause secured pages to be
+        cached by proxies which will almost certainly be a security issue.
+        <code>securePagesWithPragma</code> offers an alternative, secure,
+        workaround for browser caching issues. If not set, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_jaspicCallbackHandlerClass"><td><code class="attributeName">jaspicCallbackHandlerClass</code></td><td>
+        <p>Name of the Java class of the
+        <code>javax.security.auth.callback.CallbackHandler</code> implementation
+        which should be used by JASPIC. If none is specified the default
+        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_key"><td><code class="attributeName">key</code></td><td>
+        <p>The secret key used by digest authentication. If not set, a secure
+        random value is generated. This should normally only be set when it is
+        necessary to keep key values constant either across server restarts
+        and/or across a cluster.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_nonceCacheSize"><td><code class="attributeName">nonceCacheSize</code></td><td>
+        <p>To protect against replay attacks, the DIGEST authenticator tracks
+        server nonce and nonce count values. This attribute controls the size
+        of that cache. If not specified, the default value of 1000 is used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_nonceCountWindowSize"><td><code class="attributeName">nonceCountWindowSize</code></td><td>
+        <p>Client requests may be processed out of order which in turn means
+        that the nonce count values may be processed out of order. To prevent
+        authentication failures when nonce counts are presented out of order
+        the authenticator tracks a window of nonce count values. This attribute
+        controls how big that window is. If not specified, the default value of
+        100 is used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_nonceValidity"><td><code class="attributeName">nonceValidity</code></td><td>
+        <p>The time, in milliseconds, that a server generated nonce will be
+        considered valid for use in authentication. If not specified, the
+        default value of 300000 (5 minutes) will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_opaque"><td><code class="attributeName">opaque</code></td><td>
+        <p>The opaque server string used by digest authentication. If not set, a
+        random value is generated. This should normally only be set when it is
+        necessary to keep opaque values constant either across server restarts
+        and/or across a cluster.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_securePagesWithPragma"><td><code class="attributeName">securePagesWithPragma</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers by using
+        <code>Cache-Control: private</code> rather than the default of
+        <code>Pragma: No-cache</code> and <code>Cache-control: No-cache</code>.
+        If not set, the default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>Name of the algorithm to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the platform
+        default provider and the default algorithm will be used. If not
+        specified, the default algorithm of SHA1PRNG will be used. If the
+        default algorithm is not supported, the platform default will be used.
+        To specify that the platform default should be used, do not set the
+        secureRandomProvider attribute and set this attribute to the empty
+        string.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>Name of the Java class that extends
+        <code>java.security.SecureRandom</code> to use to generate SSO session
+        IDs. If not specified, the default value is
+        <code>java.security.SecureRandom</code>.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>Name of the provider to use to create the
+        <code>java.security.SecureRandom</code> instances that generate SSO
+        session IDs. If an invalid algorithm and/or provider is specified, the
+        platform default provider and the default algorithm will be used. If not
+        specified, the platform default provider will be used.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_sendAuthInfoResponseHeaders"><td><code class="attributeName">sendAuthInfoResponseHeaders</code></td><td>
+        <p>Controls whether the auth information (remote user and auth type)
+        shall be returned as response headers for a forwarded/proxied request.
+        When the <code>RemoteIpValve</code> or <code>RemoteIpFilter</code> mark
+        a forwarded request with the <code>Globals.REQUEST_FORWARDED_ATTRIBUTE</code>
+        this authenticator can return the values of
+        <code>HttpServletRequest.getRemoteUser()</code> and
+        <code>HttpServletRequest.getAuthType()</code> as response headers
+        <code>remote-user</code> and <code>auth-type</code> to a reverse proxy.
+        This is useful, e.g., for access log consistency or other decisions to make.
+        If not specified, the default value is <code>false</code>.</p>
+      </td></tr><tr id="Digest Authenticator Valve_Attributes_validateUri"><td><code class="attributeName">validateUri</code></td><td>
+        <p>Should the URI be validated as required by RFC2617? If not specified,
+        the default value of <code>true</code> will be used. This should
+        normally only be set when Tomcat is located behind a reverse proxy and
+        the proxy is modifying the URI passed to Tomcat such that DIGEST
+        authentication always fails.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="Form_Authenticator_Valve">Form Authenticator Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="Form_Authenticator_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Form Authenticator Valve</strong> is automatically added to
+    any <a href="context.html">Context</a> that is configured to use FORM
+    authentication.</p>
+
+    <p>If any non-default settings are required, the valve may be configured
+    within <a href="context.html">Context</a> element with the required
+    values.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Form_Authenticator_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Form Authenticator Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Form Authenticator Valve_Attributes_allowCorsPreflight"><td><code class="attributeName">allowCorsPreflight</code></td><td>
+        <p>Are requests that appear to be CORS preflight requests allowed to
+        bypass the authenticator as required by the CORS specification. The
+        allowed values are <code>never</code>, <code>filter</code> and
+        <code>always</code>. <code>never</code> means that a request will never
+        bypass authentication even if it appears to be a CORS preflight request.
+        <code>filter</code> means that a request will bypass authentication if
+        it appears to be a CORS preflight request; it is mapped to a web
+        application that has the <a href="filter.html#CORS_Filter">CORS
+        Filter</a> enabled; and the request matches the URLPatterns for the CORS
+        fitler mapper.
+        <code>always</code> means that all requests that appear to be CORS
+        preflight requests will bypass authentication. If not set, the default
+        value is <code>never</code>.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_authenticationSessionTimeout"><td><code class="attributeName">authenticationSessionTimeout</code></td><td>
+        <p>If the authentication process creates a session, this is the maximum session timeout (in seconds) during the
+        authentication process. Once authentication is complete, the default session timeout will apply. Sessions that
+        exist before the authentication process starts will retain their original session timeout throughout. If not
+        set, the default value of <code>120</code> seconds will be used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_changeSessionIdOnAuthentication"><td><code class="attributeName">changeSessionIdOnAuthentication</code></td><td>
+        <p>Controls if the session ID is changed if a session exists at the
+        point where users are authenticated. This is to prevent session fixation
+        attacks. If not set, the default value of <code>true</code> will be
+        used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_characterEncoding"><td><code class="attributeName">characterEncoding</code></td><td>
+        <p>Character encoding to use to read the username and password parameters
+        from the request. If not set, the encoding of the request body will be
+        used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.authenticator.FormAuthenticator</strong>.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_disableProxyCaching"><td><code class="attributeName">disableProxyCaching</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers but will also cause secured pages to be
+        cached by proxies which will almost certainly be a security issue.
+        <code>securePagesWithPragma</code> offers an alternative, secure,
+        workaround for browser caching issues. If not set, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_jaspicCallbackHandlerClass"><td><code class="attributeName">jaspicCallbackHandlerClass</code></td><td>
+        <p>Name of the Java class of the
+        <code>javax.security.auth.callback.CallbackHandler</code> implementation
+        which should be used by JASPIC. If none is specified the default
+        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        will be used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_landingPage"><td><code class="attributeName">landingPage</code></td><td>
+        <p>Controls the behavior of the FORM authentication process if the
+        process is misused, for example by directly requesting the login page
+        or delaying logging in for so long that the session expires. If this
+        attribute is set, rather than returning an error response code, Tomcat
+        will redirect the user to the specified landing page if the login form
+        is submitted with valid credentials. For the login to be processed, the
+        landing page must be a protected resource (i.e. one that requires
+        authentication). If the landing page does not require authentication
+        then the user will not be logged in and will be prompted for their
+        credentials again when they access a protected page.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_securePagesWithPragma"><td><code class="attributeName">securePagesWithPragma</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers by using
+        <code>Cache-Control: private</code> rather than the default of
+        <code>Pragma: No-cache</code> and <code>Cache-control: No-cache</code>.
+        If not set, the default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>Name of the algorithm to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the platform
+        default provider and the default algorithm will be used. If not
+        specified, the default algorithm of SHA1PRNG will be used. If the
+        default algorithm is not supported, the platform default will be used.
+        To specify that the platform default should be used, do not set the
+        secureRandomProvider attribute and set this attribute to the empty
+        string.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>Name of the Java class that extends
+        <code>java.security.SecureRandom</code> to use to generate SSO session
+        IDs. If not specified, the default value is
+        <code>java.security.SecureRandom</code>.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>Name of the provider to use to create the
+        <code>java.security.SecureRandom</code> instances that generate SSO
+        session IDs. If an invalid algorithm and/or provider is specified, the
+        platform default provider and the default algorithm will be used. If not
+        specified, the platform default provider will be used.</p>
+      </td></tr><tr id="Form Authenticator Valve_Attributes_sendAuthInfoResponseHeaders"><td><code class="attributeName">sendAuthInfoResponseHeaders</code></td><td>
+        <p>Controls whether the auth information (remote user and auth type)
+        shall be returned as response headers for a forwarded/proxied request.
+        When the <code>RemoteIpValve</code> or <code>RemoteIpFilter</code> mark
+        a forwarded request with the <code>Globals.REQUEST_FORWARDED_ATTRIBUTE</code>
+        this authenticator can return the values of
+        <code>HttpServletRequest.getRemoteUser()</code> and
+        <code>HttpServletRequest.getAuthType()</code> as response headers
+        <code>remote-user</code> and <code>auth-type</code> to a reverse proxy.
+        This is useful, e.g., for access log consistency or other decisions to make.
+        If not specified, the default value is <code>false</code>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="SSL_Authenticator_Valve">SSL Authenticator Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="SSL_Authenticator_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>SSL Authenticator Valve</strong> is automatically added to
+    any <a href="context.html">Context</a> that is configured to use SSL
+    authentication.</p>
+
+    <p>If any non-default settings are required, the valve may be configured
+    within <a href="context.html">Context</a> element with the required
+    values.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="SSL_Authenticator_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>SSL Authenticator Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="SSL Authenticator Valve_Attributes_allowCorsPreflight"><td><code class="attributeName">allowCorsPreflight</code></td><td>
+        <p>Are requests that appear to be CORS preflight requests allowed to
+        bypass the authenticator as required by the CORS specification. The
+        allowed values are <code>never</code>, <code>filter</code> and
+        <code>always</code>. <code>never</code> means that a request will never
+        bypass authentication even if it appears to be a CORS preflight request.
+        <code>filter</code> means that a request will bypass authentication if
+        it appears to be a CORS preflight request; it is mapped to a web
+        application that has the <a href="filter.html#CORS_Filter">CORS
+        Filter</a> enabled; and the request matches the URLPatterns for the CORS
+        fitler mapper.
+        <code>always</code> means that all requests that appear to be CORS
+        preflight requests will bypass authentication. If not set, the default
+        value is <code>never</code>.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_cache"><td><code class="attributeName">cache</code></td><td>
+        <p>Should we cache authenticated Principals if the request is part of an
+        HTTP session? If not specified, the default value of <code>true</code>
+        will be used.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.authenticator.SSLAuthenticator</strong>.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_changeSessionIdOnAuthentication"><td><code class="attributeName">changeSessionIdOnAuthentication</code></td><td>
+        <p>Controls if the session ID is changed if a session exists at the
+        point where users are authenticated. This is to prevent session fixation
+        attacks. If not set, the default value of <code>true</code> will be
+        used.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_disableProxyCaching"><td><code class="attributeName">disableProxyCaching</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers but will also cause secured pages to be
+        cached by proxies which will almost certainly be a security issue.
+        <code>securePagesWithPragma</code> offers an alternative, secure,
+        workaround for browser caching issues. If not set, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_jaspicCallbackHandlerClass"><td><code class="attributeName">jaspicCallbackHandlerClass</code></td><td>
+        <p>Name of the Java class of the
+        <code>javax.security.auth.callback.CallbackHandler</code> implementation
+        which should be used by JASPIC. If none is specified the default
+        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        will be used.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_securePagesWithPragma"><td><code class="attributeName">securePagesWithPragma</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers by using
+        <code>Cache-Control: private</code> rather than the default of
+        <code>Pragma: No-cache</code> and <code>Cache-control: No-cache</code>.
+        If not set, the default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>Name of the algorithm to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the platform
+        default provider and the default algorithm will be used. If not
+        specified, the default algorithm of SHA1PRNG will be used. If the
+        default algorithm is not supported, the platform default will be used.
+        To specify that the platform default should be used, do not set the
+        secureRandomProvider attribute and set this attribute to the empty
+        string.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>Name of the Java class that extends
+        <code>java.security.SecureRandom</code> to use to generate SSO session
+        IDs. If not specified, the default value is
+        <code>java.security.SecureRandom</code>.</p>
+      </td></tr><tr id="SSL Authenticator Valve_Attributes_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>Name of the provider to use to create the
+        <code>java.security.SecureRandom</code> instances that generate SSO
+        session IDs. If an invalid algorithm and/or provider is specified, the
+        platform default provider and the default algorithm will be used. If not
+        specified, the platform default provider will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="SPNEGO_Valve">SPNEGO Valve</h4><div class="text">
+
+  <div class="subsection"><h4 id="SPNEGO_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>SPNEGO Authenticator Valve</strong> is automatically added to
+    any <a href="context.html">Context</a> that is configured to use SPNEGO
+    authentication.</p>
+
+    <p>If any non-default settings are required, the valve may be configured
+    within <a href="context.html">Context</a> element with the required
+    values.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="SPNEGO_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>SPNEGO Authenticator Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="SPNEGO Valve_Attributes_allowCorsPreflight"><td><code class="attributeName">allowCorsPreflight</code></td><td>
+        <p>Are requests that appear to be CORS preflight requests allowed to
+        bypass the authenticator as required by the CORS specification. The
+        allowed values are <code>never</code>, <code>filter</code> and
+        <code>always</code>. <code>never</code> means that a request will never
+        bypass authentication even if it appears to be a CORS preflight request.
+        <code>filter</code> means that a request will bypass authentication if
+        it appears to be a CORS preflight request and the web application the
+        request maps to has the <a href="filter.html#CORS_Filter">CORS
+        Filter</a> enabled; and the request matches the URLPatterns for the CORS
+        fitler mapper.
+        means that all requests that appear to be CORS preflight requests will
+        bypass authentication. If not set, the default value is
+        <code>never</code>.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_alwaysUseSession"><td><code class="attributeName">alwaysUseSession</code></td><td>
+        <p>Should a session always be used once a user is authenticated? This
+        may offer some performance benefits since the session can then be used
+        to cache the authenticated Principal, hence removing the need to
+        authenticate the user on every request. This will also help with clients
+        that assume that the server will cache the authenticated user. However
+        there will also be the performance cost of creating and GC'ing the
+        session. For an alternative solution see
+        <code>noKeepAliveUserAgents</code>. If not set, the default value of
+        <code>false</code> will be used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_applyJava8u40Fix"><td><code class="attributeName">applyJava8u40Fix</code></td><td>
+        <p>A fix introduced in Java 8 update 40 (
+        <a href="https://bugs.openjdk.java.net/browse/JDK-8048194">JDK-8048194</a>)
+        onwards broke SPNEGO authentication for IE with Tomcat running on
+        Windows 2008 R2 servers. This option enables a work-around that allows
+        SPNEGO authentication to continue working. The work-around should not
+        impact other configurations so it is enabled by default. If necessary,
+        the workaround can be disabled by setting this attribute to
+        <code>false</code>.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_cache"><td><code class="attributeName">cache</code></td><td>
+        <p>Should we cache authenticated Principals if the request is part of an
+        HTTP session? If not specified, the default value of <code>true</code>
+        will be used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.authenticator.SpnegoAuthenticator</strong>.
+        </p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_changeSessionIdOnAuthentication"><td><code class="attributeName">changeSessionIdOnAuthentication</code></td><td>
+        <p>Controls if the session ID is changed if a session exists at the
+        point where users are authenticated. This is to prevent session fixation
+        attacks. If not set, the default value of <code>true</code> will be
+        used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_disableProxyCaching"><td><code class="attributeName">disableProxyCaching</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers but will also cause secured pages to be
+        cached by proxies which will almost certainly be a security issue.
+        <code>securePagesWithPragma</code> offers an alternative, secure,
+        workaround for browser caching issues. If not set, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_jaspicCallbackHandlerClass"><td><code class="attributeName">jaspicCallbackHandlerClass</code></td><td>
+        <p>Name of the Java class of the
+        <code>javax.security.auth.callback.CallbackHandler</code> implementation
+        which should be used by JASPIC. If none is specified the default
+        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        will be used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_loginConfigName"><td><code class="attributeName">loginConfigName</code></td><td>
+        <p>The name of the JAAS login configuration to be used to login as the
+        service. If not specified, the default of
+        <code>com.sun.security.jgss.krb5.accept</code> is used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_noKeepAliveUserAgents"><td><code class="attributeName">noKeepAliveUserAgents</code></td><td>
+        <p>Some clients (not most browsers) expect the server to cache the
+        authenticated user information for a connection and do not resend the
+        credentials with every request. Tomcat will not do this unless an HTTP
+        session is available. A session will be available if either the
+        application creates one or if <code>alwaysUseSession</code> is enabled
+        for this Authenticator.</p>
+        <p>As an alternative to creating a session, this attribute may be used
+        to define the user agents for which HTTP keep-alive is disabled. This
+        means that a connection will only used for a single request and hence
+        there is no ability to cache authenticated user information per
+        connection. There will be a performance cost in disabling HTTP
+        keep-alive.</p>
+        <p>The attribute should be a regular expression that matches the entire
+        user-agent string, e.g. <code>.*Chrome.*</code>. If not specified, no
+        regular expression will be defined and no user agents will have HTTP
+        keep-alive disabled.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_securePagesWithPragma"><td><code class="attributeName">securePagesWithPragma</code></td><td>
+        <p>Controls the caching of pages that are protected by security
+        constraints. Setting this to <code>false</code> may help work around
+        caching issues in some browsers by using
+        <code>Cache-Control: private</code> rather than the default of
+        <code>Pragma: No-cache</code> and <code>Cache-control: No-cache</code>.
+        If not set, the default value of <code>false</code> will be used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>Name of the algorithm to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the platform
+        default provider and the default algorithm will be used. If not
+        specified, the default algorithm of SHA1PRNG will be used. If the
+        default algorithm is not supported, the platform default will be used.
+        To specify that the platform default should be used, do not set the
+        secureRandomProvider attribute and set this attribute to the empty
+        string.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>Name of the Java class that extends
+        <code>java.security.SecureRandom</code> to use to generate SSO session
+        IDs. If not specified, the default value is
+        <code>java.security.SecureRandom</code>.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>Name of the provider to use to create the
+        <code>java.security.SecureRandom</code> instances that generate SSO
+        session IDs. If an invalid algorithm and/or provider is specified, the
+        platform default provider and the default algorithm will be used. If not
+        specified, the platform default provider will be used.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_sendAuthInfoResponseHeaders"><td><code class="attributeName">sendAuthInfoResponseHeaders</code></td><td>
+        <p>Controls whether the auth information (remote user and auth type)
+        shall be returned as response headers for a forwarded/proxied request.
+        When the <code>RemoteIpValve</code> or <code>RemoteIpFilter</code> mark
+        a forwarded request with the <code>Globals.REQUEST_FORWARDED_ATTRIBUTE</code>
+        this authenticator can return the values of
+        <code>HttpServletRequest.getRemoteUser()</code> and
+        <code>HttpServletRequest.getAuthType()</code> as response headers
+        <code>remote-user</code> and <code>auth-type</code> to a reverse proxy.
+        This is useful, e.g., for access log consistency or other decisions to make.
+        If not specified, the default value is <code>false</code>.</p>
+      </td></tr><tr id="SPNEGO Valve_Attributes_storeDelegatedCredential"><td><code class="attributeName">storeDelegatedCredential</code></td><td>
+        <p>Controls if the user' delegated credential will be stored in
+        the user Principal. If available, the delegated credential will be
+        available to applications (e.g. for onward authentication to external
+        services) via the <code>org.apache.catalina.realm.GSS_CREDENTIAL</code>
+        request attribute. If not set, the default value of <code>true</code>
+        will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div>
+
+
+</div><h3 id="Error_Report_Valve">Error Report Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Error_Report_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Error Report Valve</strong> is a simple error handler
+    for HTTP status codes that will generate and return HTML error pages. It can
+    also be configured to return pre-defined static HTML pages for specific
+    status codes and/or exception types.</p>
+
+    <p><strong>NOTE:</strong> Disabling both showServerInfo and showReport will
+    only return the HTTP status code.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Error_Report_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Error Report Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Error Report Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.ErrorReportValve</strong> to use the
+        default error report valve.</p>
+      </td></tr><tr id="Error Report Valve_Attributes_errorCode.nnn"><td><code class="attributeName">errorCode.nnn</code></td><td>
+        <p>The location of the UTF-8 encoded HTML file to return for the HTTP
+        error code represented by <code>nnn</code>. For example,
+        <code>errorCode.404</code> specifies the file to return for an HTTP 404
+        error. The location may be relative or absolute. If relative, it must be
+        relative to <code>$CATALINA_BASE</code>. The special value of
+        <code>errorCode.0</code> may be used to define a default error page to
+        be used if no error page is defined for a status code. If no matching
+        error page is found, the default <strong>Error Report Valve</strong>
+        response will be returned.</p>
+      </td></tr><tr id="Error Report Valve_Attributes_exceptionType.fullyQualifiedClassName"><td><code class="attributeName">exceptionType.fullyQualifiedClassName</code></td><td>
+        <p>The location of the UTF-8 encoded HTML file to return if an error has
+        occurred and the <code>javax.servlet.error.exception</code> request
+        attribute has been set to an instance of
+        <code>fullyQualifiedClassName</code> or a sub-class of it. For example,
+        <code>errorCode.java.io.IOException</code> specifies the file to return
+        for an <code>IOException</code>. The location may be relative or
+        absolute. If relative, it must be relative to
+        <code>$CATALINA_BASE</code>. If no matching error page is found, the
+        default <strong>Error Report Valve</strong> response will be
+        returned.</p>
+      </td></tr><tr id="Error Report Valve_Attributes_showReport"><td><code class="attributeName">showReport</code></td><td>
+        <p>Flag to determine if the error report (custom error message and/or
+           stack trace) is presented when an error occurs. If set to
+           <code>false</code>, then the error report is not returned in the HTML
+           response.
+           Default value: <code>true</code>
+        </p>
+      </td></tr><tr id="Error Report Valve_Attributes_showServerInfo"><td><code class="attributeName">showServerInfo</code></td><td>
+        <p>Flag to determine if server information is presented when an error
+           occurs. If set to <code>false</code>, then the server version is not
+           returned in the HTML response.
+           Default value: <code>true</code>
+        </p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Json_Error_Report_Valve">Json Error Report Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Json_Error_Report_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Json Error Report Valve</strong> is a simple error handler
+    for HTTP status codes that will return Json error messages.</p>
+
+    <p>By specifying this class in <code>errorReportValveClass</code> attribute
+    in <code>Host</code>, it will be used instead of
+    <code>ErrorReportValve</code> and will return JSON response instead of HTML.
+    </p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Json_Error_Report_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Json Error Report Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Json Error Report Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.JsonErrorReportValve</strong>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Proxy_Error_Report_Valve">Proxy Error Report Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Proxy_Error_Report_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Proxy Error Report Valve</strong> is a simple error handler
+    for HTTP status codes that will redirect or proxy to another location
+    responsible for the generation of the error report.</p>
+
+    <p>By specifying this class in <code>errorReportValveClass</code> attribute
+    in <code>Host</code>, it will be used instead of
+    <code>ErrorReportValve</code> with the default attribute values. To
+    configure the attributes, the valve can be defined nested in the
+    <code>Host</code> element.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Proxy_Error_Report_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Proxy Error Report Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Proxy Error Report Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.ProxyErrorReportValve</strong>.</p>
+      </td></tr><tr id="Proxy Error Report Valve_Attributes_usePropertiesFile"><td><code class="attributeName">usePropertiesFile</code></td><td>
+        <p>If <code>true</code>, the valve will use the properties file
+        described below to associate the URLs with the status code.
+        If <code>false</code>, the configuration mechanism of the default
+        <code>ErrorReportValve</code> will be used instead. The default
+        value is <code>false</code>.</p>
+      </td></tr><tr id="Proxy Error Report Valve_Attributes_useRedirect"><td><code class="attributeName">useRedirect</code></td><td>
+        <p>If <code>true</code>, the valve will send a redirect to the URL.
+        If <code>false</code>, the valve will instead proxy the content from
+        the specified URL. The default value is <code>true</code>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Configuration">Configuration</h4><div class="text">
+
+    <p>The <strong>Proxy Error Report Valve</strong> can use a resource file
+    <strong>ProxyErrorReportValve.properties</strong>
+    from the class path, where each entry is a statusCode=baseUrl. baseUrl
+    should not include any url parameters, statusCode, statusDescription,
+    requestUri, and throwable which will be automatically appended. A special
+    key named <code>0</code> should be used to match any other unmapped
+    code to a redirect or proxy URL.</p>
+
+  </div></div>
+
+</div><h3 id="Crawler_Session_Manager_Valve">Crawler Session Manager Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Crawler_Session_Manager_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>Web crawlers can trigger the creation of many thousands of sessions as
+    they crawl a site which may result in significant memory consumption. This
+    Valve ensures that crawlers are associated with a single session - just like
+    normal users - regardless of whether or not they provide a session token
+    with their requests.</p>
+
+    <p>This Valve may be used at the <code>Engine</code>, <code>Host</code> or
+    <code>Context</code> level as required. Normally, this Valve would be used
+    at the <code>Engine</code> level.</p>
+
+    <p>If used in conjunction with Remote IP valve then the Remote IP valve
+    should be defined before this valve to ensure that the correct client IP
+    address is presented to this valve.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Crawler_Session_Manager_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Crawler Session Manager Valve</strong> supports the
+    following configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Crawler Session Manager Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.CrawlerSessionManagerValve</strong>.
+        </p>
+      </td></tr><tr id="Crawler Session Manager Valve_Attributes_contextAware"><td><code class="attributeName">contextAware</code></td><td>
+        <p>Flag to use the context name together with the client IP to
+        identify the session to re-use. Can be combined with <code>hostAware</code>.
+        Default value: <code>true</code>
+        </p>
+      </td></tr><tr id="Crawler Session Manager Valve_Attributes_crawlerIps"><td><code class="attributeName">crawlerIps</code></td><td>
+        <p>Regular expression (using <code>java.util.regex</code>) that client
+        IP is matched against to determine if a request is from a web crawler.
+        By default such regular expression is not set.</p>
+      </td></tr><tr id="Crawler Session Manager Valve_Attributes_crawlerUserAgents"><td><code class="attributeName">crawlerUserAgents</code></td><td>
+        <p>Regular expression (using <code>java.util.regex</code>) that the user
+        agent HTTP request header is matched against to determine if a request
+        is from a web crawler. If not set, the default of
+        <code>.*[bB]ot.*|.*Yahoo! Slurp.*|.*Feedfetcher-Google.*</code> is used.</p>
+      </td></tr><tr id="Crawler Session Manager Valve_Attributes_hostAware"><td><code class="attributeName">hostAware</code></td><td>
+        <p>Flag to use the configured host together with the client IP to
+        identify the session to re-use. Can be combined with <code>contextAware</code>.
+        Default value: <code>true</code>
+        </p>
+      </td></tr><tr id="Crawler Session Manager Valve_Attributes_sessionInactiveInterval"><td><code class="attributeName">sessionInactiveInterval</code></td><td>
+        <p>The minimum time in seconds that the Crawler Session Manager Valve
+        should keep the mapping of client IP to session ID in memory without any
+        activity from the client. The client IP / session cache will be
+        periodically purged of mappings that have been inactive for longer than
+        this interval. If not specified the default value of <code>60</code>
+        will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Stuck_Thread_Detection_Valve">Stuck Thread Detection Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Stuck_Thread_Detection_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>This valve allows to detect requests that take a long time to process,
+    which might indicate that the thread that is processing it is stuck.
+    Additionally it can optionally interrupt such threads to try and unblock
+    them.</p>
+    <p>When such a request is detected, the current stack trace of its thread is
+    written to Tomcat log with a WARN level.</p>
+    <p>The IDs and names of the stuck threads are available through JMX in the
+    <code>stuckThreadIds</code> and <code>stuckThreadNames</code> attributes.
+    The IDs can be used with the standard Threading JVM MBean
+    (<code>java.lang:type=Threading</code>) to retrieve other information
+    about each stuck thread.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Stuck_Thread_Detection_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Stuck Thread Detection Valve</strong> supports the
+    following configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Stuck Thread Detection Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.StuckThreadDetectionValve</strong>.
+        </p>
+      </td></tr><tr id="Stuck Thread Detection Valve_Attributes_threshold"><td><code class="attributeName">threshold</code></td><td>
+        <p>Minimum duration in seconds after which a thread is considered stuck.
+        Default is 600 seconds. If set to 0, the detection is disabled.</p>
+        <p>Note: since the detection (and optional interruption) is done in the
+        background thread of the Container (Engine, Host or Context) declaring
+        this Valve, the threshold should be higher than the
+        <code>backgroundProcessorDelay</code> of this Container.</p>
+      </td></tr><tr id="Stuck Thread Detection Valve_Attributes_interruptThreadThreshold"><td><code class="attributeName">interruptThreadThreshold</code></td><td>
+        <p>Minimum duration in seconds after which a stuck thread should be
+        interrupted to attempt to "free" it.</p>
+        <p>Note that there's no guarantee that the thread will get unstuck.
+        This usually works well for threads stuck on I/O or locks, but is
+        probably useless in case of infinite loops.</p>
+        <p>Default is -1 which disables the feature. To enable it, the value
+        must be greater or equal to <code>threshold</code>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Semaphore_Valve">Semaphore Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Semaphore_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Semaphore Valve</strong> is able to limit the number of
+    concurrent request processing threads.</p>
+    <p><strong>org.apache.catalina.valves.SemaphoreValve</strong> provides
+    methods which may be overridden by a subclass to customize behavior:</p>
+    <ul>
+    <li><b><code>controlConcurrency</code></b> may be overridden to add
+    conditions;</li>
+    <li><b><code>permitDenied</code></b> may be overridden to add error handling
+    when a permit isn't granted.</li>
+    </ul>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Semaphore_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Semaphore Valve</strong> supports the following
+    configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Semaphore Valve_Attributes_block"><td><code class="attributeName">block</code></td><td>
+        <p>Flag to determine if a thread is blocked until a permit is available.
+        The default value is <strong>true</strong>.</p>
+      </td></tr><tr id="Semaphore Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use. This MUST be set to
+        <strong>org.apache.catalina.valves.SemaphoreValve</strong>.</p>
+      </td></tr><tr id="Semaphore Valve_Attributes_concurrency"><td><code class="attributeName">concurrency</code></td><td>
+        <p>Concurrency level of the semaphore. The default value is
+        <strong>10</strong>.</p>
+      </td></tr><tr id="Semaphore Valve_Attributes_fairness"><td><code class="attributeName">fairness</code></td><td>
+        <p>Fairness of the semaphore. The default value is
+        <strong>false</strong>.</p>
+      </td></tr><tr id="Semaphore Valve_Attributes_highConcurrencyStatus"><td><code class="attributeName">highConcurrencyStatus</code></td><td>
+        <p>The error status code which will be returned to the client, if the
+        value is positive, when a permit cannot be acquired from the
+        sepmaphore. The default value is <strong>-1</strong>, which will mean
+        no error status will be sent back.</p>
+      </td></tr><tr id="Semaphore Valve_Attributes_interruptible"><td><code class="attributeName">interruptible</code></td><td>
+        <p>Flag to determine if a thread may be interrupted until a permit is
+        available. The default value is <strong>false</strong>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Health_Check_Valve">Health Check Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Health_Check_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>Health Check Valve</strong> responds to
+    cloud orchestrators health checks.</p>
+  </div></div>
+
+  <div class="subsection"><h4 id="Health_Check_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>Health Check Valve</strong> supports the
+    following configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Health Check Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.HealthCheckValve</strong>.</p>
+      </td></tr><tr id="Health Check Valve_Attributes_path"><td><code class="attributeName">path</code></td><td>
+        <p>Path by the cloud orchestrators health check logic. If the valve
+        is associated with a context, then this will be relative to the context
+        path. Otherwise, the valve will match the full URI.
+        The default value is <strong>/health</strong>.</p>
+      </td></tr><tr id="Health Check Valve_Attributes_checkContainersAvailable"><td><code class="attributeName">checkContainersAvailable</code></td><td>
+        <p>If <code>true</code> the valve will check if its associated
+        container and all its children are available.
+        The default value is <strong>true</strong>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Persistent_Valve">Persistent Valve</h3><div class="text">
+
+  <div class="subsection"><h4 id="Persistent_Valve/Introduction">Introduction</h4><div class="text">
+
+    <p>The <strong>PersistentValve</strong> that implements per-request session
+    persistence. It is intended to be used with non-sticky load-balancers.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Persistent_Valve/Attributes">Attributes</h4><div class="text">
+
+    <p>The <strong>PersistentValve Valve</strong> supports the
+    following configuration attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Persistent Valve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.valves.PersistentValve</strong>.</p>
+      </td></tr><tr id="Persistent Valve_Attributes_filter"><td><code class="attributeName">filter</code></td><td>
+        <p>For known file extensions or urls, you can use this filter pattern to
+        notify the valve that no session required during this request. If the
+        request matches this filter pattern, the valve assumes there has been no
+        need to restore session. An example filter would look like <code>
+        filter=".*\.gif|.*\.js|.*\.jpeg|.*\.jpg|.*\.png|.*\.htm|.*\.html|.*\.css|.*\.txt"</code>.
+        The filter is a regular expression using
+        <code>java.util.regex</code>.</p>
+      </td></tr><tr id="Persistent Valve_Attributes_semaphoreAcquireUninterruptibly"><td><code class="attributeName">semaphoreAcquireUninterruptibly</code></td><td>
+        <p>Flag to determine if a thread that blocks waiting for the per session
+        Semaphore should do so uninterruptibly. Has no effect if
+        <strong>semaphoreBlockOnAcquire</strong> is <code>false</code>. If not
+        specified, the default value of <code>true</code> will be used.</p>
+      </td></tr><tr id="Persistent Valve_Attributes_semaphoreBlockOnAcquire"><td><code class="attributeName">semaphoreBlockOnAcquire</code></td><td>
+        <p>Flag to determine if a thread that wishes to acquire the per session
+        Semaphore when it is held by another thread should block until it can
+        acquire the Semaphore or if the waiting request be rejected. If not
+        specified, the default value of <code>true</code> will be used.</p>
+      </td></tr><tr id="Persistent Valve_Attributes_semaphoreFairness"><td><code class="attributeName">semaphoreFairness</code></td><td>
+        <p>Flag to determine if the per session Semaphore will grant requests
+        for the Semaphore in the same order they were received. Has no effect if
+        <strong>semaphoreBlockOnAcquire</strong> is <code>false</code>. If not
+        specified, the default value of <code>true</code> will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

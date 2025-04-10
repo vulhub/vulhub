@@ -1,0 +1,311 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Resources Component</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Resources Component</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#Standard_Implementation">Standard Implementation</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Special_Features">Special Features</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>The <strong>Resources</strong> element represents all the resources
+  available to the web application. This includes classes, JAR files, HTML, JSPs
+  and any other files that contribute to the web application. Implementations
+  are provided to use directories, JAR files and WARs as the source of these
+  resources and the resources implementation may be extended to provide support
+  for files stored in other forms such as in a database or a versioned
+  repository.</p>
+
+  <p>Resources are cached by default.</p>
+
+  <p><strong>Note: Running a webapp with non-filesystem based
+  Resources implementations is only possible when the webapp does not
+  rely on direct filesystem access to its own resources, and uses the methods
+  in the ServletContext interface to access them.</strong></p>
+
+  <p>A Resources element MAY be nested inside a
+  <a href="context.html">Context</a> component.  If it is not included,
+  a default filesystem based Resources will be created automatically,
+  which is sufficient for most requirements.</p>
+
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+    <p>All implementations of <strong>Resources</strong> support the following
+    attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_allowLinking"><td><code class="attributeName">allowLinking</code></td><td>
+        <p>If the value of this flag is <code>true</code>, symlinks will be
+        allowed inside the web application, pointing to resources inside or
+        outside the web application base path. If not specified, the default
+        value of the flag is <code>false</code>.</p>
+        <p><b>NOTE: This flag MUST NOT be set to true on the Windows platform
+        (or any other OS which does not have a case sensitive filesystem),
+        as it will disable case sensitivity checks, allowing JSP source code
+        disclosure, among other security problems.</b></p>
+      </td></tr><tr id="Attributes_Common Attributes_cacheMaxSize"><td><code class="attributeName">cacheMaxSize</code></td><td>
+        <p>The maximum size of the static resource cache in kilobytes.
+        If not specified, the default value is <code>10240</code>
+        (10 MiB). This value may be changed while the web application is
+        running (e.g. via JMX). If the cache is using more memory than the new
+        limit the cache will attempt to reduce in size over time to meet the
+        new limit. If necessary, <strong>cacheObjectMaxSize</strong> will be
+        reduced to ensure that it is no larger than
+        <code>cacheMaxSize/20</code>.</p>
+      </td></tr><tr id="Attributes_Common Attributes_cacheObjectMaxSize"><td><code class="attributeName">cacheObjectMaxSize</code></td><td>
+        <p>Maximum size of the static resource that will be placed in the cache.
+        If not specified, the default value is <code>512</code>
+        (512 kilobytes). If this value is greater than
+        <code>cacheMaxSize/20</code> it will be reduced to
+        <code>cacheMaxSize/20</code>. This value may be changed while the web
+        application is running (e.g. via JMX).</p>
+      </td></tr><tr id="Attributes_Common Attributes_cacheTtl"><td><code class="attributeName">cacheTtl</code></td><td>
+        <p>The amount of time in milliseconds between the revalidation of cache
+        entries. If not specified, the default value is <code>5000</code> (5
+        seconds). This value may be changed while the web application is running
+        (e.g. via JMX). When a resource is cached it will inherit the TTL in
+        force at the time it was cached and retain that TTL until the resource
+        is evicted from the cache regardless of any subsequent changes that may
+        be made to this attribute.</p>
+      </td></tr><tr id="Attributes_Common Attributes_cachingAllowed"><td><code class="attributeName">cachingAllowed</code></td><td>
+        <p>If the value of this flag is <code>true</code>, the cache for static
+        resources will be used. If not specified, the default value
+        of the flag is <code>true</code>. This value may be changed while the
+        web application is running (e.g. via JMX). When the cache is disabled
+        any resources currently in the cache are cleared from the cache.</p>
+      </td></tr><tr id="Attributes_Common Attributes_className"><td><code class="attributeName">className</code></td><td>
+        <p>Java class name of the implementation to use. This class must
+        implement the <code>org.apache.catalina.WebResourceRoot</code>
+        interface. If not specified, the standard value (defined below) will be
+        used.</p>
+      </td></tr><tr id="Attributes_Common Attributes_trackLockedFiles"><td><code class="attributeName">trackLockedFiles</code></td><td>
+        <p>Controls whether the track locked files feature is enabled. If
+        enabled, all calls to methods that return objects that lock a file and
+        need to be closed to release that lock (e.g.
+        <code>ServletContext.getResourceAsStream()</code>) will perform a number
+        of additional tasks.</p>
+        <ul>
+          <li>The stack trace at the point where the method was called will be
+          recorded and associated with the returned object.</li>
+          <li>The returned object will be wrapped so that the point where
+          close() (or equivalent) is called to release the resources can be
+          detected. Tracking of the object will cease once the resources have
+          been released.</li>
+          <li>All remaining locked resources on web application shutdown will be
+          logged and then closed.</li>
+        </ul>
+        <p>If not specified, the default value of <code>false</code> will be
+        used.</p>
+      </td></tr><tr id="Attributes_Common Attributes_archiveIndexStrategy"><td><code class="attributeName">archiveIndexStrategy</code></td><td>
+        <p>If this is <code>simple</code> then a hash map will be used for
+        JAR archive lookups, unless useBloomFilterForArchives in
+        <a href="context.html">Context</a> is explicitly defined.</p>
+        <p>If this is <code>bloom</code> then a bloom filter will be used to
+        speed up archive lookups. This can be beneficial to the deployment
+        speed to web applications that contain very large amount of JARs.</p>
+        <p>If this is <code>purged</code> then a bloom filter will be used to
+        speed up archive lookups, but can be purged at runtime. It is recommended
+        to use <code>bloom</code> to avoid reinitializing the bloom filters.</p>
+        <p>If not specified, the default value of <code>simple</code> will be
+        used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Standard_Implementation">Standard Implementation</h4><div class="text">
+
+    <h3>Standard Root Implementation</h3>
+
+    <p>The standard implementation of <strong>Resources</strong> is
+    <strong>org.apache.catalina.webresources.StandardRoot</strong>. It does not
+    support any additional attributes.</p>
+
+    <h3>Extracting Root Implementation</h3>
+
+    <p>The extracting implementation of <strong>Resources</strong> is
+    <strong>org.apache.catalina.webresources.ExtractingRoot</strong>. It does not
+    support any additional attributes.</p>
+
+    <p>When deploying web applications as packed WAR files, the extracting root
+    will extract any JAR files from <code>/WEB-INF/lib</code> to a
+    <code>application-jars</code> directory located in the web
+    application's working directory. These extracted JARs will be removed
+    when the web application stops.</p>
+
+    <p>Extracting JAR files from a packed WAR may provide a performance
+    improvement, particularly at web application start when JAR scanning is
+    required by the application.</p>
+
+  </div></div>
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <p>A web application's main resources are defined by the
+  <strong>docBase</strong> defined for the <a href="context.html">Context</a>.
+  Additional configuration settings and/or resources may be made available to
+  the web application by defining one or more nested components.</p>
+
+  <h3>PreResources</h3>
+
+  <p>PreResources are searched before the main resources. They will be searched
+  in the order they are defined. To configure PreResources, nest a
+  &lt;PreResources&gt; element inside the &lt;Resources&gt; element with the
+  following attributes:</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="_Nested Components_base"><td><strong><code class="attributeName">base</code></strong></td><td>
+      <p>Identifies where the resources to be used are located. This attribute
+      is required by the <code>org.apache.catalina.WebResourceSet</code>
+      implementations provided by Tomcat and should specify the absolute path to
+      the file, directory or JAR where the resources are located. Custom
+      implementations may not require it.</p>
+    </td></tr><tr id="_Nested Components_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+      <p>Java class name of the implementation to use. This class must
+      implement the <code>org.apache.catalina.WebResourceSet</code> interface.
+      Tomcat provides three standard implementations:
+      <code>org.apache.catalina.webresources.DirResourceSet</code>,
+      <code>org.apache.catalina.webresources.FileResourceSet</code> and
+      <code>org.apache.catalina.webresources.JarResourceSet</code>. Custom
+      implementations may also be used.
+      </p>
+    </td></tr><tr id="_Nested Components_internalPath"><td><code class="attributeName">internalPath</code></td><td>
+      <p>Identifies the path within the <strong>base</strong> where the
+      resources are to be found. This is typically only used with JAR files when
+      the resources are not located at the root of the JAR as is the case with
+      resource JARs. This attribute is required by the
+      <code>org.apache.catalina.WebResourceSet</code> implementations provided
+      by Tomcat and must start with '/'. Custom implementations may not require
+      it. If not specified, the default value '/' will be used.</p>
+    </td></tr><tr id="_Nested Components_readOnly"><td><code class="attributeName">readOnly</code></td><td>
+      <p>If <code>true</code>, resources within this resource set may not be
+      deleted, created or modified. For instance of
+      <code>org.apache.catalina.webresources.JarResourceSet</code>, this
+      attribute is hard-coded to <code>true</code> and may not be changed. For
+      instances of <code>org.apache.catalina.webresources.DirResourceSet</code>
+      and <code>org.apache.catalina.webresources.FileResourceSet</code> the
+      default value of this attribute is <code>false</code>.</p>
+    </td></tr><tr id="_Nested Components_webAppMount"><td><code class="attributeName">webAppMount</code></td><td>
+      <p>Identifies the path within the web application that these resources
+      will be made available. For the
+      <code>org.apache.catalina.WebResourceSet</code> implementations provided
+      by Tomcat, this attribute is required and must start with '/'. Custom
+      implementations may not require it. If not specified, the default value of
+      '/' will be used.</p>
+    </td></tr></table>
+
+  <h3>JAR resources</h3>
+
+  <p>JarResources are searched after the main resources but before the
+  PostResources. They will be searched in the order they are defined. To
+  configure JarResources, nest a &lt;JarResources&gt; element inside the
+  &lt;Resources&gt; element. The configuration attributes are the same as for
+  <strong>PreResources</strong>.
+  </p>
+
+  <p>During web application start, the JAR scanning process checks scanned JARs
+  for content under <code>/META-INF/resources</code>. Where found, this static
+  content is added to the JarResources.
+  </p>
+
+  <h3>Post-resources</h3>
+
+  <p>PostResources are searched after the resource JARs. They will be searched
+  in the order they are defined. To configure PostResources, nest a
+  &lt;PostResources&gt; element inside the &lt;Resources&gt; element. The
+  configuration attributes are the same as for <strong>PreResources</strong>.
+  </p>
+
+  <h3>Ordering</h3>
+
+  <p>In addition to the sets of resources described above, the standard
+  implementation also maintains ClassResources which represent the classes
+  contained in the JAR files mapped to <code>/WEB-INF/classes</code>. This
+  allows other components to search for classes with a single call rather than
+  one call to search <code>/WEB-INF/classes</code> followed by another to search
+  the JARs in <code>/WEB-INF/lib</code>. The ClassResources are populated
+  from the JARs mapped to <code>/WEB-INF/lib</code> when the web application
+  starts.</p>
+
+  <p>Therefore, the complete search order is:</p>
+  <ul>
+    <li>PreResources</li>
+    <li>MainResources</li>
+    <li>ClassResources</li>
+    <li>JarResources</li>
+    <li>PostResources</li>
+  </ul>
+
+  <p>The population of ClassResources and JarResources at web application start
+  means that care needs to be taken to add JAR based resources correctly to
+  obtain the desired behaviour. Consider the following example:</p>
+
+  <div class="codeBox"><pre><code>&lt;Resources&gt;
+  &lt;PostResources base="D:\Projects\external\classes"
+                 className="org.apache.catalina.webresources.DirResourceSet"
+                 webAppMount="/WEB-INF/classes"/&gt;
+  &lt;PostResources base="D:\Projects\lib\library1.jar"
+                 className="org.apache.catalina.webresources.FileResourceSet"
+                 webAppMount="/WEB-INF/lib/library1.jar"/&gt;
+&lt;/Resources&gt;</code></pre></div>
+
+  <p>Since both resources are PostResources, it might be expected that
+  <code>D:\Projects\external\classes</code> will be searched for classes before
+  <code>D:\Projects\lib\library1.jar</code>. However, by adding the JAR using a
+  <code>FileResourceSet</code>, the JAR is mapped to <code>/WEB-INF/lib</code>
+  and will be processed at application start along with the other JARs in
+  <code>/WEB-INF/lib</code>. The classes from the JAR file will be added to the
+  ClassResources which means they will be searched before the classes from
+  <code>D:\Projects\external\classes</code>. If the desired behaviour is that
+  <code>D:\Projects\external\classes</code> is searched before
+  <code>D:\Projects\lib\library1.jar</code> then a slightly different
+  configuration is required:</p>
+
+  <div class="codeBox"><pre><code>&lt;Resources&gt;
+  &lt;PostResources base="D:\Projects\external\classes"
+                 className="org.apache.catalina.webresources.DirResourceSet"
+                 webAppMount="/WEB-INF/classes"/&gt;
+  &lt;PostResources base="D:\Projects\lib\library1.jar"
+                 className="org.apache.catalina.webresources.JarResourceSet"
+                 webAppMount="/WEB-INF/classes"/&gt;
+&lt;/Resources&gt;</code></pre></div>
+
+  <p>In short, the JAR file should be added as a <code>JarResourceSet</code>
+  mapped to <code>/WEB-INF/classes</code> rather than using a
+  <code>FileResourceSet</code> mapped to <code>/WEB-INF/lib</code>.
+  </p>
+
+  <h3>Cache Strategy</h3>
+
+  <p>Additional control over the caching of static resources can be obtained by
+     configuring a custom cache strategy. To configure a custom cache strategy,
+     nest a &lt;CacheStrategy&gt; element inside the &lt;Resources&gt; element
+     with the following attributes:</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="_Nested Components_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+      <p>Java class name of the implementation to use. This class must implement
+      the <code>org.apache.catalina.WebResourceRoot$CacheStrategy</code>
+      interface.</p>
+    </td></tr></table>
+
+</div><h3 id="Special_Features">Special Features</h3><div class="text">
+
+  <p>No special features are associated with a <strong>Resources</strong>
+  element.</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

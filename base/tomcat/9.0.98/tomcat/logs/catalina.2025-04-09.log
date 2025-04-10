@@ -1,0 +1,190 @@
+09-Apr-2025 13:59:46.481 警告 [main] org.apache.tomcat.util.digester.Digester.endElement 找不到匹配的规则[Server/Service/Engine/Host/Manager/Store]
+09-Apr-2025 13:59:46.483 警告 [main] org.apache.tomcat.util.digester.Digester.endElement 找不到匹配的规则[Server/Service/Engine/Host/Manager]
+09-Apr-2025 13:59:46.486 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Server.服务器版本: Apache Tomcat/9.0.98
+09-Apr-2025 13:59:46.486 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 服务器构建:        Dec 5 2024 19:50:29 UTC
+09-Apr-2025 13:59:46.486 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 服务器版本号:      9.0.98.0
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 操作系统名称:      Linux
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log OS.版本:           6.11.0-21-generic
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 架构:              amd64
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java 环境变量:     /usr/lib/jvm/java-8-openjdk-amd64/jre
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java虚拟机版本:    1.8.0_442-8u442-b06~us1-0ubuntu1~24.04-b06
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM.供应商:        Private Build
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     /home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     /home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.util.logging.config.file=/home/echo/桌面/apache-tomcat-9.0.98/conf/logging.properties
+09-Apr-2025 13:59:46.487 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djdk.tls.ephemeralDHKeySize=2048
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dignore.endorsed.dirs=
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dcatalina.base=/home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dcatalina.home=/home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 13:59:46.488 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.io.tmpdir=/home/echo/桌面/apache-tomcat-9.0.98/temp
+09-Apr-2025 13:59:46.489 信息 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 在java.library.path:[/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]上找不到基于APR的Apache Tomcat本机库，该库允许在生产环境中获得最佳性能
+09-Apr-2025 13:59:46.972 信息 [main] org.apache.coyote.AbstractProtocol.init 初始化协议处理器 ["http-nio-8080"]
+09-Apr-2025 13:59:46.985 严重 [main] org.apache.catalina.util.LifecycleBase.handleSubClassException 初始化组件[Connector["http-nio-8080"]]失败。
+	org.apache.catalina.LifecycleException: 协议处理程序初始化失败
+		at org.apache.catalina.connector.Connector.initInternal(Connector.java:1027)
+		at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:122)
+		at org.apache.catalina.core.StandardService.initInternal(StandardService.java:525)
+		at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:122)
+		at org.apache.catalina.core.StandardServer.initInternal(StandardServer.java:986)
+		at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:122)
+		at org.apache.catalina.startup.Catalina.load(Catalina.java:690)
+		at org.apache.catalina.startup.Catalina.load(Catalina.java:713)
+		at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+		at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.lang.reflect.Method.invoke(Method.java:498)
+		at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:302)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:472)
+	Caused by: java.net.BindException: 地址已在使用
+		at sun.nio.ch.Net.bind0(Native Method)
+		at sun.nio.ch.Net.bind(Net.java:461)
+		at sun.nio.ch.Net.bind(Net.java:453)
+		at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:222)
+		at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:268)
+		at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:223)
+		at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1373)
+		at org.apache.tomcat.util.net.AbstractEndpoint.init(AbstractEndpoint.java:1386)
+		at org.apache.coyote.AbstractProtocol.init(AbstractProtocol.java:663)
+		at org.apache.coyote.http11.AbstractHttp11Protocol.init(AbstractHttp11Protocol.java:80)
+		at org.apache.catalina.connector.Connector.initInternal(Connector.java:1025)
+		... 13 more
+09-Apr-2025 13:59:46.986 信息 [main] org.apache.catalina.startup.Catalina.load 服务器在[784]毫秒内初始化
+09-Apr-2025 13:59:47.019 信息 [main] org.apache.catalina.core.StandardService.startInternal 正在启动服务[Catalina]
+09-Apr-2025 13:59:47.020 信息 [main] org.apache.catalina.core.StandardEngine.startInternal 正在启动 Servlet 引擎：[Apache Tomcat/9.0.98]
+09-Apr-2025 13:59:47.030 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/examples]
+09-Apr-2025 13:59:47.059 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 13:59:47.060 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 13:59:47.491 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/examples]的部署已在[458]毫秒内完成
+09-Apr-2025 13:59:47.492 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/host-manager]
+09-Apr-2025 13:59:47.495 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 13:59:47.495 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 13:59:47.518 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/host-manager]的部署已在[25]毫秒内完成
+09-Apr-2025 13:59:47.518 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/ROOT]
+09-Apr-2025 13:59:47.520 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 13:59:47.520 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 13:59:47.534 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/ROOT]的部署已在[16]毫秒内完成
+09-Apr-2025 13:59:47.535 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/docs]
+09-Apr-2025 13:59:47.537 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 13:59:47.537 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 13:59:47.552 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/docs]的部署已在[17]毫秒内完成
+09-Apr-2025 13:59:47.553 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/manager]
+09-Apr-2025 13:59:47.556 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 13:59:47.557 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 13:59:47.576 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/manager]的部署已在[23]毫秒内完成
+09-Apr-2025 13:59:47.581 信息 [main] org.apache.catalina.startup.Catalina.start [594]毫秒后服务器启动
+09-Apr-2025 14:00:35.694 信息 [main] org.apache.catalina.core.StandardServer.await 通过关闭端口接收到有效的关闭命令。正在停止服务器实例。
+09-Apr-2025 14:00:35.695 信息 [main] org.apache.coyote.AbstractProtocol.pause 暂停ProtocolHandler["http-nio-8080"]
+09-Apr-2025 14:00:35.695 信息 [main] org.apache.catalina.core.StandardService.stopInternal 正在停止服务[Catalina]
+09-Apr-2025 14:00:35.720 信息 [main] org.apache.coyote.AbstractProtocol.stop 正在停止ProtocolHandler ["http-nio-8080"]
+09-Apr-2025 14:00:35.724 信息 [main] org.apache.coyote.AbstractProtocol.destroy 正在销毁协议处理器 ["http-nio-8080"]
+09-Apr-2025 14:02:10.480 警告 [main] org.apache.tomcat.util.digester.Digester.endElement 找不到匹配的规则[Server/Service/Engine/Host/Manager/Store]
+09-Apr-2025 14:02:10.483 警告 [main] org.apache.tomcat.util.digester.Digester.endElement 找不到匹配的规则[Server/Service/Engine/Host/Manager]
+09-Apr-2025 14:02:10.489 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Server.服务器版本: Apache Tomcat/9.0.98
+09-Apr-2025 14:02:10.490 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 服务器构建:        Dec 5 2024 19:50:29 UTC
+09-Apr-2025 14:02:10.490 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 服务器版本号:      9.0.98.0
+09-Apr-2025 14:02:10.490 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 操作系统名称:      Linux
+09-Apr-2025 14:02:10.490 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log OS.版本:           6.11.0-21-generic
+09-Apr-2025 14:02:10.491 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 架构:              amd64
+09-Apr-2025 14:02:10.491 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java 环境变量:     /usr/lib/jvm/java-8-openjdk-amd64/jre
+09-Apr-2025 14:02:10.491 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java虚拟机版本:    1.8.0_442-8u442-b06~us1-0ubuntu1~24.04-b06
+09-Apr-2025 14:02:10.491 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM.供应商:        Private Build
+09-Apr-2025 14:02:10.491 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     /home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:02:10.492 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     /home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:02:10.493 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.util.logging.config.file=/home/echo/桌面/apache-tomcat-9.0.98/conf/logging.properties
+09-Apr-2025 14:02:10.493 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+09-Apr-2025 14:02:10.493 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djdk.tls.ephemeralDHKeySize=2048
+09-Apr-2025 14:02:10.493 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+09-Apr-2025 14:02:10.494 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+09-Apr-2025 14:02:10.494 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dignore.endorsed.dirs=
+09-Apr-2025 14:02:10.494 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dcatalina.base=/home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:02:10.494 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dcatalina.home=/home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:02:10.494 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.io.tmpdir=/home/echo/桌面/apache-tomcat-9.0.98/temp
+09-Apr-2025 14:02:10.498 信息 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 在java.library.path:[/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]上找不到基于APR的Apache Tomcat本机库，该库允许在生产环境中获得最佳性能
+09-Apr-2025 14:02:10.912 信息 [main] org.apache.coyote.AbstractProtocol.init 初始化协议处理器 ["http-nio-8081"]
+09-Apr-2025 14:02:10.937 信息 [main] org.apache.catalina.startup.Catalina.load 服务器在[836]毫秒内初始化
+09-Apr-2025 14:02:10.973 信息 [main] org.apache.catalina.core.StandardService.startInternal 正在启动服务[Catalina]
+09-Apr-2025 14:02:10.974 信息 [main] org.apache.catalina.core.StandardEngine.startInternal 正在启动 Servlet 引擎：[Apache Tomcat/9.0.98]
+09-Apr-2025 14:02:10.984 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/examples]
+09-Apr-2025 14:02:11.029 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:02:11.030 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:02:11.359 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/examples]的部署已在[373]毫秒内完成
+09-Apr-2025 14:02:11.359 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/host-manager]
+09-Apr-2025 14:02:11.361 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:02:11.361 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:02:11.378 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/host-manager]的部署已在[19]毫秒内完成
+09-Apr-2025 14:02:11.378 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/ROOT]
+09-Apr-2025 14:02:11.379 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:02:11.379 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:02:11.389 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/ROOT]的部署已在[11]毫秒内完成
+09-Apr-2025 14:02:11.390 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/docs]
+09-Apr-2025 14:02:11.391 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:02:11.392 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:02:11.401 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/docs]的部署已在[11]毫秒内完成
+09-Apr-2025 14:02:11.402 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/manager]
+09-Apr-2025 14:02:11.404 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:02:11.404 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:02:11.417 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/manager]的部署已在[15]毫秒内完成
+09-Apr-2025 14:02:11.420 信息 [main] org.apache.coyote.AbstractProtocol.start 开始协议处理句柄["http-nio-8081"]
+09-Apr-2025 14:02:11.434 信息 [main] org.apache.catalina.startup.Catalina.start [496]毫秒后服务器启动
+09-Apr-2025 14:21:30.071 信息 [main] org.apache.catalina.core.StandardServer.await 通过关闭端口接收到有效的关闭命令。正在停止服务器实例。
+09-Apr-2025 14:21:30.072 信息 [main] org.apache.coyote.AbstractProtocol.pause 暂停ProtocolHandler["http-nio-8081"]
+09-Apr-2025 14:21:30.076 信息 [main] org.apache.catalina.core.StandardService.stopInternal 正在停止服务[Catalina]
+09-Apr-2025 14:21:30.100 信息 [main] org.apache.coyote.AbstractProtocol.stop 正在停止ProtocolHandler ["http-nio-8081"]
+09-Apr-2025 14:21:30.113 信息 [main] org.apache.coyote.AbstractProtocol.destroy 正在销毁协议处理器 ["http-nio-8081"]
+09-Apr-2025 14:21:51.022 警告 [main] org.apache.tomcat.util.digester.Digester.endElement 找不到匹配的规则[Server/Service/Engine/Host/Manager/Store]
+09-Apr-2025 14:21:51.024 警告 [main] org.apache.tomcat.util.digester.Digester.endElement 找不到匹配的规则[Server/Service/Engine/Host/Manager]
+09-Apr-2025 14:21:51.026 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Server.服务器版本: Apache Tomcat/9.0.98
+09-Apr-2025 14:21:51.026 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 服务器构建:        Dec 5 2024 19:50:29 UTC
+09-Apr-2025 14:21:51.026 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 服务器版本号:      9.0.98.0
+09-Apr-2025 14:21:51.026 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 操作系统名称:      Linux
+09-Apr-2025 14:21:51.026 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log OS.版本:           6.11.0-21-generic
+09-Apr-2025 14:21:51.026 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 架构:              amd64
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java 环境变量:     /usr/lib/jvm/java-8-openjdk-amd64/jre
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log Java虚拟机版本:    1.8.0_442-8u442-b06~us1-0ubuntu1~24.04-b06
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM.供应商:        Private Build
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     /home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     /home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.util.logging.config.file=/home/echo/桌面/apache-tomcat-9.0.98/conf/logging.properties
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djdk.tls.ephemeralDHKeySize=2048
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dignore.endorsed.dirs=
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dcatalina.base=/home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Dcatalina.home=/home/echo/桌面/apache-tomcat-9.0.98
+09-Apr-2025 14:21:51.027 信息 [main] org.apache.catalina.startup.VersionLoggerListener.log 命令行参数：       -Djava.io.tmpdir=/home/echo/桌面/apache-tomcat-9.0.98/temp
+09-Apr-2025 14:21:51.029 信息 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 在java.library.path:[/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]上找不到基于APR的Apache Tomcat本机库，该库允许在生产环境中获得最佳性能
+09-Apr-2025 14:21:51.264 信息 [main] org.apache.coyote.AbstractProtocol.init 初始化协议处理器 ["http-nio-8081"]
+09-Apr-2025 14:21:51.282 信息 [main] org.apache.catalina.startup.Catalina.load 服务器在[491]毫秒内初始化
+09-Apr-2025 14:21:51.316 信息 [main] org.apache.catalina.core.StandardService.startInternal 正在启动服务[Catalina]
+09-Apr-2025 14:21:51.316 信息 [main] org.apache.catalina.core.StandardEngine.startInternal 正在启动 Servlet 引擎：[Apache Tomcat/9.0.98]
+09-Apr-2025 14:21:51.326 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/examples]
+09-Apr-2025 14:21:51.366 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:21:51.366 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:21:51.949 信息 [main] org.apache.jasper.servlet.TldScanner.scanJars 至少有一个JAR被扫描用于TLD但尚未包含TLD。 为此记录器启用调试日志记录，以获取已扫描但未在其中找到TLD的完整JAR列表。 在扫描期间跳过不需要的JAR可以缩短启动时间和JSP编译时间。
+09-Apr-2025 14:21:52.004 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/examples]的部署已在[675]毫秒内完成
+09-Apr-2025 14:21:52.004 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/host-manager]
+09-Apr-2025 14:21:52.008 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:21:52.008 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:21:52.273 信息 [main] org.apache.jasper.servlet.TldScanner.scanJars 至少有一个JAR被扫描用于TLD但尚未包含TLD。 为此记录器启用调试日志记录，以获取已扫描但未在其中找到TLD的完整JAR列表。 在扫描期间跳过不需要的JAR可以缩短启动时间和JSP编译时间。
+09-Apr-2025 14:21:52.278 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/host-manager]的部署已在[274]毫秒内完成
+09-Apr-2025 14:21:52.279 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/ROOT]
+09-Apr-2025 14:21:52.280 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:21:52.280 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:21:52.494 信息 [main] org.apache.jasper.servlet.TldScanner.scanJars 至少有一个JAR被扫描用于TLD但尚未包含TLD。 为此记录器启用调试日志记录，以获取已扫描但未在其中找到TLD的完整JAR列表。 在扫描期间跳过不需要的JAR可以缩短启动时间和JSP编译时间。
+09-Apr-2025 14:21:52.497 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/ROOT]的部署已在[218]毫秒内完成
+09-Apr-2025 14:21:52.497 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/docs]
+09-Apr-2025 14:21:52.499 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:21:52.499 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:21:52.728 信息 [main] org.apache.jasper.servlet.TldScanner.scanJars 至少有一个JAR被扫描用于TLD但尚未包含TLD。 为此记录器启用调试日志记录，以获取已扫描但未在其中找到TLD的完整JAR列表。 在扫描期间跳过不需要的JAR可以缩短启动时间和JSP编译时间。
+09-Apr-2025 14:21:52.729 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/docs]的部署已在[232]毫秒内完成
+09-Apr-2025 14:21:52.729 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory 把web 应用程序部署到目录 [/home/echo/桌面/apache-tomcat-9.0.98/webapps/manager]
+09-Apr-2025 14:21:52.732 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[debug]设置为[0]
+09-Apr-2025 14:21:52.732 警告 [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match[Context/Manager]无法将属性[maxActiveSession]设置为[-1]
+09-Apr-2025 14:21:52.993 信息 [main] org.apache.jasper.servlet.TldScanner.scanJars 至少有一个JAR被扫描用于TLD但尚未包含TLD。 为此记录器启用调试日志记录，以获取已扫描但未在其中找到TLD的完整JAR列表。 在扫描期间跳过不需要的JAR可以缩短启动时间和JSP编译时间。
+09-Apr-2025 14:21:52.997 信息 [main] org.apache.catalina.startup.HostConfig.deployDirectory Web应用程序目录[/home/echo/桌面/apache-tomcat-9.0.98/webapps/manager]的部署已在[267]毫秒内完成
+09-Apr-2025 14:21:53.002 信息 [main] org.apache.coyote.AbstractProtocol.start 开始协议处理句柄["http-nio-8081"]
+09-Apr-2025 14:21:53.013 信息 [main] org.apache.catalina.startup.Catalina.start [1731]毫秒后服务器启动

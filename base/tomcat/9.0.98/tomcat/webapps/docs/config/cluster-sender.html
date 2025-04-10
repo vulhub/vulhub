@@ -1,0 +1,137 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Cluster Sender object</title><meta name="author" content="Filip Hanik"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Cluster Sender object</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Concurrent_Parallel_Delivery">Concurrent Parallel Delivery</a></li><li><a href="#Nested_Elements">Nested Elements</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Sender_Attributes">Common Sender Attributes</a></li><li><a href="#Common_Transport_Attributes">Common Transport Attributes</a></li><li><a href="#Common_PooledSender_Attributes">Common PooledSender Attributes</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+  <p>
+  The channel sender component is responsible for delivering outgoing cluster messages over the network.
+  In the default implementation, <code>org.apache.catalina.tribes.transport.ReplicationTransmitter</code>,
+  the sender is a fairly empty shell with not much logic around a fairly complex <code>&lt;Transport&gt;</code>
+  component the implements the actual delivery mechanism.
+  </p>
+</div><h3 id="Concurrent_Parallel_Delivery">Concurrent Parallel Delivery</h3><div class="text">
+  <p>
+  In the default <code>transport</code> implementation, <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code>,
+  Apache Tribes implements what we like to call "Concurrent Parallel Delivery".
+  This means that we can send a message to more than one destination at the same time(parallel), and
+  deliver two messages to the same destination at the same time(concurrent). Combine these two and we have
+  "Concurrent Parallel Delivery".
+  </p>
+  <p>
+  When is this useful? The simplest example we can think of is when part of your code is sending a 10MB message,
+  like a war file being deployed, and you need to push through a small 10KB message, say a session being replicated,
+  you don't have to wait for the 10MB message to finish, as a separate thread will push in the small message
+  transmission at the same time. Currently there is no interrupt, pause or priority mechanism available, but check back soon.
+  </p>
+</div><h3 id="Nested_Elements">Nested Elements</h3><div class="text">
+ <p>
+   The nested element <code>&lt;Transport&gt;</code> is not required, but encouraged, as this is where
+   you would set all the socket options for the outgoing messages. Please see its attributes below.
+   There are two implementations, in a similar manner to the <a href="cluster-receiver.html">receiver</a>, one is non-blocking
+   based and the other is built using blocking IO. <br>
+   <code>org.apache.catalina.tribes.transport.bio.PooledMultiSender</code> is the blocking implementation and
+   <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code>.
+   Parallel delivery is not available for the blocking implementation due to the fact that it is blocking a thread on sending data.
+ </p>
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+  <div class="subsection"><h4 id="Common_Sender_Attributes">Common Sender Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Sender Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Required, only available implementation is <code>org.apache.catalina.tribes.transport.ReplicationTransmitter</code>
+      </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="Common_Transport_Attributes">Common Transport Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Transport Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Required, an implementation of the <code>org.apache.catalina.tribes.transport.MultiPointSender</code>.<br>
+        Non-blocking implementation is <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code><br>
+        Blocking implementation is <code>org.apache.catalina.tribes.transport.bio.PooledMultiSender</code>
+      </td></tr><tr id="Attributes_Common Transport Attributes_rxBufSize"><td><code class="attributeName">rxBufSize</code></td><td>
+        The receive buffer size on the socket.
+        Default value is <code>25188</code> bytes.
+      </td></tr><tr id="Attributes_Common Transport Attributes_txBufSize"><td><code class="attributeName">txBufSize</code></td><td>
+       The send buffer size on the socket.
+       Default value is <code>65536</code> bytes.
+      </td></tr><tr id="Attributes_Common Transport Attributes_udpRxBufSize"><td><code class="attributeName">udpRxBufSize</code></td><td>
+        The receive buffer size on the datagram socket.
+        Default value is <code>25188</code> bytes.
+      </td></tr><tr id="Attributes_Common Transport Attributes_udpTxBufSize"><td><code class="attributeName">udpTxBufSize</code></td><td>
+       The send buffer size on the datagram socket.
+       Default value is <code>65536</code> bytes.
+      </td></tr><tr id="Attributes_Common Transport Attributes_directBuffer"><td><code class="attributeName">directBuffer</code></td><td>
+       Possible values are <code>true</code> or <code>false</code>.
+       Set to true if you want the receiver to use direct bytebuffers when writing data
+       to the sockets. Default value is <code>false</code>
+      </td></tr><tr id="Attributes_Common Transport Attributes_keepAliveCount"><td><code class="attributeName">keepAliveCount</code></td><td>
+       The number of requests that can go through the socket before the socket is closed, and reopened
+       for the next request. The default value is <code>-1</code>, which is unlimited.
+      </td></tr><tr id="Attributes_Common Transport Attributes_keepAliveTime"><td><code class="attributeName">keepAliveTime</code></td><td>
+       The number of milliseconds a connection is kept open after its been opened.
+       The default value is <code>-1</code>, which is unlimited.
+      </td></tr><tr id="Attributes_Common Transport Attributes_timeout"><td><code class="attributeName">timeout</code></td><td>
+        Sets the SO_TIMEOUT option on the socket. The value is in milliseconds and the default value is <code>3000</code>
+        milliseconds.(3 seconds) This timeout starts when a message send attempt is starting, until the transfer has been completed.
+        For the NIO sockets, this will mean, that the caller can guarantee that we will not attempt sending the message
+        longer than this timeout value. For the blocking IO implementation, this translated directly to the soTimeout.<br>
+        A timeout will not spawn a retry attempt, in order to guarantee the return of the application thread.
+      </td></tr><tr id="Attributes_Common Transport Attributes_maxRetryAttempts"><td><code class="attributeName">maxRetryAttempts</code></td><td>
+        How many times do we retry a failed message, that received a IOException at the socket level.
+        The default value is <code>1</code>, meaning we will retry a message that has failed once.
+        In other words, we will attempt a message send no more than twice. One is the original send, and one is the
+        <code>maxRetryAttempts</code>.
+      </td></tr><tr id="Attributes_Common Transport Attributes_ooBInline"><td><code class="attributeName">ooBInline</code></td><td>
+        Boolean value for the socket OOBINLINE option. Possible values are <code>true</code> or <code>false</code>.
+      </td></tr><tr id="Attributes_Common Transport Attributes_soKeepAlive"><td><code class="attributeName">soKeepAlive</code></td><td>
+        Boolean value for the socket SO_KEEPALIVE option. Possible values are <code>true</code> or <code>false</code>.
+      </td></tr><tr id="Attributes_Common Transport Attributes_soLingerOn"><td><code class="attributeName">soLingerOn</code></td><td>
+        Boolean value to determine whether to use the SO_LINGER socket option.
+        Possible values are <code>true</code> or <code>false</code>. Default value is <code>true</code>.
+      </td></tr><tr id="Attributes_Common Transport Attributes_soLingerTime"><td><code class="attributeName">soLingerTime</code></td><td>
+        Sets the SO_LINGER socket option time value. The value is in seconds.
+        The default value is <code>3</code> seconds.
+      </td></tr><tr id="Attributes_Common Transport Attributes_soReuseAddress"><td><code class="attributeName">soReuseAddress</code></td><td>
+       Boolean value for the socket SO_REUSEADDR option. Possible values are <code>true</code> or <code>false</code>.
+      </td></tr><tr id="Attributes_Common Transport Attributes_soTrafficClass"><td><code class="attributeName">soTrafficClass</code></td><td>
+       Sets the traffic class level for the socket, the value is between 0 and 255.
+       Default value is <code>int soTrafficClass = 0x04 | 0x08 | 0x010;</code>
+       Different values are defined in <a href="https://docs.oracle.com/javase/8/docs/api/java/net/Socket.html#setTrafficClass(int)">
+       java.net.Socket#setTrafficClass(int)</a>.
+      </td></tr><tr id="Attributes_Common Transport Attributes_tcpNoDelay"><td><code class="attributeName">tcpNoDelay</code></td><td>
+       Boolean value for the socket TCP_NODELAY option. Possible values are <code>true</code> or <code>false</code>.
+       The default value is <code>true</code>
+      </td></tr><tr id="Attributes_Common Transport Attributes_throwOnFailedAck"><td><code class="attributeName">throwOnFailedAck</code></td><td>
+       Boolean value, default value is <code>true</code>.
+       If set to true, the sender will throw a <code>org.apache.catalina.tribes.RemoteProcessException</code>
+       when we receive a negative ack from the remote member.
+       Set to false, and Tribes will treat a positive ack the same way as a negative ack, that the message was received.
+      </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="Common_PooledSender_Attributes">Common PooledSender Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common PooledSender Attributes_poolSize"><td><code class="attributeName">poolSize</code></td><td>
+        The maximum number of concurrent connections from A to B.
+        The value is based on a per-destination count.
+        The default value is <code>25</code>
+      </td></tr><tr id="Attributes_Common PooledSender Attributes_maxWait"><td><code class="attributeName">maxWait</code></td><td>
+        The maximum number of milliseconds that the senderPool will wait when
+        there are no available senders. The default value is <code>3000</code>
+        milliseconds.(3 seconds).
+      </td></tr></table>
+  </div></div>
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

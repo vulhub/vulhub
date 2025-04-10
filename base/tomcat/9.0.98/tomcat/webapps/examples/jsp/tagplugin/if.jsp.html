@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;html>
+  &lt;head>
+    &lt;title>Tag Plugin Examples: if&lt;/title>
+  &lt;/head>
+  &lt;body>
+    &lt;h1>Tag Plugin Examples - &amp;lt;c:if>&lt;/h1>
+
+    &lt;hr/>
+    &lt;br/>
+    &lt;a href="notes.html">Plugin Introductory Notes&lt;/a>
+    &lt;br/>
+    &lt;a href="howto.html">Brief Instructions for Writing Plugins&lt;/a>
+    &lt;br/> &lt;br/>
+    &lt;hr/>
+
+    &lt;br/>
+    &lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+    &lt;h3>Set the test result to a variable&lt;/h3>
+    &lt;c:if test="${1==1}" var="theTruth" scope="page"/>
+    The result of testing for (1==1) is: ${theTruth}
+
+    &lt;h3>Conditionally execute the body&lt;/h3>
+    &lt;c:if test="${2>0}">
+        &lt;p>It's true that (2>0)! Working.&lt;/p>
+    &lt;/c:if>
+    &lt;c:if test="${0>2}">
+        &lt;p>It's not true that (0>2)! Failed.&lt;/p>
+    &lt;/c:if>
+  &lt;/body>
+&lt;/html>
+</pre></body></html>

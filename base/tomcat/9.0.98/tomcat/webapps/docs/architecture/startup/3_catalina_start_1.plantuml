@@ -1,0 +1,118 @@
+@startuml
+
+' Licensed to the Apache Software Foundation (ASF) under one or more
+' contributor license agreements.  See the NOTICE file distributed with
+' this work for additional information regarding copyright ownership.
+' The ASF licenses this file to You under the Apache License, Version 2.0
+' (the "License"); you may not use this file except in compliance with
+' the License.  You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+hide footbox
+skinparam style strictuml
+
+activate Catalina
+
+Catalina -> Server ++: start()
+
+Server -> Server: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+
+Server -> Server ++: startInternal()
+
+Server -> Server: fireLifecycleEvent(\n    CONFIGURE_START_EVENT)
+Server -> Server: fireLifecycleEvent(\n    START_EVENT)
+
+Server -> "Global\nNaming\nResources" as GNR ++: start()
+
+GNR -> GNR: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+GNR -> GNR ++: startInternal()
+
+GNR -> GNR: fireLifecycleEvent(\n    CONFIGURE_START_EVENT)
+GNR -> GNR: fireLifecycleEvent(\n    START_EVENT)
+
+return
+|||
+GNR -> GNR: fireLifecycleEvent(\n    AFTER_START_EVENT)
+
+return
+
+|||
+Server -> "Service(s)" as Services ++: start()
+
+Services -> Services: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+
+Services -> Services ++: startInternal()
+
+Services -> Services: fireLifecycleEvent(\n    START_EVENT)
+
+Services -> Engine ++: start()
+
+group More detail in diagram 4
+Engine -> Engine: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+
+Engine -> Engine ++: startInternal()
+
+Engine -> Engine: fireLifecycleEvent(\n    START_EVENT)
+
+return
+
+|||
+Engine -> Engine: fireLifecycleEvent(\n    AFTER_START_EVENT)
+end group
+
+return
+
+|||
+Services -> "Executor(s)" as Executors ++: start()
+Executors -> Executors: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Executors -> Executors ++: startInternal()
+Executors -> Executors: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Executors -> Executors: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+|||
+Services -> "Mapper\nListener" as MapperListener ++: start()
+MapperListener -> MapperListener: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+MapperListener -> MapperListener ++: startInternal()
+MapperListener -> MapperListener: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+MapperListener -> MapperListener: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+|||
+Services -> "Connector(s)" as Connectors ++: start()
+Connectors -> Connectors: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Connectors -> Connectors ++: startInternal()
+Connectors -> Connectors: fireLifecycleEvent(\n    START_EVENT)
+Connectors -> Protocol ++: start()
+return
+return
+|||
+Connectors -> Connectors: fireLifecycleEvent(\n    AFTER_INIT_EVENT)
+
+return
+
+return
+
+|||
+Services -> Services: fireLifecycleEvent(\n    AFTER_START_EVENT)
+
+return
+
+return
+
+|||
+Server -> Server: fireLifecycleEvent(\n    AFTER_START_EVENT)
+
+return
+@enduml

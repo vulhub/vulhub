@@ -1,0 +1,149 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - CDI 2, JAX-RS and dependent libraries support</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>CDI 2, JAX-RS and dependent libraries support</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#CDI_2_support">CDI 2 support</a></li><li><a href="#JAX-RS_support">JAX-RS support</a></li><li><a href="#Eclipse_Microprofile_support">Eclipse Microprofile support</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>
+    CDI and JAX-RS are dependencies for many other APIs and libraries. This
+    guide explains how to add support for them in Tomcat using two optional
+    modules that are provided in the Tomcat sources.
+  </p>
+
+  </div><h3 id="CDI_2_support">CDI 2 support</h3><div class="text">
+
+  <p>
+    CDI 2 support is provided by the <code>modules/owb</code> optional module.
+    It packages the Apache OpenWebBeans project and allows adding CDI 2 support
+    to the Tomcat container. The build process of the module uses Apache Maven,
+    and is not available as a binary bundle as it is built using a number of
+    publicly available JARs.
+  </p>
+
+  <p>
+    The process to build CDI support is the following.
+    <div class="codeBox"><pre><code>cd $TOMCAT_SRC/modules/owb
+mvn clean &amp;&amp; mvn package</code></pre></div>
+    The resulting JAR at
+    <code>target/tomcat-owb-x.y.z.jar</code> (where x.y.z depends on the
+    Apache OpenWebBeans version used during the build)
+    should then be placed into the <code>lib</code> folder of the Tomcat
+    installation.<br>
+    CDI support can then be enabled for all webapps in the container by adding
+    the following listener in <code>server.xml</code> nested inside the
+    <code>Server</code> element:
+    <div class="codeBox"><pre><code>&lt;Listener className="org.apache.webbeans.web.tomcat.OpenWebBeansListener" optional="true" startWithoutBeansXml="false" /&gt;</code></pre></div>
+    The listener will produce a non fatal error if the CDI container loading
+    fails.<br>
+    CDI support can also be enabled at the individual webapp level by adding
+    the following listener to the webapp <code>context.xml</code> file nested
+    inside the <code>Server</code> element:
+    <div class="codeBox"><pre><code>&lt;Listener className="org.apache.webbeans.web.tomcat.OpenWebBeansContextLifecycleListener" /&gt;</code></pre></div>
+  </p>
+
+  </div><h3 id="JAX-RS_support">JAX-RS support</h3><div class="text">
+
+  <p>
+    JAX-RS support is provided by the <code>modules/cxf</code> optional module.
+    It packages the Apache CXF project and allows adding JAX-RS support
+    to individual webapps. The build process of the module uses Apache Maven,
+    and is not available as a binary bundle as it is built using a number of
+    publicly available JARs. The support depends on CDI 2 support, which should
+    have previously been installed at either the container or webapp level.
+  </p>
+
+  <p>
+    The process to build JAX-RS support is the following.
+    <div class="codeBox"><pre><code>cd $TOMCAT_SRC/modules/cxf
+mvn clean &amp;&amp; mvn package</code></pre></div>
+    The resulting JAR at
+    <code>target/tomcat-cxf-x.y.z.jar</code> (where x.y.z depends on the
+    Apache CXF version used during the build)
+    should then be placed into the <code>/WEB-INF/lib</code> folder of the
+    desired web application.
+  </p>
+
+  <p>
+    If the CDI 2 support is available at the container
+    level, the JAR can also be placed in the Tomcat <code>lib</code> folder,
+    but in that case the CXF Servlet declaration must be individually added
+    in each webapp as needed (it is normally loaded by the web fragment that is
+    present in the JAR). The CXF Servlet class that should be used is
+    <code>org.apache.cxf.cdi.CXFCdiServlet</code> and should be mapped to the
+    desired root path where JAX-RS resources will be available.
+  </p>
+
+  </div><h3 id="Eclipse_Microprofile_support">Eclipse Microprofile support</h3><div class="text">
+
+  <p>
+    ASF artifacts are available that implement Eclipse Microprofile
+    specifications using CDI 2 extensions. Once the CDI 2 and JAX-RS support
+    is installed, they will be usable by individual webapps.
+  </p>
+
+  <p>
+    The following implementations are available (reference:
+    <code>org.apache.tomee.microprofile.TomEEMicroProfileListener</code>) as
+    Maven artifacts which must be added to the webapp <code>/WEB-INF/lib</code>
+    folders:
+    <ul>
+      <li><strong>Configuration</strong>:
+        Maven artifact:
+        <code>org.apache.geronimo.config:geronimo-config</code>
+        CDI extension class:
+        <code>org.apache.geronimo.config.cdi.ConfigExtension</code>
+      </li>
+      <li><strong>Fault Tolerance</strong>:
+        Maven artifact:
+        <code>org.apache.geronimo.safeguard:safeguard-parent</code>
+        CDI extension class:
+        <code>org.apache.safeguard.impl.cdi.SafeguardExtension</code>
+      </li>
+      <li><strong>Health</strong>:
+        Maven artifact:
+        <code>org.apache.geronimo:geronimo-health</code>
+        CDI extension class:
+        <code>org.apache.geronimo.microprofile.impl.health.cdi.GeronimoHealthExtension</code>
+      </li>
+      <li><strong>Metrics</strong>:
+        Maven artifact:
+        <code>org.apache.geronimo:geronimo-metrics</code>
+        CDI extension class:
+        <code>org.apache.geronimo.microprofile.metrics.cdi.MetricsExtension</code>
+      </li>
+      <li><strong>OpenTracing</strong>:
+        Maven artifact:
+        <code>org.apache.geronimo:geronimo-opentracing</code>
+        CDI extension class:
+        <code>org.apache.geronimo.microprofile.opentracing.microprofile.cdi.OpenTracingExtension</code>
+      </li>
+      <li><strong>OpenAPI</strong>:
+        Maven artifact:
+        <code>org.apache.geronimo:geronimo-openapi</code>
+        CDI extension class:
+        <code>org.apache.geronimo.microprofile.openapi.cdi.GeronimoOpenAPIExtension</code>
+      </li>
+      <li><strong>Rest client</strong>:
+        Maven artifact:
+        <code>org.apache.cxf:cxf-rt-rs-mp-client</code>
+        CDI extension class:
+        <code>org.apache.cxf.microprofile.client.cdi.RestClientExtension</code>
+      </li>
+      <li><strong>JSON Web Tokens</strong>:
+        Note: Fore reference only, unusable outside Apache TomEE;
+        Maven artifact:
+        <code>org.apache.tomee:mp-jwt</code>
+        CDI extension class:
+        <code>org.apache.tomee.microprofile.jwt.cdi.MPJWTCDIExtension</code>
+      </li>
+    </ul>
+  </p>
+
+  </div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

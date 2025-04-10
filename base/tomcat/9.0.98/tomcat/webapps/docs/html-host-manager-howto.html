@@ -1,0 +1,173 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Host Manager App -- HTML Interface</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Host Manager App -- HTML Interface</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+    <ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Configuring_Manager_Application_Access">Configuring Manager Application Access</a></li><li><a href="#Interface_Description">Interface Description</a></li><li><a href="#Message">Message</a></li><li><a href="#Host_Manager">Host Manager</a></li><li><a href="#Host_Name">Host Name</a></li><li><a href="#Add_Virtual_Host">Add Virtual Host</a></li><li><a href="#Persist_Configuration">Persist Configuration</a></li><li><a href="#Server_Information">Server Information</a></li></ul>
+  </div><h3 id="Introduction">Introduction</h3><div class="text">
+    <p>
+      The <strong>Tomcat Host Manager</strong> application enables you to create,
+      delete, and otherwise manage virtual hosts within Tomcat. This how-to guide
+      is best accompanied by the following pieces of documentation:
+    </p>
+    <ul>
+      <li>
+        <a href="virtual-hosting-howto.html">Virtual Hosting How-To</a> for more
+        information about virtual hosting.
+      </li>
+      <li>
+        <a href="config/host.html">The Host Container</a> for more information
+        about the underlying xml configuration of virtual hosts and description
+        of attributes.
+      </li>
+      <li>
+        <a href="host-manager-howto.html">Host Manager App -- Text Interface</a>
+        for full description of the commands.
+      </li>
+    </ul>
+
+    <p>
+      The <strong>Tomcat Host Manager</strong> application is a part of
+      Tomcat installation, by default available using the following
+      context: <code>/host-manager</code>. You can use the host manager in the
+      following ways:
+    </p>
+
+    <ul>
+      <li>
+        Utilizing the graphical user interface, accessible at:
+        <code>{server}:{port}/host-manager/html</code>.
+      </li>
+      <li>
+        Utilizing a set of minimal HTTP requests suitable for scripting.
+        You can access this mode at:
+        <code>{server}:{port}/host-manager/text</code>.
+      </li>
+    </ul>
+    <p>
+      Both ways enable you to add, remove, start, and stop virtual hosts.
+      Changes may be persisted by using the <code>persist</code> command. This
+      document focuses on the HTML interface. For further information about the
+      graphical interface, see
+      <a href="host-manager-howto.html">Host Manager App -- Text Interface</a>.
+    </p>
+  </div><h3 id="Configuring_Manager_Application_Access">Configuring Manager Application Access</h3><div class="text">
+    <p><em>The description below uses <code>$CATALINA_HOME</code> to refer the
+      base Tomcat directory. It is the directory in which you installed
+      Tomcat, for example <code>C:\tomcat9</code>, or
+      <code>/usr/share/tomcat9</code>.</em></p>
+
+    <p>
+      The Host Manager application requires a user with one of the following
+      roles:
+    </p>
+
+    <ul>
+      <li>
+        <code>admin-gui</code> - use this role for the graphical web interface.
+      </li>
+      <li>
+        <code>admin-script</code> - use this role for the scripting web interface.
+      </li>
+    </ul>
+
+    <p>
+      To enable access to the HTML interface of the Host Manager application,
+      either grant your Tomcat user the appropriate role, or create a new one with
+      the correct role. For example, open
+      <code>${CATALINA_BASE}/conf/tomcat-users.xml</code> and enter the following:
+    </p>
+    <div class="codeBox"><pre><code>&lt;user username="test" password="chang3m3N#w" roles="admin-gui"/&gt;</code></pre></div>
+    <p>
+      No further settings is needed. When you now access
+      <code>{server}:{port}/host-manager/html</code>,you are able to
+      log in with the created credentials.
+    </p>
+    <p>
+      If you are using a different realm you will need to add the necessary role
+      to the appropriate user(s) using the standard user management tools for
+      that realm.
+    </p>
+  </div><h3 id="Interface_Description">Interface Description</h3><div class="text">
+    <p>The interface is divided into six sections:</p>
+    <ul>
+      <li><strong>Message</strong> - Displays success and failure messages.</li>
+      <li><strong>Host Manager</strong> - Provides basic Host Manager operations
+      , like list and help.</li>
+      <li><strong>Host name</strong> - Provides a list of virtual Host Names and
+      enables you to operate them. </li>
+      <li><strong>Add Virtual Host</strong> - Enables you to add a new Virtual
+      Host.</li>
+      <li><strong>Persist configuration</strong> - Enables you to persist your
+      current Virtual Hosts.</li>
+      <li><strong>Server Information</strong> - Information about the Tomcat
+          server.</li>
+    </ul>
+  </div><h3 id="Message">Message</h3><div class="text">
+
+  <p>
+  Displays information about the success or failure of the last Host Manager
+  command you performed:
+  </p>
+  <ul>
+    <li>Success: <strong>OK</strong> is displayed
+    and may be followed by a success message.</li>
+    <li>Failure: <strong>FAIL</strong>
+    is displayed followed by an error message.</li>
+  </ul>
+  <p>
+    Note that the console of your Tomcat server may reveal more information
+    about each command.
+  </p>
+  </div><h3 id="Host_Manager">Host Manager</h3><div class="text">
+
+  <p>The Host Manager section enables you to:</p>
+  <ul>
+    <li><strong>List Virtual Hosts</strong> - Refresh a list of
+    currently-configured virtual hosts.</li>
+    <li><strong>HTML Host Manager Help</strong> - A documentation link.</li>
+    <li><strong>Host Manager Help</strong> - A documentation link.</li>
+    <li><strong>Server Status</strong> - A link to the <strong>Manager</strong>
+    application. Note that you user must have sufficient permissions to access
+    the application.</li>
+  </ul>
+  </div><h3 id="Host_Name">Host Name</h3><div class="text">
+
+  <p>The Host name section contains a list of currently-configured virtual host
+    names. It enables you to:</p>
+  <ul>
+    <li>View the host names</li>
+    <li>View the host name aliases</li>
+    <li>Perform basic commands, that is <strong>start</strong>,
+    <strong>stop</strong>, and <strong>remove</strong>.</li>
+  </ul>
+  </div><h3 id="Add_Virtual_Host">Add Virtual Host</h3><div class="text">
+
+  <p>The Add Virtual Host section enables you to add a virtual host using a
+  graphical interface. For a description of each property, see the
+  <a href="host-manager-howto.html">Host Manager App -- Text Interface</a>
+  documentation. Note that any configuration added via this interface is
+  non-persistent.</p>
+  </div><h3 id="Persist_Configuration">Persist Configuration</h3><div class="text">
+
+  <p>The Persist Configuration section enables you to persist your current
+  configuration into the <i>server.xml</i> file.</p>
+
+  <p> This functionality is disabled by default. To enable this option, you must
+  configure the <code>StoreConfigLifecycleListener</code> listener first.
+  To do so, add the following listener to your <i>server.xml</i>:</p>
+  <div class="codeBox"><pre><code>&lt;Listener className="org.apache.catalina.storeconfig.StoreConfigLifecycleListener"/&gt;</code></pre></div>
+
+  <p>After you configure the listener, click <strong>All</strong> to make your
+  configuration persistent.</p>
+  </div><h3 id="Server_Information">Server Information</h3><div class="text">
+    <p>
+      Provides a basic information about the currently-running Tomcat instance,
+      the JVM, and the underlying operating system.
+    </p>
+  </div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

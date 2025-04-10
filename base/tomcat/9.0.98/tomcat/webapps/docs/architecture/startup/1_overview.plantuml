@@ -1,0 +1,97 @@
+@startuml
+
+' Licensed to the Apache Software Foundation (ASF) under one or more
+' contributor license agreements.  See the NOTICE file distributed with
+' this work for additional information regarding copyright ownership.
+' The ASF licenses this file to You under the Apache License, Version 2.0
+' (the "License"); you may not use this file except in compliance with
+' the License.  You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+hide footbox
+skinparam style strictuml
+
+activate Bootstrap
+Bootstrap -> Bootstrap: initClassLoaders()
+
+Bootstrap -->> Catalina ** : newInstance()
+
+Bootstrap -> Catalina ++: setParentClassLoader()
+|||
+return
+
+Bootstrap -> Catalina ++: start()
+
+Catalina -> Catalina ++: load()
+
+Catalina -> Catalina: initNaming()
+
+Catalina -> Catalina ++: parseServerXml()
+
+Catalina -->> Digester ** :
+note right of Digester
+  The digester creates all
+  of the objects defined in
+  //server.xml// but only the
+  Server is shown here for
+  simplicity
+end note
+
+Catalina -> Digester ++: parse()
+
+Digester -->> Server ** :
+
+return
+
+return
+
+|||
+Catalina -> Catalina: initStream()
+
+group More detail in diagram 2
+Catalina -> Server ++: init()
+|||
+return
+end
+
+return
+
+|||
+group More detail in diagram 3
+Catalina -> Server ++: start()
+|||
+return
+end
+
+|||
+Catalina -> Catalina ++: await()
+note right of Catalina
+  This is where Tomcat spends
+  time serving requests
+end note
+return
+
+|||
+Catalina -> Catalina ++: stop()
+
+Catalina -> Server ++: stop()
+|||
+return
+
+Catalina -> Server ++: destroy()
+|||
+return
+
+return
+
+return
+
+deactivate Bootstrap
+@enduml

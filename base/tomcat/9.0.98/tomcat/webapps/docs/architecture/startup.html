@@ -1,0 +1,76 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Architecture (9.0.98) - Startup</title><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Architecture</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Architecture Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Contents</h2><ul><li><a href="index.html">Contents</a></li><li><a href="overview.html">Overview</a></li><li><a href="startup.html">Server Startup</a></li><li><a href="requestProcess.html">Request Process</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Startup</h2><h3 id="Server_Startup">Server Startup</h3><div class="text">
+
+<p>
+This page describes how the Tomcat server starts up.  There are several
+different ways to start tomcat, including:
+</p>
+<ul>
+  <li>From the command line.</li>
+  <li>From a Java program as an embedded server.</li>
+  <li>Automatically as a Windows service.</li>
+</ul>
+
+<p>
+A series of UML diagrams have been created to document the start-up process for
+Tomcat.
+</p>
+<p>
+<a href="startup/1_overview.png">Diagram 1</a> shows an overview of how Tomcat
+start, serves requests and then stops. Once the class loaders have been
+initialized, Tomcat parses server.xml using the Digester and the Digester
+creates the objects defined in server.xml, configures them using the property
+values defined in server.xml and the starts the Server. The main Java thread
+waits in the await() method for a shutdown signal. Once a shutdown signal is
+received, the Server object is stopped and then destroyed. The JVM then exits.
+</p>
+<p>
+<a href="startup/2_catalina_init.png">Diagram 2</a> shows how Tomcat initalizes
+the objects created by the Digester in the previous step and when additional key
+objects are created. A Server may have several Services although it typically
+only has one. Each Service may have multiple Connectors. A Connector instance is
+associated with a single Protocol instance and a single CoyoteAdapter instance.
+</p>
+<p>
+<a href="startup/3_catalina_start_1.png">Diagram 3</a> shows how Tomcat starts
+the objects created by the Digester that were initialized in the previous step.
+This diagram also shows when lifecycle events are fired. There is more detail to
+the starting of the Engine (and other Containers) which is shown in the
+following diagram.
+</p>
+<p>
+<a href="startup/4_catalina_start_2.png">Diagram 4</a> shows how Containers
+(Engines, Hosts, Contexts and Wrappers) start along with any supporting
+Clusters, Realms and Valves.
+</p>
+<p>
+<a href="startup/5_catalina_start_3.png">Diagram 5</a> shows the start process
+for Context elements as it is rather more involved that the other Containers.
+</p>
+<p>
+<a href="startup/6_catalina_host_config.png">Diagram 6</a> shows how the
+HostConfig component responds to lifecycle events triggered by the Host to
+deploy web applications to the Host.</p>
+<p>
+<a href="startup/7_catalina_context_config.png">Diagram 7</a> shows how the
+ContextConfig component responds to lifecycle events triggered by the Context to
+parse the global and application provided configuration files to create a merged
+web.xml file that is then used, along with other settings, to configure the web
+application.
+</p>
+
+<p>
+The startup process can be customized in many ways by implementing your own
+LifecycleListeners which are then registered in the server.xml configuration
+file.
+</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

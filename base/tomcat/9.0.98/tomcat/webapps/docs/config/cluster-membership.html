@@ -1,0 +1,281 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Cluster Membership object</title><meta name="author" content="Filip Hanik"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Cluster Membership object</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Default_Implementation">Default Implementation</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#Multicast_Attributes">Multicast Attributes</a></li><li><a href="#Static_Membership_Attributes">Static Membership Attributes</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a><ol><li><a href="#StaticMember_Attributes">StaticMember Attributes</a></li><li><a href="#Setting">Setting</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+  <p>
+    The membership component in the Apache Tribes <a href="cluster-channel.html">Channel</a> is responsible
+    for dynamic discovery of other members(nodes) in the cluster.
+    There are currently two different membership service, the <code>org.apache.catalina.tribes.membership.McastService</code>
+    and the <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>.
+    The <code>McastService</code> builds a multicast based membership service
+    that sends UDP packets to multicast IP addresses.
+    The <code>StaticMembershipService</code> builds  a unicast based membership
+    service that sends TCP packets to predefined member address.
+  </p>
+</div><h3 id="Default_Implementation">Default Implementation</h3><div class="text">
+  <p>
+    The default implementation of the cluster group notification is built on top of multicast heartbeats
+    sent using UDP packets to a multicast IP address.
+    Cluster members are grouped together by using the same multicast address/port combination.
+    Each member sends out a heartbeat with a given interval (<code>frequency</code>), and this
+    heartbeat is used for dynamic discovery.
+    In a similar fashion, if a heartbeat has not been received in a timeframe specified by <code>dropTime</code>
+    ms. a member is considered suspect and the channel and any membership listener will be notified.
+  </p>
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>
+        The implementation of the membership component.
+        Two implementations available, <code>org.apache.catalina.tribes.membership.McastService</code>
+        and <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>.
+        </p>
+      </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="Multicast_Attributes">Multicast Attributes</h4><div class="text">
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Multicast Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+      <p>
+      The value is <code>org.apache.catalina.tribes.membership.McastService</code>.
+      This implementation uses multicast heartbeats for member discovery.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_address"><td><code class="attributeName">address</code></td><td>
+      <p>
+      The multicast address that the membership will broadcast its presence and listen
+      for other heartbeats on. The default value is <code>228.0.0.4</code>
+      Make sure your network is enabled for multicast traffic.<br>
+      The multicast address, in conjunction with the <code>port</code> is what
+      creates a cluster group. To divide up your farm into several different group, or to
+      split up QA from production, change the <code>port</code> or the <code>address</code>
+      <br>Previously known as mcastAddr.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_port"><td><code class="attributeName">port</code></td><td>
+      <p>
+      The multicast port, the default value is <code>45564</code><br>
+      The multicast port, in conjunction with the <code>address</code> is what
+      creates a cluster group. To divide up your farm into several different group, or to
+      split up QA from production, change the <code>port</code> or the <code>address</code>
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_frequency"><td><code class="attributeName">frequency</code></td><td>
+      <p>
+      The frequency in milliseconds in which heartbeats are sent out. The default value is <code>500</code> ms.<br>
+      In most cases the default value is sufficient. Changing this value, simply changes the interval in between heartbeats.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_dropTime"><td><code class="attributeName">dropTime</code></td><td>
+      <p>
+      The membership component will time out members and notify the Channel if a member fails to send a heartbeat within
+      a give time. The default value is <code>3000</code> ms. This means, that if a heartbeat is not received from a
+      member in that timeframe, the membership component will notify the cluster of this.<br>
+      On a high latency network you may wish to increase this value, to protect against false positives.<br>
+      Apache Tribes also provides a <a href="cluster-interceptor.html#org.apache.catalina.tribes.group.interceptors.TcpFailureDetector_Attributes"><code>TcpFailureDetector</code></a> that will
+      verify a timeout using a TCP connection when a heartbeat timeout has occurred. This protects against false positives.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_bind"><td><code class="attributeName">bind</code></td><td>
+      <p>
+      Use this attribute if you wish to bind your multicast traffic to a specific network interface.
+      By default, or when this attribute is unset, it tries to bind to <code>0.0.0.0</code> and sometimes on multihomed hosts
+      this becomes a problem.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_ttl"><td><code class="attributeName">ttl</code></td><td>
+      <p>
+      The time-to-live setting for the multicast heartbeats.
+      This setting should be a value between 0 and 255. The default value is VM implementation specific.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_domain"><td><code class="attributeName">domain</code></td><td>
+      <p>
+      Apache Tribes has the ability to logically group members into domains, by using this domain attribute.
+      The <code>org.apache.catalina.tribes.Member.getDomain()</code> method returns the value specified here.
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_soTimeout"><td><code class="attributeName">soTimeout</code></td><td>
+      <p>
+      The sending and receiving of heartbeats is done on a single thread, hence to avoid blocking this thread forever,
+      you can control the <code>SO_TIMEOUT</code> value on this socket.<br>
+      If a value smaller or equal to 0 is presented, the code will default this value to frequency
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_recoveryEnabled"><td><code class="attributeName">recoveryEnabled</code></td><td>
+      <p>
+      In case of a network failure, Java multicast socket don't transparently fail over, instead the socket will continuously
+      throw IOException upon each receive request. When recoveryEnabled is set to true, this will close the multicast socket
+      and open a new socket with the same properties as defined above.<br>
+      The default is <code>true</code>. <br>
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_recoveryCounter"><td><code class="attributeName">recoveryCounter</code></td><td>
+      <p>
+      When <code>recoveryEnabled==true</code> this value indicates how many
+      times an error has to occur before recovery is attempted. The default is
+      <code>10</code>. <br>
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_recoverySleepTime"><td><code class="attributeName">recoverySleepTime</code></td><td>
+      <p>
+      When <code>recoveryEnabled==true</code> this value indicates how long time (in milliseconds)
+      the system will sleep in between recovery attempts, until it recovers successfully.
+      The default is <code>5000</code> (5 seconds). <br>
+      </p>
+    </td></tr><tr id="Attributes_Multicast Attributes_localLoopbackDisabled"><td><code class="attributeName">localLoopbackDisabled</code></td><td>
+      <p>
+      Membership uses multicast, it will call <code>java.net.MulticastSocket.setLoopbackMode(localLoopbackDisabled)</code>.
+      When <code>localLoopbackDisabled==true</code> multicast messages will not reach other nodes on the same local machine.
+      The default is <code>false</code>. <br>
+      </p>
+    </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Static_Membership_Attributes">Static Membership Attributes</h4><div class="text">
+
+    <p>When using the static membership service you must ensure that the
+    <code>channelStartOptions</code> attribute of the <code>Cluster</code>
+    element is set to the default value of <code>15</code>.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Static Membership Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>
+        The value is <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>.
+        </p>
+      </td></tr><tr id="Attributes_Static Membership Attributes_connectTimeout"><td><code class="attributeName">connectTimeout</code></td><td>
+        <p>
+        Timeout for attempting a TCP connection to address of predefined static member.
+        Default is <code>500</code> ms.
+        </p>
+      </td></tr><tr id="Attributes_Static Membership Attributes_expirationTime"><td><code class="attributeName">expirationTime</code></td><td>
+        <p>
+        If members have failed to update their alive time within the given time,
+        this membership will notify the memberDisappeared event to cluster.
+        Default is <code>5000</code> ms.
+        </p>
+      </td></tr><tr id="Attributes_Static Membership Attributes_rpcTimeout"><td><code class="attributeName">rpcTimeout</code></td><td>
+        <p>
+        Timeout for messages that used for member notification to/from othee nodes.
+        Default is <code>3000</code> ms.
+        </p>
+      </td></tr><tr id="Attributes_Static Membership Attributes_useThread"><td><code class="attributeName">useThread</code></td><td>
+        <p>
+        If set to true, this membership service will start a local thread for
+        sending a ping message. if set to <code>false</code>, channel heartbeat
+        will send a ping message. Default is <code>false</code>.
+        </p>
+      </td></tr><tr id="Attributes_Static Membership Attributes_pingInterval"><td><code class="attributeName">pingInterval</code></td><td>
+        <p>
+        If <code>useThread</code> == <code>true</code>, defines the interval of
+        sending a ping message. Default is <code>1000</code> ms.
+        </p>
+      </td></tr></table>
+  </div></div>
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+  <p>
+  Static Membership Service allows nesting of a <strong>&lt;LocalMember&gt;</strong>
+  and <strong>&lt;Member&gt;</strong> element.
+  </p>
+  <div class="subsection"><h4 id="StaticMember_Attributes">StaticMember Attributes</h4><div class="text">
+    <p><b>LocalMember:</b> <br>
+    Static member that is the local member of the static cluster group.
+    </p>
+    <p><strong>Note:</strong> In Tomcat 9.0.17 and later, it is not necessary to explicitly configure the local member
+    using the <strong>&lt;LocalMember&gt;</strong> element. All cluster members, including the local member, may be
+    defined using the <strong>&lt;Member&gt;</strong> element and Tomcat work out which one is the local member.
+    </p>
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Nested Components_StaticMember Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_port"><td><code class="attributeName">port</code></td><td>
+        There is no need to set.
+        The value of this attribute inherits from the cluster receiver setting.
+      </td></tr><tr id="Nested Components_StaticMember Attributes_securePort"><td><code class="attributeName">securePort</code></td><td>
+        There is no need to set.
+        The value of this attribute inherits from the cluster receiver setting.
+      </td></tr><tr id="Nested Components_StaticMember Attributes_host"><td><code class="attributeName">host</code></td><td>
+        There is no need to set.
+        The value of this attribute inherits from the cluster receiver setting.
+      </td></tr><tr id="Nested Components_StaticMember Attributes_domain"><td><code class="attributeName">domain</code></td><td>
+        The logical cluster domain for that this static member listens for cluster messages.
+        Two different type of values are possible:<br>
+        1. Regular string values like "staging-domain" or "tomcat-cluster" will be converted into bytes
+        using ISO-8859-1 encoding.
+        2. byte array in string form, for example {216,123,12,3}<br>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_uniqueId"><td><strong><code class="attributeName">uniqueId</code></strong></td><td>
+        A universally uniqueId for this static member.
+        The values must be 16 bytes in the following form:<br>
+        1. byte array in string form, for example {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}<br>
+      </td></tr></table>
+
+    <p><b>Member:</b> <br>
+    Static member that add to the static cluster group.
+    </p>
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Nested Components_StaticMember Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_port"><td><strong><code class="attributeName">port</code></strong></td><td>
+        The port that this static member listens to for cluster messages
+      </td></tr><tr id="Nested Components_StaticMember Attributes_securePort"><td><code class="attributeName">securePort</code></td><td>
+        The secure port this static member listens to for encrypted cluster messages
+        default value is <code>-1</code>, this value means the member is not listening on a secure port
+      </td></tr><tr id="Nested Components_StaticMember Attributes_host"><td><strong><code class="attributeName">host</code></strong></td><td>
+        The host (or network interface) that this static member listens for cluster messages.
+        Three different type of values are possible:<br>
+        1. IP address in the form of "216.123.1.23"<br>
+        2. Hostnames like "tomcat01.mydomain.com" or "tomcat01" as long as they resolve correctly<br>
+        3. byte array in string form, for example {216,123,12,3}<br>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_domain"><td><code class="attributeName">domain</code></td><td>
+        The logical cluster domain for that this static member listens for cluster messages.
+        Two different type of values are possible:<br>
+        1. Regular string values like "staging-domain" or "tomcat-cluster" will be converted into bytes
+        using ISO-8859-1 encoding.<br>
+        2. byte array in string form, for example {216,123,12,3}<br>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_uniqueId"><td><strong><code class="attributeName">uniqueId</code></strong></td><td>
+        A universally uniqueId for this static member.
+        The values must be 16 bytes in the following form:<br>
+        1. byte array in string form, for example {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}<br>
+      </td></tr></table>
+  </div></div>
+
+  <div class="subsection"><h4 id="Setting">Setting</h4><div class="text">
+    <p><b>Before Tomcat 9.0.16</b> <br>
+    <div class="codeBox"><pre><code>     &lt;Membership className="org.apache.catalina.tribes.membership.StaticMembershipService"&gt;
+       &lt;LocalMember className="org.apache.catalina.tribes.membership.StaticMember"
+                  uniqueId="{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}"/&gt;
+       &lt;Member className="org.apache.catalina.tribes.membership.StaticMember"
+                  port="4004"
+                  host="tomcat02.mydomain.com"
+                  uniqueId="{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1}"/&gt;
+     &lt;/Membership&gt;</code></pre></div>
+     </p>
+     <p><b>Tomcat9.0.17 and later</b> <br>
+      <div class="codeBox"><pre><code>     &lt;Membership className="org.apache.catalina.tribes.membership.StaticMembershipService"&gt;
+       &lt;Member className="org.apache.catalina.tribes.membership.StaticMember"
+                  port="4004"
+                  host="tomcat01.mydomain.com"
+                  uniqueId="{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}"/&gt;
+       &lt;Member className="org.apache.catalina.tribes.membership.StaticMember"
+                  port="4004"
+                  host="tomcat02.mydomain.com"
+                  uniqueId="{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1}"/&gt;
+     &lt;/Membership&gt;</code></pre></div>
+     </p>
+  </div></div>
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

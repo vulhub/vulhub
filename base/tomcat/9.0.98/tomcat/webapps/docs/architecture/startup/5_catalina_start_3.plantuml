@@ -1,0 +1,140 @@
+@startuml
+
+' Licensed to the Apache Software Foundation (ASF) under one or more
+' contributor license agreements.  See the NOTICE file distributed with
+' this work for additional information regarding copyright ownership.
+' The ASF licenses this file to You under the Apache License, Version 2.0
+' (the "License"); you may not use this file except in compliance with
+' the License.  You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+hide footbox
+skinparam style strictuml
+
+activate Host
+
+Host -> Context ++: start()
+
+Context -> Context: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+
+Context -> Context ++: startInternal()
+
+Context -> NamingResourcesImpl ++: start()
+NamingResourcesImpl -> NamingResourcesImpl: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+NamingResourcesImpl -> NamingResourcesImpl ++: startInternal()
+NamingResourcesImpl -> NamingResourcesImpl: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+NamingResourcesImpl -> NamingResourcesImpl: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Context -> Context: postWorkDirectory()
+
+Context --> StandardRoot **
+
+Context -> StandardRoot ++: start()
+StandardRoot -> StandardRoot: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+StandardRoot -> StandardRoot ++: startInternal()
+StandardRoot -> StandardRoot: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+StandardRoot -> StandardRoot: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Context --> WebappLoader **
+Context --> CookieProcessor **
+Context --> CharsetMapper **
+
+Context --> WebappLoader ++: start()
+WebappLoader -> WebappLoader: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+WebappLoader -> WebappLoader ++: startInternal()
+WebappLoader -> WebappLoader: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+WebappLoader -> WebappLoader: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Context -> Realm ++: start()
+Realm -> Realm: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Realm -> Realm ++: startInternal()
+Realm -> Realm: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Realm -> Realm: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Context -> Context: fireLifecycleEvent(\n    CONFIGURE_START_EVENT)
+
+group Each Wrapper is started sequentially
+Context -> Wrapper ++: start()
+Wrapper -> Wrapper: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Wrapper -> Wrapper ++: startInternal()
+Wrapper -> Wrapper: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Wrapper -> Wrapper: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+end group
+
+Context -> Pipeline ++: start()
+Pipeline -> Pipeline: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Pipeline -> Pipeline ++: startInternal()
+
+group Each Valve is started sequentially
+Pipeline -> Valve ++: start()
+Valve -> Valve: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Valve -> Valve ++: startInternal()
+Valve -> Valve: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Valve -> Valve: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+end group
+
+Pipeline -> Pipeline: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Pipeline -> Pipeline: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+|||
+Context --> Manager **
+Context -> Cluster ++: registerManager()
+return
+
+group Each SCI is called sequentially
+Context -> SCI ++: onStartUp
+return
+end group
+
+Context -> Context: listenerStart()
+
+Context -> Manager ++: start()
+Manager -> Manager: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Manager -> Manager ++: startInternal()
+Manager -> Manager: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Manager -> Manager: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Context -> Context: filterStart()
+
+Context -> Context: loadOnStartup()
+
+Context -> Context: fireLifecycleEvent(\n    START_EVENT)
+return
+
+|||
+Context -> Context: fireLifecycleEvent(\n    AFTER_START_EVENT)
+
+return
+
+@enduml

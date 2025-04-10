@@ -1,0 +1,398 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Logging in Tomcat</title><meta name="author" content="Allistair Crossley"><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Logging in Tomcat</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a><ol><li><a href="#Java_logging_API_%E2%80%94_java.util.logging">Java logging API &mdash; java.util.logging</a></li><li><a href="#Servlets_logging_API">Servlets logging API</a></li><li><a href="#Console">Console</a></li><li><a href="#Access_logging">Access logging</a></li></ol></li><li><a href="#Using_java.util.logging_(default)">Using java.util.logging (default)</a><ol><li><a href="#Documentation_references">Documentation references</a></li><li><a href="#Considerations_for_production_usage">Considerations for production usage</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+    <p>
+      The internal logging for Apache Tomcat uses JULI, a packaged renamed fork
+      of <a href="https://commons.apache.org/logging">Apache Commons Logging</a>
+      that is hard-coded to use the <code>java.util.logging</code> framework.
+      This ensures that Tomcat's internal logging and any web application
+      logging will remain independent, even if a web application uses Apache
+      Commons Logging.
+    </p>
+
+    <p>
+      To configure Tomcat to use an alternative logging framework for its
+      internal logging, follow the instructions provided by the alternative
+      logging framework for redirecting logging for applications that use
+      <code>java.util.logging</code>. Keep in mind that the alternative logging
+      framework will need to be capable of working in an environment where
+      different loggers with the same name may exist in different class loaders.
+    </p>
+
+    <p>
+      A web application running on Apache Tomcat can:
+    </p>
+    <ul>
+      <li>
+        Use any logging framework of its choice.
+      </li>
+      <li>
+        Use system logging API, <code>java.util.logging</code>.
+      </li>
+      <li>
+        Use the logging API provided by the Java Servlets specification,
+        <code>javax.servlet.ServletContext.log(...)</code>
+      </li>
+    </ul>
+
+    <p>
+      The logging frameworks used by different web applications are independent.
+      See <a href="class-loader-howto.html">class loading</a> for more details.
+      The exception to this rule is <code>java.util.logging</code>. If it is
+      used directly or indirectly by your logging library then elements of it
+      will be shared across web applications because it is loaded by the system
+      class loader.
+    </p>
+
+    <div class="subsection"><h4 id="Java_logging_API_&mdash;_java.util.logging">Java logging API &mdash; java.util.logging</h4><div class="text">
+
+    <p>
+      Apache Tomcat has its own implementation of several key elements of
+      <code>java.util.logging</code> API. This implementation is called JULI.
+      The key component there is a custom LogManager implementation,
+      that is aware of different web applications running on Tomcat (and
+      their different class loaders). It supports private per-application
+      logging configurations. It is also notified by Tomcat when a web application
+      is unloaded from memory, so that the references to its classes can be
+      cleared, preventing memory leaks.
+    </p>
+
+    <p>
+      This <code>java.util.logging</code> implementation is enabled by providing
+      certain system properties when starting Java. The Apache Tomcat startup
+      scripts do this for you, but if you are using different tools to run
+      Tomcat (such as jsvc, or running Tomcat from within an IDE), you should
+      take care of them by yourself.
+    </p>
+
+    <p>
+      More details about java.util.logging may be found in the documentation
+      for your JDK and on its Javadoc pages for the <code>java.util.logging</code>
+      package.
+    </p>
+
+    <p>
+      More details about Tomcat JULI may be found below.
+    </p>
+
+    </div></div>
+
+    <div class="subsection"><h4 id="Servlets_logging_API">Servlets logging API</h4><div class="text">
+
+    <p>
+      The calls to <code>javax.servlet.ServletContext.log(...)</code> to write
+      log messages are handled by internal Tomcat logging. Such messages are
+      logged to the category named
+    </p>
+      <div class="codeBox"><pre><code>org.apache.catalina.core.ContainerBase.[${engine}].[${host}].[${context}]</code></pre></div>
+    <p>
+      This logging is performed according to the Tomcat logging configuration. You
+      cannot overwrite it in a web application.
+    </p>
+
+    <p>
+      The Servlets logging API predates the <code>java.util.logging</code> API
+      that is now provided by Java. As such, it does not offer you much options.
+      E.g., you cannot control the log levels. It can be noted, though, that
+      in Apache Tomcat implementation the calls to <code>ServletContext.log(String)</code>
+      or <code>GenericServlet.log(String)</code> are logged at the INFO level.
+      The calls to <code>ServletContext.log(String, Throwable)</code> or
+      <code>GenericServlet.log(String, Throwable)</code>
+      are logged at the SEVERE level.
+    </p>
+
+    </div></div>
+
+    <div class="subsection"><h4 id="Console">Console</h4><div class="text">
+
+    <p>
+      When running Tomcat on unixes, the console output is usually redirected
+      to the file named <code>catalina.out</code>. The name is configurable
+      using an environment variable. (See the startup scripts).
+      Whatever is written to <code>System.err/out</code> will be caught into
+      that file. That may include:
+    </p>
+
+    <ul>
+      <li>Uncaught exceptions printed by <code>java.lang.ThreadGroup.uncaughtException(..)</code></li>
+      <li>Thread dumps, if you requested them via a system signal</li>
+    </ul>
+
+    <p>
+      When running as a service on Windows, the console output is also caught
+      and redirected, but the file names are different.
+    </p>
+
+    <p>
+      The default logging configuration in Apache Tomcat writes the same
+      messages to the console and to a log file. This is great when using
+      Tomcat for development, but usually is not needed in production.
+    </p>
+
+    <p>
+      Old applications that still use <code>System.out</code> or <code>System.err</code>
+      can be tricked by setting <code>swallowOutput</code> attribute on a
+      <a href="config/context.html">Context</a>. If the attribute is set to
+      <code>true</code>, the calls to <code>System.out/err</code> during request
+      processing will be intercepted, and their output will be fed to the
+      logging subsystem using the
+      <code>javax.servlet.ServletContext.log(...)</code> calls.<br>
+      <strong>Note</strong>, that the <code>swallowOutput</code>  feature is
+      actually a trick, and it has its limitations.
+      It works only with direct calls to <code>System.out/err</code>,
+      and only during request processing cycle. It may not work in other
+      threads that might be created by the application. It cannot be used to
+      intercept logging frameworks that themselves write to the system streams,
+      as those start early and may obtain a direct reference to the streams
+      before the redirection takes place.
+    </p>
+
+    </div></div>
+
+    <div class="subsection"><h4 id="Access_logging">Access logging</h4><div class="text">
+
+    <p>
+      Access logging is a related but different feature, which is
+      implemented as a <code>Valve</code>. It uses self-contained
+      logic to write its log files. The essential requirement for
+      access logging is to handle a large continuous stream of data
+      with low overhead, so it only uses Apache Commons Logging for
+      its own debug messages. This implementation approach avoids
+      additional overhead and potentially complex configuration.
+      Please refer to the <a href="config/valve.html#Access_Logging">Valves</a>
+      documentation for more details on its configuration, including
+      the various report formats.
+    </p>
+
+    </div></div>
+
+  </div><h3 id="Using_java.util.logging_(default)">Using java.util.logging (default)</h3><div class="text">
+
+  <p>
+    The default implementation of java.util.logging provided in the JDK is too
+    limited to be useful. The key limitation is the inability to have per-web
+    application logging, as the configuration is per-VM. As a result, Tomcat
+    will, in the default configuration, replace the default LogManager
+    implementation with a container friendly implementation called JULI, which
+    addresses these shortcomings.
+  </p>
+  <p>
+    JULI supports the same configuration mechanisms as the standard JDK
+    <code>java.util.logging</code>, using either a programmatic approach, or
+    properties files. The main difference is that per-classloader properties
+    files can be set (which enables easy redeployment friendly webapp
+    configuration), and the properties files support extended constructs which
+    allows more freedom for defining handlers and assigning them to loggers.
+  </p>
+  <p>
+    JULI is enabled by default, and supports per classloader configuration, in
+    addition to the regular global java.util.logging configuration. This means
+    that logging can be configured at the following layers:
+  </p>
+    <ul>
+      <li>Globally. That is usually done in the
+        <code>${catalina.base}/conf/logging.properties</code> file.
+        The file is specified by the <code>java.util.logging.config.file</code>
+        System property which is set by the startup scripts.
+        If it is not readable or is not configured, the default is to use the
+        <code>${java.home}/lib/logging.properties</code> file in the JRE.
+      </li>
+      <li>In the web application. The file will be
+        <code>WEB-INF/classes/logging.properties</code>
+      </li>
+    </ul>
+  <p>
+    The default <code>logging.properties</code> in the JRE specifies a
+    <code>ConsoleHandler</code> that routes logging to System.err.
+    The default <code>conf/logging.properties</code> in Apache Tomcat also
+    adds several <code>AsyncFileHandler</code>s that write to files.
+  </p>
+  <p>
+    A handler's log level threshold is <code>INFO</code> by default and can be set using
+    <code>SEVERE</code>, <code>WARNING</code>, <code>INFO</code>, <code>CONFIG</code>,
+    <code>FINE</code>, <code>FINER</code>, <code>FINEST</code> or <code>ALL</code>.
+    You can also target specific packages to collect logging from and specify
+    a level.
+  </p>
+  <p>
+    To enable debug logging for part of Tomcat's internals, you should
+    configure both the appropriate logger(s) and the appropriate handler(s) to
+    use the <code>FINEST</code> or <code>ALL</code> level. e.g.:
+  </p>
+  <div class="codeBox"><pre><code>org.apache.catalina.session.level=ALL
+java.util.logging.ConsoleHandler.level=ALL</code></pre></div>
+  <p>
+    When enabling debug logging it is recommended that it is enabled for the
+    narrowest possible scope as debug logging can generate large amounts of
+    information.
+  </p>
+  <p>
+    The configuration used by JULI is the same as the one supported by plain
+    <code>java.util.logging</code>, but uses a few extensions to allow better
+    flexibility in configuring loggers and handlers. The main differences are:
+  </p>
+  <ul>
+      <li>A prefix may be added to handler names, so that multiple handlers of a
+      single class may be instantiated. A prefix is a String which starts with a
+      digit, and ends with '.'. For example, <code>22foobar.</code> is a valid
+      prefix.</li>
+      <li>System property replacement is performed for property values which
+      contain <code>${systemPropertyName}</code>.</li>
+      <li>If using a class loader that implements the
+      <code>org.apache.juli.WebappProperties</code> interface (Tomcat's
+      web application class loader does) then property replacement is also
+      performed for <code>${classloader.webappName}</code>,
+      <code>${classloader.hostName}</code> and
+      <code>${classloader.serviceName}</code> which are replaced with the
+      web application name, the host name and the service name respectively.
+      </li>
+      <li>By default, loggers will not delegate to their parent if they have
+      associated handlers. This may be changed per logger using the
+      <code>loggerName.useParentHandlers</code> property, which accepts a
+      boolean value.</li>
+      <li>The root logger can define its set of handlers using the
+      <code>.handlers</code> property.</li>
+      <li> By default the log files will be kept on the file system for
+      <code>90</code> days. This may be changed per handler using the
+      <code>handlerName.maxDays</code> property. If the specified value for the
+      property is <code>&le;0</code> then the log files will be kept on the
+      file system forever, otherwise they will be kept the specified maximum
+      days.</li>
+  </ul>
+  <p>
+    There are several additional implementation classes, that can be used
+    together with the ones provided by Java. The notable ones are
+    <code>org.apache.juli.FileHandler</code> and <code>org.apache.juli.AsyncFileHandler</code>.
+  </p>
+  <p>
+    <code>org.apache.juli.FileHandler</code> supports buffering of the
+      logs. The buffering is not enabled by default. To configure it, use the
+      <code>bufferSize</code> property of a handler. The value of <code>0</code>
+      uses system default buffering (typically an 8K buffer will be used). A
+      value of <code>&lt;0</code> forces a writer flush upon each log write. A
+      value <code>&gt;0</code> uses a BufferedOutputStream with the defined
+      value but note that the system default buffering will also be
+      applied.
+  </p>
+  <p>
+    <code>org.apache.juli.AsyncFileHandler</code> is a subclass of <code>FileHandler</code>
+      that queues the log messages and writes them asynchronously to the log files.
+      Its additional behaviour can be configured by setting some
+      <a href="config/systemprops.html#Logging">system properties</a>.
+  </p>
+  <p>
+    Example logging.properties file to be placed in $CATALINA_BASE/conf:
+  </p>
+  <div class="codeBox"><pre><code>handlers = 1catalina.org.apache.juli.AsyncFileHandler, \
+           2localhost.org.apache.juli.AsyncFileHandler, \
+           3manager.org.apache.juli.AsyncFileHandler, \
+           java.util.logging.ConsoleHandler
+
+.handlers = 1catalina.org.apache.juli.AsyncFileHandler, java.util.logging.ConsoleHandler
+
+############################################################
+# Handler specific properties.
+# Describes specific configuration info for Handlers.
+############################################################
+
+1catalina.org.apache.juli.AsyncFileHandler.level = ALL
+1catalina.org.apache.juli.AsyncFileHandler.directory = ${catalina.base}/logs
+1catalina.org.apache.juli.AsyncFileHandler.prefix = catalina.
+1catalina.org.apache.juli.AsyncFileHandler.maxDays = 90
+1catalina.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+2localhost.org.apache.juli.AsyncFileHandler.level = ALL
+2localhost.org.apache.juli.AsyncFileHandler.directory = ${catalina.base}/logs
+2localhost.org.apache.juli.AsyncFileHandler.prefix = localhost.
+2localhost.org.apache.juli.AsyncFileHandler.maxDays = 90
+2localhost.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+3manager.org.apache.juli.AsyncFileHandler.level = ALL
+3manager.org.apache.juli.AsyncFileHandler.directory = ${catalina.base}/logs
+3manager.org.apache.juli.AsyncFileHandler.prefix = manager.
+3manager.org.apache.juli.AsyncFileHandler.bufferSize = 16384
+3manager.org.apache.juli.AsyncFileHandler.maxDays = 90
+3manager.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+java.util.logging.ConsoleHandler.level = ALL
+java.util.logging.ConsoleHandler.formatter = java.util.logging.OneLineFormatter
+java.util.logging.ConsoleHandler.encoding = UTF-8
+
+############################################################
+# Facility specific properties.
+# Provides extra control for each logger.
+############################################################
+
+org.apache.catalina.core.ContainerBase.[Catalina].[localhost].level = INFO
+org.apache.catalina.core.ContainerBase.[Catalina].[localhost].handlers = \
+   2localhost.org.apache.juli.AsyncFileHandler
+
+org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/manager].level = INFO
+org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/manager].handlers = \
+   3manager.org.apache.juli.AsyncFileHandler
+
+# For example, set the org.apache.catalina.util.LifecycleBase logger to log
+# each component that extends LifecycleBase changing state:
+#org.apache.catalina.util.LifecycleBase.level = FINE</code></pre></div>
+
+    <p>
+      Example logging.properties for the servlet-examples web application to be
+      placed in WEB-INF/classes inside the web application:
+    </p>
+    <div class="codeBox"><pre><code>handlers = org.apache.juli.AsyncFileHandler, java.util.logging.ConsoleHandler
+
+############################################################
+# Handler specific properties.
+# Describes specific configuration info for Handlers.
+############################################################
+
+org.apache.juli.AsyncFileHandler.level = ALL
+org.apache.juli.AsyncFileHandler.directory = ${catalina.base}/logs
+org.apache.juli.AsyncFileHandler.prefix = ${classloader.webappName}.
+org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+java.util.logging.ConsoleHandler.level = ALL
+java.util.logging.ConsoleHandler.formatter = java.util.logging.OneLineFormatter
+java.util.logging.ConsoleHandler.encoding = UTF-8</code></pre></div>
+
+
+    <div class="subsection"><h4 id="Documentation_references">Documentation references</h4><div class="text">
+      <p>See the following resources for additional information:</p>
+      <ul>
+        <li>Apache Tomcat Javadoc for the
+          <a href="api/org/apache/juli/package-summary.html"><code>org.apache.juli</code></a>
+          package.
+        </li>
+        <li>Oracle Java 8 Javadoc for the
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html"><code>java.util.logging</code></a>
+          package.
+        </li>
+      </ul>
+    </div></div>
+
+    <div class="subsection"><h4 id="Considerations_for_production_usage">Considerations for production usage</h4><div class="text">
+      <p>You may want to take note of the following:</p>
+      <ul>
+        <li>Consider removing <code>ConsoleHandler</code> from configuration. By
+        default (thanks to the <code>.handlers</code> setting) logging goes both
+        to a <code>AsyncFileHandler</code> and to a <code>ConsoleHandler</code>. The
+        output of the latter one is usually captured into a file, such as
+        <code>catalina.out</code>. Thus you end up with two copies of the same
+        messages.</li>
+        <li>Consider removing <code>AsyncFileHandler</code>s for the applications
+        that you do not use. E.g., the one for <code>host-manager</code>.</li>
+        <li>Consider configuring an
+        <a href="config/valve.html#Access_Logging">Access log</a>.</li>
+      </ul>
+    </div></div>
+
+  </div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Manager Component</title><meta name="author" content="Craig R. McClanahan"><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Manager Component</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#Standard_Implementation">Standard Implementation</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Special_Features">Special Features</a><ol><li><a href="#Persistence_Across_Restarts">Persistence Across Restarts</a></li><li><a href="#Disable_Session_Persistence">Disable Session Persistence</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>The <strong>Manager</strong> element represents the <em>session
+  manager</em> that will be used to create and maintain HTTP sessions
+  as requested by the associated web application.</p>
+
+  <p>A Manager element MAY be nested inside a
+  <a href="context.html">Context</a> component.  If it is not included,
+  a default Manager configuration will be created automatically, which
+  is sufficient for most requirements, &mdash; see
+  <em>Standard Manager Implementation</em> below for the details
+  of this configuration.</p>
+
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+    <p>All implementations of <strong>Manager</strong>
+    support the following attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><code class="attributeName">className</code></td><td>
+        <p>Java class name of the implementation to use.  This class must
+        implement the <code>org.apache.catalina.Manager</code> interface.
+        If not specified, the standard value (defined below) will be used.</p>
+      </td></tr><tr id="Attributes_Common Attributes_maxActiveSessions"><td><code class="attributeName">maxActiveSessions</code></td><td>
+        <p>The maximum number of active sessions that will be created by
+        this Manager, or <code>-1</code> (the default) for no limit.</p>
+
+        <p>When the limit is reached, any attempt to create a new session
+        (e.g. with <code>HttpServletRequest.getSession()</code> call)
+        will fail with an <code>IllegalStateException</code>.</p>
+      </td></tr><tr id="Attributes_Common Attributes_notifyAttributeListenerOnUnchangedValue"><td><code class="attributeName">notifyAttributeListenerOnUnchangedValue</code></td><td>
+        <p>If an attribute is added to the session and that attribute is already
+        present in the session under the same name will any
+        <code>HttpSessionAttributeListener</code> be notified that the attribute
+        has been replaced. If not specified, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="Attributes_Common Attributes_notifyBindingListenerOnUnchangedValue"><td><code class="attributeName">notifyBindingListenerOnUnchangedValue</code></td><td>
+        <p>If an attribute is added to the session, that attribute is already
+        present in the session under the same name and the attribute implements
+        <code>HttpSessionBindingListener</code>, will the listener be notified
+        that the attribute has been unbound and bound again. If not specified,
+        the default value of <code>false</code> will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Standard_Implementation">Standard Implementation</h4><div class="text">
+
+    <p>Tomcat provides two standard implementations of <strong>Manager</strong>
+    for use &mdash; the default one stores active sessions, while the optional one
+    stores active sessions that have been swapped out (in addition to saving
+    sessions across a restart of Tomcat) in a storage location that is selected
+    via the use of an appropriate <strong>Store</strong> nested element.</p>
+
+    <h3>Standard Manager Implementation</h3>
+
+    <p>The standard implementation of <strong>Manager</strong> is
+    <strong>org.apache.catalina.session.StandardManager</strong>.
+    It supports the following additional attributes (in addition to the
+    common attributes listed above):</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Standard Implementation_pathname"><td><code class="attributeName">pathname</code></td><td>
+        <p>Absolute or relative (to the work directory for this Context)
+        pathname of the file in which session state will be preserved
+        across application restarts, if possible.  The default is
+        "SESSIONS.ser".<br>See
+        <a href="#Persistence_Across_Restarts">Persistence Across Restarts</a>
+        for more information. This persistence may be
+        disabled by setting this attribute to an empty string.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_persistAuthentication"><td><code class="attributeName">persistAuthentication</code></td><td>
+        <p>Should authentication information be included when session state is
+        preserved across application restarts? If <code>true</code>, the session's
+        authentication is preserved so that the session remains authenticated
+        after the application has been restarted. If not specified, the default
+        value of <code>false</code> will be used.<br>See
+        <a href="#Persistence_Across_Restarts">Persistence Across Restarts</a>
+        for more information.</p>
+
+        <p>Please note that the session's <code>Principal</code> class as well
+        as its descendant classes are all subject to the
+        <strong>sessionAttributeValueClassNameFilter</strong>. If such a filter
+        is specified or a <code>SecurityManager</code> is enabled, the names of
+        the <code>Principal</code> class and descendant classes must match that
+        filter pattern in order to be restored.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_persistAuthenticationNotes"><td><code class="attributeName">persistAuthenticationNotes</code></td><td>
+        <p>Should authentication notes (used during FORM authentication) be
+        included when session state is preserved across application restarts?
+        If <code>true</code>, the session's authentication notes are preserved
+        so that an in progress FORM authentication can continue after the
+        application has been restarted. If not specified, the default value of
+        <code>false</code> will be used.<br>See
+        <a href="#Persistence_Across_Restarts">Persistence Across Restarts</a>
+        for more information.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_processExpiresFrequency"><td><code class="attributeName">processExpiresFrequency</code></td><td>
+        <p>Frequency of the session expiration, and related manager operations.
+        Manager operations will be done once for the specified amount of
+        backgroundProcess calls (i.e., the lower the amount, the more often the
+        checks will occur). The minimum value is 1, and the default value is 6.
+        </p>
+      </td></tr><tr id="Attributes_Standard Implementation_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>Name of the Java class that extends
+        <code>java.security.SecureRandom</code> to use to generate session IDs.
+        If not specified, the default value is
+        <code>java.security.SecureRandom</code>.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>Name of the provider to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the Manager
+        will use the platform default provider and the default algorithm. If not
+        specified, the platform default provider will be used.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>Name of the algorithm to use to create the
+        <code>java.security.SecureRandom</code> instances that generate session
+        IDs. If an invalid algorithm and/or provider is specified, the Manager
+        will use the platform default provider and the default algorithm. If not
+        specified, the default algorithm of SHA1PRNG will be used. If the
+        default algorithm is not supported, the platform default will be used.
+        To specify that the platform default should be used, do not set the
+        secureRandomProvider attribute and set this attribute to the empty
+        string.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_sessionAttributeNameFilter"><td><code class="attributeName">sessionAttributeNameFilter</code></td><td>
+        <p>A regular expression used to filter which session attributes will be
+        serialized for clustering/replication, or storage to any persistent store.
+        An attribute will only be serialized if its name matches
+        this pattern. If the pattern is zero length or <code>null</code>, all
+        attributes are eligible for distribution. The pattern is anchored so the
+        session attribute name must fully match the pattern. As an example, the
+        value <code>(userName|sessionHistory)</code> will only distribute the
+        two session attributes named <code>userName</code> and
+        <code>sessionHistory</code>. If not specified, the default value of
+        <code>null</code> will be used.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_sessionAttributeValueClassNameFilter"><td><code class="attributeName">sessionAttributeValueClassNameFilter</code></td><td>
+        <p>A regular expression used to filter which session attributes will be
+        serialized for clustering/replication, or storage to any persistent store.
+        An attribute will only be serialized if the implementation
+        class name of the value matches this pattern. If the pattern is zero
+        length or <code>null</code>, all attributes are eligible for
+        distribution. The pattern is anchored so the fully qualified class name
+        must fully match the pattern. If not specified, the default value of
+        <code>null</code> will be used unless a <code>SecurityManager</code> is
+        enabled in which case the default will be
+        <code>java\\.lang\\.(?:Boolean|Integer|Long|Number|String)|org\\.apache\\.catalina\\.realm\\.GenericPrincipal\\$SerializablePrincipal|\\[Ljava.lang.String;</code>.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_warnOnSessionAttributeFilterFailure"><td><code class="attributeName">warnOnSessionAttributeFilterFailure</code></td><td>
+        <p>If <strong>sessionAttributeNameFilter</strong> or
+        <strong>sessionAttributeValueClassNameFilter</strong> blocks an
+        attribute, should this be logged at <code>WARN</code> level? If
+        <code>WARN</code> level logging is disabled then it will be logged at
+        <code>DEBUG</code>. The default value of this attribute is
+        <code>false</code> unless a <code>SecurityManager</code> is enabled in
+        which case the default will be <code>true</code>.</p>
+      </td></tr></table>
+
+    <h3>Persistent Manager Implementation</h3>
+
+    <p><strong>NOTE:</strong> You must set either the
+    <code>org.apache.catalina.session.StandardSession.ACTIVITY_CHECK</code> or
+    <code>org.apache.catalina.STRICT_SERVLET_COMPLIANCE</code>
+    <a href="systemprops.html">system properties</a> to <code>true</code> for
+    the persistent manager to work correctly.</p>
+
+    <p>The persistent implementation of <strong>Manager</strong> is
+    <strong>org.apache.catalina.session.PersistentManager</strong>.  In
+    addition to the usual operations of creating and deleting sessions, a
+    <code>PersistentManager</code> has the capability to swap active (but
+    idle) sessions out to a persistent storage mechanism, as well as to save
+    all sessions across a normal restart of Tomcat.  The actual persistent
+    storage mechanism used is selected by your choice of a
+    <strong>Store</strong> element nested inside the <strong>Manager</strong>
+    element - this is required for use of <code>PersistentManager</code>.</p>
+
+    <p>This implementation of Manager supports the following attributes in
+    addition to the <a href="#Common_Attributes">Common Attributes</a>
+    described earlier.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Standard Implementation_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>It has the same meaning as described in the
+        <a href="#Common_Attributes">Common Attributes</a> above.
+        You <strong>must</strong> specify
+        <code>org.apache.catalina.session.PersistentManager</code> to use
+        this manager implementation.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_maxIdleBackup"><td><code class="attributeName">maxIdleBackup</code></td><td>
+        <p>The time interval (in seconds) since the last access to a session
+        before it is eligible for being persisted to the session store, or
+        <code>-1</code> to disable this feature.  By default, this feature is
+        disabled.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_maxIdleSwap"><td><code class="attributeName">maxIdleSwap</code></td><td>
+        <p>The maximum time a session may be idle before it is eligible to be
+        swapped to disk due to inactivity. Setting this to <code>-1</code> means
+        sessions should not be swapped out just because of inactivity. If this
+        feature is enabled, the time interval specified here should be equal to
+        or longer than the value specified for <code>maxIdleBackup</code>. By
+        default, this feature is disabled.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_minIdleSwap"><td><code class="attributeName">minIdleSwap</code></td><td>
+        <p>The minimum time in seconds a session must be idle before it is
+        eligible to be swapped to disk to keep the active session count below
+        maxActiveSessions. Setting to <code>-1</code> means sessions will not be
+        swapped out to keep the active session count down. If specified, this
+        value should be less than that specified by <code>maxIdleSwap</code>.
+        By default, this value is set to <code>-1</code>.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_persistAuthentication"><td><code class="attributeName">persistAuthentication</code></td><td>
+        <p>Should authentication information be included when sessions are
+        swapped out to persistent storage? If <code>true</code>, the session's
+        authentication is preserved so that the session remains authenticated
+        after being reloaded (swapped in) from persistent storage. If not
+        specified, the default value of <code>false</code> will be used.</p>
+
+        <p>Please note that the session's <code>Principal</code> class as well
+        as its descendant classes are all subject to the
+        <strong>sessionAttributeValueClassNameFilter</strong>. If such a filter
+        is specified or a <code>SecurityManager</code> is enabled, the names of
+        the <code>Principal</code> class and descendant classes must match that
+        filter pattern in order to be restored.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_persistAuthenticationNotes"><td><code class="attributeName">persistAuthenticationNotes</code></td><td>
+        <p>Should authentication notes (used during FORM authentication) be
+        included when sessions are swapped out to persistent storage? If
+        <code>true</code>, the session's authentication notes (used during
+        FORM authentication) are preserved so that an in progress FORM
+        authentication can continue after being reloaded (swapped in) from
+        persistent storage. If not specified, the default value of
+        <code>false</code> will be used.</p>
+
+        <p>Please note that if it is possible that the session will be swapped
+        in to a different node to the node from which it was swapped out, all
+        nodes must be upgraded to at least 9.0.66 (the version where this
+        feature was introduced) before this feature is enabled else the swapping
+        in may fail.</p>
+
+        <p>This attribute has been removed for Tomcat 10.1.x onwards which
+        always persists FORM authenticaton notes.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_processExpiresFrequency"><td><code class="attributeName">processExpiresFrequency</code></td><td>
+        <p>It is the same as described above for the
+        <code>org.apache.catalina.session.StandardManager</code> class.
+        </p>
+      </td></tr><tr id="Attributes_Standard Implementation_saveOnRestart"><td><code class="attributeName">saveOnRestart</code></td><td>
+        <p>Should all sessions be persisted and reloaded when Tomcat is shut
+        down and restarted (or when this application is reloaded)?  By default,
+        this attribute is set to <code>true</code>.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_secureRandomClass"><td><code class="attributeName">secureRandomClass</code></td><td>
+        <p>It is the same as described above for the
+        <code>org.apache.catalina.session.StandardManager</code> class.
+        </p>
+      </td></tr><tr id="Attributes_Standard Implementation_secureRandomProvider"><td><code class="attributeName">secureRandomProvider</code></td><td>
+        <p>It is the same as described above for the
+        <code>org.apache.catalina.session.StandardManager</code> class.
+        </p>
+      </td></tr><tr id="Attributes_Standard Implementation_secureRandomAlgorithm"><td><code class="attributeName">secureRandomAlgorithm</code></td><td>
+        <p>It is the same as described above for the
+        <code>org.apache.catalina.session.StandardManager</code> class.
+        </p>
+      </td></tr><tr id="Attributes_Standard Implementation_sessionAttributeNameFilter"><td><code class="attributeName">sessionAttributeNameFilter</code></td><td>
+        <p>A regular expression used to filter which session attributes will be
+        serialized for clustering/replication, or storage to any persistent store.
+        An attribute will only be serialized if its name matches
+        this pattern. If the pattern is zero length or <code>null</code>, all
+        attributes are eligible for distribution. The pattern is anchored so the
+        session attribute name must fully match the pattern. As an example, the
+        value <code>(userName|sessionHistory)</code> will only distribute the
+        two session attributes named <code>userName</code> and
+        <code>sessionHistory</code>. If not specified, the default value of
+        <code>null</code> will be used.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_sessionAttributeValueClassNameFilter"><td><code class="attributeName">sessionAttributeValueClassNameFilter</code></td><td>
+        <p>A regular expression used to filter which session attributes will be
+        serialized for clustering/replication, or storage to any persistent store.
+        An attribute will only be serialized if the implementation
+        class name of the value matches this pattern. If the pattern is zero
+        length or <code>null</code>, all attributes are eligible for
+        distribution. The pattern is anchored so the fully qualified class name
+        must fully match the pattern. If not specified, the default value of
+        <code>null</code> will be used unless a <code>SecurityManager</code> is
+        enabled in which case the default will be
+        <code>java\\.lang\\.(?:Boolean|Integer|Long|Number|String)|org\\.apache\\.catalina\\.realm\\.GenericPrincipal\\$SerializablePrincipal|\\[Ljava.lang.String;</code>.</p>
+      </td></tr><tr id="Attributes_Standard Implementation_warnOnSessionAttributeFilterFailure"><td><code class="attributeName">warnOnSessionAttributeFilterFailure</code></td><td>
+        <p>If <strong>sessionAttributeNameFilter</strong> or
+        <strong>sessionAttributeValueClassNameFilter</strong> blocks an
+        attribute, should this be logged at <code>WARN</code> level? If
+        <code>WARN</code> level logging is disabled then it will be logged at
+        <code>DEBUG</code>. The default value of this attribute is
+        <code>false</code> unless a <code>SecurityManager</code> is enabled in
+        which case the default will be <code>true</code>.</p>
+      </td></tr></table>
+
+    <p>In order to successfully use a PersistentManager, you must nest inside
+    it a <strong>&lt;Store&gt;</strong> element, as described below.</p>
+
+  </div></div>
+
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <h3>All Manager Implementations</h3>
+
+  <p>All Manager implementations allow nesting of a
+  <strong>&lt;SessionIdGenerator&gt;</strong> element. It defines
+  the behavior of session id generation.  All implementations
+  of the <a href="sessionidgenerator.html">SessionIdGenerator</a> allow the
+  following attributes:
+  </p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="_Nested Components_sessionIdLength"><td><code class="attributeName">sessionIdLength</code></td><td>
+      <p>The length of the session ID may be changed with the
+      <strong>sessionIdLength</strong> attribute.
+      </p>
+    </td></tr></table>
+
+  <h3>Persistent Manager Implementation</h3>
+
+  <p>If you are using the <em>Persistent Manager Implementation</em>
+  as described above, you <strong>MUST</strong> nest a
+  <strong>&lt;Store&gt;</strong> element inside, which defines the
+  characteristics of the persistent data storage.  Two implementations
+  of the <code>&lt;Store&gt;</code> element are currently available,
+  with different characteristics, as described below.</p>
+
+  <h5>File Based Store</h5>
+
+  <p>The <em>File Based Store</em> implementation saves swapped out
+  sessions in individual files (named based on the session identifier)
+  in a configurable directory.  Therefore, you are likely to encounter
+  scalability problems as the number of active sessions increases, and
+  this should primarily be considered a means to easily experiment.</p>
+
+  <p>To configure this, add a <code>&lt;Store&gt;</code> nested inside
+  your <code>&lt;Manager&gt;</code> element with the following attributes:
+  </p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="_Nested Components_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+      <p>Java class name of the implementation to use.  This class must
+      implement the <code>org.apache.catalina.Store</code> interface.  You
+      <strong>must</strong> specify
+      <code>org.apache.catalina.session.FileStore</code>
+      to use this implementation.</p>
+    </td></tr><tr id="_Nested Components_directory"><td><code class="attributeName">directory</code></td><td>
+      <p>Absolute or relative (to the temporary work directory for this web
+      application) pathname of the directory into which individual session
+      files are written.  If not specified, the temporary work directory
+      assigned by the container is utilized.</p>
+    </td></tr></table>
+
+
+  <h5>Data source Based Store</h5>
+
+  <p>The <em>Data source Based Store</em> implementation saves swapped out
+  sessions in individual rows of a preconfigured table in a database
+  that is accessed via a data sourcer.  With large numbers of swapped out
+  sessions, this implementation will exhibit improved performance over
+  the File Based Store described above.</p>
+
+  <p>To configure this, add a <code>&lt;Store&gt;</code> nested inside
+  your <code>&lt;Manager&gt;</code> element with the following attributes:
+  </p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="_Nested Components_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+      <p>Java class name of the implementation to use.  This class must
+      implement the <code>org.apache.catalina.Store</code> interface.  You
+      <strong>must</strong> specify
+      <code>org.apache.catalina.session.DataSourceStore</code>
+      to use this implementation.</p>
+    </td></tr><tr id="_Nested Components_dataSourceName"><td><code class="attributeName">dataSourceName</code></td><td>
+      <p>Name of the JNDI resource for a JDBC DataSource-factory. Since this
+      code uses prepared statements, you might want to configure pooled
+      prepared statements as shown in
+       <a href="../jndi-resources-howto.html">the JNDI resources
+      How-To</a>.</p>
+    </td></tr><tr id="_Nested Components_localDataSource"><td><code class="attributeName">localDataSource</code></td><td>
+      <p>This allows the Store to use a DataSource defined for the Context
+      rather than a global DataSource. If not specified, the default is
+      <code>false</code>: use a global DataSource.</p>
+    </td></tr><tr id="_Nested Components_sessionAppCol"><td><code class="attributeName">sessionAppCol</code></td><td>
+      <p>Name of the database column, contained in the specified session table,
+      that contains the Engine, Host, and Web Application Context name in the
+      format <code>/Engine/Host/Context</code>. If not specified the default
+      value of <code>app</code> will be used.</p>
+    </td></tr><tr id="_Nested Components_sessionDataCol"><td><code class="attributeName">sessionDataCol</code></td><td>
+      <p>Name of the database column, contained in the specified session table,
+      that contains the serialized form of all session attributes for a swapped
+      out session. The column type must accept a binary object (typically called
+      a BLOB). If not specified the default value of <code>data</code> will be
+      used.</p>
+    </td></tr><tr id="_Nested Components_sessionIdCol"><td><code class="attributeName">sessionIdCol</code></td><td>
+      <p>Name of the database column, contained in the specified session table,
+      that contains the session identifier of the swapped out session. The
+      column type must accept character string data of at least as many
+      characters as are contained in session identifiers created by Tomcat
+      (typically 32). If not specified the default value of <code>id</code> will
+      be used.</p>
+    </td></tr><tr id="_Nested Components_sessionLastAccessedCol"><td><code class="attributeName">sessionLastAccessedCol</code></td><td>
+      <p>Name of the database column, contained in the specified session table,
+      that contains the <code>lastAccessedTime</code> property of this session.
+      The column type must accept a Java <code>long</code> (64 bits). If not
+      specified the default value of <code>maxinactive</code> will be used.</p>
+    </td></tr><tr id="_Nested Components_sessionMaxInactiveCol"><td><code class="attributeName">sessionMaxInactiveCol</code></td><td>
+      <p>Name of the database column, contained in the specified session table,
+      that contains the <code>maxInactiveInterval</code> property of this
+      session. The column type must accept a Java <code>integer</code> (32
+      bits). If not specified, the default value of <code>maxinactive</code>
+      will be used.</p>
+    </td></tr><tr id="_Nested Components_sessionTable"><td><code class="attributeName">sessionTable</code></td><td>
+      <p>Name of the database table to be used for storing swapped out sessions.
+      This table must contain (at least) the database columns that are
+      configured by the other attributes of this element. If not specified the
+      default value of <code>tomcat$sessions</code> will be used.</p>
+    </td></tr><tr id="_Nested Components_sessionValidCol"><td><code class="attributeName">sessionValidCol</code></td><td>
+      <p>Name of the database column, contained in the specified session table,
+      that contains a flag indicating whether this swapped out session is still
+      valid or not. The column type must accept a single character. If not
+      specified the default value of <code>valid</code> will be used.</p>
+    </td></tr></table>
+
+  <p>Before attempting to use the data source Store for the first time,
+  you must create the table that will be used to store swapped out sessions.
+  Detailed SQL commands vary depending on the database you are using, but
+  a script like this will generally be required:</p>
+
+<div class="codeBox"><pre><code>create table tomcat_sessions (
+  session_id     varchar(100) not null primary key,
+  valid_session  char(1) not null,
+  max_inactive   int not null,
+  last_access    bigint not null,
+  app_name       varchar(255),
+  session_data   mediumblob,
+  KEY kapp_name(app_name)
+);</code></pre></div>
+
+  <p>Note: The SQL command above does not use the default names for either the
+  table or the columns so the data source Store would need to be configured
+  to reflect this.</p>
+
+</div><h3 id="Special_Features">Special Features</h3><div class="text">
+
+
+  <div class="subsection"><h4 id="Persistence_Across_Restarts">Persistence Across Restarts</h4><div class="text">
+
+    <p>Whenever Apache Tomcat is shut down normally and restarted, or when an
+    application reload is triggered, the standard Manager implementation
+    will attempt to serialize all currently active sessions to a disk
+    file located via the <code>pathname</code> attribute.  All such saved
+    sessions will then be deserialized and activated (assuming they have
+    not expired in the mean time) when the application reload is completed.</p>
+
+    <p>In order to successfully restore the state of session attributes,
+    all such attributes MUST implement the <code>java.io.Serializable</code>
+    interface.  You MAY cause the Manager to enforce this restriction by
+    including the <code>&lt;distributable&gt;</code> element in your web
+    application deployment descriptor (<code>/WEB-INF/web.xml</code>).</p>
+
+    <p>Note that, if <strong>persistAuthentication</strong> is also set to
+    <code>true</code>, the <code>Principal</code> class present in the session
+    MUST also implement the <code>java.io.Serializable</code> interface in order
+    to make authentication persistence work properly. The actual type of that
+    <code>Principal</code> class is determined by the <a href="realm.html">
+    Realm</a> implementation used with the application. Tomcat's standard
+    <code>Principal</code> class instantiated by most of the Realms (except
+    <code>JAASRealm</code>) implements <code>java.io.Serializable</code>.</p>
+
+    <p>The persistence across restarts provided by the
+    <strong>StandardManager</strong> is a simpler implementation than that
+    provided by the <strong>PersistentManager</strong>. If robust, production
+    quality persistence across restarts is required then the
+    <strong>PersistentManager</strong> should be used with an appropriate
+    configuration.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Disable_Session_Persistence">Disable Session Persistence</h4><div class="text">
+
+    <p>As documented above, every web application by default has
+    standard manager implementation configured, and it performs session
+    persistence across restarts. To disable this persistence feature, create
+    a <a href="context.html">Context</a> configuration file for your web
+    application and add the following element there:</p>
+
+    <div class="codeBox"><pre><code>&lt;Manager pathname="" /&gt;</code></pre></div>
+  </div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

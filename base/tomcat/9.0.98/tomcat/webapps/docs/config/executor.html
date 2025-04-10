@@ -1,0 +1,114 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Executor (thread pool)</title><meta name="author" content="Filip Hanik"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Executor (thread pool)</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#Standard_Implementation">Standard Implementation</a></li><li><a href="#Virtual_Thread_Implementation">Virtual Thread Implementation</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>The <strong>Executor</strong> represents a thread pool that can be shared
+     between components in Tomcat. Historically there has been a thread pool per
+     connector created but this allows you to share a thread pool, between (primarily) connector
+     but also other components when those get configured to support executors</p>
+
+
+  <p>The executor has to implement the <code>org.apache.catalina.Executor</code> interface.</p>
+
+  <p>The executor is a nested element to the <a href="service.html">Service</a> element.
+     And in order for it to be picked up by the connectors, the Executor element has to appear
+     prior to the Connector element in server.xml</p>
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+  <p>All implementations of <strong>Executor</strong>
+  support the following attributes:</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><code class="attributeName">className</code></td><td>
+      <p>The class of the implementation. The implementation has to implement the
+         <code>org.apache.catalina.Executor</code> interface.
+         This interface ensures that the object can be referenced through its <code>name</code> attribute
+         and that implements Lifecycle, so that it can be started and stopped with the container.
+         The default value for the className is <code>org.apache.catalina.core.StandardThreadExecutor</code></p>
+    </td></tr><tr id="Attributes_Common Attributes_name"><td><strong><code class="attributeName">name</code></strong></td><td>
+      <p>The name used to reference this pool in other places in server.xml.
+         The name is required and must be unique.</p>
+    </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Standard_Implementation">Standard Implementation</h4><div class="text">
+
+  <p>This implementation uses a pool of platform threads to execute the tasks assigned to the Executor.</p>
+
+  <p>The <code>className</code> attribute must be <code>org.apache.catalina.core.StandardThreadExecutor</code> to use
+     this implementation.</p>
+
+  <p>The standard implementation supports the following attributes:</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Standard Implementation_threadPriority"><td><code class="attributeName">threadPriority</code></td><td>
+      <p>(int) The thread priority for threads in the executor, the default is
+      <code>5</code> (the value of the <code>Thread.NORM_PRIORITY</code> constant)</p>
+    </td></tr><tr id="Attributes_Standard Implementation_daemon"><td><code class="attributeName">daemon</code></td><td>
+      <p>(boolean) Whether the threads should be daemon threads or not, the default is <code>true</code></p>
+    </td></tr><tr id="Attributes_Standard Implementation_namePrefix"><td><code class="attributeName">namePrefix</code></td><td>
+      <p>(String) The name prefix for each thread created by the executor.
+         The thread name for an individual thread will be <code>namePrefix+threadNumber</code>. The default value is
+         <code>tomcat-exec-</code>.</p>
+    </td></tr><tr id="Attributes_Standard Implementation_maxThreads"><td><code class="attributeName">maxThreads</code></td><td>
+      <p>(int) The max number of active threads in this pool, default is <code>200</code></p>
+    </td></tr><tr id="Attributes_Standard Implementation_minSpareThreads"><td><code class="attributeName">minSpareThreads</code></td><td>
+      <p>(int) The minimum number of threads (idle and active) always kept alive, default is <code>25</code></p>
+    </td></tr><tr id="Attributes_Standard Implementation_maxIdleTime"><td><code class="attributeName">maxIdleTime</code></td><td>
+      <p>(int) The number of milliseconds before an idle thread shutsdown, unless the number of active threads are less
+         or equal to minSpareThreads. Default value is <code>60000</code>(1 minute)</p>
+    </td></tr><tr id="Attributes_Standard Implementation_maxQueueSize"><td><code class="attributeName">maxQueueSize</code></td><td>
+      <p>(int) The maximum number of runnable tasks that can queue up awaiting
+        execution before we reject them. Default value is <code>Integer.MAX_VALUE</code></p>
+    </td></tr><tr id="Attributes_Standard Implementation_threadRenewalDelay"><td><code class="attributeName">threadRenewalDelay</code></td><td>
+      <p>(long) If a <a href="listeners.html">ThreadLocalLeakPreventionListener</a> is configured,
+        it will notify this executor about stopped contexts.
+        After a context is stopped, threads in the pool are renewed. To avoid renewing all threads at the same time,
+        this option sets a delay between renewal of any 2 threads. The value is in ms,
+        default value is <code>1000</code> ms. If value is negative, threads are not renewed.</p>
+    </td></tr></table>
+
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Virtual_Thread_Implementation">Virtual Thread Implementation</h4><div class="text">
+
+  <p>This implementation uses a new virtual thread to execute each task assigned to the Executor. This Executor requires
+     a minimum Java version of Java 21.</p>
+
+  <p>The <code>className</code> attribute must be <code>org.apache.catalina.core.StandardVirtualThreadExecutor</code> to
+     use this implementation.</p>
+
+  <p>The virtual thread implementation supports the follow attributes:</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Virtual Thread Implementation_namePrefix"><td><code class="attributeName">namePrefix</code></td><td>
+      <p>(String) The name prefix for each thread created by the executor.
+         The thread name for an individual thread will be <code>namePrefix+threadNumber</code>. The default value is
+         <code>tomcat-virt-</code></p>
+    </td></tr></table>
+
+  </div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - SSI How To</title><meta name="author" content="Glenn L. Nielsen"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>SSI How To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Installation">Installation</a></li><li><a href="#Servlet_Configuration">Servlet Configuration</a></li><li><a href="#Filter_Configuration">Filter Configuration</a></li><li><a href="#Directives">Directives</a></li><li><a href="#Variables">Variables</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+<p>SSI (Server Side Includes) are directives that are placed in HTML pages,
+and evaluated on the server while the pages are being served. They let you
+add dynamically generated content to an existing HTML page, without having
+to serve the entire page via a CGI program, or other dynamic technology.
+</p>
+
+<p>Within Tomcat SSI support can be added when using Tomcat as your
+HTTP server and you require SSI support.  Typically this is done
+during development when you don't want to run a web server like Apache.</p>
+
+<p>Tomcat SSI support implements the same SSI directives as Apache.  See the
+<a href="https://httpd.apache.org/docs/howto/ssi.html#basicssidirectives">
+Apache Introduction to SSI</a> for information on using SSI directives.</p>
+
+<p>SSI support is available as a servlet and as a filter. You should use one
+or the other to provide SSI support but not both.</p>
+
+<p>Servlet based SSI support is implemented using the class
+<code>org.apache.catalina.ssi.SSIServlet</code>.  Traditionally, this servlet
+is mapped to the URL pattern "*.shtml".</p>
+
+<p>Filter based SSI support is implemented using the class
+<code>org.apache.catalina.ssi.SSIFilter</code>.  Traditionally, this filter
+is mapped to the URL pattern "*.shtml", though it can be mapped to "*" as
+it will selectively enable/disable SSI processing based on mime types.  The
+contentType init param allows you to apply SSI processing to JSP pages,
+JavaScript, or any other content you wish.</p>
+<p>By default SSI support is disabled in Tomcat.</p>
+</div><h3 id="Installation">Installation</h3><div class="text">
+
+<p><strong>CAUTION</strong> - SSI directives can be used to execute programs
+external to the Tomcat JVM. If you are using the Java SecurityManager this
+will bypass your security policy configuration in <code>catalina.policy.</code>
+</p>
+
+<p>To use the SSI servlet, remove the XML comments from around the SSI servlet
+and servlet-mapping configuration in
+<code>$CATALINA_BASE/conf/web.xml</code>.</p>
+
+<p>To use the SSI filter, remove the XML comments from around the SSI filter
+and filter-mapping configuration in
+<code>$CATALINA_BASE/conf/web.xml</code>.</p>
+
+<p>Only Contexts which are marked as privileged may use SSI features (see the
+privileged property of the Context element).</p>
+
+</div><h3 id="Servlet_Configuration">Servlet Configuration</h3><div class="text">
+
+<p>There are several servlet init parameters which can be used to
+configure the behaviour of the SSI servlet.</p>
+<ul>
+<li><strong>buffered</strong> - Should output from this servlet be buffered?
+(0=false, 1=true) Default 0 (false).</li>
+<li><strong>debug</strong> - Debugging detail level for messages logged
+by this servlet. Default 0.</li>
+<li><strong>expires</strong> - The number of seconds before a page with SSI
+directives will expire. Default behaviour is for all SSI directives to be
+evaluated for every request.</li>
+<li><strong>isVirtualWebappRelative</strong> - Should "virtual" SSI directive
+paths be interpreted as relative to the context root, instead of the server
+root? Default false.</li>
+<li><strong>inputEncoding</strong> - The encoding to be assumed for SSI
+resources if one cannot be determined from the resource itself. Default is
+the default platform encoding.</li>
+<li><strong>outputEncoding</strong> - The encoding to be used for the result
+of the SSI processing. Default is UTF-8.</li>
+<li><strong>allowExec</strong> - Is the exec command enabled? Default is
+false.</li>
+</ul>
+
+
+</div><h3 id="Filter_Configuration">Filter Configuration</h3><div class="text">
+
+<p>There are several filter init parameters which can be used to
+configure the behaviour of the SSI filter.</p>
+<ul>
+<li><strong>contentType</strong> - A regex pattern that must be matched before
+SSI processing is applied. When crafting your own pattern, don't forget that a
+mime content type may be followed by an optional character set in the form
+"mime/type; charset=set" that you must take into account.  Default is
+"text/x-server-parsed-html(;.*)?".</li>
+<li><strong>debug</strong> - Debugging detail level for messages logged
+by this servlet. Default 0.</li>
+<li><strong>expires</strong> - The number of seconds before a page with SSI
+directives will expire. Default behaviour is for all SSI directives to be
+evaluated for every request.</li>
+<li><strong>isVirtualWebappRelative</strong> - Should "virtual" SSI directive
+paths be interpreted as relative to the context root, instead of the server
+root? Default false.</li>
+<li><strong>allowExec</strong> - Is the exec command enabled? Default is
+false.</li>
+</ul>
+
+
+</div><h3 id="Directives">Directives</h3><div class="text">
+<p>Server Side Includes are invoked by embedding SSI directives in an HTML document
+ whose type will be processed by the SSI servlet. The directives take the form of an HTML
+ comment. The directive is replaced by the results of interpreting it before sending the
+ page to the client. The general form of a directive is: </p>
+<p> <code>&lt;!--#directive [param=value] --&gt;</code></p>
+<p>The directives are:</p>
+<ul>
+<li>
+<strong>config</strong> - <code>&lt;!--#config errmsg="Error occurred" sizefmt="abbrev"
+timefmt="%B %Y" --&gt;</code>
+Used to set SSI error message, the format of dates and file sizes processed by SSI.<br>
+All are optional but at least one must be used. The available options are as follows:
+<br>
+<strong>errmsg</strong> - error message used for SSI errors<br>
+<strong>sizefmt</strong> - format used for sizes in the <strong>fsize</strong> directive<br>
+<strong>timefmt</strong> - format used for timestamps in the <strong>flastmod</strong> directive<br>
+</li>
+<li>
+<strong>echo</strong> -   <code>&lt;!--#echo var="VARIABLE_NAME" encoding="entity" --&gt;</code>
+will be replaced by the value of the variable.
+<br>
+The optional <strong>encoding</strong> parameter specifies the type of encoding to use.
+Valid values are <strong>entity</strong> (default), <strong>url</strong> or <strong>none</strong>.
+NOTE: Using an encoding other than <strong>entity</strong> can lead to security issues.
+</li>
+<li>
+<strong>exec</strong> - <code>&lt;!--#exec cmd="file-name" --&gt;</code>
+Used to run commands on the host system.
+</li>
+<li>
+<strong>exec</strong> - <code>&lt;!--#exec cgi="file-name" --&gt;</code>
+This acts the same as the <strong>include virtual</strong> directive, and doesn't actually execute any commands.
+</li>
+<li>
+<strong>include</strong> -  <code>&lt;!--#include file="file-name" --&gt;</code>
+inserts the contents. The path is interpreted relative to the document where this directive
+is being used, and IS NOT a "virtual" path relative to either the context root or the server root.
+</li>
+<li>
+<strong>include</strong> -  <code>&lt;!--#include virtual="file-name" --&gt;</code>
+inserts the contents. The path is interpreted as a "virtual" path which is
+relative to either the context root or the server root (depending on the <strong>isVirtualWebappRelative</strong>
+parameter).
+</li>
+<li>
+<strong>flastmod</strong> - <code>&lt;!--#flastmod file="filename.shtml" --&gt;</code>
+Returns the time that a file was last modified. The path is interpreted relative to the document where this directive
+is being used, and IS NOT a "virtual" path relative to either the context root or the server root.
+</li>
+<li>
+<strong>flastmod</strong> - <code>&lt;!--#flastmod virtual="filename.shtml" --&gt;</code>
+Returns the time that a file was last modified. The path is interpreted as a "virtual" path which is
+relative to either the context root or the server root (depending on the <strong>isVirtualWebappRelative</strong>
+parameter).
+</li>
+<li>
+<strong>fsize</strong> - <code>&lt;!--#fsize file="filename.shtml" --&gt;</code>
+Returns the size of a file. The path is interpreted relative to the document where this directive
+is being used, and IS NOT a "virtual" path relative to either the context root or the server root.
+</li>
+<li>
+<strong>fsize</strong> - <code>&lt;!--#fsize virtual="filename.shtml" --&gt;</code>
+Returns the size of a file. The path is interpreted as a "virtual" path which is
+relative to either the context root or the server root (depending on the <strong>isVirtualWebappRelative</strong>
+parameter).
+</li>
+<li>
+<strong>printenv</strong> - <code>&lt;!--#printenv --&gt;</code>
+Returns the list of all the defined variables.
+</li>
+<li>
+<strong>set</strong> - <code>&lt;!--#set var="foo" value="Bar" --&gt;</code>
+is used to assign a value to a user-defined variable.
+</li>
+<li>
+<strong>if elif endif else</strong> - Used to create conditional sections. For example:
+<div class="codeBox"><pre><code>&lt;!--#config timefmt="%A" --&gt;
+&lt;!--#if expr="$DATE_LOCAL = /Monday/" --&gt;
+&lt;p&gt;Meeting at 10:00 on Mondays&lt;/p&gt;
+&lt;!--#elif expr="$DATE_LOCAL = /Friday/" --&gt;
+&lt;p&gt;Turn in your time card&lt;/p&gt;
+&lt;!--#else --&gt;
+&lt;p&gt;Yoga class at noon.&lt;/p&gt;
+&lt;!--#endif --&gt;</code></pre></div>
+</li>
+</ul>
+<p>
+See the
+<a href="https://httpd.apache.org/docs/howto/ssi.html#basicssidirectives">
+Apache Introduction to SSI</a> for more information on using SSI directives.</p>
+</div><h3 id="Variables">Variables</h3><div class="text">
+<p>
+SSI variables are implemented via request attributes on the <b>javax.servlet.ServletRequest</b> object
+and are not limited to the SSI servlet. Variables starting with the names
+"java.", "javax.", "sun" or "org.apache.catalina.ssi.SSIMediator." are reserved
+and cannot be used.
+</p>
+<p>The SSI servlet currently implements the following variables:
+</p>
+<table class="defaultTable">
+<tr>
+<th>Variable Name</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>AUTH_TYPE</td>
+<td>
+  The type of authentication used for this user: BASIC, FORM, etc.</td>
+</tr>
+
+<tr>
+<td>CONTENT_LENGTH</td>
+<td>
+  The length of the data (in bytes or the number of
+  characters) passed from a form.</td>
+</tr>
+
+<tr>
+<td>CONTENT_TYPE</td>
+<td>
+  The MIME type of the query data, such as "text/html".</td>
+</tr>
+
+<tr>
+<td>DATE_GMT</td>
+<td>
+Current date and time in GMT</td>
+</tr>
+
+<tr>
+<td>DATE_LOCAL</td>
+<td>
+Current date and time in the local time zone</td>
+</tr>
+<tr>
+<td>DOCUMENT_NAME</td>
+<td>
+The current file</td>
+</tr>
+<tr>
+<td>DOCUMENT_URI</td>
+<td>
+Virtual path to the file</td>
+</tr>
+
+<tr>
+<td>GATEWAY_INTERFACE</td>
+<td>
+  The revision of the Common Gateway Interface that the
+  server uses if enabled: "CGI/1.1".</td>
+</tr>
+
+<tr>
+<td>HTTP_ACCEPT</td>
+<td>
+  A list of the MIME types that the client can accept.</td>
+</tr>
+
+<tr>
+<td>HTTP_ACCEPT_ENCODING</td>
+<td>
+  A list of the compression types that the client can accept.</td>
+</tr>
+
+<tr>
+<td>HTTP_ACCEPT_LANGUAGE</td>
+<td>
+  A list of the languages that the client can accept.</td>
+</tr>
+<tr>
+<td>HTTP_CONNECTION</td>
+<td>
+  The way that the connection from the client is being managed:
+  "Close" or "Keep-Alive".</td>
+</tr>
+<tr>
+<td>HTTP_HOST</td>
+<td>
+  The web site that the client requested.</td>
+</tr>
+<tr>
+<td>HTTP_REFERER</td>
+<td>
+  The URL of the document that the client linked from.</td>
+</tr>
+<tr>
+<td>HTTP_USER_AGENT</td>
+<td>
+  The browser the client is using to issue the request.</td>
+</tr>
+<tr>
+<td>LAST_MODIFIED</td>
+<td>
+Last modification date and time for current file</td>
+</tr>
+<tr>
+<td>PATH_INFO</td>
+<td>
+  Extra path information passed to a servlet.</td>
+</tr>
+<tr>
+<td>PATH_TRANSLATED</td>
+<td>
+  The translated version of the path given by the
+  variable PATH_INFO.</td>
+</tr>
+<tr>
+<td>QUERY_STRING</td>
+<td>
+The query string that follows the "?" in the URL.
+</td>
+</tr>
+<tr>
+<td>QUERY_STRING_UNESCAPED</td>
+<td>
+Undecoded query string with all shell metacharacters escaped
+with "\"</td>
+</tr>
+<tr>
+<td>REMOTE_ADDR</td>
+<td>
+  The remote IP address of the user making the request.</td>
+</tr>
+<tr>
+<td>REMOTE_HOST</td>
+<td>
+  The remote hostname of the user making the request.</td>
+</tr>
+<tr>
+<td>REMOTE_PORT</td>
+<td>
+  The port number at remote IP address of the user making the request.</td>
+</tr>
+<tr>
+<td>REMOTE_USER</td>
+<td>
+  The authenticated name of the user.</td>
+</tr>
+<tr>
+<td>REQUEST_METHOD</td>
+<td>
+  The method with which the information request was
+  issued: "GET", "POST" etc.</td>
+</tr>
+<tr>
+<td>REQUEST_URI</td>
+<td>
+  The web page originally requested by the client.</td>
+</tr>
+<tr>
+<td>SCRIPT_FILENAME</td>
+<td>
+  The location of the current web page on the server.</td>
+</tr>
+<tr>
+<td>SCRIPT_NAME</td>
+<td>
+  The name of the web page.</td>
+</tr>
+<tr>
+<td>SERVER_ADDR</td>
+<td>
+  The server's IP address.</td>
+</tr>
+<tr>
+<td>SERVER_NAME</td>
+<td>
+  The server's hostname or IP address.</td>
+</tr>
+<tr>
+<td>SERVER_PORT</td>
+<td>
+  The port on which the server received the request.</td>
+</tr>
+<tr>
+<td>SERVER_PROTOCOL</td>
+<td>
+  The protocol used by the server. E.g. "HTTP/1.1".</td>
+</tr>
+<tr>
+<td>SERVER_SOFTWARE</td>
+<td>
+  The name and version of the server software that is
+  answering the client request.</td>
+</tr>
+<tr>
+<td>UNIQUE_ID</td>
+<td>
+  A token used to identify the current session if one
+  has been established.</td>
+</tr>
+</table>
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;%@ page import="java.net.URLEncoder" %>
+&lt;%@ page import="java.nio.charset.StandardCharsets" %>
+&lt;%@ page import="java.security.Principal" %>
+&lt;%@ page import="java.util.Enumeration" %>
+&lt;%@ page import="org.apache.catalina.TomcatPrincipal" %>
+&lt;%
+  if (request.getParameter("logoff") != null) {
+    session.invalidate();
+    response.sendRedirect("index.jsp");
+    return;
+  }
+%>
+&lt;html>
+&lt;head>
+&lt;title>Protected Page for Examples&lt;/title>
+&lt;/head>
+&lt;body bgcolor="white">
+
+You are logged in as remote user
+&lt;b>&lt;%= util.HTMLFilter.filter(request.getRemoteUser()) %>&lt;/b>
+in session &lt;b>&lt;%= session.getId() %>&lt;/b>&lt;br>&lt;br>
+
+&lt;%
+  if (request.getUserPrincipal() != null) {
+%>
+    Your user principal name is
+    &lt;b>&lt;%= util.HTMLFilter.filter(request.getUserPrincipal().getName()) %>&lt;/b>
+    &lt;br>&lt;br>
+&lt;%
+  } else {
+%>
+    No user principal could be identified.&lt;br>&lt;br>
+&lt;%
+  }
+%>
+
+&lt;%
+  String role = request.getParameter("role");
+  if (role == null)
+    role = "";
+  if (role.length() > 0) {
+    if (request.isUserInRole(role)) {
+%>
+      You have been granted role
+      &lt;b>&lt;%= util.HTMLFilter.filter(role) %>&lt;/b>&lt;br>&lt;br>
+&lt;%
+    } else {
+%>
+      You have &lt;i>not&lt;/i> been granted role
+      &lt;b>&lt;%= util.HTMLFilter.filter(role) %>&lt;/b>&lt;br>&lt;br>
+&lt;%
+    }
+  }
+%>
+
+To check whether your user name has been granted a particular role,
+enter it here:
+&lt;form method="GET" action='&lt;%= response.encodeURL("index.jsp") %>'>
+&lt;input type="text" name="role" value="&lt;%= util.HTMLFilter.filter(role) %>">
+&lt;input type="submit" >
+&lt;/form>
+&lt;br>&lt;br>
+
+&lt;%
+  Principal p = request.getUserPrincipal();
+  if (!(p instanceof TomcatPrincipal)) {
+%>
+&lt;p>The principal does not support attributes.&lt;/p>
+&lt;%
+  } else {
+    TomcatPrincipal principal = (TomcatPrincipal) p;
+%>
+&lt;p>The principal contains the following attributes:&lt;/p>
+&lt;table>
+&lt;tr>&lt;th>Name&lt;/th>&lt;th>Value&lt;/th>&lt;th>Type&lt;/th>&lt;/tr>
+&lt;%
+    Enumeration&lt;String> names = principal.getAttributeNames();
+    while (names.hasMoreElements()) {
+      String name = names.nextElement();
+      Object value = principal.getAttribute(name);
+      String type = value != null ? value.getClass().getName() : "unknown";
+      if (value instanceof Object[]) {
+        Object[] values = (Object[]) value;
+        value = "";
+        for (int i = 0; i &lt; values.length; i++) {
+          value += values[i] + "&lt;br/>";
+        }
+        if (values.length > 0) {
+          type = values[0].getClass().getName() + "[]";
+        } else {
+          type = "unknown";
+        }
+      }
+      type = type.replaceFirst("^java\\.lang\\.", "");
+%>
+&lt;tr>
+  &lt;td>&lt;%= util.HTMLFilter.filter(name) %>&lt;/td>
+  &lt;td>&lt;%= util.HTMLFilter.filter(String.valueOf(value)) %>&lt;/td>
+  &lt;td>&lt;%= util.HTMLFilter.filter(type) %>&lt;/td>
+&lt;/tr>
+&lt;%
+    }
+%>
+&lt;/table>
+&lt;%
+  }
+%>
+&lt;br>&lt;br>
+
+&lt;%
+  // Count the existing attributes
+  int sessionAttributeCount = 0;
+  Enumeration&lt;String> names = session.getAttributeNames();
+  while (names.hasMoreElements()) {
+    names.nextElement();
+    sessionAttributeCount++;
+  }
+
+  String dataName = request.getParameter("dataName");
+  String dataValue = request.getParameter("dataValue");
+  if (dataName != null) {
+    if (dataValue == null) {
+      session.removeAttribute(dataName);
+      sessionAttributeCount--;
+    } else if (sessionAttributeCount &lt; 10) {
+      session.setAttribute(dataName, dataValue);
+      sessionAttributeCount++;
+    } else {
+%>
+&lt;p>Session attribute [&lt;%= util.HTMLFilter.filter(dataName) %>] not added as there are already 10 attributes in the
+session. Delete an attribute before adding another.&lt;/p>
+&lt;%
+    }
+  }
+
+  if (sessionAttributeCount &lt; 10) {
+%>
+To add some data to the authenticated session, enter it here:
+&lt;form method="GET" action='&lt;%= response.encodeURL("index.jsp") %>'>
+&lt;input type="text" name="dataName">
+&lt;input type="text" name="dataValue">
+&lt;input type="submit" >
+&lt;/form>
+&lt;%
+  } else {
+%>
+&lt;p>You may not add more than 10 attributes to this session.&lt;/p>
+&lt;%
+  }
+%>
+&lt;br>&lt;br>
+
+&lt;p>The authenticated session contains the following attributes:&lt;/p>
+&lt;table>
+&lt;tr>&lt;th>Name&lt;/th>&lt;th>Value&lt;/th>&lt;/tr>
+&lt;%
+  names = session.getAttributeNames();
+  while (names.hasMoreElements()) {
+    String name = names.nextElement();
+    String value = session.getAttribute(name).toString();
+%>
+&lt;tr>
+  &lt;td>&lt;%= util.HTMLFilter.filter(name) %>&lt;/td>
+  &lt;td>&lt;%= util.HTMLFilter.filter(value) %>&lt;/td>
+  &lt;td>&lt;a href='&lt;%= response.encodeURL("index.jsp?dataName=" + URLEncoder.encode(name, "UTF-8")) %>'>delete&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;%
+  }
+%>
+&lt;/table>
+&lt;br>&lt;br>
+
+If you have configured this application for form-based authentication, you can
+log off by clicking
+&lt;a href='&lt;%= response.encodeURL("index.jsp?logoff=true") %>'>here&lt;/a>.
+This should cause you to be returned to the login page after the redirect
+that is performed.
+
+&lt;/body>
+&lt;/html>
+</pre></body></html>

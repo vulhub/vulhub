@@ -1,0 +1,303 @@
+@charset "utf-8";
+/*
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+/* Fonts */
+@import url("fonts/fonts.css");
+
+/* General style */
+
+h1, h2, h3, h4, h5, h6, th {
+  font-weight: 600;
+}
+
+body {
+  margin: 0;
+}
+
+body, input {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10.5pt;
+}
+
+code, pre {
+  font-family: Consolas, monospace;
+}
+
+img {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: left;
+}
+table *:not(table) {
+  /* Prevent border-collapsing for table child elements like <div> */
+  border-collapse: separate;
+}
+
+th {
+  text-align: left;
+}
+
+main {
+  /* Remove this once all IEs support <main> element */
+  display: block;
+}
+
+
+/* Layout */
+
+#wrapper {
+  min-width: 400px;
+}
+
+#header {
+  border-bottom: 1px solid #bbb;
+}
+
+@media not print {
+    #header {
+        box-shadow: 0 0 7px #aaa;
+    }
+}
+
+#header > div {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  /* Work-around for old browsers: */
+  background-color: #F8F3E4;
+  background: linear-gradient(to bottom, #ffffff -10%, #F8F3E4 100%);
+  position: relative;
+}
+
+#header .logo {
+  float: left;
+  padding-top: 10px;
+  min-width: 190px;
+}
+
+#header .logo  img{
+  /* To avoid that the Font Descender being added to the parent div's height */
+  vertical-align: middle;
+}
+
+#header .asfLogo {
+  float: right;
+  position: relative;
+  top: 8px;
+}
+
+#header h1 {
+  margin-top: 0.6em;
+  margin-bottom: 0;
+}
+
+#header .versionInfo {
+  font-size: 13pt;
+  margin-bottom: 1em;
+}
+
+#middle {
+  display: table;
+  table-layout: fixed;
+  margin: 0;
+  width: 100%;
+}
+#middle > div { display: table-row; }
+#middle > div > div { display: table-cell; vertical-align: top; }
+
+
+
+#mainLeft {
+  width: 190px;
+}
+
+#mainLeft > div {
+  margin-top: -1px; /* to overwrite border of element above */
+  padding-left: 16px;
+  padding-right: 14px;
+  padding-top: 6px;
+  padding-bottom: 15px;
+  background-color: #F8F3E4;
+  border-right: 1px solid #bbb;
+  border-bottom: 1px solid #bbb;
+  font-size: 10pt;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 0 5px #aaa;
+}
+
+#mainLeft h2 {
+  margin-bottom: 0.2em;
+  font-size: 1.2em;
+}
+
+#mainLeft ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+#mainLeft ul a {
+  text-indent: -0.6em;
+  padding-left: 1.4em;
+  display: block;
+  text-decoration: none;
+  color: #444;
+}
+#mainLeft ul a:hover {
+  color: #000;
+  background-color: #D1c9b9;
+}
+
+#mainRight {
+  padding-left: 14px;
+  padding-right: 20px;
+
+}
+
+#footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-top: 1px solid #ccc;
+  color: #444;
+  text-align: center;
+  /* font-style: italic; */
+  font-size: 9pt;
+}
+
+
+/* Content */
+
+#content div.text {
+  padding-left: 1em;
+  padding-left: 1em;
+}
+
+#content h3, #content h4, #content h5, #content h6 {
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #eaeaea;
+}
+
+@media not print {
+    #content h3, #content h4, #content h5, #content h6 {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+}
+
+#content h4, #content h5, #content h6 {
+  background-color: #f6f6f6;
+}
+
+code {
+  background-color: rgb(224,255,255);
+}
+
+div.codeBox pre code, code.attributeName, code.propertyName, code.noHighlight, .noHighlight code {
+  background-color: transparent;
+}
+div.codeBox {
+  overflow: auto;
+  margin: 1em 0;
+}
+div.codeBox pre {
+  margin: 0;
+  padding: 4px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  background-color: #eff8ff;
+  display: table; /* To prevent <pre>s from taking the complete available width. */
+  /*
+  When it is officially supported, use the following CSS instead of display: table
+  to prevent big <pre>s from exceeding the browser window:
+  max-width: available;
+  width: min-content;
+  */
+}
+
+div.codeBox pre.wrap {
+  white-space: pre-wrap;
+}
+
+
+table.defaultTable tr, table.detail-table tr {
+    border: 1px solid #CCC;
+}
+
+table.defaultTable tr:nth-child(even), table.detail-table tr:nth-child(even) {
+    background-color: #FAFBFF;
+}
+
+table.defaultTable tr:nth-child(odd), table.detail-table tr:nth-child(odd) {
+    background-color: #EEEFFF;
+}
+
+table.defaultTable th, table.detail-table th {
+  background-color: #88b;
+  color: #fff;
+}
+
+table.defaultTable th, table.defaultTable td, table.detail-table th, table.detail-table td {
+  padding: 5px 8px;
+}
+
+
+p.notice {
+  border: 1px solid rgb(255, 0, 0);
+  background-color: rgb(238, 238, 238);
+  color: rgb(0, 51, 102);
+  padding: 0.5em;
+  margin: 1em 2em 1em 1em;
+}
+
+
+/* Changelog-Styles */
+
+ul.changelog {
+  padding-left: 1em;
+  list-style-type: none;
+}
+
+ul.changelog  li{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+ul.changelog img {
+  vertical-align: middle
+}
+
+
+/* Printer-only Styles */
+@media print {
+    .noPrint { display: none; }
+    #middle > div > div#mainLeft { display: none; }
+    a { color: inherit; text-decoration: none; }
+}
+
+/* Fix for Comments section which contains a <h4> */
+#comments_thread h1, #comments_thread h2, #comments_thread h3, #comments_thread h4, #comments_thread h5, #comments_thread h6 {
+    border: none;
+    background-color: transparent;
+}

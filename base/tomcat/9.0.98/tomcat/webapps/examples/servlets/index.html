@@ -1,0 +1,193 @@
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE html><html lang="en">
+<head>
+   <meta charset="UTF-8" />
+   <meta name="Author" content="Anil K. Vijendran" />
+   <title>Servlet Examples</title>
+   <style type="text/css">
+   img { border: 0; }
+   th { text-align: left; }
+   tr { vertical-align: top; }
+   </style>
+</head>
+<body>
+<h1>Servlet
+Examples with Code</h1>
+<p>This is a collection of examples which demonstrate some of the more
+frequently used parts of the Servlet API. Familiarity with the Java(tm)
+Programming Language is assumed.
+<p>These examples will only work when viewed via an http URL. They will
+not work if you are viewing these pages via a "file://..." URL. Please
+refer to the <i>README</i> file provide with this Tomcat release regarding
+how to configure and start the provided web server.
+<p>Wherever you see a form, enter some data and see how the servlet reacts.
+When playing with the Cookie and Session Examples, jump back to the Headers
+Example to see exactly what your browser is sending the server.
+<p>To navigate your way through the examples, the following icons will
+help:</p>
+<ul style="list-style-type: none; padding-left: 0;">
+<li><img src="images/execute.gif" alt=""> Execute the example</li>
+<li><img src="images/code.gif" alt=""> Look at the source code for the example</li>
+<li><img src="images/return.gif" alt=""> Return to this screen</li>
+</ul>
+
+<p>Tip: To see the cookie interactions with your browser, try turning on
+the "notify when setting a cookie" option in your browser preferences.
+This will let you see when a session is created and give some feedback
+when looking at the cookie demo.</p>
+<table style="width: 85%;" >
+<tr>
+<td>Hello World</td>
+
+<td style="width: 30%;"><a href="servlet/HelloWorldExample"><img SRC="images/execute.gif" alt=""></a><a href="servlet/HelloWorldExample">Execute</a></td>
+
+<td style="width: 30%;"><a href="helloworld.html"><img SRC="images/code.gif" alt=""></a><a href="helloworld.html">Source</a></td>
+</tr>
+
+<tr>
+<td>Request Info</td>
+
+<td style="width: 30%;"><a href="servlet/RequestInfoExample"><img SRC="images/execute.gif" alt=""></a><a href="servlet/RequestInfoExample">Execute</a></td>
+
+<td style="width: 30%;"><a href="reqinfo.html"><img SRC="images/code.gif" alt=""></a><a href="reqinfo.html">Source</a></td>
+</tr>
+
+<tr>
+<td>Request Headers</td>
+
+<td style="width: 30%;"><a href="servlet/RequestHeaderExample"><img SRC="images/execute.gif" alt=""></a><a href="servlet/RequestHeaderExample">Execute</a></td>
+
+<td style="width: 30%;"><a href="reqheaders.html"><img SRC="images/code.gif" alt=""></a><a href="reqheaders.html">Source</a></td>
+</tr>
+
+<tr>
+<td>Request Parameters</td>
+
+<td style="width: 30%;"><a href="servlet/RequestParamExample"><img SRC="images/execute.gif" alt=""></a><a href="servlet/RequestParamExample">Execute</a></td>
+
+<td style="width: 30%;"><a href="reqparams.html"><img SRC="images/code.gif" alt=""></a><a href="reqparams.html">Source</a></td>
+</tr>
+
+<tr>
+<td>Cookies</td>
+
+<td style="width: 30%;"><a href="servlet/CookieExample"><img SRC="images/execute.gif" alt=""></a><a href="servlet/CookieExample">Execute</a></td>
+
+<td style="width: 30%;"><a href="cookies.html"><img SRC="images/code.gif" alt=""></a><a href="cookies.html">Source</a></td>
+</tr>
+
+<tr>
+<td>Sessions</td>
+
+<td style="width: 30%;"><a href="servlet/SessionExample"><img SRC="images/execute.gif" alt=""></a><a href="servlet/SessionExample">Execute</a></td>
+
+<td style="width: 30%;"><a href="sessions.html"><img SRC="images/code.gif" alt=""></a><a href="sessions.html">Source</a></td>
+</tr>
+</table>
+
+<p>Note: The source code for these examples does not contain all of the
+source code that is actually in the example, only the important sections
+of code. Code not important to understand the example has been removed
+for clarity.</p>
+
+<h2>Other Examples</h2>
+<table style="width: 85%;" >
+
+<tr>
+  <th colspan="3">Servlet 3.0 Asynchronous processing examples:</th>
+</tr>
+<tr>
+  <td>async0</td>
+  <td style="width: 30%;">
+    <a href="../async/async0"><img SRC="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+<tr>
+  <td>async1</td>
+  <td style="width: 30%;">
+    <a href="../async/async1"><img SRC="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+<tr>
+  <td>async2</td>
+  <td style="width: 30%;">
+    <a href="../async/async2"><img SRC="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+<tr>
+  <td>async3</td>
+  <td style="width: 30%;">
+    <a href="../async/async3"><img SRC="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+<tr>
+  <td>stockticker</td>
+  <td style="width: 30%;">
+    <a href="../async/stockticker"><img SRC="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+
+<tr>
+  <th colspan="3">Servlet 3.1 Non-blocking IO examples</th>
+</tr>
+<tr>
+  <td>Byte counter</td>
+  <td style="width: 30%;">
+    <a href="nonblocking/bytecounter.html"><img src="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+<tr>
+  <td>Number Writer</td>
+  <td style="width: 30%;">
+    <a href="nonblocking/numberwriter"><img src="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+
+<tr>
+  <th colspan="3">Servlet 4.0 Server Push examples</th>
+</tr>
+<tr>
+  <td>Simple image push</td>
+  <td style="width: 30%;">
+    <a href="serverpush/simpleimage"><img src="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+
+<tr>
+  <th colspan="3">Servlet 4.0 Trailer Field examples</th>
+</tr>
+<tr>
+  <td>Response trailer fields</td>
+  <td style="width: 30%;">
+    <a href="trailers/response"><img src="images/execute.gif" alt=""> Execute</a>
+  </td>
+  <td style="width: 30%;"></td>
+</tr>
+
+</table>
+
+</body>
+</html>

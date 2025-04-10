@@ -1,0 +1,46 @@
+<!DOCTYPE html><!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>JSP 2.0 SVG Example</title>
+  </head>
+  <body>
+    <h1>JSP 2.0 SVG Example</h1>
+    This example uses JSP 2.0's new, simplified JSPX syntax to render a
+    Scalable Vector Graphics (SVG) document.  When you view the source,
+    notice the lack of a &lt;jsp:root&gt; element!  The text to be rendered
+    can be modified by changing the value of the name parameter.
+    <p>
+    SVG has many potential uses, such as searchable images, or images
+    customized with the name of your site's visitor (e.g. a "Susan's Store"
+    tab image).  JSPX is a natural fit for generating dynamic XML content
+    such as SVG.
+    <p>
+    To execute this example you will need a browser with basic SVG support. Any
+    remotely recent browser should have this.
+    <ol>
+      <li>Use this URL:
+      <a href="textRotate.jspx?name=JSPX">textRotate.jspx?name=JSPX</a></li>
+      <li>Customize by changing the name=JSPX parameter</li>
+    </ol>
+    <p style="margin-top: 2em;">
+    The following is a screenshot of the resulting image, for those using a
+    browser without SVG support:<br>
+    <img src="textRotate.jpg" alt="[Screenshot image]" style="border: 1px solid #000;">
+  </body>
+</html>

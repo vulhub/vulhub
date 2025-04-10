@@ -1,0 +1,769 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - The rewrite Valve</title><meta name="author" content="Remy Maucherat"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The rewrite Valve</h2><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>The rewrite valve implements URL rewrite functionality in a way that is
+  very similar to mod_rewrite from Apache HTTP Server.</p>
+
+</div><h3 id="Configuration">Configuration</h3><div class="text">
+
+  <p>The rewrite valve is configured as a valve using the <code>org.apache.catalina.valves.rewrite.RewriteValve</code>
+  class name.</p>
+
+  <p>The rewrite valve can be configured as a valve added in a Host.
+     See <a href="config/host.html">virtual-server</a> documentation for
+     information on how to configure it. It will use a <code>rewrite.config</code> file
+     containing the rewrite directives, it must be placed in the Host configuration
+     folder.
+  </p>
+
+  <p>It can also be in the context.xml of a webapp.
+  The valve will then use a <code>rewrite.config</code> file containing the
+  rewrite directives, it must be placed in the WEB-INF folder of the web application
+  </p>
+
+</div><h3 id="Directives">Directives</h3><div class="text">
+
+  <p>The rewrite.config file contains a list of directives which closely
+  resemble the directives used by mod_rewrite, in particular the central
+  RewriteRule and RewriteCond directives. Lines that start with a
+  <code>#</code> character are treated as comments and will be ignored.</p>
+
+  <p>Note: This section is a modified version of the mod_rewrite documentation,
+  which is Copyright 1995-2006 The Apache Software Foundation, and licensed under the
+  under the Apache License, Version 2.0.</p>
+
+  <div class="subsection"><h4 id="RewriteCond">RewriteCond</h4><div class="text">
+
+    <p>Syntax: <code>RewriteCond TestString CondPattern</code></p>
+
+    <p>The RewriteCond directive defines a rule condition. One or more RewriteCond
+    can precede a RewriteRule directive. The following rule is then only used if both
+    the current state of the URI matches its pattern, and if these conditions are met.</p>
+
+      <p><em>TestString</em> is a string which can contain the
+      following expanded constructs in addition to plain text:</p>
+
+      <ul>
+        <li>
+          <strong>RewriteRule backreferences</strong>: These are
+          backreferences of the form <strong><code>$N</code></strong>
+          (0 &lt;= N &lt;= 9), which provide access to the grouped
+          parts (in parentheses) of the pattern, from the
+          <code>RewriteRule</code> which is subject to the current
+          set of <code>RewriteCond</code> conditions..
+        </li>
+        <li>
+          <strong>RewriteCond backreferences</strong>: These are
+          backreferences of the form <strong><code>%N</code></strong>
+          (1 &lt;= N &lt;= 9), which provide access to the grouped
+          parts (again, in parentheses) of the pattern, from the last matched
+          <code>RewriteCond</code> in the current set
+          of conditions.
+        </li>
+        <li>
+          <strong>RewriteMap expansions</strong>: These are
+          expansions of the form <strong><code>${mapname:key|default}</code></strong>.
+          See <a href="#RewriteMap">the documentation for
+          RewriteMap</a> for more details.
+        </li>
+        <li>
+          <strong>Server-Variables</strong>: These are variables of
+          the form
+            <strong><code>%{</code> <em>NAME_OF_VARIABLE</em>
+            <code>}</code></strong>
+          where <em>NAME_OF_VARIABLE</em> can be a string taken
+          from the following list:
+
+          <ul>
+          <li>
+          <p><b>HTTP headers:</b></p>
+          <p>
+            HTTP_USER_AGENT<br>
+            HTTP_REFERER<br>
+            HTTP_COOKIE<br>
+            HTTP_FORWARDED<br>
+            HTTP_HOST<br>
+            HTTP_PROXY_CONNECTION<br>
+            HTTP_ACCEPT<br>
+          </p>
+          </li>
+          <li>
+          <p><b>connection &amp; request:</b></p>
+          <p>
+            REMOTE_ADDR<br>
+            REMOTE_HOST<br>
+            REMOTE_PORT<br>
+            REMOTE_USER<br>
+            REMOTE_IDENT<br>
+            REQUEST_METHOD<br>
+            SCRIPT_FILENAME<br>
+            REQUEST_PATH<br>
+            CONTEXT_PATH<br>
+            SERVLET_PATH<br>
+            PATH_INFO<br>
+            QUERY_STRING<br>
+            AUTH_TYPE<br>
+          </p>
+          </li>
+          <li>
+          <p><b>server internals:</b></p>
+          <p>
+            DOCUMENT_ROOT<br>
+            SERVER_NAME<br>
+            SERVER_ADDR<br>
+            SERVER_PORT<br>
+            SERVER_PROTOCOL<br>
+            SERVER_SOFTWARE<br>
+          </p>
+          </li>
+          <li>
+          <p><b>date and time:</b></p>
+          <p>
+            TIME_YEAR<br>
+            TIME_MON<br>
+            TIME_DAY<br>
+            TIME_HOUR<br>
+            TIME_MIN<br>
+            TIME_SEC<br>
+            TIME_WDAY<br>
+            TIME<br>
+          </p>
+          </li>
+          <li>
+          <p><b>specials:</b></p>
+          <p>
+            THE_REQUEST<br>
+            REQUEST_URI<br>
+            REQUEST_FILENAME<br>
+            HTTPS<br>
+          </p>
+          </li>
+          </ul>
+
+                <p>These variables all
+                correspond to the similarly named HTTP
+                MIME-headers and Servlet API methods.
+                Most are documented elsewhere in the Manual or in
+                the CGI specification. Those that are special to
+                the rewrite valve include those below.</p>
+
+                <dl>
+
+                  <dt><code>REQUEST_PATH</code></dt>
+
+                  <dd>Corresponds to the full path that is used for mapping.</dd>
+
+                  <dt><code>CONTEXT_PATH</code></dt>
+
+                  <dd>Corresponds to the path of the mapped context.</dd>
+
+                  <dt><code>SERVLET_PATH</code></dt>
+
+                  <dd>Corresponds to the servlet path.</dd>
+
+                  <dt><code>THE_REQUEST</code></dt>
+
+                  <dd>The full HTTP request line sent by the
+                  browser to the server (e.g., "<code>GET
+                  /index.html HTTP/1.1</code>"). This does not
+                  include any additional headers sent by the
+                  browser.</dd>
+
+                  <dt><code>REQUEST_URI</code></dt>
+
+                  <dd>The resource requested in the HTTP request
+                  line. (In the example above, this would be
+                  "/index.html".)</dd>
+
+                  <dt><code>REQUEST_FILENAME</code></dt>
+
+                  <dd>The full local file system path to the file or
+                  script matching the request.</dd>
+
+                  <dt><code>HTTPS</code></dt>
+
+                  <dd>Will contain the text "on" if the connection is
+                  using SSL/TLS, or "off" otherwise.</dd>
+
+                </dl>
+
+        </li>
+      </ul>
+
+      <p>Other things you should be aware of:</p>
+
+      <ol>
+        <li>The variables SCRIPT_FILENAME and REQUEST_FILENAME
+        contain the same value - the value of the
+        <code>filename</code> field of the internal
+        <code>request_rec</code> structure of the Apache server.
+        The first name is the commonly known CGI variable name
+        while the second is the appropriate counterpart of
+        REQUEST_URI (which contains the value of the
+        <code>uri</code> field of <code>request_rec</code>).</li>
+
+        <li>
+        <code>%{ENV:variable}</code>, where <em>variable</em> can be
+        any Java system property, is also available.</li>
+
+        <li>
+        <code>%{SSL:variable}</code>, where <em>variable</em> is the
+        name of an SSL environment
+        variable, are implemented, except
+        <code>SSL_SESSION_RESUMED</code>, <code>SSL_SECURE_RENEG</code>,
+        <code>SSL_COMPRESS_METHOD</code>, <code>SSL_TLS_SNI</code>,
+        <code>SSL_SRP_USER</code>, <code>SSL_SRP_USERINFO</code>,
+        <code>SSL_CLIENT_VERIFY</code>,
+        <code>SSL_CLIENT_SAN_OTHER_msUPN_n</code>,
+        <code>SSL_CLIENT_CERT_RFC4523_CEA</code>,
+        <code>SSL_SERVER_SAN_OTHER_dnsSRV_n</code>.
+        When OpenSSL is used, the variables related to the server
+        certificate, prefixed by <code>SSL_SERVER_</code> are not available.
+        Example:
+        <code>%{SSL:SSL_CIPHER_USEKEYSIZE}</code> may expand to
+        <code>128</code>.</li>
+
+        <li>
+        <code>%{HTTP:header}</code>, where <em>header</em> can be
+        any HTTP MIME-header name, can always be used to obtain the
+        value of a header sent in the HTTP request.
+        Example: <code>%{HTTP:Proxy-Connection}</code> is
+        the value of the HTTP header
+        '<code>Proxy-Connection:</code>'.</li>
+
+      </ol>
+
+      <p><em>CondPattern</em> is the condition pattern,
+       a regular expression which is applied to the
+      current instance of the <em>TestString</em>.
+      <em>TestString</em> is first evaluated, before being matched against
+      <em>CondPattern</em>.</p>
+
+      <p><strong>Remember:</strong> <em>CondPattern</em> is a
+      <em>perl compatible regular expression</em> with some
+      additions:</p>
+
+      <ol>
+        <li>You can prefix the pattern string with a
+        '<code>!</code>' character (exclamation mark) to specify a
+        <strong>non</strong>-matching pattern.</li>
+
+        <li>
+          There are some special variants of <em>CondPatterns</em>.
+          Instead of real regular expression strings you can also
+          use one of the following:
+
+          <ul>
+            <li>'<strong>&lt;CondPattern</strong>' (lexicographically
+            precedes)<br>
+            Treats the <em>CondPattern</em> as a plain string and
+            compares it lexicographically to <em>TestString</em>. True if
+            <em>TestString</em> lexicographically precedes
+            <em>CondPattern</em>.</li>
+
+            <li>'<strong>&gt;CondPattern</strong>' (lexicographically
+            follows)<br>
+            Treats the <em>CondPattern</em> as a plain string and
+            compares it lexicographically to <em>TestString</em>. True if
+            <em>TestString</em> lexicographically follows
+            <em>CondPattern</em>.</li>
+
+            <li>'<strong>=CondPattern</strong>' (lexicographically
+            equal)<br>
+            Treats the <em>CondPattern</em> as a plain string and
+            compares it lexicographically to <em>TestString</em>. True if
+            <em>TestString</em> is lexicographically equal to
+            <em>CondPattern</em> (the two strings are exactly
+            equal, character for character). If <em>CondPattern</em>
+            is <code>""</code> (two quotation marks) this
+            compares <em>TestString</em> to the empty string.</li>
+
+            <li>'<strong>-d</strong>' (is
+            <strong>d</strong>irectory)<br>
+             Treats the <em>TestString</em> as a pathname and tests
+            whether or not it exists, and is a directory.</li>
+
+            <li>'<strong>-f</strong>' (is regular
+            <strong>f</strong>ile)<br>
+             Treats the <em>TestString</em> as a pathname and tests
+            whether or not it exists, and is a regular file.</li>
+
+            <li>'<strong>-s</strong>' (is regular file, with
+            <strong>s</strong>ize)<br>
+            Treats the <em>TestString</em> as a pathname and tests
+            whether or not it exists, and is a regular file with size greater
+            than zero.</li>
+
+          </ul>
+
+<strong>Note:</strong>
+              All of these tests can
+              also be prefixed by an exclamation mark ('!') to
+              negate their meaning.
+
+        </li>
+
+        <li>You can also set special flags for
+      <em>CondPattern</em> by appending
+        <strong><code>[</code><em>flags</em><code>]</code></strong>
+      as the third argument to the <code>RewriteCond</code>
+      directive, where <em>flags</em> is a comma-separated list of any of the
+      following flags:
+
+      <ul>
+        <li>'<strong><code>nocase|NC</code></strong>'
+        (<strong>n</strong>o <strong>c</strong>ase)<br>
+        This makes the test case-insensitive - differences
+        between 'A-Z' and 'a-z' are ignored, both in the
+        expanded <em>TestString</em> and the <em>CondPattern</em>.
+        This flag is effective only for comparisons between
+        <em>TestString</em> and <em>CondPattern</em>. It has no
+        effect on file system and subrequest checks.</li>
+
+        <li>
+          '<strong><code>ornext|OR</code></strong>'
+          (<strong>or</strong> next condition)<br>
+          Use this to combine rule conditions with a local OR
+          instead of the implicit AND. Typical example:
+
+<div class="codeBox"><pre><code>RewriteCond %{REMOTE_HOST}  ^host1.*  [OR]
+RewriteCond %{REMOTE_HOST}  ^host2.*  [OR]
+RewriteCond %{REMOTE_HOST}  ^host3.*
+RewriteRule ...some special stuff for any of these hosts...</code></pre></div>
+
+          Without this flag you would have to write the condition/rule
+          pair three times.
+        </li>
+      </ul>
+      </li>
+     </ol>
+
+      <p><strong>Example:</strong></p>
+
+       <p>To rewrite the Homepage of a site according to the
+        '<code>User-Agent:</code>' header of the request, you can
+        use the following: </p>
+
+<div class="codeBox"><pre><code>RewriteCond  %{HTTP_USER_AGENT}  ^Mozilla.*
+RewriteRule  ^/$                 /homepage.max.html  [L]
+
+RewriteCond  %{HTTP_USER_AGENT}  ^Lynx.*
+RewriteRule  ^/$                 /homepage.min.html  [L]
+
+RewriteRule  ^/$                 /homepage.std.html  [L]</code></pre></div>
+
+        <p>Explanation: If you use a browser which identifies itself
+        as 'Mozilla' (including Netscape Navigator, Mozilla etc), then you
+        get the max homepage (which could include frames, or other special
+        features).
+        If you use the Lynx browser (which is terminal-based), then
+        you get the min homepage (which could be a version designed for
+        easy, text-only browsing).
+        If neither of these conditions apply (you use any other browser,
+        or your browser identifies itself as something non-standard), you get
+        the std (standard) homepage.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="RewriteMap">RewriteMap</h4><div class="text">
+
+    <p>Syntax: <code>RewriteMap name rewriteMapClassName optionalParameters</code></p>
+
+    <p>The <code>rewriteMapClassName</code> value also allows special values:
+    <ul>
+    <li><code>int:toupper</code>: Special map converting passed values to upper case</li>
+    <li><code>int:tolower</code>: Special map converting passed values to lower case</li>
+    <li><code>int:escape</code>: URL escape the passed value</li>
+    <li><code>int:unescape</code>: URL unescape the passed value</li>
+    </ul>
+    </p>
+
+    <p>The maps are implemented using an interface that users must implement. Its class
+    name is <code>org.apache.catalina.valves.rewrite.RewriteMap</code>, and its code is:</p>
+
+<div class="codeBox"><pre><code>package org.apache.catalina.valves.rewrite;
+
+public interface RewriteMap {
+    default String setParameters(String params...); // calls setParameters(String) with the first parameter if there is only one
+    public String setParameters(String params);
+    public String lookup(String key);
+}</code></pre></div>
+
+    <p>The referenced implementation of such a class &ndash; in our example <code>rewriteMapClassName</code> &ndash;
+    will be instantiated and initialized with the optional parameter &ndash; <code>optionalParameters</code> from above
+    (be careful with whitespace) &ndash; by calling <code>setParameters(String)</code>. That instance
+    will then be registered under the name given as the first parameter of <code>RewriteMap</code> rule.</p>
+
+    <p>Note: Starting with Tomcat 9 you can use more than one parameter. These have to be separated by spaces. Parameters
+    can be quoted with ". This enables space characters inside parameters.</p>
+
+    <p>That map instance will be given the the lookup value that is configured in the corresponding <code>RewriteRule</code> by
+    calling <code>lookup(String)</code>. Your implementation is free to return <code>null</code> to indicate,
+    that the given default should be used, or to return a replacement value.</p>
+
+    <p>Say, you want to implement a rewrite map function that converts all lookup keys to uppercase. You
+    would start by implementing a class that implements the <code>RewriteMap</code> interface.</p>
+
+<div class="codeBox"><pre><code>package example.maps;
+
+import org.apache.catalina.valves.rewrite.RewriteMap;
+
+public class UpperCaseMap implements RewriteMap {
+
+  @Override
+  public String setParameters(String params) {
+    // nothing to be done here
+    return null;
+  }
+
+  @Override
+  public String lookup(String key) {
+    if (key == null) {
+      return null;
+    }
+    return key.toUpperCase(Locale.ENGLISH);
+  }
+
+}</code></pre></div>
+
+    <p>Compile this class, put it into a jar and place that jar in <code>${CATALINA_BASE}/lib</code>.</p>
+
+    <p>Having done that, you can now define a map with the <code>RewriteMap</code> directive
+    and further on use that map in a <code>RewriteRule</code>.</p>
+
+<div class="codeBox"><pre><code>RewriteMap uc example.maps.UpperCaseMap
+
+RewriteRule ^/(.*)$ ${uc:$1}
+</code></pre></div>
+
+    <p>With this setup a request to the url path <code>/index.html</code> would get routed
+    to <code>/INDEX.HTML</code>.</p>
+  </div></div>
+
+  <div class="subsection"><h4 id="RewriteRule">RewriteRule</h4><div class="text">
+
+    <p>Syntax: <code>RewriteRule Pattern Substitution</code></p>
+
+      <p>The RewriteRule directive is the real
+      rewriting workhorse. The directive can occur more than once,
+      with each instance defining a single rewrite rule. The
+      order in which these rules are defined is important - this is the order
+      in which they will be applied at run-time.</p>
+
+      <p>Pattern is a perl compatible regular
+      expression, which is applied to the current URL.
+      'Current' means the value of the URL when this rule is
+      applied. This may not be the originally requested URL,
+      which may already have matched a previous rule, and have been
+      altered.</p>
+
+      <p><strong>Security warning:</strong> Due to the way Java's
+      regex matching is done, poorly formed regex patterns are vulnerable
+      to "catastrophic backtracking", also known as "regular expression
+      denial of service" or ReDoS. Therefore, extra caution should be used
+      for RewriteRule patterns. In general it is difficult to automatically
+      detect such vulnerable regex, and so a good defense is to read a bit
+      on the subject of catastrophic backtracking. A good reference is the
+      <a href="https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS">
+      OWASP ReDoS guide</a>.</p>
+
+      <p>Some hints on the syntax of regular
+      expressions:</p>
+
+
+<pre>
+<strong>Text:</strong>
+  <strong><code>.</code></strong>           Any single character
+  <strong><code>[</code></strong>chars<strong><code>]</code></strong>     Character class: Any character of the class 'chars'
+  <strong><code>[^</code></strong>chars<strong><code>]</code></strong>    Character class: Not a character of the class 'chars'
+  text1<strong><code>|</code></strong>text2 Alternative: text1 or text2
+
+<strong>Quantifiers:</strong>
+  <strong><code>?</code></strong>           0 or 1 occurrences of the preceding text
+  <strong><code>*</code></strong>           0 or N occurrences of the preceding text (N &gt; 0)
+  <strong><code>+</code></strong>           1 or N occurrences of the preceding text (N &gt; 1)
+
+<strong>Grouping:</strong>
+  <strong><code>(</code></strong>text<strong><code>)</code></strong>      Grouping of text
+              (used either to set the borders of an alternative as above, or
+              to make backreferences, where the <strong>N</strong>th group can
+              be referred to on the RHS of a RewriteRule as <code>$</code><strong>N</strong>)
+
+<strong>Anchors:</strong>
+  <strong><code>^</code></strong>           Start-of-line anchor
+  <strong><code>$</code></strong>           End-of-line anchor
+
+<strong>Escaping:</strong>
+  <strong><code>\</code></strong>char       escape the given char
+              (for instance, to specify the chars "<code>.[]()</code>" <em>etc.</em>)
+</pre>
+
+      <p>For more information about regular expressions, have a look at the
+      perl regular expression manpage ("<a href="https://perldoc.perl.org/perlre.html">perldoc
+      perlre</a>"). If you are interested in more detailed
+      information about regular expressions and their variants
+      (POSIX regex etc.) the following book is dedicated to this topic:</p>
+
+      <p class="indent">
+        <em>Mastering Regular Expressions, 2nd Edition</em><br>
+         Jeffrey E.F. Friedl<br>
+         O'Reilly &amp; Associates, Inc. 2002<br>
+         ISBN 978-0-596-00289-3<br>
+      </p>
+
+      <p>In the rules, the NOT character
+       ('<code>!</code>') is also available as a possible pattern
+      prefix. This enables you to negate a pattern; to say, for instance:
+      '<em>if the current URL does <strong>NOT</strong> match this
+      pattern</em>'. This can be used for exceptional cases, where
+      it is easier to match the negative pattern, or as a last
+      default rule.</p>
+
+<p>
+Note: When using the NOT character to negate a pattern, you cannot include
+grouped wildcard parts in that pattern. This is because, when the
+pattern does NOT match (i.e., the negation matches), there are no
+contents for the groups. Thus, if negated patterns are used, you
+cannot use <code>$N</code> in the substitution string!
+</p>
+
+      <p>The <em id="rhs">substitution</em> of a
+      rewrite rule is the string which is substituted for (or
+      replaces) the original URL which <em>Pattern</em>
+      matched. In addition to plain text, it can include</p>
+
+      <ol>
+        <li>back-references (<code>$N</code>) to the RewriteRule
+        pattern</li>
+
+        <li>back-references (<code>%N</code>) to the last matched
+        RewriteCond pattern</li>
+
+        <li>server-variables as in rule condition test-strings
+        (<code>%{VARNAME}</code>)</li>
+
+        <li><a href="#RewriteMap">mapping-function</a> calls
+        (<code>${mapname:key|default}</code>)</li>
+      </ol>
+      <p>Back-references are identifiers of the form
+      <code>$</code><strong>N</strong>
+      (<strong>N</strong>=0..9), which will be replaced
+      by the contents of the <strong>N</strong>th group of the
+      matched <em>Pattern</em>. The server-variables are the same
+      as for the <em>TestString</em> of a <code>RewriteCond</code>
+      directive. The mapping-functions come from the
+      <code>RewriteMap</code> directive and are explained there.
+      These three types of variables are expanded in the order above.</p>
+
+      <p>As already mentioned, all rewrite rules are
+      applied to the <em>Substitution</em> (in the order in which
+      they are defined
+      in the config file). The URL is <strong>completely
+      replaced</strong> by the <em>Substitution</em> and the
+      rewriting process continues until all rules have been applied,
+      or it is explicitly terminated by a
+      <code><strong>L</strong></code> flag.</p>
+
+      <p>The special characters <code>$</code> and <code>%</code> can
+      be quoted by prepending them with a backslash character
+      <code>\</code>.</p>
+
+      <p>There is a special substitution string named
+      '<code>-</code>' which means: <strong>NO
+      substitution</strong>! This is useful in providing
+      rewriting rules which <strong>only</strong> match
+      URLs but do not substitute anything for them. It is commonly used
+      in conjunction with the <strong>C</strong> (chain) flag, in order
+      to apply more than one pattern before substitution occurs.</p>
+
+      <p>Unlike newer mod_rewrite versions, the Tomcat rewrite valve does
+      not automatically support absolute URLs (the specific redirect flag
+      must be used to be able to specify an absolute URLs, see below)
+      or direct file serving.</p>
+
+      <p>Additionally you can set special <span id="rewriteflags">flags</span> for <em>Substitution</em> by
+      appending <strong><code>[</code><em>flags</em><code>]</code></strong>
+      as the third argument to the <code>RewriteRule</code>
+      directive. <em>Flags</em> is a comma-separated list of any of the
+      following flags: </p>
+
+      <ul>
+        <li>'<strong><code>chain|C</code></strong>'
+        (<strong>c</strong>hained with next rule)<br>
+         This flag chains the current rule with the next rule
+        (which itself can be chained with the following rule,
+        and so on). This has the following effect: if a rule
+        matches, then processing continues as usual -
+        the flag has no effect. If the rule does
+        <strong>not</strong> match, then all following chained
+        rules are skipped. For instance, it can be used to remove the
+        '<code>.www</code>' part, inside a per-directory rule set,
+        when you let an external redirect happen (where the
+        '<code>.www</code>' part should not occur!).</li>
+
+        <li>
+        '<strong><code>cookie|CO=</code></strong><em>NAME</em>:<em>VAL</em>:<em>domain</em>[:<em>lifetime</em>[:<em>path</em>]]'
+        (set <strong>co</strong>okie)<br>
+        This sets a cookie in the client's browser.  The cookie's name
+        is specified by <em>NAME</em> and the value is
+        <em>VAL</em>. The <em>domain</em> field is the domain of the
+        cookie, such as '.apache.org', the optional <em>lifetime</em>
+        is the lifetime of the cookie in minutes, and the optional
+        <em>path</em> is the path of the cookie</li>
+
+        <li>
+        '<strong><code>env|E=</code></strong><em>VAR</em>:<em>VAL</em>'
+        (set <strong>e</strong>nvironment variable)<br>
+        This forces a request attribute named <em>VAR</em> to
+        be set to the value <em>VAL</em>, where <em>VAL</em> can
+        contain regexp backreferences (<code>$N</code> and
+        <code>%N</code>) which will be expanded. You can use this
+        flag more than once, to set more than one variable.</li>
+
+        <li>'<strong><code>forbidden|F</code></strong>' (force URL
+        to be <strong>f</strong>orbidden)<br>
+        This forces the current URL to be forbidden - it immediately
+        sends back an HTTP response of 403 (FORBIDDEN).
+        Use this flag in conjunction with
+        appropriate RewriteConds to conditionally block some
+        URLs.</li>
+
+        <li>'<strong><code>gone|G</code></strong>' (force URL to be
+        <strong>g</strong>one)<br>
+        This forces the current URL to be gone - it
+        immediately sends back an HTTP response of 410 (GONE). Use
+        this flag to mark pages which no longer exist as gone.</li>
+
+        <li>
+        '<strong><code>host|H</code></strong>=<em>Host</em>'
+        (apply rewriting to <strong>h</strong>ost)<br>
+        Rather that rewrite the URL, the virtual host will be
+        rewritten.</li>
+
+        <li>'<strong><code>last|L</code></strong>'
+        (<strong>l</strong>ast rule)<br>
+        Stop the rewriting process here and don't apply any more
+        rewrite rules. This corresponds to the Perl
+        <code>last</code> command or the <code>break</code> command
+        in C. Use this flag to prevent the currently
+        rewritten URL from being rewritten further by following
+        rules. For example, use it to rewrite the root-path URL
+        ('<code>/</code>') to a real one, <em>e.g.</em>,
+        '<code>/e/www/</code>'.</li>
+
+        <li>'<strong><code>next|N</code></strong>'
+        (<strong>n</strong>ext round)<br>
+        Re-run the rewriting process (starting again with the
+        first rewriting rule). This time, the URL to match is no longer
+        the original URL, but rather the URL returned by the last rewriting rule.
+        This corresponds to the Perl <code>next</code> command or
+        the <code>continue</code> command in C. Use
+        this flag to restart the rewriting process -
+        to immediately go to the top of the loop.<br>
+         <strong>Be careful not to create an infinite
+        loop!</strong></li>
+
+        <li>'<strong><code>nocase|NC</code></strong>'
+        (<strong>n</strong>o <strong>c</strong>ase)<br>
+        This makes the <em>Pattern</em> case-insensitive,
+        ignoring difference between 'A-Z' and
+        'a-z' when <em>Pattern</em> is matched against the current
+        URL.</li>
+
+        <li>
+          '<strong><code>noescape|NE</code></strong>'
+          (<strong>n</strong>o URI <strong>e</strong>scaping of
+          output)<br>
+          This flag prevents the rewrite valve from applying the usual URI
+          escaping rules to the result of a rewrite. Ordinarily,
+          special characters (such as '%', '$', ';', and so on)
+          will be escaped into their hexcode equivalents ('%25',
+          '%24', and '%3B', respectively); this flag prevents this
+          from happening. This allows percent symbols to appear in
+          the output, as in
+          <div class="codeBox"><pre><code>RewriteRule /foo/(.*) /bar?arg=P1\%3d$1 [R,NE]</code></pre></div>
+          which would turn '<code>/foo/zed</code>' into a safe
+          request for '<code>/bar?arg=P1=zed</code>'.
+        </li>
+
+
+
+        <li>'<strong><code>qsappend|QSA</code></strong>'
+        (<strong>q</strong>uery <strong>s</strong>tring
+        <strong>a</strong>ppend)<br>
+        This flag forces the rewrite engine to append a query
+        string part of the substitution string to the existing string,
+        instead of replacing it. Use this when you want to add more
+        data to the query string via a rewrite rule.</li>
+
+         <li>'<strong><code>redirect|R</code>
+          [=<em>code</em>]</strong>' (force <span id="redirect">
+          <strong>r</strong>edirect</span>)<br>
+          Prefix <em>Substitution</em> with
+          <code>http://thishost[:thisport]/</code> (which makes the
+          new URL a URI) to force an external redirection. If no
+          <em>code</em> is given, an HTTP response of 302 (FOUND, previously MOVED
+          TEMPORARILY) will be returned. If you want to use other response
+          codes in the range 300-399, simply specify the appropriate number
+          or use one of the following symbolic names:
+          <code>temp</code> (default), <code>permanent</code>,
+          <code>seeother</code>. Use this for rules to
+          canonicalize the URL and return it to the client - to
+          translate '<code>/~</code>' into
+          '<code>/u/</code>', or to always append a slash to
+          <code>/u/</code><em>user</em>, etc.<br>
+          <strong>Note:</strong> When you use this flag, make
+          sure that the substitution field is a valid URL! Otherwise,
+          you will be redirecting to an invalid location. Remember
+          that this flag on its own will only prepend
+          <code>http://thishost[:thisport]/</code> to the URL, and rewriting
+          will continue. Usually, you will want to stop rewriting at this point,
+          and redirect immediately. To stop rewriting, you should add
+          the 'L' flag.
+        </li>
+
+        <li>'<strong><code>skip|S</code></strong>=<em>num</em>'
+        (<strong>s</strong>kip next rule(s))<br>
+        This flag forces the rewriting engine to skip the next
+        <em>num</em> rules in sequence, if the current rule
+        matches. Use this to make pseudo if-then-else constructs:
+        The last rule of the then-clause becomes
+        <code>skip=N</code>, where N is the number of rules in the
+        else-clause. (This is <strong>not</strong> the same as the
+        'chain|C' flag!)</li>
+
+        <li>
+        '<strong><code>type|T</code></strong>=<em>MIME-type</em>'
+        (force MIME <strong>t</strong>ype)<br>
+         Force the MIME-type of the target file to be
+        <em>MIME-type</em>. This can be used to
+        set up the content-type based on some conditions.
+        For example, the following snippet allows <code>.php</code> files to
+        be <em>displayed</em> by <code>mod_php</code> if they are called with
+        the <code>.phps</code> extension:
+        <div class="codeBox"><pre><code>RewriteRule ^(.+\.php)s$ $1 [T=application/x-httpd-php-source]</code></pre></div>
+        </li>
+
+        <li>'<strong><code>valveSkip|VS</code></strong>'
+        (skip valve)<br>
+        This flag can be used to setup conditional execution of valves.
+        When the flag is set and the rule matches, the rewrite valve will skip
+        the next valve in the Catalina pipeline. If the rewrite valve is the
+        last of the pipeline, then the flag will be ignored and the container
+        basic valve will be invoked. If rewrite occurred, then the flag will
+        not have any effect.
+        </li>
+
+      </ul>
+
+  </div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

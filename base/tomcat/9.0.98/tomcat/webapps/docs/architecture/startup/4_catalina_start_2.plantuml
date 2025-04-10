@@ -1,0 +1,103 @@
+@startuml
+
+' Licensed to the Apache Software Foundation (ASF) under one or more
+' contributor license agreements.  See the NOTICE file distributed with
+' this work for additional information regarding copyright ownership.
+' The ASF licenses this file to You under the Apache License, Version 2.0
+' (the "License"); you may not use this file except in compliance with
+' the License.  You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+hide footbox
+skinparam style strictuml
+
+activate Container
+
+Container -> Container: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+
+Container -> Container ++: startInternal()
+
+Container -> Cluster ++: start()
+Cluster -> Cluster: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Cluster -> Cluster ++: startInternal()
+Cluster -> Cluster: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Cluster -> Cluster: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Container -> Realm ++: start()
+Realm -> Realm: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Realm -> Realm ++: startInternal()
+Realm -> Realm: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Realm -> Realm: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+group Children started in parallel if startStopThreads > 1 (Engines and Hosts only)
+Container -> Child ++: start()
+note right of Child
+Engines have Hosts as children.
+Hosts have Contexts as children.
+Contexts have Wrappers as children.
+
+Children are containers so the
+process on this diagram is
+repeated for each child.
+
+Contexts do a lot more in start()
+as shown in diagram 5.
+end note
+return
+end group
+
+Container -> Pipeline ++: start()
+Pipeline -> Pipeline: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Pipeline -> Pipeline ++: startInternal()
+
+group Each Valve is started sequentially
+Pipeline -> Valve ++: start()
+Valve -> Valve: fireLifecycleEvent(\n    BEFORE_START_EVENT)
+Valve -> Valve ++: startInternal()
+Valve -> Valve: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Valve -> Valve: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+end group
+
+Pipeline -> Pipeline: fireLifecycleEvent(\n    START_EVENT)
+return
+|||
+Pipeline -> Pipeline: fireLifecycleEvent(\n    AFTER_START_EVENT)
+return
+
+Container -> Container: fireLifecycleEvent(\n    START_EVENT)
+
+group If backgroundProcessorDelay > 0 (Engine defaults to 10, other Containers -1)
+Container -> UtilityExecutor ++: scheduleWithFixedDelay()
+UtilityExecutor --> ContainerBackgroundProcessor **
+note right of ContainerBackgroundProcessor
+Re-created
+automatically
+if it fails
+end note
+return
+end group
+
+|||
+Container -> Container: fireLifecycleEvent(\n    AFTER_START_EVENT)
+
+return
+
+|||
+
+@enduml

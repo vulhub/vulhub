@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Architecture (9.0.98) - Request Process Flow</title><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Architecture</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Architecture Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Contents</h2><ul><li><a href="index.html">Contents</a></li><li><a href="overview.html">Overview</a></li><li><a href="startup.html">Server Startup</a></li><li><a href="requestProcess.html">Request Process</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Request Process Flow</h2><h3 id="Request_Process_Flow">Request Process Flow</h3><div class="text">
+
+<p>
+This page describes the process used by Tomcat to handle
+an incoming request.  This process is largely defined by
+the Servlet Specification, which outlines the order
+of events that must take place.
+</p>
+
+<div class="subsection"><h4 id="description">description</h4><div class="text">
+<p>
+TODO
+</p>
+</div></div>
+
+<div class="subsection"><h4 id="diagrams">diagrams</h4><div class="text">
+<p>
+A UML sequence diagram of the request process is available
+<a href="requestProcess/request-process.png">here.</a>
+</p>
+<p>
+A UML sequence diagram of the authentication process is available
+<a href="requestProcess/authentication-process.png">here.</a>
+</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="comments">comments</h4><div class="text">
+<p>
+The Servlet Specification provides many opportunities for
+listening in (using Listeners) or modifying (using Filters)
+the request handling process even before the request arrives
+at the servlet that will handle it.
+</p>
+
+</div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

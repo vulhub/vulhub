@@ -1,0 +1,171 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - WebSocket How-To</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>WebSocket How-To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Overview">Overview</a></li><li><a href="#Application_development">Application development</a></li><li><a href="#Tomcat_WebSocket_specific_configuration">Tomcat WebSocket specific configuration</a></li></ul>
+</div><h3 id="Overview">Overview</h3><div class="text">
+<p>Tomcat provides support for WebSocket as defined by
+   <a href="https://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+</div><h3 id="Application_development">Application development</h3><div class="text">
+<p>Tomcat implements the Java WebSocket 1.1 API defined by <a href="https://www.jcp.org/en/jsr/detail?id=356">JSR-356</a>.</p>
+
+<p>There are several example applications that demonstrate how the WebSocket API
+   can be used. You will need to look at both the client side <a href="https://github.com/apache/tomcat/tree/9.0.x/webapps/examples/websocket">
+   HTML</a> and the server side <a href="https://github.com/apache/tomcat/tree/9.0.x/webapps/examples/WEB-INF/classes/websocket">
+   code</a>.</p>
+</div><h3 id="Tomcat_WebSocket_specific_configuration">Tomcat WebSocket specific configuration</h3><div class="text">
+
+<p>Tomcat provides a number of Tomcat specific configuration options for
+   WebSocket. It is anticipated that these will be absorbed into the WebSocket
+   specification over time.</p>
+
+<p>The write timeout used when sending WebSocket messages in blocking mode
+   defaults to 20000 milliseconds (20 seconds). This may be changed by setting
+   the property <code>org.apache.tomcat.websocket.BLOCKING_SEND_TIMEOUT</code>
+   in the user properties collection attached to the WebSocket session. The
+   value assigned to this property should be a <code>Long</code> and represents
+   the timeout to use in milliseconds. For an infinite timeout, use
+   <code>-1</code>.</p>
+
+<p>The time Tomcat waits for a peer to send a WebSocket session close message
+   after Tomcat has sent a close message to the peer defaults to 30000
+   milliseconds (30 seconds). This may be changed by setting the property
+   <code>org.apache.tomcat.websocket.SESSION_CLOSE_TIMEOUT</code> in the user
+   properties collection attached to the WebSocket session. The value assigned
+   to this property should be a <code>Long</code> and represents the timeout to
+   use in milliseconds. Values less than or equal to zero will be ignored.</p>
+
+<p>The write timeout Tomcat uses when writing a session close message when the
+   close is abnormal defaults to 50 milliseconds. This may be changed by setting
+   the property
+   <code>org.apache.tomcat.websocket.ABNORMAL_SESSION_CLOSE_SEND_TIMEOUT</code>
+   in the user properties collection attached to the WebSocket session. The
+   value assigned to this property should be a <code>Long</code> and represents
+   the timeout to use in milliseconds. Values less than or equal to zero will be
+   ignored.</p>
+
+<p>In addition to the <code>Session.setMaxIdleTimeout(long)</code> method which
+   is part of the Java WebSocket API, Tomcat provides greater control of the
+   timing out the session due to lack of activity. Setting the property
+   <code>org.apache.tomcat.websocket.READ_IDLE_TIMEOUT_MS</code> in the user
+   properties collection attached to the WebSocket session will trigger a
+   session timeout if no WebSocket message is received for the specified number
+   of milliseconds. Setting the property
+   <code>org.apache.tomcat.websocket.WRITE_IDLE_TIMEOUT_MS</code> will trigger a
+   session timeout if no WebSocket message is sent for the specified number of
+   milliseconds. These can be used separately or together, with or without
+   <code>Session.setMaxIdleTimeout(long)</code>. If the associated property is
+   not specified, the read and/or write idle timeout will be applied.</p>
+
+<p>If the application does not define a <code>MessageHandler.Partial</code> for
+   incoming binary messages, any incoming binary messages must be buffered so
+   the entire message can be delivered in a single call to the registered
+   <code>MessageHandler.Whole</code> for binary messages. The default buffer
+   size for binary messages is 8192 bytes. This may be changed for a web
+   application by setting the servlet context initialization parameter
+   <code>org.apache.tomcat.websocket.binaryBufferSize</code> to the desired
+   value in bytes.</p>
+
+<p>If the application does not define a <code>MessageHandler.Partial</code> for
+   incoming text messages, any incoming text messages must be buffered so the
+   entire message can be delivered in a single call to the registered
+   <code>MessageHandler.Whole</code> for text messages. The default buffer size
+   for text messages is 8192 bytes. This may be changed for a web application by
+   setting the servlet context initialization parameter
+   <code>org.apache.tomcat.websocket.textBufferSize</code> to the desired value
+   in bytes.</p>
+
+<p>The Java WebSocket specification 1.0 does not permit programmatic deployment
+   after the first endpoint has started a WebSocket handshake. By default,
+   Tomcat continues to permit additional programmatic deployment. This
+   behavior is controlled by the
+   <code>org.apache.tomcat.websocket.noAddAfterHandshake</code> servlet context
+   initialization parameter. The default may be changed by setting the
+   <code>org.apache.tomcat.websocket.STRICT_SPEC_COMPLIANCE</code> system
+   property to <code>true</code> but any explicit setting on the servlet context
+   will always take priority.</p>
+
+<p>When using the WebSocket client to connect to server endpoints, the timeout
+   for IO operations while establishing the connection is controlled by the
+   <code>userProperties</code> of the provided
+   <code>javax.websocket.ClientEndpointConfig</code>. The property is
+   <code>org.apache.tomcat.websocket.IO_TIMEOUT_MS</code> and is the
+   timeout as a <code>String</code> in milliseconds. The default is 5000 (5
+   seconds).</p>
+
+<p>When using the WebSocket client to connect to secure server endpoints, the
+   client SSL configuration is controlled by the <code>userProperties</code>
+   of the provided <code>javax.websocket.ClientEndpointConfig</code>. The
+   following user properties are supported:</p>
+   <ul>
+     <li><code>org.apache.tomcat.websocket.SSL_CONTEXT</code></li>
+     <li><code>org.apache.tomcat.websocket.SSL_PROTOCOLS</code></li>
+     <li><code>org.apache.tomcat.websocket.SSL_TRUSTSTORE</code></li>
+     <li><code>org.apache.tomcat.websocket.SSL_TRUSTSTORE_PWD</code></li>
+   </ul>
+   <p>The default truststore password is <code>changeit</code>.</p>
+
+<p>If the <code>org.apache.tomcat.websocket.SSL_CONTEXT</code> property is
+   set then the <code>org.apache.tomcat.websocket.SSL_TRUSTSTORE</code> and
+   <code>org.apache.tomcat.websocket.SSL_TRUSTSTORE_PWD</code> properties
+   will be ignored.</p>
+
+<p>For secure server end points, host name verification is enabled by default.
+   To bypass this verification (not recommended), it is necessary to provide a
+   custom <code>SSLContext</code> via the
+   <code>org.apache.tomcat.websocket.SSL_CONTEXT</code> user property. The
+   custom <code>SSLContext</code> must be configured with a custom
+   <code>TrustManager</code> that extends
+   <code>javax.net.ssl.X509ExtendedTrustManager</code>. The desired verification
+   (or lack of verification) can then be controlled by appropriate
+   implementations of the individual abstract methods.</p>
+
+<p>When using the WebSocket client to connect to server endpoints, the number of
+   HTTP redirects that the client will follow is controlled by the
+   <code>userProperties</code> of the provided
+   <code>javax.websocket.ClientEndpointConfig</code>. The property is
+   <ocde>org.apache.tomcat.websocket.MAX_REDIRECTIONS</ocde>. The default value
+   is 20. Redirection support can be disabled by configuring a value of zero.
+   </p>
+
+<p>When using the WebSocket client to connect to a server endpoint that requires
+   BASIC or DIGEST authentication, the following user properties must be set:
+   </p>
+   <ul>
+     <li><code>org.apache.tomcat.websocket.WS_AUTHENTICATION_USER_NAME</code>
+     </li>
+     <li><code>org.apache.tomcat.websocket.WS_AUTHENTICATION_PASSWORD</code>
+     </li>
+   </ul>
+   <p>Optionally, the WebSocket client can be configured only to send
+   credentials if the server authentication challenge includes a specific realm
+   by defining that realm in the optional user property:</p>
+   <ul>
+     <li><code>org.apache.tomcat.websocket.WS_AUTHENTICATION_REALM</code></li>
+   </ul>
+
+<p>When using the WebSocket client to connect to a server endpoint via a forward
+   proxy (also known as a gateway) that requires BASIC or DIGEST authentication,
+   the following user properties must be set:
+   </p>
+   <ul>
+     <li><code>org.apache.tomcat.websocket.WS_PROXY_AUTHENTICATION_USER_NAME
+     </code></li>
+     <li><code>org.apache.tomcat.websocket.WS_PROXY_AUTHENTICATION_PASSWORD
+     </code></li>
+   </ul>
+   <p>Optionally, the WebSocket client can be configured only to send
+   credentials if the server authentication challenge includes a specific realm
+   by defining that realm in the optional user property:</p>
+   <ul>
+     <li><code>org.apache.tomcat.websocket.WS_PROXY_AUTHENTICATION_REALM</code>
+     </li>
+   </ul>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Engine Container</title><meta name="author" content="Craig R. McClanahan"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Engine Container</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#Standard_Implementation">Standard Implementation</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Special_Features">Special Features</a><ol><li><a href="#Logging">Logging</a></li><li><a href="#Access_Logs">Access Logs</a></li><li><a href="#Lifecycle_Listeners">Lifecycle Listeners</a></li><li><a href="#Request_Filters">Request Filters</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>The <strong>Engine</strong> element represents the entire request
+  processing machinery associated with a particular Catalina
+  <a href="service.html">Service</a>.  It receives and processes
+  <em>all</em> requests from one or more <strong>Connectors</strong>,
+  and returns the completed response to the Connector for ultimate
+  transmission back to the client.</p>
+
+  <p>Exactly one <strong>Engine</strong> element MUST be nested inside
+  a <a href="service.html">Service</a> element, following all of the
+  corresponding Connector elements associated with this Service.</p>
+
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+    <p>All implementations of <strong>Engine</strong>
+    support the following attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_backgroundProcessorDelay"><td><code class="attributeName">backgroundProcessorDelay</code></td><td>
+        <p>This value represents the delay in seconds between the
+        invocation of the backgroundProcess method on this engine and
+        its child containers, including all hosts and contexts.
+        Child containers will not be invoked if their delay value is not
+        negative (which would mean they are using their own processing
+        thread). Setting this to a positive value will cause
+        a thread to be spawn. After waiting the specified amount of time,
+        the thread will invoke the backgroundProcess method on this engine
+        and all its child containers. If not specified, the default value for
+        this attribute is 10, which represent a 10 seconds delay.</p>
+      </td></tr><tr id="Attributes_Common Attributes_className"><td><code class="attributeName">className</code></td><td>
+        <p>Java class name of the implementation to use.  This class must
+        implement the <code>org.apache.catalina.Engine</code> interface.
+        If not specified, the standard value (defined below) will be used.</p>
+      </td></tr><tr id="Attributes_Common Attributes_defaultHost"><td><strong><code class="attributeName">defaultHost</code></strong></td><td>
+        <p>The default host name, which identifies the
+        <a href="host.html">Host</a> that will process requests directed
+        to host names on this server, but which are not configured in
+        this configuration file.  This name MUST match the <code>name</code>
+        attributes of one of the <a href="host.html">Host</a> elements
+        nested immediately inside.</p>
+      </td></tr><tr id="Attributes_Common Attributes_jvmRoute"><td><code class="attributeName">jvmRoute</code></td><td>
+        <p>Identifier which must be used in load balancing scenarios to enable
+        session affinity. The identifier, which must be unique across all
+        Tomcat servers which participate in the cluster, will be appended to
+        the generated session identifier, therefore allowing the front end
+        proxy to always forward a particular session to the same Tomcat
+        instance.</p>
+        <p>
+            Note that the <code>jvmRoute</code> can also be set using the
+            deprecated <code>jvmRoute</code> system property. The
+            <code>jvmRoute</code> set in an <code>&lt;Engine&gt;</code>
+            attribute will override any <code>jvmRoute</code> system property.
+        </p>
+      </td></tr><tr id="Attributes_Common Attributes_name"><td><strong><code class="attributeName">name</code></strong></td><td>
+        <p>Logical name of this Engine, used in log and error messages. <em>When
+        using multiple <a href="service.html">Service</a> elements in the same
+        <a href="server.html">Server</a>, each Engine MUST be assigned a unique
+        name.</em></p>
+      </td></tr><tr id="Attributes_Common Attributes_startStopThreads"><td><code class="attributeName">startStopThreads</code></td><td>
+        <p>The number of threads this <strong>Engine</strong> will use to start
+        child <a href="host.html">Host</a> elements in parallel. The special
+        value of 0 will result in the value of
+        <code>Runtime.getRuntime().availableProcessors()</code> being used.
+        Negative values will result in
+        <code>Runtime.getRuntime().availableProcessors() + value</code> being
+        used unless this is less than 1 in which case 1 thread will be used. If
+        not specified, the default value of 1 will be used. If 1 thread is
+        used then, rather than using an <code>ExecutorService</code>, the
+        current thread will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Standard_Implementation">Standard Implementation</h4><div class="text">
+
+    <p>The standard implementation of <strong>Engine</strong> is
+    <strong>org.apache.catalina.core.StandardEngine</strong>.
+    It supports the following additional attributes (in addition to the
+    common attributes listed above):</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr></table>
+
+  </div></div>
+
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <p>You can nest one or more <a href="host.html">Host</a> elements inside
+  this <strong>Engine</strong> element, each representing a different virtual
+  host associated with this server.  At least one <a href="host.html">Host</a>
+  is required, and one of the nested <a href="host.html">Hosts</a> MUST
+  have a name that matches the name specified for the
+  <code>defaultHost</code> attribute, listed above.</p>
+
+  <p>You can nest at most one instance of the following utility components
+  by nesting a corresponding element inside your <strong>Engine</strong>
+  element:</p>
+  <ul>
+  <li><a href="realm.html"><strong>Realm</strong></a> -
+      Configure a realm that will allow its
+      database of users, and their associated roles, to be shared across all
+      <a href="host.html">Hosts</a> and <a href="context.html">Contexts</a>
+      nested inside this Engine, unless overridden by a
+      <a href="realm.html">Realm</a> configuration at a lower level.</li>
+  </ul>
+
+</div><h3 id="Special_Features">Special Features</h3><div class="text">
+
+
+  <div class="subsection"><h4 id="Logging">Logging</h4><div class="text">
+
+    <p>An engine is associated with the
+       <code>org.apache.catalina.core.ContainerBase.[enginename]</code>
+       log category.  Note that the brackets are actually part of the name,
+       don't omit them.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Access_Logs">Access Logs</h4><div class="text">
+
+    <p>When you run a web server, one of the output files normally generated
+    is an <em>access log</em>, which generates one line of information for
+    each request processed by the server, in a standard format.  Catalina
+    includes an optional <a href="valve.html">Valve</a> implementation that
+    can create access logs in the same standard format created by web servers,
+    or in any number of custom formats.</p>
+
+    <p>You can ask Catalina to create an access log for all requests
+    processed by an <a href="engine.html">Engine</a>,
+    <a href="host.html">Host</a>, or <a href="context.html">Context</a>
+    by nesting a <a href="valve.html">Valve</a> element like this:</p>
+
+<div class="codeBox"><pre><code>&lt;Engine name="Standalone" ...&gt;
+  ...
+  &lt;Valve className="org.apache.catalina.valves.AccessLogValve"
+         prefix="catalina_access_log" suffix=".txt"
+         pattern="common"/&gt;
+  ...
+&lt;/Engine&gt;</code></pre></div>
+
+    <p>See <a href="valve.html#Access_Logging">Access Logging Valves</a>
+    for more information on the configuration attributes that are
+    supported.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Lifecycle_Listeners">Lifecycle Listeners</h4><div class="text">
+
+    <p>If you have implemented a Java object that needs to know when this
+    <strong>Engine</strong> is started or stopped, you can declare it by
+    nesting a <strong>Listener</strong> element inside this element.  The
+    class name you specify must implement the
+    <code>org.apache.catalina.LifecycleListener</code> interface, and
+    it will be notified about the occurrence of the corresponding
+    lifecycle events.  Configuration of such a listener looks like this:</p>
+
+<div class="codeBox"><pre><code>&lt;Engine name="Standalone" ...&gt;
+  ...
+  &lt;Listener className="com.mycompany.mypackage.MyListener" ... &gt;
+  ...
+&lt;/Engine&gt;</code></pre></div>
+
+    <p>Note that a Listener can have any number of additional properties
+    that may be configured from this element.  Attribute names are matched
+    to corresponding JavaBean property names using the standard property
+    method naming patterns.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Request_Filters">Request Filters</h4><div class="text">
+
+    <p>You can ask Catalina to check the IP address, or host name, on every
+    incoming request directed to the surrounding
+    <a href="engine.html">Engine</a>, <a href="host.html">Host</a>, or
+    <a href="context.html">Context</a> element.  The remote address or name
+    will be checked against configured "accept" and/or "deny"
+    filters, which are defined using <code>java.util.regex</code> Regular
+    Expression syntax.  Requests that come from locations that are
+    not accepted will be rejected with an HTTP "Forbidden" error.
+    Example filter declarations:</p>
+
+<div class="codeBox"><pre><code>&lt;Engine name="Standalone" ...&gt;
+  ...
+  &lt;Valve className="org.apache.catalina.valves.RemoteHostValve"
+         allow=".*\.mycompany\.com|www\.yourcompany\.com"/&gt;
+  &lt;Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         deny="192\.168\.1\.\d+"/&gt;
+  ...
+&lt;/Engine&gt;</code></pre></div>
+
+  <p>See <a href="valve.html#Remote_Address_Filter">Remote Address Filter</a>
+  and <a href="valve.html#Remote_Host_Filter">Remote Host Filter</a> for
+  more information about the configuration options that are supported.</p>
+
+  </div></div>
+
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

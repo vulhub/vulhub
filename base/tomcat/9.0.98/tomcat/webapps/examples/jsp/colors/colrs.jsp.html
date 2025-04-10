@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;html>
+
+&lt;jsp:useBean id="cb" scope="session" class="colors.ColorGameBean" />
+&lt;jsp:setProperty name="cb" property="*" />
+
+&lt;%
+    cb.processRequest();
+%>
+
+&lt;body bgcolor=&lt;%= cb.getColor1() %>>
+&lt;font size=6 color=&lt;%= cb.getColor2() %>>
+&lt;p>
+
+&lt;% if (cb.getHint()==true) { %>
+
+    &lt;p> Hint #1: Vampires prey at night!
+    &lt;p>  &lt;p> Hint #2: Nancy without the n.
+
+&lt;% } %>
+
+&lt;% if  (cb.getSuccess()==true) { %>
+
+    &lt;p> CONGRATULATIONS!!
+    &lt;% if  (cb.getHintTaken()==true) { %>
+
+        &lt;p> ( although I know you cheated and peeked into the hints)
+
+    &lt;% } %>
+
+&lt;% } %>
+
+&lt;p> Total attempts so far: &lt;%= cb.getAttempts() %>
+&lt;p>
+
+&lt;p>
+
+&lt;form method=POST action=colrs.jsp>
+
+Color #1: &lt;input type=text name= color1 size=16>
+
+&lt;br>
+
+Color #2: &lt;input type=text name= color2 size=16>
+
+&lt;p>
+
+&lt;input type=submit name=action value="Submit">
+&lt;input type=submit name=action value="Hint">
+
+&lt;/form>
+
+&lt;/font>
+&lt;/body>
+&lt;/html>
+</pre></body></html>

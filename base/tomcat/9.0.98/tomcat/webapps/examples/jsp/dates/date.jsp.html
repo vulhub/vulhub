@@ -1,0 +1,42 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;html>
+
+&lt;%@ page session="false"%>
+
+&lt;body bgcolor="white">
+&lt;jsp:useBean id='clock' scope='page' class='dates.JspCalendar' type="dates.JspCalendar" />
+
+&lt;font size=4>
+&lt;ul>
+&lt;li>    Day of month: is  &lt;jsp:getProperty name="clock" property="dayOfMonth"/>
+&lt;li>    Year: is  &lt;jsp:getProperty name="clock" property="year"/>
+&lt;li>    Month: is  &lt;jsp:getProperty name="clock" property="month"/>
+&lt;li>    Time: is  &lt;jsp:getProperty name="clock" property="time"/>
+&lt;li>    Date: is  &lt;jsp:getProperty name="clock" property="date"/>
+&lt;li>    Day: is  &lt;jsp:getProperty name="clock" property="day"/>
+&lt;li>    Day Of Year: is  &lt;jsp:getProperty name="clock" property="dayOfYear"/>
+&lt;li>    Week Of Year: is  &lt;jsp:getProperty name="clock" property="weekOfYear"/>
+&lt;li>    era: is  &lt;jsp:getProperty name="clock" property="era"/>
+&lt;li>    DST Offset: is  &lt;jsp:getProperty name="clock" property="DSTOffset"/>
+&lt;li>    Zone Offset: is  &lt;jsp:getProperty name="clock" property="zoneOffset"/>
+&lt;/ul>
+&lt;/font>
+
+&lt;/body>
+&lt;/html>
+</pre></body></html>

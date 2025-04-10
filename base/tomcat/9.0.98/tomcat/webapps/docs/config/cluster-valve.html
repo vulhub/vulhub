@@ -1,0 +1,132 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Cluster Valve object</title><meta name="author" content="Filip Hanik"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Cluster Valve object</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#org.apache.catalina.ha.tcp.ReplicationValve">org.apache.catalina.ha.tcp.ReplicationValve</a><ol><li><a href="#org.apache.catalina.ha.tcp.ReplicationValve/Attributes">Attributes</a></li></ol></li><li><a href="#org.apache.catalina.ha.session.JvmRouteBinderValve">org.apache.catalina.ha.session.JvmRouteBinderValve</a><ol><li><a href="#org.apache.catalina.ha.session.JvmRouteBinderValve/Attributes">Attributes</a></li></ol></li><li><a href="#org.apache.catalina.ha.authenticator.ClusterSingleSignOn">org.apache.catalina.ha.authenticator.ClusterSingleSignOn</a><ol><li><a href="#org.apache.catalina.ha.authenticator.ClusterSingleSignOn/Attributes">Attributes</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+  <p>
+  A cluster valve is no different from any other <a href="valve.html">Tomcat <code>Valve</code></a>.
+  The cluster valves are interceptors in the invocation chain for HTTP requests, and the clustering implementation
+  uses these valves to make intelligent decision around data and when data should be replicated.
+  </p>
+  <p>
+  A cluster valve must implement the <code>org.apache.catalina.ha.ClusterValve</code> interface.
+  This is a simple interface that extends the <code>org.apache.catalina.Valve</code> interface.
+  </p>
+</div><h3 id="org.apache.catalina.ha.tcp.ReplicationValve">org.apache.catalina.ha.tcp.ReplicationValve</h3><div class="text">
+  The <code>ReplicationValve</code> will notify the cluster at the end of an HTTP request
+  so that the cluster can make a decision whether there is data to be replicated or not.
+  <div class="subsection"><h4 id="org.apache.catalina.ha.tcp.ReplicationValve/Attributes">Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="org.apache.catalina.ha.tcp.ReplicationValve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Set value to <code>org.apache.catalina.ha.tcp.ReplicationValve</code>
+      </td></tr><tr id="org.apache.catalina.ha.tcp.ReplicationValve_Attributes_filter"><td><code class="attributeName">filter</code></td><td>
+        For known file extensions or urls, you can use this Valve to notify the
+        cluster that the session has not been modified during this  request and
+        the cluster doesn't have to probe the session managers for changes. If
+        the request matches this filter pattern, the cluster assumes there has
+        been no session change. An example filter would look like <code>
+        filter=".*\.gif|.*\.js|.*\.jpeg|.*\.jpg|.*\.png|.*\.htm|.*\.html|.*\.css|.*\.txt"
+        </code>. The filter is a regular expression using
+        <code>java.util.regex</code>. If no filter pattern specified or if the
+        filter pattern is configured to be the empty string, no filtering will
+        take place.
+      </td></tr><tr id="org.apache.catalina.ha.tcp.ReplicationValve_Attributes_primaryIndicator"><td><code class="attributeName">primaryIndicator</code></td><td>
+        Boolean value, so to true, and the replication valve will insert a request attribute with the name
+        defined by the <code>primaryIndicatorName</code> attribute.
+        The value inserted into the request attribute is either <code>Boolean.TRUE</code> or
+        <code>Boolean.FALSE</code>
+      </td></tr><tr id="org.apache.catalina.ha.tcp.ReplicationValve_Attributes_primaryIndicatorName"><td><code class="attributeName">primaryIndicatorName</code></td><td>
+        Default value is <code>org.apache.catalina.ha.tcp.isPrimarySession</code>
+        The value defined here is the name of the request attribute that contains the boolean value
+        if the session is primary on this server or not.
+      </td></tr><tr id="org.apache.catalina.ha.tcp.ReplicationValve_Attributes_statistics"><td><code class="attributeName">statistics</code></td><td>
+        Boolean value. Set to <code>true</code> if you want the valve to collect request statistics.
+        Default value is <code>false</code>
+      </td></tr></table>
+  </div></div>
+</div><h3 id="org.apache.catalina.ha.session.JvmRouteBinderValve">org.apache.catalina.ha.session.JvmRouteBinderValve</h3><div class="text">
+  In case of a mod_jk failover, the <code>JvmRouteBinderValve</code> will replace the
+  <code>jvmWorker</code> attribute in the session Id, to make future requests stick to this
+  node. If you want fallback capability, don't enable this valve, but if you want your failover to stick,
+  and for mod_jk not to have to keep probing the node that went down, you use this valve.
+  <div class="subsection"><h4 id="org.apache.catalina.ha.session.JvmRouteBinderValve/Attributes">Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="org.apache.catalina.ha.session.JvmRouteBinderValve_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <code>org.apache.catalina.ha.session.JvmRouteBinderValve</code>
+      </td></tr><tr id="org.apache.catalina.ha.session.JvmRouteBinderValve_Attributes_enabled"><td><code class="attributeName">enabled</code></td><td>
+        Default value is <code>true</code>
+        Runtime attribute to turn on and off turn over of the session's jvmRoute value.
+      </td></tr><tr id="org.apache.catalina.ha.session.JvmRouteBinderValve_Attributes_sessionIdAttribute"><td><code class="attributeName">sessionIdAttribute</code></td><td>
+        Old sessionid before failover is registered in request attributes with  this attribute.
+        Default attribute name is <code>org.apache.catalina.ha.session.JvmRouteOriginalSessionID</code>.
+      </td></tr></table>
+  </div></div>
+</div><h3 id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn">org.apache.catalina.ha.authenticator.ClusterSingleSignOn</h3><div class="text">
+  The <code>ClusterSingleSignOn</code> supports feature of single sign on in cluster.
+  By using <code>ClusterSingleSignOn</code>, the security identity authenticated
+  by one web application is recognized by other web applications on the same virtual host,
+  and it is propagated to other nodes in the cluster.
+
+  <p>See the <a href="host.html#Single_Sign_On">Single Sign On</a> special
+    feature on the <strong>Host</strong> element for more information.</p>
+
+  <p><strong>Note:</strong> ClusterSingleSignOn can be configured at host level cluster only.
+  </p>
+
+  <div class="subsection"><h4 id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn/Attributes">Attributes</h4><div class="text">
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This MUST be set to
+        <strong>org.apache.catalina.ha.authenticator.ClusterSingleSignOn</strong>.</p>
+      </td></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_cookieDomain"><td><code class="attributeName">cookieDomain</code></td><td>
+        <p>Sets the host domain to be used for sso cookies.</p>
+      </td></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_mapSendOptions"><td><code class="attributeName">mapSendOptions</code></td><td>
+        <p>The Valve uses a replicated map. You can setup the flag for how this
+        map sends messages. The default value is <code>6</code> (synchronous).
+        Note that if you use asynchronous messaging it is possible for update
+        messages to be processed by the receiving node in a different order to
+        the order in which they were sent.</p>
+      </td></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_requireReauthentication"><td><code class="attributeName">requireReauthentication</code></td><td>
+        <p>Default false. Flag to determine whether each request needs to be
+        reauthenticated to the security <strong>Realm</strong>. If "true", this
+        Valve uses cached security credentials (username and password) to
+        reauthenticate to the <strong>Realm</strong> each request associated
+        with an SSO session.  If "false", the Valve can itself authenticate
+        requests based on the presence of a valid SSO cookie, without
+        rechecking with the <strong>Realm</strong>.</p>
+      </td></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_rpcTimeout"><td><code class="attributeName">rpcTimeout</code></td><td>
+        <p>The Valve uses a replicated map. This is the timeout for messages
+        that transfer state to/from the other nodes in the cluster. If not
+        specified, a default value of <code>15000</code> milliseconds is used.
+        </p>
+      </td></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_terminateOnStartFailure"><td><code class="attributeName">terminateOnStartFailure</code></td><td>
+        <p>Set to <code>true</code> if you wish this Valve to fail if the
+        underlying replication fails to start. If the Valve fails, then the
+        associated container will fail to start. If you set this attribute to
+        false, and the underlying replications fails to start, the Valve will
+        start and it will attempt to join the cluster and start replication as
+        part of the heartbeat process. If not specified, the default value of
+        <code>false</code> is used.</p>
+      </td></tr><tr id="org.apache.catalina.ha.authenticator.ClusterSingleSignOn_Attributes_accessTimeout"><td><code class="attributeName">accessTimeout</code></td><td>
+        The timeout for a ping message. If a remote map does not respond within
+        this timeout period, its regarded as disappeared.
+        Default value is <code>5000</code> milliseconds.
+      </td></tr></table>
+  </div></div>
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

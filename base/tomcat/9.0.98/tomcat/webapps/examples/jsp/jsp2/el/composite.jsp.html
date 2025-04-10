@@ -1,0 +1,111 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;%@ taglib prefix="my" uri="http://tomcat.apache.org/example-taglib" %>
+
+&lt;html>
+  &lt;head>
+    &lt;title>JSP 2.0 Expression Language - Composite Expressions&lt;/title>
+  &lt;/head>
+  &lt;body>
+    &lt;h1>JSP 2.0 Expression Language - Composite Expressions&lt;/h1>
+    &lt;hr>
+    This example illustrates EL composite expressions. Composite expressions
+    are formed by grouping together multiple EL expressions. Each of them is
+    evaluated from left to right, coerced to String, all those strings are
+    concatenated, and the result is coerced to the expected type.
+
+    &lt;jsp:useBean id="values" class="jsp2.examples.ValuesBean" />
+
+    &lt;blockquote>
+      &lt;code>
+        &lt;table border="1">
+          &lt;thead>
+        &lt;td>&lt;b>EL Expression&lt;/b>&lt;/td>
+        &lt;td>&lt;b>Type&lt;/b>&lt;/td>
+        &lt;td>&lt;b>Result&lt;/b>&lt;/td>
+      &lt;/thead>
+      &lt;tr>
+        &lt;td>\${'hello'} wo\${'rld'}&lt;/td>
+        &lt;td>String&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="stringValue" value="${'hello'} wo${'rld'}"/>${values.stringValue}&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${'hello'} wo\${'rld'}&lt;/td>
+        &lt;td>String&lt;/td>
+        &lt;td>&lt;my:values string="${'hello'} wo${'rld'}"/>&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${1+2}.\${220}&lt;/td>
+        &lt;td>Double&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="doubleValue" value="${1+2}.${220}"/>${values.doubleValue}&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${1+2}.\${220}&lt;/td>
+        &lt;td>Double&lt;/td>
+        &lt;td>&lt;my:values double="${1+2}.${220}"/>&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>000\${1}\${7}&lt;/td>
+        &lt;td>Long&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="longValue" value="000${1}${7}"/>${values.longValue}&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>000\${1}\${7}&lt;/td>
+        &lt;td>Long&lt;/td>
+        &lt;td>&lt;my:values long="000${1}${7}"/>&lt;/td>
+      &lt;/tr>
+      &lt;!--
+         Undefined values are to be coerced to String, to be "",
+         https://bz.apache.org/bugzilla/show_bug.cgi?id=47413
+       -->
+      &lt;tr>
+        &lt;td>\${undefinedFoo}hello world\${undefinedBar}&lt;/td>
+        &lt;td>String&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="stringValue" value="${undefinedFoo}hello world${undefinedBar}"/>${values.stringValue}&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${undefinedFoo}hello world\${undefinedBar}&lt;/td>
+        &lt;td>String&lt;/td>
+        &lt;td>&lt;my:values string="${undefinedFoo}hello world${undefinedBar}"/>&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${undefinedFoo}\${undefinedBar}&lt;/td>
+        &lt;td>Double&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="doubleValue" value="${undefinedFoo}${undefinedBar}"/>${values.doubleValue}&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${undefinedFoo}\${undefinedBar}&lt;/td>
+        &lt;td>Double&lt;/td>
+        &lt;td>&lt;my:values double="${undefinedFoo}${undefinedBar}"/>&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${undefinedFoo}\${undefinedBar}&lt;/td>
+        &lt;td>Long&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="longValue" value="${undefinedFoo}${undefinedBar}"/>${values.longValue}&lt;/td>
+      &lt;/tr>
+      &lt;tr>
+        &lt;td>\${undefinedFoo}\${undefinedBar}&lt;/td>
+        &lt;td>Long&lt;/td>
+        &lt;td>&lt;my:values long="${undefinedFoo}${undefinedBar}"/>&lt;/td>
+      &lt;/tr>
+    &lt;/table>
+      &lt;/code>
+    &lt;/blockquote>
+  &lt;/body>
+&lt;/html>
+
+</pre></body></html>

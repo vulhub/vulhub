@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+    <!-- 监控这些资源，一旦发生变化，将重载 Web 应用 -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <!-- 采用 PersistentManager 持久化 session -->
+    <Manager className="org.apache.catalina.session.PersistentManager" 
+             debug="0"
+             saveOnRestart="true"
+             maxActiveSession="-1"
+             minIdleSwap="-1"
+             maxIdleSwap="-1"
+             maxIdleBackup="-1">
+        <!-- 使用 FileStore 将 session 数据存放到相对于 $CATALINA_BASE 的 "session" 目录下 -->
+        <Store className="org.apache.catalina.session.FileStore"/>
+    </Manager>
+
+</Context>

@@ -1,0 +1,294 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Default Servlet Reference</title><meta name="author" content="Tim Funk"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Default Servlet Reference</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#what">What is the DefaultServlet</a></li><li><a href="#where">Where is it declared?</a></li><li><a href="#change">What can I change?</a></li><li><a href="#dir">How do I customize directory listings?</a></li><li><a href="#secure">How do I secure directory listings?</a></li></ul>
+</div><h3 id="what">What is the DefaultServlet</h3><div class="text">
+<p>
+The default servlet is the servlet which serves static resources as well
+as serves the directory listings (if directory listings are enabled).
+</p>
+</div><h3 id="where">Where is it declared?</h3><div class="text">
+<p>
+It is declared globally in <i>$CATALINA_BASE/conf/web.xml</i>.
+By default here is it's declaration:
+</p>
+<div class="codeBox"><pre><code>    &lt;servlet&gt;
+        &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;
+          org.apache.catalina.servlets.DefaultServlet
+        &lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;debug&lt;/param-name&gt;
+            &lt;param-value&gt;0&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;listings&lt;/param-name&gt;
+            &lt;param-value&gt;false&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+
+...
+
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;</code></pre></div>
+
+<p>So by default, the default servlet is loaded at webapp startup and directory
+listings are disabled and debugging is turned off.</p>
+
+<p>If you need to change the DefaultServlet settings for an application you can
+override the default configuration by re-defining the DefaultServlet in
+<code>/WEB-INF/web.xml</code>. However, this will cause problems if you attempt
+to deploy the application on another container as the DefaultServlet class will
+not be recognised. You can work-around this problem by using the Tomcat specific
+<code>/WEB-INF/tomcat-web.xml</code> deployment descriptor. The format is
+identical to <code>/WEB-INF/web.xml</code>. It will override any default
+settings but not those in <code>/WEB-INF/web.xml</code>. Since it is Tomcat
+specific, it will only be processed when the application is deployed on
+Tomcat.</p>
+</div><h3 id="change">What can I change?</h3><div class="text">
+<p>
+  The DefaultServlet allows the following initParameters:
+</p>
+
+<table class="defaultTable"><tr><th style="width: 15%;">
+          Property
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr><td><code class="propertyName">debug</code></td><td>
+        Debugging level. It is not very useful unless you are a tomcat
+        developer. As
+        of this writing, useful values are 0, 1, 11. [0]
+  </td></tr><tr><td><code class="propertyName">listings</code></td><td>
+        If no welcome file is present, can a directory listing be
+        shown?
+        value may be <b>true</b> or <b>false</b> [false]
+        <br>
+        Welcome files are part of the servlet api.
+        <br>
+        <b>WARNING:</b> Listings of directories containing many entries are
+        expensive. Multiple requests for large directory listings can consume
+        significant proportions of server resources.
+  </td></tr><tr><td><code class="propertyName">precompressed</code></td><td>
+        If a precompressed version of a file exists (a file with <code>.br</code>
+        or <code>.gz</code> appended to the file name located alongside the
+        original file), Tomcat will serve the precompressed file if the user
+        agent supports the matching content encoding (br or gzip) and this
+        option is enabled. [false]
+        <br>
+        The precompressed file with the with <code>.br</code> or <code>.gz</code>
+        extension will be accessible if requested directly so if the original
+        resource is protected with a security constraint, the precompressed
+        versions must be similarly protected.
+        <br>
+        It is also possible to configure the list of precompressed formats.
+        The syntax is comma separated list of
+        <code>[content-encoding]=[file-extension]</code> pairs. For example:
+        <code>br=.br,gzip=.gz,bzip2=.bz2</code>. If multiple formats are
+        specified, the client supports more than one and the client does not
+        express a preference, the order of the list of formats will be treated
+        as the server preference order and used to select the format returned.
+  </td></tr><tr><td><code class="propertyName">readmeFile</code></td><td>
+        If a directory listing is presented, a readme file may also
+        be presented with the listing. This file is inserted as is
+        so it may contain HTML.
+  </td></tr><tr><td><code class="propertyName">globalXsltFile</code></td><td>
+        If you wish to customize your directory listing, you
+        can use an XSL transformation. This value is a relative file name (to
+        either $CATALINA_BASE/conf/ or $CATALINA_HOME/conf/) which will be used
+        for all directory listings. This can be overridden per context and/or
+        per directory. See <strong>contextXsltFile</strong> and
+        <strong>localXsltFile</strong> below. The format of the xml is shown
+        below.
+  </td></tr><tr><td><code class="propertyName">contextXsltFile</code></td><td>
+        You may also customize your directory listing by context by
+        configuring <code>contextXsltFile</code>. This must be a context
+        relative path (e.g.: <code>/path/to/context.xslt</code>) to a file with
+        a <code>.xsl</code> or <code>.xslt</code> extension. This overrides
+        <code>globalXsltFile</code>. If this value is present but a file does
+        not exist, then <code>globalXsltFile</code> will be used. If
+        <code>globalXsltFile</code> does not exist, then the default
+        directory listing will be shown.
+  </td></tr><tr><td><code class="propertyName">localXsltFile</code></td><td>
+        You may also customize your directory listing by directory by
+        configuring <code>localXsltFile</code>. This must be a file in the
+        directory where the listing will take place to with a
+        <code>.xsl</code> or <code>.xslt</code> extension. This overrides
+        <code>globalXsltFile</code> and <code>contextXsltFile</code>. If this
+        value is present but a file does not exist, then
+        <code>contextXsltFile</code> will be used. If
+        <code>contextXsltFile</code> does not exist, then
+        <code>globalXsltFile</code> will be used. If
+        <code>globalXsltFile</code> does not exist, then the default
+        directory listing will be shown.
+  </td></tr><tr><td><code class="propertyName">input</code></td><td>
+        Input buffer size (in bytes) when reading
+        resources to be served.  [2048]
+  </td></tr><tr><td><code class="propertyName">output</code></td><td>
+        Output buffer size (in bytes) when writing
+        resources to be served.  [2048]
+  </td></tr><tr><td><code class="propertyName">readonly</code></td><td>
+        Is this context "read only", so HTTP commands like PUT and
+        DELETE are rejected?  [true]
+  </td></tr><tr><td><code class="propertyName">fileEncoding</code></td><td>
+        File encoding to be used when reading static resources.
+        [platform default]
+  </td></tr><tr><td><code class="propertyName">useBomIfPresent</code></td><td>
+        If a static file contains a byte order mark (BOM), should this be used
+        to determine the file encoding in preference to fileEncoding. This
+        setting must be one of <code>true</code> (remove the BOM and use it in
+        preference to fileEncoding), <code>false</code> (remove the BOM but do
+        not use it) or <code>pass-through</code> (do not use the BOM and do not
+        remove it). [true]
+  </td></tr><tr><td><code class="propertyName">sendfileSize</code></td><td>
+        If the connector used supports sendfile, this represents the minimal
+        file size in KiB for which sendfile will be used. Use a negative value
+        to always disable sendfile. [48]
+  </td></tr><tr><td><code class="propertyName">useAcceptRanges</code></td><td>
+        If true, the Accept-Ranges header will be set when appropriate for the
+        response. [true]
+        <br>
+        Deprecated. This option will be removed without replacement in Tomcat
+        12 onwards where it will effectively be hard coded to <code>true</code>.
+  </td></tr><tr><td><code class="propertyName">showServerInfo</code></td><td>
+        Should server information be presented in the response sent to clients
+        when directory listing is enabled. [true]
+  </td></tr><tr><td><code class="propertyName">sortListings</code></td><td>
+        Should the server sort the listings in a directory. [false]
+  </td></tr><tr><td><code class="propertyName">sortDirectoriesFirst</code></td><td>
+        Should the server list all directories before all files. [false]
+  </td></tr><tr><td><code class="propertyName">allowPartialPut</code></td><td>
+        Should the server treat an HTTP PUT request with a Range header as a
+        partial PUT? Note that while RFC 7233 clarified that Range headers only
+        valid for GET requests, RFC 9110 (which obsoletes RFC 7233) now allows
+        partial puts. [true]
+  </td></tr></table>
+</div><h3 id="dir">How do I customize directory listings?</h3><div class="text">
+<p>You can override DefaultServlet with you own implementation and use that
+in your web.xml declaration. If you
+can understand what was just said, we will assume you can read the code
+to DefaultServlet servlet and make the appropriate adjustments. (If not,
+then that method isn't for you)
+</p>
+<p>
+You can use either  <code>localXsltFile</code>, <code>contextXsltFile</code>
+or <code>globalXsltFile</code> and DefaultServlet will create
+an xml document and run it through an xsl transformation based
+on the values provided in the XSLT file. <code>localXsltFile</code> is first
+checked, then <code>contextXsltFile</code>, followed by
+<code>globalXsltFile</code>. If no XSLT files are configured, default behavior
+is used.
+</p>
+
+<p>
+Format:
+</p>
+<div class="codeBox"><pre><code>    &lt;listing&gt;
+     &lt;entries&gt;
+      &lt;entry type='file|dir' urlPath='aPath' size='###' date='gmt date'&gt;
+        fileName1
+      &lt;/entry&gt;
+      &lt;entry type='file|dir' urlPath='aPath' size='###' date='gmt date'&gt;
+        fileName2
+      &lt;/entry&gt;
+      ...
+     &lt;/entries&gt;
+     &lt;readme&gt;&lt;/readme&gt;
+    &lt;/listing&gt;</code></pre></div>
+<ul>
+  <li>size will be missing if <code>type='dir'</code></li>
+  <li>Readme is a CDATA entry</li>
+</ul>
+
+<p>
+  The following is a sample xsl file which mimics the default tomcat behavior:
+</p>
+<div class="codeBox"><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  version="3.0"&gt;
+
+  &lt;xsl:output method="html" html-version="5.0"
+    encoding="UTF-8" indent="no"
+    doctype-system="about:legacy-compat"/&gt;
+
+  &lt;xsl:template match="listing"&gt;
+   &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;
+        Sample Directory Listing For
+        &lt;xsl:value-of select="@directory"/&gt;
+      &lt;/title&gt;
+      &lt;style&gt;
+        h1 {color : white;background-color : #0086b2;}
+        h3 {color : white;background-color : #0086b2;}
+        body {font-family : sans-serif,Arial,Tahoma;
+             color : black;background-color : white;}
+        b {color : white;background-color : #0086b2;}
+        a {color : black;} HR{color : #0086b2;}
+        table td { padding: 5px; }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Sample Directory Listing For
+            &lt;xsl:value-of select="@directory"/&gt;
+      &lt;/h1&gt;
+      &lt;hr style="height: 1px;" /&gt;
+      &lt;table style="width: 100%;"&gt;
+        &lt;tr&gt;
+          &lt;th style="text-align: left;"&gt;Filename&lt;/th&gt;
+          &lt;th style="text-align: center;"&gt;Size&lt;/th&gt;
+          &lt;th style="text-align: right;"&gt;Last Modified&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;xsl:apply-templates select="entries"/&gt;
+        &lt;/table&gt;
+      &lt;xsl:apply-templates select="readme"/&gt;
+      &lt;hr style="height: 1px;" /&gt;
+      &lt;h3&gt;Apache Tomcat/9.0&lt;/h3&gt;
+    &lt;/body&gt;
+   &lt;/html&gt;
+  &lt;/xsl:template&gt;
+
+
+  &lt;xsl:template match="entries"&gt;
+    &lt;xsl:apply-templates select="entry"/&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match="readme"&gt;
+    &lt;hr style="height: 1px;" /&gt;
+    &lt;pre&gt;&lt;xsl:apply-templates/&gt;&lt;/pre&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match="entry"&gt;
+    &lt;tr&gt;
+      &lt;td style="text-align: left;"&gt;
+        &lt;xsl:variable name="urlPath" select="@urlPath"/&gt;
+        &lt;a href="{$urlPath}"&gt;
+          &lt;pre&gt;&lt;xsl:apply-templates/&gt;&lt;/pre&gt;
+        &lt;/a&gt;
+      &lt;/td&gt;
+      &lt;td style="text-align: right;"&gt;
+        &lt;pre&gt;&lt;xsl:value-of select="@size"/&gt;&lt;/pre&gt;
+      &lt;/td&gt;
+      &lt;td style="text-align: right;"&gt;
+        &lt;pre&gt;&lt;xsl:value-of select="@date"/&gt;&lt;/pre&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</code></pre></div>
+
+</div><h3 id="secure">How do I secure directory listings?</h3><div class="text">
+Use web.xml in each individual webapp. See the security section of the
+Servlet specification.
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

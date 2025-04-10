@@ -1,9 +1,20 @@
-FROM tomcat:9.0.98-jre8-temurin-noble
-COPY server.xml /usr/local/tomcat/conf/server.xml
-COPY web.xml /usr/local/tomcat/conf/web.xml
-COPY context.xml /usr/local/tomcat/conf/context.xml
-COPY commons-collections-3.1.jar /usr/local/tomcat/lib/commons-collections-3.1.jar
+FROM ubuntu:20.04
 
-RUN set -ex \
-    && rmdir webapps \
-    && mv webapps.dist webapps
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jdk && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+    
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin
+RUN mkdir -p /opt/tomcat
+COPY ./tomcat /opt/tomcat
+WORKDIR /opt/tomcat
+
+RUN chmod +x /opt/tomcat/bin/*.sh
+
+EXPOSE 8080
+
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]

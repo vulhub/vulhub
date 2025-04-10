@@ -1,0 +1,91 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;%@page contentType="text/html; charset=UTF-8" %>
+&lt;%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+&lt;html>
+  &lt;head>
+    &lt;title>JSP 2.0 Expression Language - Implicit Objects&lt;/title>
+  &lt;/head>
+  &lt;body>
+    &lt;h1>JSP 2.0 Expression Language - Implicit Objects&lt;/h1>
+    &lt;hr>
+    This example illustrates some of the implicit objects available
+    in the Expression Language.  The following implicit objects are
+    available (not all illustrated here):
+    &lt;ul>
+      &lt;li>pageContext - the PageContext object&lt;/li>
+      &lt;li>pageScope - a Map that maps page-scoped attribute names to
+          their values&lt;/li>
+      &lt;li>requestScope - a Map that maps request-scoped attribute names
+          to their values&lt;/li>
+      &lt;li>sessionScope - a Map that maps session-scoped attribute names
+          to their values&lt;/li>
+      &lt;li>applicationScope - a Map that maps application-scoped attribute
+          names to their values&lt;/li>
+      &lt;li>param - a Map that maps parameter names to a single String
+          parameter value&lt;/li>
+      &lt;li>paramValues - a Map that maps parameter names to a String[] of
+          all values for that parameter&lt;/li>
+      &lt;li>header - a Map that maps header names to a single String
+          header value&lt;/li>
+      &lt;li>headerValues - a Map that maps header names to a String[] of
+          all values for that header&lt;/li>
+      &lt;li>initParam - a Map that maps context initialization parameter
+          names to their String parameter value&lt;/li>
+      &lt;li>cookie - a Map that maps cookie names to a single Cookie object.&lt;/li>
+    &lt;/ul>
+
+    &lt;blockquote>
+      &lt;u>&lt;b>Change Parameter&lt;/b>&lt;/u>
+      &lt;form action="implicit-objects.jsp" method="GET">
+          foo = &lt;input type="text" name="foo" value="${fn:escapeXml(param["foo"])}">
+          &lt;input type="submit">
+      &lt;/form>
+      &lt;br>
+      &lt;code>
+        &lt;table border="1">
+          &lt;thead>
+            &lt;td>&lt;b>EL Expression&lt;/b>&lt;/td>
+            &lt;td>&lt;b>Result&lt;/b>&lt;/td>
+          &lt;/thead>
+          &lt;tr>
+            &lt;td>\${param.foo}&lt;/td>
+            &lt;td>${fn:escapeXml(param["foo"])}&amp;nbsp;&lt;/td>
+          &lt;/tr>
+          &lt;tr>
+            &lt;td>\${param["foo"]}&lt;/td>
+            &lt;td>${fn:escapeXml(param["foo"])}&amp;nbsp;&lt;/td>
+          &lt;/tr>
+          &lt;tr>
+            &lt;td>\${header["host"]}&lt;/td>
+            &lt;td>${fn:escapeXml(header["host"])}&amp;nbsp;&lt;/td>
+          &lt;/tr>
+          &lt;tr>
+            &lt;td>\${header["accept"]}&lt;/td>
+            &lt;td>${fn:escapeXml(header["accept"])}&amp;nbsp;&lt;/td>
+          &lt;/tr>
+          &lt;tr>
+            &lt;td>\${header["user-agent"]}&lt;/td>
+            &lt;td>${fn:escapeXml(header["user-agent"])}&amp;nbsp;&lt;/td>
+          &lt;/tr>
+        &lt;/table>
+      &lt;/code>
+    &lt;/blockquote>
+  &lt;/body>
+&lt;/html>
+</pre></body></html>

@@ -1,0 +1,109 @@
+@startuml
+
+' Licensed to the Apache Software Foundation (ASF) under one or more
+' contributor license agreements.  See the NOTICE file distributed with
+' this work for additional information regarding copyright ownership.
+' The ASF licenses this file to You under the Apache License, Version 2.0
+' (the "License"); you may not use this file except in compliance with
+' the License.  You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+hide footbox
+skinparam style strictuml
+
+activate Context
+
+== BEFORE_START_EVENT ==
+
+Context -> ContextConfig ++:lifecycleEvent(BEFORE_START_EVENT)
+
+ContextConfig -> ContextConfig ++: beforeStart()
+
+ContextConfig -> ContextConfig: fixDocBase()
+
+ContextConfig -> ContextConfig: antiLocking()
+
+return
+
+return
+
+== CONFIGURE_START_EVENT ==
+
+Context -> ContextConfig ++:lifecycleEvent(CONFIGURE_START_EVENT)
+
+ContextConfig -> ContextConfig ++: configureStart()
+
+ContextConfig -> ContextConfig ++: webConfig()
+
+ContextConfig --> WebXmlParser **
+
+ContextConfig -> ContextConfig ++: getDefaultWebXmlFragment()
+
+ContextConfig -> WebXmlParser ++: parseWebXml(defaultWebXml)
+return
+
+return
+
+ContextConfig -> ContextConfig ++: getTomcatWebXmlFragment()
+
+ContextConfig -> WebXmlParser ++: parseWebXml(tomcatWebXml)
+return
+
+return
+
+ContextConfig --> WebXml **
+
+ContextConfig -> WebXmlParser ++: parseWebXml(contextWebXml)
+WebXmlParser -> WebXml ++
+return
+return
+
+ContextConfig -> ContextConfig: processJarsForWebFragments()
+ContextConfig -> ContextConfig: processServletContainerInitializers()
+ContextConfig -> ContextConfig: processClasses()
+
+ContextConfig -> WebXml ++: merge(orderedFragments)
+return
+
+ContextConfig -> WebXml ++: merge(tomcatWebXml)
+return
+
+ContextConfig -> WebXml ++: merge(defaultWebXml)
+return
+
+ContextConfig -> ContextConfig: convertJsps()
+ContextConfig -> ContextConfig: configureContext()
+ContextConfig -> ContextConfig: processResourceJARs()
+
+return
+
+|||
+ContextConfig -> ContextConfig: applicationAnnotationsConfig()
+
+ContextConfig -> ContextConfig: validateSecurityRoles()
+
+ContextConfig -> ContextConfig: authenticatorConfig()
+
+return
+destroy WebXmlParser
+destroy WebXml
+
+return
+
+== AFTER_START_EVENT ==
+
+Context -> ContextConfig ++:lifecycleEvent(AFTER_START_EVENT)
+
+ContextConfig -> Context ++:setDocBase(originalDocBase)
+return
+
+return
+
+@enduml

@@ -1,0 +1,170 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Tomcat Setup</title><meta name="author" content="Remy Maucherat"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Tomcat Setup</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Windows">Windows</a></li><li><a href="#Unix_daemon">Unix daemon</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+    <p>
+      There are several ways to set up Tomcat for running on different
+      platforms. The main documentation for this is a file called
+      <a href="RUNNING.txt">RUNNING.txt</a>. We encourage you to refer to that
+      file if the information below does not answer some of your questions.
+    </p>
+  </div><h3 id="Windows">Windows</h3><div class="text">
+
+    <p>
+      Installing Tomcat on Windows can be done easily using the Windows
+      installer. Its interface and functionality is similar to other wizard
+      based installers, with only a few items of interest.
+    </p>
+
+
+      <ul>
+        <li><strong>Installation as a service</strong>: Tomcat will be
+            installed as a Windows service no matter what setting is selected.
+            Using the checkbox on the component page sets the service as "auto"
+            startup, so that Tomcat is automatically started when Windows
+            starts. For optimal security, the service should be run as a
+            separate user, with reduced permissions (see the Windows Services
+            administration tool and its documentation).</li>
+        <li><strong>Java location</strong>: The installer will provide a default
+            JRE to use to run the service. The installer uses the registry to
+            determine the base path of a Java 8 or later JRE,
+            including the JRE installed as part of the full JDK. When running on
+            a 64-bit operating system, the installer will first look for a
+            64-bit JRE and only look for a 32-bit JRE if a 64-bit JRE is not
+            found. If a JRE cannot be found when running on a 64-bit operating
+            system, the installer will look for a 64-bit JDK. Finally, if a JRE
+            or JDK has not been found, the installer will try to use the
+            <code>JAVA_HOME</code> environment variable. It is not mandatory to
+            use the default JRE detected by the installer. Any installed Java
+            8 or later JRE (32-bit or 64-bit) may be
+            used.</li>
+        <li><strong>Tray icon</strong>: When Tomcat is run as a service, there
+            will not be any tray icon present when Tomcat is running. Note that
+            when choosing to run Tomcat at the end of installation, the tray
+            icon will be used even if Tomcat was installed as a service.</li>
+        <li><strong>Defaults</strong>: The defaults used by the installer may be
+            overridden by use of the <code>/C=&lt;config file&gt;</code> command
+            line argument. The configuration file uses the format
+            <code>name=value</code> with each pair on a separate line. The names
+            of the available configuration options are:
+            <ul>
+            <li>JavaHome</li>
+            <li>TomcatPortShutdown</li>
+            <li>TomcatPortHttp</li>
+            <li>TomcatMenuEntriesEnable</li>
+            <li>TomcatShortcutAllUsers</li>
+            <li>TomcatServiceDefaultName</li>
+            <li>TomcatServiceName</li>
+            <li>TomcatServiceFileName</li>
+            <li>TomcatServiceManagerFileName</li>
+            <li>TomcatAdminEnable</li>
+            <li>TomcatAdminUsername</li>
+            <li>TomcatAdminPassword</li>
+            <li>TomcatAdminRoles</li>
+            </ul>
+            By using <code>/C=...</code> along with <code>/S</code> and
+            <code>/D=</code> it is possible to perform fully configured
+            unattended installs of Apache Tomcat.
+        </li>
+        <li>Refer to the
+            <a href="windows-service-howto.html">Windows Service How-To</a>
+            for information on how to manage Tomcat as a Windows service.
+            </li>
+      </ul>
+
+
+    <p>The installer will create shortcuts allowing starting and configuring
+       Tomcat. It is important to note that the Tomcat administration web
+       application can only be used when Tomcat is running.</p>
+
+  </div><h3 id="Unix_daemon">Unix daemon</h3><div class="text">
+
+    <p>Tomcat can be run as a daemon using the jsvc tool from the
+       commons-daemon project. Source tarballs for jsvc are included with the
+       Tomcat binaries, and need to be compiled. Building jsvc requires
+       a C ANSI compiler (such as GCC), GNU Autoconf, and a JDK.</p>
+
+    <p>Before running the script, the <code>JAVA_HOME</code> environment
+       variable should be set to the base path of the JDK. Alternately, when
+       calling the <code>./configure</code> script, the path of the JDK may
+       be specified using the <code>--with-java</code> parameter, such as
+       <code>./configure --with-java=/usr/java</code>.</p>
+
+    <p>Using the following commands should result in a compiled jsvc binary,
+       located in the <code>$CATALINA_HOME/bin</code> folder. This assumes
+       that GNU TAR is used, and that <code>CATALINA_HOME</code> is an
+       environment variable pointing to the base path of the Tomcat
+       installation.</p>
+
+    <p>Please note that you should use the GNU make (gmake) instead of
+       the native BSD make on FreeBSD systems.</p>
+
+<div class="codeBox"><pre><code>cd $CATALINA_HOME/bin
+tar xvfz commons-daemon-native.tar.gz
+cd commons-daemon-1.1.x-native-src/unix
+./configure
+make
+cp jsvc ../..
+cd ../..</code></pre></div>
+
+    <p>Tomcat can then be run as a daemon using the following commands.</p>
+
+<div class="codeBox"><pre><code>CATALINA_BASE=$CATALINA_HOME
+cd $CATALINA_HOME
+./bin/jsvc \
+    -classpath $CATALINA_HOME/bin/bootstrap.jar:$CATALINA_HOME/bin/tomcat-juli.jar \
+    -outfile $CATALINA_BASE/logs/catalina.out \
+    -errfile $CATALINA_BASE/logs/catalina.err \
+    -Dcatalina.home=$CATALINA_HOME \
+    -Dcatalina.base=$CATALINA_BASE \
+    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+    -Djava.util.logging.config.file=$CATALINA_BASE/conf/logging.properties \
+    org.apache.catalina.startup.Bootstrap</code></pre></div>
+
+    <p>When running on Java 9 you will need to additionally specify the
+    following when starting jsvc.</p>
+<div class="codeBox"><pre><code>...
+--add-opens=java.base/java.lang=ALL-UNNAMED \
+--add-opens=java.base/java.io=ALL-UNNAMED \
+--add-opens=java.base/java.util=ALL-UNNAMED \
+--add-opens=java.base/java.util.concurrent=ALL-UNNAMED \
+--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED \
+...
+</code></pre></div>
+
+    <p>You may also need to specify <code>-jvm server</code> if the JVM defaults
+       to using a server VM rather than a client VM. This has been observed on
+       OSX.</p>
+
+    <p>jsvc has other useful parameters, such as <code>-user</code> which
+       causes it to switch to another user after the daemon initialization is
+       complete. This allows, for example, running Tomcat as a non privileged
+       user while still being able to use privileged ports. Note that if you
+       use this option and start Tomcat as root, you'll need to disable the
+       <code>org.apache.catalina.security.SecurityListener</code> check that
+       prevents Tomcat starting when running as root.</p>
+
+    <p><code>jsvc --help</code> will return the full jsvc usage
+       information. In particular, the <code>-debug</code> option is useful
+       to debug issues running jsvc.</p>
+
+    <p>The file <code>$CATALINA_HOME/bin/daemon.sh</code> can be used as a
+       template for starting Tomcat automatically at boot time from
+       <code>/etc/init.d</code> with jsvc.</p>
+
+    <p>Note that the Commons-Daemon JAR file must be on your runtime classpath
+       to run Tomcat in this manner.  The Commons-Daemon JAR file is in the
+       Class-Path entry of the bootstrap.jar manifest, but if you get a
+       ClassNotFoundException or a NoClassDefFoundError for a Commons-Daemon
+       class, add the Commons-Daemon JAR to the -cp argument when launching
+       jsvc.</p>
+
+  </div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

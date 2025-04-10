@@ -1,0 +1,641 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - JNDI Datasource How-To</title><meta name="author" content="Les Hughes"><meta name="author" content="David Haraburda"><meta name="author" content="Glenn Nielsen"><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>JNDI Datasource How-To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#DriverManager,_the_service_provider_mechanism_and_memory_leaks">DriverManager, the service provider mechanism and memory leaks</a></li><li><a href="#Database_Connection_Pool_(DBCP_2)_Configurations">Database Connection Pool (DBCP 2) Configurations</a><ol><li><a href="#Installation">Installation</a></li><li><a href="#Preventing_database_connection_pool_leaks">Preventing database connection pool leaks</a></li><li><a href="#MySQL_DBCP_2_Example">MySQL DBCP 2 Example</a></li><li><a href="#Oracle_8i,_9i_&amp;_10g">Oracle 8i, 9i &amp; 10g</a></li><li><a href="#PostgreSQL">PostgreSQL</a></li></ol></li><li><a href="#Non-DBCP_Solutions">Non-DBCP Solutions</a></li><li><a href="#Oracle_8i_with_OCI_client">Oracle 8i with OCI client</a><ol><li><a href="#Oracle_8i_with_OCI_client/Introduction">Introduction</a></li><li><a href="#Putting_it_all_together">Putting it all together</a></li></ol></li><li><a href="#Common_Problems">Common Problems</a><ol><li><a href="#Intermittent_Database_Connection_Failures">Intermittent Database Connection Failures</a></li><li><a href="#Random_Connection_Closed_Exceptions">Random Connection Closed Exceptions</a></li><li><a href="#Context_versus_GlobalNamingResources">Context versus GlobalNamingResources</a></li><li><a href="#JNDI_Resource_Naming_and_Realm_Interaction">JNDI Resource Naming and Realm Interaction</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+<p>JNDI Datasource configuration is covered extensively in the
+JNDI-Resources-HOWTO.  However, feedback from <code>tomcat-user</code> has
+shown that specifics for individual configurations can be rather tricky.</p>
+
+<p>Here then are some example configurations that have been posted to
+tomcat-user for popular databases and some general tips for db usage.</p>
+
+<p>You should be aware that since these notes are derived from configuration
+and/or feedback posted to <code>tomcat-user</code> YMMV :-). Please let us
+know if you have any other tested configurations that you feel may be of use
+to the wider audience, or if you feel we can improve this section in anyway.</p>
+
+<p>
+<b>Please note that JNDI resource configuration changed somewhat between
+Tomcat 7.x and Tomcat 8.x as they are using different versions of
+Apache Commons DBCP library.</b>  You will most likely need to modify older
+JNDI resource configurations to match the syntax in the example below in order
+to make them work in Tomcat 9.
+See <a href="https://tomcat.apache.org/migration.html">Tomcat Migration Guide</a>
+for details.
+</p>
+
+<p>
+Also, please note that JNDI DataSource configuration in general, and this
+tutorial in particular, assumes that you have read and understood the
+<a href="config/context.html">Context</a> and
+<a href="config/host.html">Host</a> configuration references, including
+the section about Automatic Application Deployment in the latter reference.
+</p>
+</div><h3 id="DriverManager,_the_service_provider_mechanism_and_memory_leaks">DriverManager, the service provider mechanism and memory leaks</h3><div class="text">
+
+<p><code>java.sql.DriverManager</code> supports the
+<a href="https://docs.oracle.com/javase/8/docs/api/index.html?java/sql/DriverManager.html">service
+provider</a> mechanism. This feature is that all the available JDBC drivers
+that announce themselves by providing a <code>META-INF/services/java.sql.Driver</code>
+file are automatically discovered, loaded and registered,
+relieving you from the need to load the database driver explicitly before
+you create a JDBC connection.
+However, the implementation is fundamentally broken in all Java versions for
+a servlet container environment. The problem is that
+<code>java.sql.DriverManager</code> will scan for the drivers only once.</p>
+
+<p>The <a href="config/listeners.html">JRE Memory Leak Prevention Listener</a>
+that is included with Apache Tomcat solves this by triggering the driver scan
+during Tomcat startup. This is enabled by default. It means that only
+libraries visible to the common class loader and its parents will be scanned for
+database drivers. This include drivers in <code>$CATALINA_HOME/lib</code>,
+<code>$CATALINA_BASE/lib</code>, the class path and (where the JRE supports it)
+the endorsed directory. Drivers packaged in web applications (in
+<code>WEB-INF/lib</code>) and in the shared class loader (where configured) will
+not be visible and will not be loaded automatically. If you are considering
+disabling this feature, note that the scan would be triggered by the first web
+application that is using JDBC, leading to failures when this web application is
+reloaded and for other web applications that rely on this feature.
+</p>
+
+<p>Thus, the web applications that have database drivers in their
+<code>WEB-INF/lib</code> directory cannot rely on the service provider
+mechanism and should register the drivers explicitly.</p>
+
+<p>The list of drivers in <code>java.sql.DriverManager</code> is also
+a known source of memory leaks. Any Drivers registered
+by a web application must be deregistered when the web application stops.
+Tomcat will attempt to automatically discover and deregister any
+JDBC drivers loaded by the web application class loader when the web
+application stops.
+However, it is expected that applications do this for themselves via
+a <code>ServletContextListener</code>.
+</p>
+
+</div><h3 id="Database_Connection_Pool_(DBCP_2)_Configurations">Database Connection Pool (DBCP 2) Configurations</h3><div class="text">
+
+<p>The default database connection pool implementation in Apache Tomcat
+relies on the libraries from the
+<a href="https://commons.apache.org/">Apache Commons</a> project.
+The following libraries are used:
+</p>
+
+<ul>
+<li>Commons DBCP 2</li>
+<li>Commons Pool 2</li>
+</ul>
+
+<p>
+These libraries are located in a single JAR at
+<code>$CATALINA_HOME/lib/tomcat-dbcp.jar</code>. However,
+only the classes needed for connection pooling have been included, and the
+packages have been renamed to avoid interfering with applications.
+</p>
+
+<p>DBCP 2 provides support for JDBC 4.1.</p>
+
+<div class="subsection"><h4 id="Installation">Installation</h4><div class="text">
+
+<p>See the <a href="https://commons.apache.org/dbcp/configuration.html">
+DBCP 2 documentation</a> for a complete list of configuration parameters.
+</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="Preventing_database_connection_pool_leaks">Preventing database connection pool leaks</h4><div class="text">
+
+<p>
+A database connection pool creates and manages a pool of connections
+to a database. Recycling and reusing already existing connections
+to a database is more efficient than opening a new connection.
+</p>
+
+<p>
+There is one problem with connection pooling.  A web application has
+to explicitly close ResultSet's, Statement's, and Connection's.
+Failure of a web application to close these resources can result in
+them never being available again for reuse, a database connection pool "leak".
+This can eventually result in your web application database connections failing
+if there are no more available connections.</p>
+
+<p>
+There is a solution to this problem.  The Apache Commons DBCP 2 can be
+configured to track and recover these abandoned database connections.  Not
+only can it recover them, but also generate a stack trace for the code
+which opened these resources and never closed them.</p>
+
+<p>
+To configure a DBCP 2 DataSource so that abandoned database connections are
+removed and recycled, add one or both of the following attributes to the
+<code>Resource</code> configuration for your DBCP 2 DataSource:
+</p>
+<div class="codeBox"><pre><code>removeAbandonedOnBorrow=true</code></pre></div>
+<div class="codeBox"><pre><code>removeAbandonedOnMaintenance=true</code></pre></div>
+<p> The default for both of these attributes is <code>false</code>.  Note that
+<code>removeAbandonedOnMaintenance</code> has no effect unless pool
+maintenance is enabled by setting <code>timeBetweenEvictionRunsMillis</code>
+to a positive value.  See the
+<a href="https://commons.apache.org/dbcp/configuration.html">
+DBCP 2 documentation</a> for full documentation on these attributes.
+</p>
+
+<p>
+Use the <code>removeAbandonedTimeout</code> attribute to set the number
+of seconds a database connection has been idle before it is considered abandoned.
+</p>
+
+<div class="codeBox"><pre><code>removeAbandonedTimeout="60"</code></pre></div>
+
+<p>
+The default timeout for removing abandoned connections is 300 seconds.
+</p>
+
+<p>
+The <code>logAbandoned</code> attribute can be set to <code>true</code>
+if you want DBCP 2 to log a stack trace of the code which abandoned the
+database connection resources.
+</p>
+<div class="codeBox"><pre><code>logAbandoned="true"</code></pre></div>
+<p>
+The default is <code>false</code>.
+</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="MySQL_DBCP_2_Example">MySQL DBCP 2 Example</h4><div class="text">
+
+<h5>0. Introduction</h5>
+<p>Versions of <a href="https://www.mysql.com/products/mysql/index.html">MySQL</a> and JDBC
+drivers that have been reported to work:
+</p>
+<ul>
+<li>MySQL 3.23.47, MySQL 3.23.47 using InnoDB,, MySQL 3.23.58,  MySQL 4.0.1alpha</li>
+<li><a href="https://www.mysql.com/products/connector-j">Connector/J</a> 3.0.11-stable (the official JDBC Driver)</li>
+<li><a href="http://mmmysql.sourceforge.net">mm.mysql</a> 2.0.14 (an old 3rd party JDBC Driver)</li>
+</ul>
+
+<p>Before you proceed, don't forget to copy the JDBC Driver's jar into <code>$CATALINA_HOME/lib</code>.</p>
+
+<h5>1. MySQL configuration</h5>
+<p>
+Ensure that you follow these instructions as variations can cause problems.
+</p>
+
+<p>Create a new test user, a new database and a single test table.
+Your MySQL user <strong>must</strong> have a password assigned. The driver
+will fail if you try to connect with an empty password.
+</p>
+<div class="codeBox"><pre><code>mysql&gt; GRANT ALL PRIVILEGES ON *.* TO javauser@localhost
+    -&gt;   IDENTIFIED BY 'javadude' WITH GRANT OPTION;
+mysql&gt; create database javatest;
+mysql&gt; use javatest;
+mysql&gt; create table testdata (
+    -&gt;   id int not null auto_increment primary key,
+    -&gt;   foo varchar(25),
+    -&gt;   bar int);</code></pre></div>
+<blockquote>
+<strong>Note:</strong> the above user should be removed once testing is
+complete!
+</blockquote>
+
+<p>Next insert some test data into the testdata table.
+</p>
+<div class="codeBox"><pre><code>mysql&gt; insert into testdata values(null, 'hello', 12345);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select * from testdata;
++----+-------+-------+
+| ID | FOO   | BAR   |
++----+-------+-------+
+|  1 | hello | 12345 |
++----+-------+-------+
+1 row in set (0.00 sec)
+
+mysql&gt;</code></pre></div>
+
+<h5>2. Context configuration</h5>
+<p>Configure the JNDI DataSource in Tomcat by adding a declaration for your
+resource to your <a href="config/context.html">Context</a>.</p>
+<p>For example:</p>
+<div class="codeBox"><pre><code>&lt;Context&gt;
+
+    &lt;!-- maxTotal: Maximum number of database connections in pool. Make sure you
+         configure your mysqld max_connections large enough to handle
+         all of your db connections. Set to -1 for no limit.
+         --&gt;
+
+    &lt;!-- maxIdle: Maximum number of idle database connections to retain in pool.
+         Set to -1 for no limit.  See also the DBCP 2 documentation on this
+         and the minEvictableIdleTimeMillis configuration parameter.
+         --&gt;
+
+    &lt;!-- maxWaitMillis: Maximum time to wait for a database connection to become available
+         in ms, in this example 10 seconds. An Exception is thrown if
+         this timeout is exceeded.  Set to -1 to wait indefinitely.
+         --&gt;
+
+    &lt;!-- username and password: MySQL username and password for database connections  --&gt;
+
+    &lt;!-- driverClassName: Class name for the old mm.mysql JDBC driver is
+         org.gjt.mm.mysql.Driver - we recommend using Connector/J though.
+         Class name for the official MySQL Connector/J driver is com.mysql.jdbc.Driver.
+         --&gt;
+
+    &lt;!-- url: The JDBC connection url for connecting to your MySQL database.
+         --&gt;
+
+  &lt;Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+               username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/javatest"/&gt;
+
+&lt;/Context&gt;</code></pre></div>
+
+<h5>3. web.xml configuration</h5>
+
+<p>Now create a <code>WEB-INF/web.xml</code> for this test application.</p>
+<div class="codeBox"><pre><code>&lt;web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4"&gt;
+  &lt;description&gt;MySQL Test App&lt;/description&gt;
+  &lt;resource-ref&gt;
+      &lt;description&gt;DB Connection&lt;/description&gt;
+      &lt;res-ref-name&gt;jdbc/TestDB&lt;/res-ref-name&gt;
+      &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+      &lt;res-auth&gt;Container&lt;/res-auth&gt;
+  &lt;/resource-ref&gt;
+&lt;/web-app&gt;</code></pre></div>
+
+<h5>4. Test code</h5>
+<p>Now create a simple <code>test.jsp</code> page for use later.</p>
+<div class="codeBox"><pre><code>&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
+
+&lt;sql:query var="rs" dataSource="jdbc/TestDB"&gt;
+select id, foo, bar from testdata
+&lt;/sql:query&gt;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;DB Test&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+
+  &lt;h2&gt;Results&lt;/h2&gt;
+
+&lt;c:forEach var="row" items="${rs.rows}"&gt;
+    Foo ${row.foo}&lt;br/&gt;
+    Bar ${row.bar}&lt;br/&gt;
+&lt;/c:forEach&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+
+<p>That JSP page makes use of
+<a href="http://www.oracle.com/technetwork/java/index-jsp-135995.html">JSTL</a>'s
+SQL and Core taglibs. You can get it from
+<a href="https://tomcat.apache.org/taglibs/standard/">Apache Tomcat Taglibs - Standard Tag Library</a>
+project &mdash; just make sure you get a 1.1.x or later release. Once you have
+JSTL, copy <code>jstl.jar</code> and <code>standard.jar</code> to your web app's
+<code>WEB-INF/lib</code> directory.
+
+</p>
+
+<p>Finally deploy your web app into <code>$CATALINA_BASE/webapps</code> either
+as a warfile called <code>DBTest.war</code> or into a sub-directory called
+<code>DBTest</code></p>
+<p>Once deployed, point a browser at
+<code>http://localhost:8080/DBTest/test.jsp</code> to view the fruits of
+your hard work.</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="Oracle_8i,_9i_&amp;_10g">Oracle 8i, 9i &amp; 10g</h4><div class="text">
+<h5>0.    Introduction</h5>
+
+<p>Oracle requires minimal changes from the MySQL configuration except for the
+usual gotchas :-)</p>
+<p>Drivers for older Oracle versions may be distributed as *.zip files rather
+than *.jar files. Tomcat will only use <code>*.jar</code> files installed in
+<code>$CATALINA_HOME/lib</code>. Therefore <code>classes111.zip</code>
+or <code>classes12.zip</code> will need to be renamed with a <code>.jar</code>
+extension. Since jarfiles are zipfiles, there is no need to unzip and jar these
+files - a simple rename will suffice.</p>
+
+<p>For Oracle 9i onwards you should use <code>oracle.jdbc.OracleDriver</code>
+rather than <code>oracle.jdbc.driver.OracleDriver</code> as Oracle have stated
+that <code>oracle.jdbc.driver.OracleDriver</code> is deprecated and support
+for this driver class will be discontinued in the next major release.
+</p>
+
+<h5>1. Context configuration</h5>
+<p>In a similar manner to the mysql config above, you will need to define your
+Datasource in your <a href="config/context.html">Context</a>. Here we define a
+Datasource called myoracle using the thin driver to connect as user scott,
+password tiger to the sid called mysid. (Note: with the thin driver this sid is
+not the same as the tnsname). The schema used will be the default schema for the
+user scott.</p>
+
+<p>Use of the OCI driver should simply involve a changing thin to oci in the URL string.
+</p>
+<div class="codeBox"><pre><code>&lt;Resource name="jdbc/myoracle" auth="Container"
+              type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+              url="jdbc:oracle:thin:@127.0.0.1:1521:mysid"
+              username="scott" password="tiger" maxTotal="20" maxIdle="10"
+              maxWaitMillis="-1"/&gt;</code></pre></div>
+
+<h5>2.    web.xml configuration</h5>
+<p>You should ensure that you respect the element ordering defined by the DTD when you
+create you applications web.xml file.</p>
+<div class="codeBox"><pre><code>&lt;resource-ref&gt;
+ &lt;description&gt;Oracle Datasource example&lt;/description&gt;
+ &lt;res-ref-name&gt;jdbc/myoracle&lt;/res-ref-name&gt;
+ &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+ &lt;res-auth&gt;Container&lt;/res-auth&gt;
+&lt;/resource-ref&gt;</code></pre></div>
+<h5>3.   Code example</h5>
+<p>You can use the same example application as above (assuming you create the required DB
+instance, tables etc.) replacing the Datasource code with something like</p>
+<div class="codeBox"><pre><code>Context initContext = new InitialContext();
+Context envContext  = (Context)initContext.lookup("java:/comp/env");
+DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
+Connection conn = ds.getConnection();
+//etc.</code></pre></div>
+</div></div>
+
+
+<div class="subsection"><h4 id="PostgreSQL">PostgreSQL</h4><div class="text">
+<h5>0.    Introduction</h5>
+<p>PostgreSQL is configured in a similar manner to Oracle.</p>
+
+<h5>1. Required files </h5>
+<p>
+Copy the Postgres JDBC jar to $CATALINA_HOME/lib. As with Oracle, the
+jars need to be in this directory in order for DBCP 2's Classloader to find
+them. This has to be done regardless of which configuration step you take next.
+</p>
+
+<h5>2. Resource configuration</h5>
+
+<p>
+You have two choices here: define a datasource that is shared across all Tomcat
+applications, or define a datasource specifically for one application.
+</p>
+
+<h6>2a. Shared resource configuration</h6>
+<p>
+Use this option if you wish to define a datasource that is shared across
+multiple Tomcat applications, or if you just prefer defining your datasource
+in this file.
+</p>
+<p><i>This author has not had success here, although others have reported so.
+Clarification would be appreciated here.</i></p>
+
+<div class="codeBox"><pre><code>&lt;Resource name="jdbc/postgres" auth="Container"
+          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://127.0.0.1:5432/mydb"
+          username="myuser" password="mypasswd" maxTotal="20" maxIdle="10" maxWaitMillis="-1"/&gt;</code></pre></div>
+<h6>2b. Application-specific resource configuration</h6>
+
+<p>
+Use this option if you wish to define a datasource specific to your application,
+not visible to other Tomcat applications. This method is less invasive to your
+Tomcat installation.
+</p>
+
+<p>
+Create a resource definition for your <a href="config/context.html">Context</a>.
+The Context element should look something like the following.
+</p>
+
+<div class="codeBox"><pre><code>&lt;Context&gt;
+
+&lt;Resource name="jdbc/postgres" auth="Container"
+          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://127.0.0.1:5432/mydb"
+          username="myuser" password="mypasswd" maxTotal="20" maxIdle="10"
+maxWaitMillis="-1"/&gt;
+&lt;/Context&gt;</code></pre></div>
+
+<h5>3. web.xml configuration</h5>
+<div class="codeBox"><pre><code>&lt;resource-ref&gt;
+ &lt;description&gt;postgreSQL Datasource example&lt;/description&gt;
+ &lt;res-ref-name&gt;jdbc/postgres&lt;/res-ref-name&gt;
+ &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+ &lt;res-auth&gt;Container&lt;/res-auth&gt;
+&lt;/resource-ref&gt;</code></pre></div>
+
+<h5>4. Accessing the datasource</h5>
+<p>
+When accessing the datasource programmatically, remember to prepend
+<code>java:/comp/env</code> to your JNDI lookup, as in the following snippet of
+code. Note also that "jdbc/postgres" can be replaced with any value you prefer, provided
+you change it in the above resource definition file as well.
+</p>
+
+<div class="codeBox"><pre><code>InitialContext cxt = new InitialContext();
+if ( cxt == null ) {
+   throw new Exception("Uh oh -- no context!");
+}
+
+DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
+
+if ( ds == null ) {
+   throw new Exception("Data source not found!");
+}</code></pre></div>
+
+</div></div>
+</div><h3 id="Non-DBCP_Solutions">Non-DBCP Solutions</h3><div class="text">
+<p>
+These solutions either utilise a single connection to the database (not recommended for anything other
+than testing!) or some other pooling technology.
+</p>
+</div><h3 id="Oracle_8i_with_OCI_client">Oracle 8i with OCI client</h3><div class="text">
+<div class="subsection"><h4 id="Oracle_8i_with_OCI_client/Introduction">Introduction</h4><div class="text">
+<p>Whilst not strictly addressing the creation of a JNDI DataSource using the OCI client, these notes can be combined with the
+Oracle and DBCP 2 solution above.</p>
+<p>
+In order to use OCI driver, you should have an Oracle client installed. You should have installed
+Oracle8i(8.1.7) client from cd,  and download the suitable JDBC/OCI
+driver(Oracle8i 8.1.7.1 JDBC/OCI Driver) from <a href="http://otn.oracle.com/">otn.oracle.com</a>.
+</p>
+<p>
+After renaming <code>classes12.zip</code> file to <code>classes12.jar</code>
+for Tomcat, copy it into <code>$CATALINA_HOME/lib</code>.
+You may also have to remove the <code>javax.sql.*</code> classes
+from this file depending upon the version of Tomcat and JDK you are using.
+</p>
+</div></div>
+
+<div class="subsection"><h4 id="Putting_it_all_together">Putting it all together</h4><div class="text">
+<p>
+Ensure that you have the <code>ocijdbc8.dll</code> or <code>.so</code> in your <code>$PATH</code> or <code>LD_LIBRARY_PATH</code>
+ (possibly in <code>$ORAHOME\bin</code>) and also confirm that the native library can be loaded by a simple test program
+using <code>System.loadLibrary("ocijdbc8");</code>
+</p>
+<p>
+You should next create a simple test servlet or JSP that has these
+<strong>critical lines</strong>:
+</p>
+<div class="codeBox"><pre><code>DriverManager.registerDriver(new
+oracle.jdbc.driver.OracleDriver());
+conn =
+DriverManager.getConnection("jdbc:oracle:oci8:@database","username","password");</code></pre></div>
+<p>
+where database is of the form <code>host:port:SID</code> Now if you try to access the URL of your
+test servlet/JSP and what you get is a
+<code>ServletException</code> with a root cause of <code>java.lang.UnsatisfiedLinkError:get_env_handle</code>.
+</p>
+<p>
+First, the <code>UnsatisfiedLinkError</code> indicates that you have
+</p>
+<ul>
+<li>a mismatch between your JDBC classes file and
+your Oracle client version. The giveaway here is the message stating that a needed library file cannot be
+found. For example, you may be using a classes12.zip file from Oracle Version 8.1.6 with a Version 8.1.5
+Oracle client. The classesXXX.zip file and Oracle client software versions must match.
+</li>
+<li>A <code>$PATH</code>, <code>LD_LIBRARY_PATH</code> problem.</li>
+<li>It has been reported that ignoring the driver you have downloaded from otn and using
+the classes12.zip file from the directory <code>$ORAHOME\jdbc\lib</code> will also work.
+</li>
+</ul>
+<p>
+Next you may experience the error <code>ORA-06401 NETCMN: invalid driver designator</code>
+</p>
+<p>
+The Oracle documentation says : "Cause: The login (connect) string contains an invalid
+driver designator. Action: Correct the string and re-submit."
+
+Change the database connect string (of the form <code>host:port:SID</code>) with this one:
+<code>(description=(address=(host=myhost)(protocol=tcp)(port=1521))(connect_data=(sid=orcl)))</code>
+</p>
+<p>
+<i>Ed. Hmm, I don't think this is really needed if you sort out your TNSNames - but I'm not an Oracle DBA :-)</i>
+</p>
+</div></div>
+</div><h3 id="Common_Problems">Common Problems</h3><div class="text">
+<p>Here are some common problems encountered with a web application which
+uses a database and tips for how to solve them.</p>
+
+<div class="subsection"><h4 id="Intermittent_Database_Connection_Failures">Intermittent Database Connection Failures</h4><div class="text">
+<p>
+Tomcat runs within a JVM.  The JVM periodically performs garbage collection
+(GC) to remove java objects which are no longer being used.  When the JVM
+performs GC execution of code within Tomcat freezes. If the maximum time
+configured for establishment of a database connection is less than the amount
+of time garbage collection took you can get a database connection failure.
+</p>
+
+<p>To collect data on how long garbage collection is taking add the
+<code>-verbose:gc</code> argument to your <code>CATALINA_OPTS</code>
+environment variable when starting Tomcat.  When verbose gc is enabled
+your <code>$CATALINA_BASE/logs/catalina.out</code> log file will include
+data for every garbage collection including how long it took.</p>
+
+<p>When your JVM is tuned correctly 99% of the time a GC will take less
+than one second.  The remainder will only take a few seconds.  Rarely,
+if ever should a GC take more than 10 seconds.</p>
+
+<p>Make sure that the db connection timeout is set to 10-15 seconds.
+For DBCP 2 you set this using the parameter <code>maxWaitMillis</code>.</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="Random_Connection_Closed_Exceptions">Random Connection Closed Exceptions</h4><div class="text">
+<p>
+These can occur when one request gets a db connection from the connection
+pool and closes it twice.  When using a connection pool, closing the
+connection just returns it to the pool for reuse by another request,
+it doesn't close the connection.  And Tomcat uses multiple threads to
+handle concurrent requests. Here is an example of the sequence
+of events which could cause this error in Tomcat:
+</p>
+<pre>
+  Request 1 running in Thread 1 gets a db connection.
+
+  Request 1 closes the db connection.
+
+  The JVM switches the running thread to Thread 2
+
+  Request 2 running in Thread 2 gets a db connection
+  (the same db connection just closed by Request 1).
+
+  The JVM switches the running thread back to Thread 1
+
+  Request 1 closes the db connection a second time in a finally block.
+
+  The JVM switches the running thread back to Thread 2
+
+  Request 2 Thread 2 tries to use the db connection but fails
+  because Request 1 closed it.
+</pre>
+<p>
+Here is an example of properly written code to use a database connection
+obtained from a connection pool:
+</p>
+<div class="codeBox"><pre><code>  Connection conn = null;
+  Statement stmt = null;  // Or PreparedStatement if needed
+  ResultSet rs = null;
+  try {
+    conn = ... get connection from connection pool ...
+    stmt = conn.createStatement("select ...");
+    rs = stmt.executeQuery();
+    ... iterate through the result set ...
+    rs.close();
+    rs = null;
+    stmt.close();
+    stmt = null;
+    conn.close(); // Return to connection pool
+    conn = null;  // Make sure we don't close it twice
+  } catch (SQLException e) {
+    ... deal with errors ...
+  } finally {
+    // Always make sure result sets and statements are closed,
+    // and the connection is returned to the pool
+    if (rs != null) {
+      try { rs.close(); } catch (SQLException e) { ; }
+      rs = null;
+    }
+    if (stmt != null) {
+      try { stmt.close(); } catch (SQLException e) { ; }
+      stmt = null;
+    }
+    if (conn != null) {
+      try { conn.close(); } catch (SQLException e) { ; }
+      conn = null;
+    }
+  }</code></pre></div>
+
+</div></div>
+
+<div class="subsection"><h4 id="Context_versus_GlobalNamingResources">Context versus GlobalNamingResources</h4><div class="text">
+<p>
+  Please note that although the above instructions place the JNDI declarations in a Context
+  element, it is possible and sometimes desirable to place these declarations in the
+  <a href="config/globalresources.html">GlobalNamingResources</a> section of the server
+  configuration file.  A resource placed in the GlobalNamingResources section will be shared
+  among the Contexts of the server.
+</p>
+</div></div>
+
+<div class="subsection"><h4 id="JNDI_Resource_Naming_and_Realm_Interaction">JNDI Resource Naming and Realm Interaction</h4><div class="text">
+<p>
+  In order to get Realms to work, the realm must refer to the datasource as
+  defined in the &lt;GlobalNamingResources&gt; or &lt;Context&gt; section, not a datasource as renamed
+  using &lt;ResourceLink&gt;.
+</p>
+</div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

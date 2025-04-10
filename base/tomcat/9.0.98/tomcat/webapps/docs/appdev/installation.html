@@ -1,0 +1,75 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Application Developer's Guide (9.0.98) - Installation</title><meta name="author" content="Craig R. McClanahan"><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Application Developer's Guide</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">App Dev Guide Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Contents</h2><ul><li><a href="index.html">Contents</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="installation.html">Installation</a></li><li><a href="deployment.html">Deployment</a></li><li><a href="source.html">Source Code</a></li><li><a href="processes.html">Processes</a></li><li><a href="sample/">Example App</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Installation</h2><h3 id="Installation">Installation</h3><div class="text">
+
+<p>In order to use Tomcat for developing web applications, you must first
+install it (and the software it depends on).  The required steps are outlined
+in the following subsections.</p>
+
+<div class="subsection"><h4 id="JDK">JDK</h4><div class="text">
+
+<p>Tomcat 9.0 was designed to run on Java SE 8 or later.
+</p>
+
+<p>Compatible JDKs for many platforms (or links to where they can be found)
+are available at
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.</p>
+
+</div></div>
+
+<div class="subsection"><h4 id="Tomcat">Tomcat</h4><div class="text">
+
+<p>Binary downloads of the <strong>Tomcat</strong> server are available from
+<a href="https://tomcat.apache.org/">https://tomcat.apache.org/</a>.
+This manual assumes you are using the most recent release
+of Tomcat 9.  Detailed instructions for downloading and installing
+Tomcat are available <a href="../setup.html">here</a>.</p>
+
+<p>In the remainder of this manual, example shell scripts assume that you have
+set an environment variable <code>CATALINA_HOME</code> that contains the
+pathname to the directory in which Tomcat has been installed. Optionally, if
+Tomcat has been configured for multiple instances, each instance will have its
+own <code>CATALINA_BASE</code> configured.</p>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="Ant">Ant</h4><div class="text">
+
+<p>Binary downloads of the <strong>Ant</strong> build tool are available from
+<a href="https://ant.apache.org/">https://ant.apache.org/</a>.
+This manual assumes you are using Ant 1.8 or later.  The instructions may
+also be compatible with other versions, but this has not been tested.</p>
+
+<p>Download and install Ant.
+Then, add the <code>bin</code> directory of the Ant distribution to your
+<code>PATH</code> environment variable, following the standard practices for
+your operating system platform.  Once you have done this, you will be able to
+execute the <code>ant</code> shell command directly.</p>
+
+</div></div>
+
+
+<div class="subsection"><h4 id="Source_Code_Control">Source Code Control</h4><div class="text">
+
+<p>Besides the required tools described above, you are strongly encouraged
+to download and install a <em>source code control</em> system, such as Git,
+Subversion, CVS or one of the many alternatives. You will need appropriate
+client tools to check out source code files, and check in modified versions and,
+depending on the tool and hosting option you choose, you may need to obtain and
+install server software or sign up for an account with a cloud provider.</p>
+
+<p>Detailed instructions for installing and using source code control
+applications is beyond the scope of this manual.</p>
+
+</div></div>
+
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

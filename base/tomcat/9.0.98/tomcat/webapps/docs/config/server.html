@@ -1,0 +1,109 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Server Component</title><meta name="author" content="Craig R. McClanahan"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Server Component</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#Standard_Implementation">Standard Implementation</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Special_Features">Special Features</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>A <strong>Server</strong> element represents the entire Catalina
+  servlet container.  Therefore, it must be the single outermost element
+  in the <code>conf/server.xml</code> configuration file.  Its attributes
+  represent the characteristics of the servlet container as a whole.</p>
+
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+  <p>All implementations of <strong>Server</strong>
+  support the following attributes:</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><code class="attributeName">className</code></td><td>
+      <p>Java class name of the implementation to use.  This class must
+      implement the <code>org.apache.catalina.Server</code> interface.
+      If no class name is specified, the standard implementation will
+      be used.</p>
+    </td></tr><tr id="Attributes_Common Attributes_address"><td><code class="attributeName">address</code></td><td>
+      <p>The TCP/IP address on which this server waits for a shutdown
+      command. If no address is specified, <code>localhost</code> is used.</p>
+    </td></tr><tr id="Attributes_Common Attributes_port"><td><strong><code class="attributeName">port</code></strong></td><td>
+      <p>The TCP/IP port number on which this server waits for a shutdown
+      command. Set to <code>-1</code> to disable the shutdown port.</p>
+      <p>Note: Disabling the shutdown port works well when Tomcat is started
+      using <a href="https://commons.apache.org/daemon/">Apache Commons Daemon</a>
+      (running as a service on Windows or with jsvc on un*xes). It cannot be
+      used when running Tomcat with the standard shell scripts though, as it
+      will prevent shutdown.bat|.sh and catalina.bat|.sh from stopping it
+      gracefully.</p>
+    </td></tr><tr id="Attributes_Common Attributes_portOffset"><td><code class="attributeName">portOffset</code></td><td>
+      <p>The offset to apply to <code>port</code> and to the ports of any
+      nested connectors. It must be a non-negative integer. If not specified,
+      the default value of <code>0</code> is used.</p>
+    </td></tr><tr id="Attributes_Common Attributes_shutdown"><td><strong><code class="attributeName">shutdown</code></strong></td><td>
+      <p>The command string that must be received via a TCP/IP connection
+      to the specified port number, in order to shut down Tomcat.</p>
+    </td></tr><tr id="Attributes_Common Attributes_utilityThreads"><td><code class="attributeName">utilityThreads</code></td><td>
+      <p>The number of threads this <strong>Service</strong> will use for
+      various utility tasks, including recurring ones. The special value
+      of 0 will result in the value of
+      <code>Runtime.getRuntime().availableProcessors()</code> being
+      used. Negative values will result in
+      <code>Runtime.getRuntime().availableProcessors() + value</code> being
+      used unless this is less than 1 in which case 1 thread will be used.
+      The default value is 1.
+      </p>
+    </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Standard_Implementation">Standard Implementation</h4><div class="text">
+
+  <p>The standard implementation of <strong>Server</strong> is
+  <strong>org.apache.catalina.core.StandardServer</strong>.
+  It supports the following additional attributes (in addition to the
+  common attributes listed above):</p>
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Standard Implementation_utilityThreadsAsDaemon"><td><code class="attributeName">utilityThreadsAsDaemon</code></td><td>
+      <p>Set the daemon flag value for the utility threads. The default value
+      is <code>false</code>.
+      </p>
+    </td></tr><tr id="Attributes_Standard Implementation_periodicEventDelay"><td><code class="attributeName">periodicEventDelay</code></td><td>
+      <p>This value represents the delay in seconds between periodic
+      lifecycle event invocation of the lifecycle listeners configured on this
+      Server. The value is in seconds, and a negative or zero value will
+      disable the invocations. If not specified, the default value for this
+      attribute is 10 seconds.</p>
+    </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <p>The following components may be nested inside a <strong>Server</strong>
+  element:</p>
+  <ul>
+  <li><a href="service.html"><strong>Service</strong></a> -
+      One or more service element.</li>
+  <li><a href="globalresources.html"><strong>GlobalNamingResources</strong></a> -
+      Configure the JNDI global resources for the server.</li>
+  </ul>
+
+</div><h3 id="Special_Features">Special Features</h3><div class="text">
+
+  <p>There are no special features associated with a <strong>Server</strong>.
+  </p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

@@ -1,0 +1,1033 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Realm Component</title><meta name="author" content="Craig R. McClanahan"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Realm Component</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#DataSource_Database_Realm_-_org.apache.catalina.realm.DataSourceRealm">DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm</a></li><li><a href="#JNDI_Directory_Realm_-_org.apache.catalina.realm.JNDIRealm">JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm</a></li><li><a href="#UserDatabase_Realm_-_org.apache.catalina.realm.UserDatabaseRealm">UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm</a></li><li><a href="#Memory_Based_Realm_-_org.apache.catalina.realm.MemoryRealm">Memory Based Realm - org.apache.catalina.realm.MemoryRealm</a></li><li><a href="#JAAS_Realm_-_org.apache.catalina.realm.JAASRealm">JAAS Realm - org.apache.catalina.realm.JAASRealm</a></li><li><a href="#Combined_Realm_-_org.apache.catalina.realm.CombinedRealm">Combined Realm - org.apache.catalina.realm.CombinedRealm</a></li><li><a href="#LockOut_Realm_-_org.apache.catalina.realm.LockOutRealm">LockOut Realm - org.apache.catalina.realm.LockOutRealm</a></li><li><a href="#Null_Realm_-_org.apache.catalina.realm.NullRealm">Null Realm - org.apache.catalina.realm.NullRealm</a></li><li><a href="#Authenticated_User_Realm_-_org.apache.catalina.realm.AuthenticatedUserRealm">Authenticated User Realm - org.apache.catalina.realm.AuthenticatedUserRealm</a></li><li><a href="#JDBC_Database_Realm_-_org.apache.catalina.realm.JDBCRealm">JDBC Database Realm - org.apache.catalina.realm.JDBCRealm</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Special_Features">Special Features</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>A <strong>Realm</strong> element represents a "database" of usernames,
+  passwords, and <em>roles</em> (similar to Unix <em>groups</em>) assigned
+  to those users.  Different implementations of Realm allow Catalina to be
+  integrated into environments where such authentication information is already
+  being created and maintained, and then utilize that information to implement
+  <em>Container Managed Security</em> as described in the Servlet
+  Specification.</p>
+
+  <p>A Catalina container (<a href="engine.html">Engine</a>,
+  <a href="host.html">Host</a>, or <a href="context.html">Context</a>) may
+  contain no more than one Realm element (although if supported by the Realm
+  this one Realm may itself contain multiple nested Realms). In addition, the
+  Realm associated with an Engine or a Host is automatically inherited by
+  lower-level containers unless the lower level container explicitly defines its
+  own Realm. If no Realm is configured for the Engine, an instance of the
+  <a href="#Null_Realm_-_org.apache.catalina.realm.NullRealm">Null Realm</a>
+  will be configured for the Engine automatically.</p>
+
+  <p>For more in-depth information about container managed security in web
+  applications, as well as more information on configuring and using the
+  standard realm component implementations, please see the
+  <a href="../realm-howto.html">Container-Managed Security Guide</a>.
+  </p>
+
+    <p><em>The description below uses the variable name $CATALINA_BASE to refer the
+    base directory against which most relative paths are resolved. If you have
+    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
+    the directory into which you have installed Tomcat.</em></p>
+
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+    <p>All implementations of <strong>Realm</strong>
+    support the following attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use.  This class must
+        implement the <code>org.apache.catalina.Realm</code> interface.</p>
+      </td></tr></table>
+
+    <p>Unlike most Catalina components, there are several standard
+    <strong>Realm</strong> implementations available.  As a result,
+    the <code>className</code> attribute MUST be used to select the
+    implementation you wish to use.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="DataSource_Database_Realm_-_org.apache.catalina.realm.DataSourceRealm">DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm</h4><div class="text">
+
+    <p>The <strong>DataSource Database Realm</strong> connects Tomcat to
+    a relational database, accessed through a JNDI named JDBC DataSource
+    to perform lookups of usernames, passwords, and their associated
+    roles.  Because the lookup is done each time that it is required,
+    changes to the database will be immediately reflected in the
+    information used to authenticate new logins.</p>
+
+    <p>The JDBC Realm uses a single db connection. This requires that
+    realm based authentication be synchronized, i.e. only one authentication
+    can be done at a time. This could be a bottleneck for applications
+    with high volumes of realm based authentications.</p>
+
+    <p>The DataSource Database Realm supports simultaneous realm based
+    authentications and allows the underlying JDBC DataSource to
+    handle optimizations like database connection pooling.</p>
+
+    <p>A rich set of additional attributes lets you configure the name
+    of the JNDI JDBC DataSource, as well as the table and
+    column names used to retrieve the required information:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+        <p>When this attribute has the value of <code>authOnly</code> or
+        <code>strictAuthOnly</code>, the <strong>roleNameCol</strong> and
+        <strong>userRoleTable</strong> attributes become optional. If those two
+        attributes are omitted, the user's roles will not be loaded by this
+        Realm.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_dataSourceName"><td><strong><code class="attributeName">dataSourceName</code></strong></td><td>
+        <p>The name of the JNDI JDBC DataSource for this Realm.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_localDataSource"><td><code class="attributeName">localDataSource</code></td><td>
+        <p>When the realm is nested inside a Context element, this allows the
+        realm to use a DataSource defined for the Context rather than a global
+        DataSource.  If not specified, the default is <code>false</code>: use a
+        global DataSource.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_roleNameCol"><td><code class="attributeName">roleNameCol</code></td><td>
+        <p>Name of the column, in the "user roles" table, which contains
+        a role name assigned to the corresponding user.</p>
+        <p>This attribute is <strong>required</strong> in majority of
+        configurations. See <strong>allRolesMode</strong> attribute for
+        a rare case when it can be omitted.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_stripRealmForGss"><td><code class="attributeName">stripRealmForGss</code></td><td>
+        <p>When processing users authenticated via the GSS-API, this attribute
+        controls if any "@..." is removed from the end of the user
+        name. If not specified, the default is <code>true</code>.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_userCredCol"><td><strong><code class="attributeName">userCredCol</code></strong></td><td>
+        <p>Name of the column, in the "users" table, which contains
+        the user's credentials (i.e. password).  If a
+        <code>CredentialHandler</code> is specified, this component
+        will assume that the passwords have been encoded with the
+        specified algorithm.  Otherwise, they will be assumed to be
+        in clear text.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_userNameCol"><td><strong><code class="attributeName">userNameCol</code></strong></td><td>
+        <p>Name of the column, in the "users" and "user roles" table,
+        that contains the user's username.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_userRoleTable"><td><code class="attributeName">userRoleTable</code></td><td>
+        <p>Name of the "user roles" table, which must contain columns
+        named by the <code>userNameCol</code> and <code>roleNameCol</code>
+        attributes.</p>
+        <p>This attribute is <strong>required</strong> in majority of
+        configurations. See <strong>allRolesMode</strong> attribute for
+        a rare case when it can be omitted.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_userTable"><td><strong><code class="attributeName">userTable</code></strong></td><td>
+        <p>Name of the "users" table, which must contain columns named
+        by the <code>userNameCol</code> and <code>userCredCol</code>
+        attributes.</p>
+      </td></tr><tr id="Attributes_DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm_X509UsernameRetrieverClassName"><td><code class="attributeName">X509UsernameRetrieverClassName</code></td><td>
+        <p>When using X509 client certificates, this specifies the class name
+        that will be used to retrieve the user name from the certificate.
+        The class must implement the
+        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        interface. The default is to use the certificate's SubjectDN
+        as the username.</p>
+      </td></tr></table>
+
+    <p>See the <a href="../realm-howto.html#DataSourceRealm">
+    DataSource Realm How-To</a> for more information on setting up container
+    managed security using the DataSource Database Realm component.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="JNDI_Directory_Realm_-_org.apache.catalina.realm.JNDIRealm">JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm</h4><div class="text">
+
+    <p>The <strong>JNDI Directory Realm</strong> connects Tomcat to
+    an LDAP Directory, accessed through an appropriate JNDI driver,
+    that stores usernames, passwords, and their associated
+    roles. Changes to the directory are immediately reflected in the
+    information used to authenticate new logins.</p>
+
+    <p>The directory realm supports a variety of approaches to using
+    LDAP for authentication:</p>
+
+    <ul>
+    <li>The realm can either use a pattern to determine the
+    distinguished name (DN) of the user's directory entry, or search
+    the directory to locate that entry.
+    </li>
+
+    <li>The realm can authenticate the user either by binding to the
+    directory with the DN of the user's entry and the password
+    presented by the user, or by retrieving the password from the
+    user's entry and performing a comparison locally.
+    </li>
+
+    <li>Roles may be represented in the directory as explicit entries
+    found by a directory search (e.g. group entries of which the user
+    is a member), as the values of an attribute in the user's entry,
+    or both.
+    </li>
+    </ul>
+
+    <p> A rich set of additional attributes lets you configure the
+    required behaviour as well as the connection to the underlying
+    directory and the element and attribute names used to retrieve
+    information from the directory:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_adCompat"><td><code class="attributeName">adCompat</code></td><td>
+        <p>Microsoft Active Directory often returns referrals.
+        When iterating over NamingEnumerations these lead to
+        PartialResultExceptions. If you want us to ignore those exceptions,
+        set this attribute to "true". Unfortunately there's no stable way
+        to detect, if the Exceptions really come from an AD referral.
+        The default value is "false".</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_alternateURL"><td><code class="attributeName">alternateURL</code></td><td>
+        <p>If a socket connection cannot be made to the provider at
+        the <code>connectionURL</code> an attempt will be made to use the
+        <code>alternateURL</code>.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_authentication"><td><code class="attributeName">authentication</code></td><td>
+        <p>A string specifying the type of authentication to use.
+        "none", "simple", "strong" or a provider specific definition
+        can be used. If no value is given the providers default is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_cipherSuites"><td><code class="attributeName">cipherSuites</code></td><td>
+        <p>Specify which cipher suites are allowed when trying to open
+        a secured connection using StartTLS. The allowed cipher suites
+        are specified by a comma separated list. The default is to use the
+        cipher suites of the JVM.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_commonRole"><td><code class="attributeName">commonRole</code></td><td>
+        <p>A role name assigned to each successfully authenticated user in
+        addition to the roles retrieved from LDAP. If not specified, only
+        the roles retrieved via LDAP are used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_connectionName"><td><code class="attributeName">connectionName</code></td><td>
+        <p>The directory username to use when establishing a
+        connection to the directory for LDAP search operations. If not
+        specified an anonymous connection is made, which is often
+        sufficient unless you specify the <code>userPassword</code>
+        property.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_connectionPassword"><td><code class="attributeName">connectionPassword</code></td><td>
+        <p>The directory password to use when establishing a
+        connection to the directory for LDAP search operations. If not
+        specified an anonymous connection is made, which is often
+        sufficient unless you specify the <code>userPassword</code>
+        property.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_connectionPoolSize"><td><code class="attributeName">connectionPoolSize</code></td><td>
+        <p>The JNDI realm can use a pool of connections to the directory server
+        to avoid blocking on a single connection. This attribute value is the
+        maximum pool size. If not specified, it will use <code>1</code>, which
+        means a single connection will be used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_connectionTimeout"><td><code class="attributeName">connectionTimeout</code></td><td>
+        <p>The timeout in milliseconds to use when establishing the connection
+        to the LDAP directory. If not specified, a value of 5000 (5 seconds) is
+        used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_connectionURL"><td><strong><code class="attributeName">connectionURL</code></strong></td><td>
+        <p>The connection URL to be passed to the JNDI driver when
+        establishing a connection to the directory.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_contextFactory"><td><code class="attributeName">contextFactory</code></td><td>
+        <p>Fully qualified Java class name of the factory class used
+        to acquire our JNDI <code>InitialContext</code>.  By default,
+        assumes that the standard JNDI LDAP provider will be utilized.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_derefAliases"><td><code class="attributeName">derefAliases</code></td><td>
+        <p>A string specifying how aliases are to be dereferenced during
+        search operations. The allowed values are "always", "never",
+        "finding" and "searching". If not specified, "always" is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_forceDnHexEscape"><td><code class="attributeName">forceDnHexEscape</code></td><td>
+        <p>A setting of <code>true</code> forces escaping in the String
+        representation of a distinguished name to use the <code>\nn</code> form.
+        This may avoid issues with realms using Active Directory which appears
+        to be more tolerant of optional escaping when the <code>\nn</code> form
+        is used. If not specified, the default of <code>false</code> will be
+        used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_hostnameVerifierClassName"><td><code class="attributeName">hostnameVerifierClassName</code></td><td>
+        <p>The name of the class to use for hostname verification when
+        using StartTLS for securing the connection to the ldap server.
+        The default constructor will be used to construct an instance of
+        the verifier class. The default is to accept only those hostnames,
+        that are valid according to the peer certificate of the ldap
+        server.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_protocol"><td><code class="attributeName">protocol</code></td><td>
+         <p>A string specifying the TLS protocol to use. If not given, the
+         Java runtime's default is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_readTimeout"><td><code class="attributeName">readTimeout</code></td><td>
+          <p>The timeout, in milliseconds, to use when trying to read from a
+          connection to the directory. If not specified, the default of 5000
+          (5 seconds) is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_referrals"><td><code class="attributeName">referrals</code></td><td>
+        <p>How do we handle JNDI referrals? Allowed values are
+        "ignore", "follow", or "throw"  (see javax.naming.Context.REFERRAL
+        for more information).
+        Microsoft Active Directory often returns referrals.
+        If you need to follow them set referrals to "follow".
+        Caution: if your DNS is not part of AD, the LDAP client lib might try
+        to resolve your domain name in DNS to find another LDAP server.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_roleBase"><td><code class="attributeName">roleBase</code></td><td>
+        <p>The base directory entry for performing role searches. If not
+        specified the top-level element in the directory context will be used.
+        If specified it may optionally include pattern replacements
+        "{0}".."{n}" corresponding to the name parts of the
+        user's distinguished name (as returned by
+        <code>javax.naming.Name.get()</code>).</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_roleName"><td><code class="attributeName">roleName</code></td><td>
+        <p>The name of the attribute that contains role names in the
+        directory entries found by a role search. In addition you can
+        use the <code>userRoleName</code> property to specify the name
+        of an attribute, in the user's entry, containing additional
+        role names.</p>
+        <p>If <code>roleName</code> is not specified a role
+        search does not take place, and roles are taken only from the
+        user's entry.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_roleNested"><td><code class="attributeName">roleNested</code></td><td>
+        <p>Set to <code>true</code> if you want to nest roles into roles.
+        When a role search is performed and the value of this property is
+        <code>true</code>, the search will be repeated recursively to find
+        all the roles that belong to the user either directly or indirectly.
+        If not specified, the default value of <code>false</code> is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_roleSearch"><td><code class="attributeName">roleSearch</code></td><td>
+        <p>The LDAP filter expression used for performing role
+        searches.</p>
+
+        <p>Use <code>{0}</code> to substitute the distinguished name (DN)
+        of the user, and/or <code>{1}</code> to substitute the username,
+        and/or <code>{2}</code> for the value of an attribute from the
+        user's directory entry, of the authenticated user.
+        The name of the attribute that provides the value for <code>{2}</code>
+        is configured by the <code>userRoleAttribute</code> property.</p>
+
+        <p>When <code>roleNested</code> property is <code>true</code>,
+        this filter expression will be also used to recursively search for
+        other roles, which indirectly belong to this user. To find the
+        roles that match the newly found role, the following values
+        are used:
+        <code>{0}</code> is substituted by the distinguished name of the newly
+        found role, and both <code>{1}</code> and <code>{2}</code> are
+        substituted by the name of the role (see the <code>roleName</code>
+        property). The <code>userRoleAttribute</code> property is not
+        applicable to this search.</p>
+
+        <p>If this property is not specified, a role search does not take
+        place and roles are taken only from the attribute in the user's entry
+        specified by the <code>userRoleName</code> property.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_roleSearchAsUser"><td><code class="attributeName">roleSearchAsUser</code></td><td>
+        <p> When searching for user roles, should the search be performed as the
+        user currently being authenticated? If false,
+        <code>connectionName</code> and <code>connectionPassword</code> will be
+        used if specified, else an anonymous. If not specified, the default
+        value of <code>false</code> is used. Note that when accessing the
+        directory using delegated credentials, this attribute is always ignored
+        and the search is performed using the delegated credentials.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_roleSubtree"><td><code class="attributeName">roleSubtree</code></td><td>
+        <p>Set to <code>true</code> if you want to search the entire
+        subtree of the element specified by the <code>roleBase</code>
+        property for role entries associated with the user. The
+        default value of <code>false</code> causes only the top level
+        to be searched.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_sizeLimit"><td><code class="attributeName">sizeLimit</code></td><td>
+        <p>Specifies the maximum number of records to return when using the
+        <code>userSearch</code> attribute. If not specified, the default of
+        <code>0</code> is used which indicates no limit.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_spnegoDelegationQop"><td><code class="attributeName">spnegoDelegationQop</code></td><td>
+        <p>When the JNDI Realm is used with the SPNEGO authenticator and
+        <code>useDelegatedCredential</code> is <code>true</code> this attribute
+        controls the QOP (Quality of Protection) that should be used for
+        the connection to the LDAP
+        server after authentication. This value is used to set the
+        <code>javax.security.sasl.qop</code> environment property for the LDAP
+        connection. This attribute should be a comma-separated list of values
+        selected from <code>auth-conf</code>, <code>auth-int</code> and
+        <code>auth</code>. See <a href="https://docs.oracle.com/javase/8/docs/api/javax/security/sasl/Sasl.html#QOP" rel="nofollow">Java documentation</a> for more details.</p>
+        <p>The default value is <code>auth-conf</code>.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_sslProtocol"><td><code class="attributeName">sslProtocol</code></td><td>
+        <p>Specifies which ssl protocol should be used, when connecting with
+        StartTLS. The default is to let the jre decide. If you need even more
+        control, you can specify the <code>SSLSocketFactory</code> to use.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_sslSocketFactory"><td><code class="attributeName">sslSocketFactory</code></td><td>
+        <p>Specifies which <code>SSLSocketFactory</code> to use when connecting
+        to the ldap server using StartTLS. An instance of the class will be
+        constructed using the default constructor. If none class name is given
+        the default jre <code>SSLSocketFactory</code> will be used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_stripRealmForGss"><td><code class="attributeName">stripRealmForGss</code></td><td>
+        <p>When processing users authenticated via the GSS-API, this attribute
+        controls if any "@..." is removed from the end of the user
+        name. If not specified, the default is <code>true</code>.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_timeLimit"><td><code class="attributeName">timeLimit</code></td><td>
+        <p>Specifies the time (in milliseconds) to wait for records to be
+        returned when using the <code>userSearch</code> attribute. If not
+        specified, the default of <code>0</code> is used which indicates no
+        limit.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_useContextClassLoader"><td><code class="attributeName">useContextClassLoader</code></td><td>
+        <p>Instructs JNDIRealm to use the context class loader when opening the
+        connection for the JNDI provider. The default value is
+        <code>true</code>. To load classes using the container's classloader,
+        specify <code>false</code>.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_useDelegatedCredential"><td><code class="attributeName">useDelegatedCredential</code></td><td>
+        <p>When the JNDIRealm is used with the SPNEGO authenticator, delegated
+        credentials for the user may be available. If such credentials are
+        present, this attribute controls whether or not they are used to
+        connect to the directory. If not specified, the default value of
+        <code>true</code> is used.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userBase"><td><code class="attributeName">userBase</code></td><td>
+        <p>The base element for user searches performed using the
+        <code>userSearch</code> expression.  Not used if you are using
+        the <code>userPattern</code> expression.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userPassword"><td><code class="attributeName">userPassword</code></td><td>
+        <p>Name of the attribute in the user's entry containing the
+        user's password.  If you specify this value, JNDIRealm will
+        bind to the directory using the values specified by
+        <code>connectionName</code> and
+        <code>connectionPassword</code> properties, and retrieve the
+        corresponding attribute for comparison to the value specified
+        by the user being authenticated.  If you do
+        <strong>not</strong> specify this value, JNDIRealm will
+        attempt a simple bind to the directory using the DN of the
+        user's entry and the password presented by the user, with a
+        successful bind being interpreted as an authenticated
+        user.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userPattern"><td><code class="attributeName">userPattern</code></td><td>
+        <p>Pattern for the distinguished name (DN) of the user's
+        directory entry, with <code>{0}</code> marking where the
+        actual username should be inserted. You can use this property
+        instead of <code>userSearch</code>, <code>userSubtree</code>
+        and <code>userBase</code> when the distinguished name contains
+        the username and is otherwise the same for all users. Note that
+        when accessing the directory using delegated credentials, this
+        attribute is always ignored and <code>userSearch</code>,
+        <code>userSubtree</code> and <code>userBase</code> are always
+        used instead.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userRoleName"><td><code class="attributeName">userRoleName</code></td><td>
+        <p>The name of an attribute in the user's directory entry
+        containing zero or more values for the names of roles assigned
+        to this user.  In addition you can use the
+        <code>roleName</code> property to specify the name of an
+        attribute to be retrieved from individual role entries found
+        by searching the directory. If <code>userRoleName</code> is
+        not specified all the roles for a user derive from the role
+        search.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userRoleAttribute"><td><code class="attributeName">userRoleAttribute</code></td><td>
+        <p>The name of an attribute in the user's directory entry
+        containing the value that you wish to use when you search for
+        roles. This is especially useful for RFC 2307 where
+        the role memberUid can be the <code>uid</code> or the
+        <code>uidNumber</code> of the user. This value will be
+        marked as <code>{2}</code> in your role search filter expression.
+        This value will NOT be available for nested role searches.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userSearch"><td><code class="attributeName">userSearch</code></td><td>
+        <p>The LDAP filter expression to use when searching for a
+        user's directory entry, with <code>{0}</code> marking where
+        the actual username should be inserted.  Use this property
+        (along with the <code>userBase</code> and
+        <code>userSubtree</code> properties) instead of
+        <code>userPattern</code> to search the directory for the
+        user's entry.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userSearchAsUser"><td><code class="attributeName">userSearchAsUser</code></td><td>
+        <p> When searching for a user's entry, should the search be performed as
+        the user currently being authenticated? If false,
+        <code>connectionName</code> and <code>connectionPassword</code> will be
+        used if specified, else an anonymous. If not specified, the default
+        value of <code>false</code> is used. Note that when accessing the
+        directory using delegated credentials, this attribute is always ignored
+        and the search is performed using the delegated credentials.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_userSubtree"><td><code class="attributeName">userSubtree</code></td><td>
+        <p>Set to <code>true</code> if you want to search the entire
+        subtree of the element specified by the <code>userBase</code>
+        property for the user's entry. The default value of
+        <code>false</code> causes only the top level to be searched.
+        Not used if you are using the <code>userPattern</code>
+        expression.</p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_useStartTls"><td><code class="attributeName">useStartTls</code></td><td>
+        <p>Set to <code>true</code> if you want to use StartTLS for securing
+        the connection to the ldap server. The default value is <code>false</code>.
+        </p>
+      </td></tr><tr id="Attributes_JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm_X509UsernameRetrieverClassName"><td><code class="attributeName">X509UsernameRetrieverClassName</code></td><td>
+        <p>When using X509 client certificates, this specifies the class name
+        that will be used to retrieve the user name from the certificate.
+        The class must implement the
+        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        interface. The default is to use the certificate's SubjectDN
+        as the username.</p>
+      </td></tr></table>
+
+    <p>See the <a href="../realm-howto.html">Container-Managed Security Guide</a> for more
+    information on setting up container managed security using the
+    JNDI Directory Realm component.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="UserDatabase_Realm_-_org.apache.catalina.realm.UserDatabaseRealm">UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm</h4><div class="text">
+
+    <p>The <strong>UserDatabase Realm</strong> is a Realm implementation
+    that is based on a UserDatabase resource made available through the global
+    JNDI resources configured for this Tomcat instance.</p>
+
+    <p>The UserDatabase Realm implementation supports the following
+    additional attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+      </td></tr><tr id="Attributes_UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm_localJndiResource"><td><code class="attributeName">localJndiResource</code></td><td>
+        <p>When the realm is nested inside a Context element, this allows the
+        realm to use a UserDatabase defined for the Context rather than a global
+        UserDatabase. If not specified, the default is <code>false</code>: use a
+        global UserDatabase.</p>
+      </td></tr><tr id="Attributes_UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm_resourceName"><td><strong><code class="attributeName">resourceName</code></strong></td><td>
+        <p>The name of the global <code>UserDatabase</code> resource
+        that this realm will use for user, password and role information.</p>
+      </td></tr><tr id="Attributes_UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm_useStaticPrincipal"><td><code class="attributeName">useStaticPrincipal</code></td><td>
+        <p>This allows using a static <code>Principal</code> instance
+        disconnected from the database if needed. This makes the behavior of
+        authenticated prinicipals equivalent to that of the other realms.
+        If there is a plan to use serialization, it is best to set this to
+        <code>true</code> as the principal will always be replaced by this
+        equivalent static principal when serializing.
+        If not specified, the default is <code>false</code>: use a
+        Principal connected to the UserDatabase.</p>
+      </td></tr><tr id="Attributes_UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr><tr id="Attributes_UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm_X509UsernameRetrieverClassName"><td><code class="attributeName">X509UsernameRetrieverClassName</code></td><td>
+        <p>When using X509 client certificates, this specifies the class name
+        that will be used to retrieve the user name from the certificate.
+        The class must implement the
+        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        interface. The default is to use the certificate's SubjectDN
+        as the username.</p>
+      </td></tr></table>
+
+    <p>See the
+    <a href="../realm-howto.html">Container-Managed Security Guide</a> for more
+    information on setting up container managed security using the UserDatabase
+    Realm component and the
+    <a href="../jndi-resources-howto.html">JNDI resources how-to</a> for more
+    information on how to configure a UserDatabase resource.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Memory_Based_Realm_-_org.apache.catalina.realm.MemoryRealm">Memory Based Realm - org.apache.catalina.realm.MemoryRealm</h4><div class="text">
+
+    <p>The <strong>Memory Based Realm</strong> is a simple Realm implementation
+    that reads user information from an XML format, and represents it as a
+    collection of Java objects in memory.  This implementation is intended
+    solely to get up and running with container managed security - it is NOT
+    intended for production use.  As such, there are no mechanisms for
+    updating the in-memory collection of users when the content of the
+    underlying data file is changed.</p>
+
+    <p>The Memory Based Realm implementation supports the following
+    additional attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Memory Based Realm - org.apache.catalina.realm.MemoryRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+      </td></tr><tr id="Attributes_Memory Based Realm - org.apache.catalina.realm.MemoryRealm_pathname"><td><code class="attributeName">pathname</code></td><td>
+        <p>URL, absolute path or relative path (to $CATALINA_BASE) for the XML
+        file containing our user information.  See below for details on the
+        XML element format required.  If no pathname is specified, the
+        default value is <code>conf/tomcat-users.xml</code>.</p>
+      </td></tr><tr id="Attributes_Memory Based Realm - org.apache.catalina.realm.MemoryRealm_stripRealmForGss"><td><code class="attributeName">stripRealmForGss</code></td><td>
+        <p>When processing users authenticated via the GSS-API, this attribute
+        controls if any "@..." is removed from the end of the user
+        name. If not specified, the default is <code>true</code>.</p>
+      </td></tr><tr id="Attributes_Memory Based Realm - org.apache.catalina.realm.MemoryRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr><tr id="Attributes_Memory Based Realm - org.apache.catalina.realm.MemoryRealm_X509UsernameRetrieverClassName"><td><code class="attributeName">X509UsernameRetrieverClassName</code></td><td>
+        <p>When using X509 client certificates, this specifies the class name
+        that will be used to retrieve the user name from the certificate.
+        The class must implement the
+        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        interface. The default is to use the certificate's SubjectDN
+        as the username.</p>
+      </td></tr></table>
+
+    <p>The XML document referenced by the <code>pathname</code> attribute must
+    conform to the following requirements:</p>
+    <ul>
+    <li>The root (outer) element must be <code>&lt;tomcat-users&gt;</code>.
+        </li>
+    <li>Each authorized user must be represented by a single XML element
+        <code>&lt;user&gt;</code>, nested inside the root element.</li>
+    <li>Each <code>&lt;user&gt;</code> element must have the following
+        attributes:
+        <ul>
+        <li><strong>username</strong> - Username of this user (must be unique
+            within this file).<br>
+            For compatibility, it is allowed to use <strong>name</strong> as an
+            alternative name for this attribute.</li>
+        <li><strong>password</strong> - Password of this user (in
+            clear text).</li>
+        <li><strong>roles</strong> - Comma-delimited list of the role names
+            assigned to this user.</li>
+        </ul></li>
+    </ul>
+
+    <p>See the <a href="../realm-howto.html">Container-Managed Security Guide</a> for more
+    information on setting up container managed security using the
+    Memory Based Realm component.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="JAAS_Realm_-_org.apache.catalina.realm.JAASRealm">JAAS Realm - org.apache.catalina.realm.JAASRealm</h4><div class="text">
+
+    <p><strong>JAASRealm</strong> is an implementation of the Tomcat
+    <code>Realm</code> interface that authenticates users through the Java
+    Authentication &amp; Authorization Service (JAAS) framework which is now
+    provided as part of the standard J2SE API.</p>
+
+    <p>Using JAASRealm gives the developer the ability to combine practically
+    any conceivable security realm with Tomcat's CMA.</p>
+
+    <p>JAASRealm is prototype for Tomcat of the JAAS-based J2EE authentication
+    framework for J2EE v1.4, based on the <a href="https://www.jcp.org/en/jsr/detail?id=196">JCP Specification Request
+    196</a> to enhance container-managed security and promote 'pluggable'
+    authentication mechanisms whose implementations would be
+    container-independent.</p>
+
+    <p>Based on the JAAS login module and principal
+    (see <code>javax.security.auth.spi.LoginModule</code> and
+    <code>javax.security.Principal</code>), you can develop your own security
+    mechanism or wrap another third-party mechanism for integration with the CMA
+    as implemented by Tomcat.</p>
+
+    <p>The JAAS Realm implementation supports the following additional
+    attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_appName"><td><code class="attributeName">appName</code></td><td>
+       <p>The name of the application as configured in your login configuration
+       file
+       (<a href="http://docs.oracle.com/javase/1.4.2/docs/guide/security/jaas/tutorials/LoginConfigFile.html">JAAS LoginConfig</a>).</p>
+       <p>If not specified <code>appName</code> is derived from the Container's
+       name it is placed in, for example <code>Catalina</code> or <code>ROOT</code>.
+       If the realm is not placed in any Container, the default is <code>Tomcat</code>.
+       </p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_userClassNames"><td><strong><code class="attributeName">userClassNames</code></strong></td><td>
+        <p>A comma-separated list of the names of the classes that you have made
+        for your user <code>Principals</code>.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_configFile"><td><code class="attributeName">configFile</code></td><td>
+        <p>The name of a JAAS configuration file to use with this Realm. It will
+        be searched for using <code>ClassLoader#getResource(String)</code> so it
+        is possible for the configuration to be bundled within a web
+        application. If not specified, the default JVM global JAAS configuration
+        will be used.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_roleClassNames"><td><code class="attributeName">roleClassNames</code></td><td>
+        <p>A comma-separated list of the names of the classes that you have made
+        for your role <code>Principals</code>.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_stripRealmForGss"><td><code class="attributeName">stripRealmForGss</code></td><td>
+        <p>When processing users authenticated via the GSS-API, this attribute
+        controls if any "@..." is removed from the end of the user
+        name. If not specified, the default is <code>true</code>.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_useContextClassLoader"><td><code class="attributeName">useContextClassLoader</code></td><td>
+        <p>Instructs JAASRealm to use the context class loader for loading the
+        user-specified <code>LoginModule</code> class and associated
+        <code>Principal</code> classes. The default value is <code>true</code>,
+        which is backwards-compatible with the way Tomcat 5 works. To load
+        classes using the container's classloader, specify
+        <code>false</code>.</p>
+      </td></tr><tr id="Attributes_JAAS Realm - org.apache.catalina.realm.JAASRealm_X509UsernameRetrieverClassName"><td><code class="attributeName">X509UsernameRetrieverClassName</code></td><td>
+        <p>When using X509 client certificates, this specifies the class name
+        that will be used to retrieve the user name from the certificate.
+        The class must implement the
+        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        interface. The default is to use the certificate's SubjectDN
+        as the username.</p>
+      </td></tr></table>
+
+    <p>See the <a href="../realm-howto.html">Container-Managed Security
+    Guide</a> for more information on setting up container managed security
+    using the JAAS Realm component.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Combined_Realm_-_org.apache.catalina.realm.CombinedRealm">Combined Realm - org.apache.catalina.realm.CombinedRealm</h4><div class="text">
+
+    <p><strong>CombinedRealm</strong> is an implementation of the Tomcat
+    <code>Realm</code> interface that authenticates users through one or more
+    sub-Realms.</p>
+
+    <p>Using CombinedRealm gives the developer the ability to combine multiple
+    Realms of the same or different types. This can be used to authenticate
+    against different sources, provide fall back in case one Realm fails or for
+    any other purpose that requires multiple Realms.</p>
+
+    <p>Sub-realms are defined by nesting <code>Realm</code> elements inside the
+    <code>Realm</code> element that defines the CombinedRealm. Authentication
+    will be attempted against each <code>Realm</code> in the order they are
+    listed. Authentication against any Realm will be sufficient to authenticate
+    the user. The authenticated user, and their associated roles, will be taken
+    from the first Realm that successfully authenticates the user.</p>
+
+    <p>See the <a href="../realm-howto.html">Container-Managed Security
+    Guide</a> for more information on setting up container managed security
+    using the CombinedRealm component.</p>
+
+    <p>The CombinedRealm implementation supports the following additional
+    attributes.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Combined Realm - org.apache.catalina.realm.CombinedRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+      </td></tr><tr id="Attributes_Combined Realm - org.apache.catalina.realm.CombinedRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr></table>
+  </div></div>
+
+
+  <div class="subsection"><h4 id="LockOut_Realm_-_org.apache.catalina.realm.LockOutRealm">LockOut Realm - org.apache.catalina.realm.LockOutRealm</h4><div class="text">
+
+    <p><strong>LockOutRealm</strong> is an implementation of the Tomcat
+    <code>Realm</code> interface that extends the CombinedRealm to provide lock
+    out functionality to provide a user lock out mechanism if there are too many
+    failed authentication attempts in a given period of time.</p>
+
+    <p>To ensure correct operation, there is a reasonable degree of
+    synchronization in this Realm.</p>
+
+    <p>This Realm does not require modification to the underlying Realms or the
+    associated user storage mechanisms. It achieves this by recording all failed
+    logins, including those for users that do not exist. To prevent a DOS by
+    deliberating making requests with invalid users (and hence causing this
+    cache to grow) the size of the list of users that have failed authentication
+    is limited.</p>
+
+    <p>Sub-realms are defined by nesting <code>Realm</code> elements inside the
+    <code>Realm</code> element that defines the LockOutRealm. Authentication
+    will be attempted against each <code>Realm</code> in the order they are
+    listed. Authentication against any Realm will be sufficient to authenticate
+    the user.</p>
+
+    <p>The LockOutRealm implementation supports the following additional
+    attributes.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_LockOut Realm - org.apache.catalina.realm.LockOutRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+      </td></tr><tr id="Attributes_LockOut Realm - org.apache.catalina.realm.LockOutRealm_cacheRemovalWarningTime"><td><code class="attributeName">cacheRemovalWarningTime</code></td><td>
+       <p>If a failed user is removed from the cache because the cache is too
+       big before it has been in the cache for at least this period of time (in
+       seconds) a warning message will be logged. Defaults to 3600 (1 hour).</p>
+      </td></tr><tr id="Attributes_LockOut Realm - org.apache.catalina.realm.LockOutRealm_cacheSize"><td><code class="attributeName">cacheSize</code></td><td>
+       <p>Number of users that have failed authentication to keep in cache. Over
+       time the cache will grow to this size and may not shrink. Defaults to
+       1000.</p>
+      </td></tr><tr id="Attributes_LockOut Realm - org.apache.catalina.realm.LockOutRealm_failureCount"><td><code class="attributeName">failureCount</code></td><td>
+       <p>The number of times in a row a user has to fail authentication to be
+       locked out. Defaults to 5.</p>
+      </td></tr><tr id="Attributes_LockOut Realm - org.apache.catalina.realm.LockOutRealm_lockOutTime"><td><code class="attributeName">lockOutTime</code></td><td>
+       <p>The time (in seconds) a user is locked out for after too many
+       authentication failures. Defaults to 300 (5 minutes). Further
+       authentication failures during the lock out time will cause the lock out
+       timer to reset to zero, effectively extending the lock out time. Valid
+       authentication attempts during the lock out period will not succeed but
+       will also not reset the lock out time.</p>
+      </td></tr><tr id="Attributes_LockOut Realm - org.apache.catalina.realm.LockOutRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr></table>
+
+    <p>See the <a href="../realm-howto.html">Container-Managed Security
+    Guide</a> for more information on setting up container managed security
+    using the LockOutRealm component.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Null_Realm_-_org.apache.catalina.realm.NullRealm">Null Realm - org.apache.catalina.realm.NullRealm</h4><div class="text">
+
+    <p><strong>NullRealm</strong> is a minimal implementation of the Tomcat
+    <code>Realm</code> interface that always returns null when an attempt is
+    made to validate a user name and associated credentials. It is intended to
+    be used as a default Realm implementation when no other Realm is
+    specified.</p>
+
+    <p>The NullRealm implementation supports the following additional
+    attributes.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Null Realm - org.apache.catalina.realm.NullRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Authenticated_User_Realm_-_org.apache.catalina.realm.AuthenticatedUserRealm">Authenticated User Realm - org.apache.catalina.realm.AuthenticatedUserRealm</h4><div class="text">
+
+    <p><strong>AuthenticatedUserRealm</strong> is intended for use with
+    Authenticator implementations (SSLAuthenticator, SpnegoAuthenticator) that
+    authenticate the user as well as obtain the user credentials. An
+    authenticated Principal is always created from the user name presented to
+    without further validation.</p>
+    <p><strong>Note:</strong> It is unsafe to use this Realm with Authenticator
+    implementations that do not validate the provided credentials.</p>
+
+    <p>The AuthenticatedUserRealm implementation supports the following
+    additional attributes.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Authenticated User Realm - org.apache.catalina.realm.AuthenticatedUserRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="JDBC_Database_Realm_-_org.apache.catalina.realm.JDBCRealm">JDBC Database Realm - org.apache.catalina.realm.JDBCRealm</h4><div class="text">
+
+    <p><strong>The JDBC Database Realm has been deprecated and will be removed
+    in Tomcat 10 onwards. Use the DataSourceRealm instead.</strong></p>
+
+    <p>The <strong>JDBC Database Realm</strong> connects Tomcat to
+    a relational database, accessed through an appropriate JDBC driver,
+    to perform lookups of usernames, passwords, and their associated
+    roles.  Because the lookup is done each time that it is required,
+    changes to the database will be immediately reflected in the
+    information used to authenticate new logins.</p>
+
+    <p>Note: The <strong>JDBC Database Realm</strong> uses a single connection
+    to the database with synchronisation to prevenbt concurrent usage. It is not
+    recommended for production usage. Use the DataSource Realm instaead.</p>
+
+    <p>A rich set of additional attributes lets you configure the required
+    connection to the underlying database, as well as the table and
+    column names used to retrieve the required information:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_allRolesMode"><td><code class="attributeName">allRolesMode</code></td><td>
+        <p>This attribute controls how the special role name <code>*</code> is
+        handled when processing authorization constraints in web.xml. By
+        default, the specification compliant value of <code>strict</code> is
+        used which means that the user must be assigned one of the roles defined
+        in web.xml. The alternative values are <code>authOnly</code> which means
+        that the user must be authenticated but no check is made for assigned
+        roles and <code>strictAuthOnly</code> which means that the user must be
+        authenticated and no check will be made for assigned roles unless roles
+        are defined in web.xml in which case the user must be assigned at least
+        one of those roles.</p>
+        <p>When this attribute has the value of <code>authOnly</code> or
+        <code>strictAuthOnly</code>, the <strong>roleNameCol</strong> and
+        <strong>userRoleTable</strong> attributes become optional. If those two
+        attributes are omitted, the user's roles will not be loaded by this
+        Realm.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_connectionName"><td><strong><code class="attributeName">connectionName</code></strong></td><td>
+        <p>The database username to use when establishing the JDBC
+        connection.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_connectionPassword"><td><strong><code class="attributeName">connectionPassword</code></strong></td><td>
+        <p>The database password to use when establishing the JDBC
+        connection.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_connectionURL"><td><strong><code class="attributeName">connectionURL</code></strong></td><td>
+        <p>The connection URL to be passed to the JDBC driver when
+        establishing a database connection.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_driverName"><td><strong><code class="attributeName">driverName</code></strong></td><td>
+        <p>Fully qualified Java class name of the JDBC driver to be
+        used to connect to the authentication database.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_roleNameCol"><td><code class="attributeName">roleNameCol</code></td><td>
+        <p>Name of the column, in the "user roles" table, which contains
+        a role name assigned to the corresponding user.</p>
+        <p>This attribute is <strong>required</strong> in majority of
+        configurations. See <strong>allRolesMode</strong> attribute for
+        a rare case when it can be omitted.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_stripRealmForGss"><td><code class="attributeName">stripRealmForGss</code></td><td>
+        <p>When processing users authenticated via the GSS-API, this attribute
+        controls if any "@..." is removed from the end of the user
+        name. If not specified, the default is <code>true</code>.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_transportGuaranteeRedirectStatus"><td><code class="attributeName">transportGuaranteeRedirectStatus</code></td><td>
+        <p>The HTTP status code to use when the container needs to issue an HTTP
+           redirect to meet the requirements of a configured transport
+           guarantee. The provided status code is not validated. If not
+           specified, the default value of <code>302</code> is used.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_userCredCol"><td><strong><code class="attributeName">userCredCol</code></strong></td><td>
+        <p>Name of the column, in the "users" table, which contains
+        the user's credentials (i.e. password).  If a
+        <code>CredentialHandler</code> is specified, this component
+        will assume that the passwords have been encoded with the
+        specified algorithm.  Otherwise, they will be assumed to be
+        in clear text.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_userNameCol"><td><strong><code class="attributeName">userNameCol</code></strong></td><td>
+        <p>Name of the column, in the "users" and "user roles" table,
+        that contains the user's username.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_userRoleTable"><td><code class="attributeName">userRoleTable</code></td><td>
+        <p>Name of the "user roles" table, which must contain columns
+        named by the <code>userNameCol</code> and <code>roleNameCol</code>
+        attributes.</p>
+        <p>This attribute is <strong>required</strong> in majority of
+        configurations. See <strong>allRolesMode</strong> attribute for
+        a rare case when it can be omitted.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_userTable"><td><strong><code class="attributeName">userTable</code></strong></td><td>
+        <p>Name of the "users" table, which must contain columns named
+        by the <code>userNameCol</code> and <code>userCredCol</code>
+        attributes.</p>
+      </td></tr><tr id="Attributes_JDBC Database Realm - org.apache.catalina.realm.JDBCRealm_X509UsernameRetrieverClassName"><td><code class="attributeName">X509UsernameRetrieverClassName</code></td><td>
+        <p>When using X509 client certificates, this specifies the class name
+        that will be used to retrieve the user name from the certificate.
+        The class must implement the
+        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        interface. The default is to use the certificate's SubjectDN
+        as the username.</p>
+      </td></tr></table>
+
+    <p>See the <a href="../realm-howto.html">Container-Managed Security Guide</a> for more
+    information on setting up container managed security using the
+    JDBC Database Realm component.</p>
+
+  </div></div>
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <p>You can nest the following components by nesting the corresponding element
+  inside your <strong>Realm</strong> element:</p>
+  <ul>
+  <li><strong>CombinedRealm Implementation</strong> - If you are using the
+    <em>CombinedRealm Implementation</em> or a Realm
+    that extends the CombinedRealm, e.g. the LockOutRealm, one or more
+    <strong>&lt;Realm&gt;</strong> elements may be nested inside it.</li>
+  <li><a href="credentialhandler.html"><strong>CredentialHandler</strong></a> -
+      You may nest at most one instance of this element inside a Realm. This
+      configures the credential handler that will be used to validate provided
+      credentials with those stored by the Realm. If not specified a default
+      <em>MessageDigestCredentialHandler</em> will be configured.</li>
+  </ul>
+
+</div><h3 id="Special_Features">Special Features</h3><div class="text">
+
+  <p>See <a href="host.html">Single Sign On</a> for information about
+  configuring Single Sign On support for a virtual host.</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

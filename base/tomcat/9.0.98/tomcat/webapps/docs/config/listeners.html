@@ -1,0 +1,638 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The LifeCycle Listener Component</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The LifeCycle Listener Component</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Standard_Implementations">Standard Implementations</a><ol><li><a href="#APR_Lifecycle_Listener_-_org.apache.catalina.core.AprLifecycleListener">APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener</a></li><li><a href="#Context_Naming_Info_Listener_-_org.apache.catalina.core.ContextNamingInfoListener">Context Naming Info Listener - org.apache.catalina.core.ContextNamingInfoListener</a></li><li><a href="#Global_Resources_Lifecycle_Listener_-_org.apache.catalina.mbeans.GlobalResourcesLifecycleListener">Global Resources Lifecycle Listener - org.apache.catalina.mbeans.GlobalResourcesLifecycleListener</a></li><li><a href="#JNI_Library_Loading_Listener_-_org.apache.catalina.core.JniLifecycleListener">JNI Library Loading Listener - org.apache.catalina.core.JniLifecycleListener</a></li><li><a href="#JRE_Memory_Leak_Prevention_Listener_-_org.apache.catalina.core.JreMemoryLeakPreventionListener">JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener</a><ol><li><a href="#JreMemoryLeakPreventionListener_Examples">JreMemoryLeakPreventionListener Examples</a></li></ol></li><li><a href="#OpenSSL_Lifecycle_Listener_-_org.apache.catalina.core.OpenSSLLifecycleListener">OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener</a></li><li><a href="#Properties_Role_Mapping_Listener_-_org.apache.catalina.core.PropertiesRoleMappingListener">Properties Role Mapping Listener - org.apache.catalina.core.PropertiesRoleMappingListener</a></li><li><a href="#Security_Lifecycle_Listener_-_org.apache.catalina.security.SecurityListener">Security Lifecycle Listener - org.apache.catalina.security.SecurityListener</a></li><li><a href="#StoreConfig_Lifecycle_Listener_-_org.apache.catalina.storeconfig.StoreConfigLifecycleListener">StoreConfig Lifecycle Listener - org.apache.catalina.storeconfig.StoreConfigLifecycleListener</a></li><li><a href="#ThreadLocal_Leak_Prevention_Listener_-_org.apache.catalina.core.ThreadLocalLeakPreventionListener">ThreadLocal Leak Prevention Listener - org.apache.catalina.core.ThreadLocalLeakPreventionListener</a></li><li><a href="#TLS_configuration_reload_listener_-_org.apache.catalina.security.TLSCertificateReloadListener">TLS configuration reload listener - org.apache.catalina.security.TLSCertificateReloadListener</a></li><li><a href="#UserConfig_-_org.apache.catalina.startup.UserConfig">UserConfig - org.apache.catalina.startup.UserConfig</a></li><li><a href="#Version_Logging_Lifecycle_Listener_-_org.apache.catalina.startup.VersionLoggerListener">Version Logging Lifecycle Listener - org.apache.catalina.startup.VersionLoggerListener</a></li><li><a href="#HTTPD_mod_heartmonitor_Listener_-_org.apache.catalina.ha.backend.HeartbeatListener">HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>A <strong>Listener</strong> element defines a component that performs
+  actions when specific events occur, usually Tomcat starting or Tomcat
+  stopping.</p>
+
+  <p>Listeners may be nested inside a <a href="server.html">Server</a>,
+  <a href="engine.html">Engine</a>, <a href="host.html">Host</a> or
+  <a href="context.html">Context</a>. Some Listeners are only intended to be
+  nested inside specific elements. These constraints are noted in the
+  documentation below.</p>
+
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+    <p>All implementations of <strong>Listener</strong>
+    support the following attributes:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        <p>Java class name of the implementation to use. This class must
+        implement the <code>org.apache.catalina.LifecycleListener</code>
+        interface.</p>
+      </td></tr></table>
+
+  </div></div>
+
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <p>No element may be nested inside a <strong>Listener</strong>.</p>
+
+</div><h3 id="Standard_Implementations">Standard Implementations</h3><div class="text">
+
+  <p>Unlike most Catalina components, there are several standard
+  <strong>Listener</strong> implementations available.  As a result,
+  the <code>className</code> attribute MUST be used to select the
+  implementation you wish to use.</p>
+
+  <div class="subsection"><h4 id="APR_Lifecycle_Listener_-_org.apache.catalina.core.AprLifecycleListener">APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener</h4><div class="text">
+
+    <p>The <strong>APR Lifecycle Listener</strong> checks for the presence of
+    the Apache Tomcat Native library and loads the library if it is present.
+    For more information see the <a href="../apr.html">APR/native guide</a>.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>The following additional attributes are supported by the <strong>APR
+    Lifecycle Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener_SSLEngine"><td><code class="attributeName">SSLEngine</code></td><td>
+        <p>Name of the SSLEngine to use. <code>off</code>: do not use SSL,
+        <code>on</code>: use SSL but no specific ENGINE.</p>
+        <p>The default value is <b>on</b>. This initializes the
+        native SSL engine, which must be enabled in the APR/native connector by
+        the use of the <code>SSLEnabled</code> attribute.</p>
+        <p>See the <a href="http://www.openssl.org/">Official OpenSSL website</a>
+        for more details on supported SSL hardware engines and manufacturers.
+        </p>
+        <p>Tomcat Native 2.x onwards requires SSL so if SSLEngine is set to
+        <code>off</code> when using Tomcat Native 2.x onwards, the APR/native
+        library will be disabled.</p>
+      </td></tr><tr id="Standard Implementations_APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener_SSLRandomSeed"><td><code class="attributeName">SSLRandomSeed</code></td><td>
+        <p>Entropy source used to seed the SSLEngine's PRNG. The default value
+        is <code>builtin</code>. On development systems, you may want to set
+        this to <code>/dev/urandom</code> to allow quicker start times.</p>
+      </td></tr><tr id="Standard Implementations_APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener_FIPSMode"><td><code class="attributeName">FIPSMode</code></td><td>
+        <p>The behaviour of this attribute depends on whether Tomcat Native has
+        been compiled against OpenSSL 1.x or OpenSSL 3.x.</p>
+        <p>For OpenSSL 1.x: Set to <code>on</code> to request that OpenSSL be in
+        FIPS mode (if OpenSSL is already in FIPS mode, it will remain in FIPS
+        mode).
+        Set to <code>enter</code> to force OpenSSL to enter FIPS mode (an
+        error will occur if OpenSSL is already in FIPS mode).
+        Set to <code>require</code> to require that OpenSSL <i>already</i> be
+        in FIPS mode (an error will occur if OpenSSL is not already in FIPS
+        mode).</p>
+        <p>For OpenSSL 3.x: <code>on</code>, <code>enter</code> and
+        <code>require</code> all behave the same way. If the FIPS provider is
+        the default provider, it will be used. If the FIPS provider is not the
+        default provider, an error will occur.</p>
+        <p>FIPS mode <em>requires you to have a FIPS-capable OpenSSL library</em>.
+        If this attribute is set to anything other than <code>off</code>, the
+        <b>SSLEngine</b> must be enabled as well.</p>
+        <p>The default value is <code>off</code>.</p>
+      </td></tr><tr id="Standard Implementations_APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener_useAprConnector"><td><code class="attributeName">useAprConnector</code></td><td>
+        <p>This attribute controls the auto-selection of the connector
+        implementation. When the <strong>protocol</strong> is specified as
+        <code>HTTP/1.1</code> or <code>AJP/1.3</code> then if this attribute is
+        <code>true</code> the APR/native connector will be used but if this
+        attribute is false the NIO connector will be used.</p>
+      </td></tr><tr id="Standard Implementations_APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener_useOpenSSL"><td><code class="attributeName">useOpenSSL</code></td><td>
+        <p>This attribute controls the auto-selection of the OpenSSL JSSE
+        implementation. The default is <code>true</code> which will use OpenSSL
+        if the native library is available and a NIO or NIO2 connector is used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Context_Naming_Info_Listener_-_org.apache.catalina.core.ContextNamingInfoListener">Context Naming Info Listener - org.apache.catalina.core.ContextNamingInfoListener</h4><div class="text">
+
+    <p>The <strong>Context Naming Info Listener</strong> adds the following
+    environment entries (<code>java:comp/env</code> implied) from the
+    <a href="context.html">Context</a>: <code>context/path</code>,
+    <code>context/encodedPath</code>, <code>context/webappVersion</code>,
+    <code>context/name</code>, <code>context/baseName</code>,
+    <code>context/displayName</code>.</p>
+
+    <p>This listener must only be nested within
+    <a href="context.html">Context</a> elements.</p>
+
+    <p>The following additional attributes are supported by the
+    <strong>Context Naming Info Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_Context Naming Info Listener - org.apache.catalina.core.ContextNamingInfoListener_emptyOnRoot"><td><code class="attributeName">emptyOnRoot</code></td><td>
+        <p>Whether for the root context <code>context/path</code> and
+        <code>context/encodedPath</code> will contain <code>"/"</code> and
+        <code>context/name</code> will contain <code>"ROOT"</code> with a version,
+        if any.</p>
+        <p>The default value is <code>true</code>.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Global_Resources_Lifecycle_Listener_-_org.apache.catalina.mbeans.GlobalResourcesLifecycleListener">Global Resources Lifecycle Listener - org.apache.catalina.mbeans.GlobalResourcesLifecycleListener</h4><div class="text">
+
+    <p>The <strong>Global Resources Lifecycle Listener</strong> initializes the
+    Global JNDI resources defined in server.xml as part of the <a href="globalresources.html">Global Resources</a> element. Without this
+    listener, none of the Global Resources will be available.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>No additional attributes are supported by the <strong>Global Resources
+    Lifecycle Listener</strong>.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="JNI_Library_Loading_Listener_-_org.apache.catalina.core.JniLifecycleListener">JNI Library Loading Listener - org.apache.catalina.core.JniLifecycleListener</h4><div class="text">
+
+    <p>The <strong>JNI Library Loading Listener</strong> makes it possible
+    for multiple Webapps to use a native library, by loading the native
+    library using a shared class loader (typically the Common class loader but
+    may vary in some configurations)</p>
+
+    <p>The listener supports two mutually exclusive attributes, so one of them must be used, but you can not use both together:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_JNI Library Loading Listener - org.apache.catalina.core.JniLifecycleListener_libraryName"><td><code class="attributeName">libraryName</code></td><td>
+        <p>The name of the native library, as defined in
+        <code>java.lang.System.loadLibrary()</code>
+        </p>
+      </td></tr><tr id="Standard Implementations_JNI Library Loading Listener - org.apache.catalina.core.JniLifecycleListener_libraryPath"><td><code class="attributeName">libraryPath</code></td><td>
+        <p>The absolute path of the native library, as defined in
+        <code>java.lang.System.load()</code>
+        </p>
+      </td></tr></table>
+  </div></div>
+
+  <div class="subsection"><h4 id="JRE_Memory_Leak_Prevention_Listener_-_org.apache.catalina.core.JreMemoryLeakPreventionListener">JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener</h4><div class="text">
+
+    <p>The <strong>JRE Memory Leak Prevention Listener</strong> provides
+    work-arounds for known places where the Java Runtime environment uses
+    the context class loader to load a singleton as this will cause a memory
+    leak if a web application class loader happens to be the context class
+    loader at the time. The work-around is to initialise these singletons when
+    this listener starts as Tomcat's common class loader is the context class
+    loader at that time. It also provides work-arounds for known issues that
+    can result in locked JAR files.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>The following additional attributes are supported by the <strong>JRE
+    Memory Leak Prevention Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_appContextProtection"><td><code class="attributeName">appContextProtection</code></td><td>
+        <p>Enables protection so that calls to
+        <code>sun.awt.AppContext.getAppContext()</code> triggered by a web
+        application do not result in a memory leak. Note that enabling this
+        protection will trigger a requirement for a graphical environment unless
+        Java is started in head-less mode. The default is <code>false</code>.
+        </p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_AWTThreadProtection"><td><code class="attributeName">AWTThreadProtection</code></td><td>
+        <p>Enables protection so that calls to
+        <code>java.awt.Toolkit.getDefaultToolkit()</code> triggered by a web
+        application do not result in a memory leak.
+        Defaults to <code>false</code> because an AWT thread is launched. This
+        protection is disabled if running on Java 9 onwards since the leak has
+        been fixed for Java 9 onwards.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_classesToInitialize"><td><code class="attributeName">classesToInitialize</code></td><td>
+        <p>List of comma-separated fully qualified class names to load and initialize
+        during the startup of this Listener. This allows to pre-load classes that are
+        known to provoke classloader leaks if they are loaded during a request
+        processing. Non-JRE classes may be referenced, like
+        <code>oracle.jdbc.driver.OracleTimeoutThreadPerVM</code>.
+        The default value is empty, but specific JRE classes are loaded by other leak
+        protection features managed by other attributes of this Listener.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_driverManagerProtection"><td><code class="attributeName">driverManagerProtection</code></td><td>
+        <p>The first use of <code>java.sql.DriverManager</code> will trigger the
+        loading of JDBC Drivers visible to the current class loader and its
+        parents. The web application level memory leak protection can take care
+        of this in most cases but triggering the loading here has fewer
+        side-effects. The default is <code>true</code>.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_forkJoinCommonPoolProtection"><td><code class="attributeName">forkJoinCommonPoolProtection</code></td><td>
+        <p>Enables protection so the threads created for
+        <code>ForkJoinPool.commonPool()</code> do not result in a memory leak.
+        The protection is enabled by setting the
+        <code>java.util.concurrent.ForkJoinPool.common.threadFactory</code>
+        system property. If this property is set when Tomcat starts, Tomcat will
+        not over-ride it even if this protection is explicitly enabled. The
+        default is <code>true</code>.  This protection is disabled if running on
+        Java 9 onwards since the leak has been fixed for Java 9 onwards.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_gcDaemonProtection"><td><code class="attributeName">gcDaemonProtection</code></td><td>
+        <p>Enables protection so that calls to
+        <code>sun.misc.GC.requestLatency(long)</code> triggered by a web
+        application do not result in a memory leak. Use of RMI is likely to
+        trigger a call to this method. A side effect of enabling this protection
+        is the creation of a thread named "GC Daemon". The protection uses
+        reflection to access internal Sun classes and may generate errors on
+        startup on non-Sun JVMs. The default is <code>true</code>. This
+        protection is disabled if running on Java 9 onwards since the leak has
+        been fixed for Java 9 onwards.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_initSeedGenerator"><td><code class="attributeName">initSeedGenerator</code></td><td>
+        <p>The first use of <code>SeedGenerator</code>, an internal class of
+        the default security spi implementation, might create a thread on some
+        platforms. Depending on the timing of the first use of a secure random
+        this thread might become associated with a webapp classloader, causing
+        a memory leak. Setting this to <code>true</code> will initialize the
+        seed. The default is <code>false</code> to avoid consuming random if
+        not needed.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_ldapPoolProtection"><td><code class="attributeName">ldapPoolProtection</code></td><td>
+        <p>Enables protection so that the PoolCleaner thread started by
+        <code>com.sun.jndi.ldap.LdapPoolManager</code> does not result in a
+        memory leak. The thread is started the first time the
+        <code>LdapPoolManager</code> class is used if the system property
+        <code>com.sun.jndi.ldap.connect.pool.timeout</code> is set to a value
+        greater than 0. Without this protection, if a web application uses this
+        class the PoolCleaner thread will be configured with the thread's
+        context class loader set to the web application class loader which in
+        turn will trigger a memory leak on reload. Defaults to
+        <code>true</code>. This protection is disabled if running on Java 9
+        onwards since the leak has been fixed for Java 9 onwards.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_tokenPollerProtection"><td><code class="attributeName">tokenPollerProtection</code></td><td>
+        <p>Enables protection so that any token poller thread initialized by
+        <code>sun.security.pkcs11.SunPKCS11.initToken()</code> does not
+        result in a memory leak. The thread is started depending on various
+        conditions as part of the initialization of the Java Cryptography
+        Architecture. Without the protection this can happen during Webapp
+        deployment when the MessageDigest for generating session IDs is
+        initialized. As a result the thread has the Webapp class loader as its
+        thread context class loader. Enabling the protection initializes JCA
+        early during Tomcat startup. Defaults to <code>true</code>. This
+        protection is disabled if running on Java 9 onwards since the leak has
+        been fixed for Java 9 onwards.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_urlCacheProtection"><td><code class="attributeName">urlCacheProtection</code></td><td>
+        <p>Enables protection so that reading resources from JAR files using
+        <code>java.net.URLConnection</code>s does not result in the JAR file
+        being locked. Note that enabling this protection disables caching by
+        default for all resources obtained via
+        <code>java.net.URLConnection</code>s. Caching may be re-enabled on a
+        case by case basis as required. Defaults to <code>true</code>.</p>
+      </td></tr><tr id="Standard Implementations_JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener_xmlParsingProtection"><td><code class="attributeName">xmlParsingProtection</code></td><td>
+        <p>Enables protection so that parsing XML files within a web application
+        does not result in a memory leak. Note that memory profilers may not
+        display the GC root associated with this leak making it particularly
+        hard to diagnose. Defaults to <code>true</code>. This protection is
+        disabled if running on Java 9 onwards since the leak has been fixed for
+        Java 9 onwards.</p>
+      </td></tr></table>
+
+    <div class="subsection"><h4 id="JreMemoryLeakPreventionListener_Examples">JreMemoryLeakPreventionListener Examples</h4><div class="text">
+
+      <p>The following is an example of how to configure the
+      <code>classesToInitialize</code> attribute of this listener.</p>
+
+      <p>If this listener was configured in server.xml as:</p>
+
+      <div class="codeBox"><pre><code>  &lt;Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"
+            classesToInitialize="oracle.jdbc.driver.OracleTimeoutThreadPerVM" /&gt;</code></pre></div>
+
+      <p>then the <code>OracleTimeoutThreadPerVM</code> class would be loaded
+      and initialized during listener startup instead of during request
+      processing.</p>
+
+    </div></div>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="OpenSSL_Lifecycle_Listener_-_org.apache.catalina.core.OpenSSLLifecycleListener">OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener</h4><div class="text">
+
+    <p>The <strong>OpenSSL Lifecycle Listener</strong> checks for the presence
+    of the OpenSSL library and loads the library if it is present. This
+    uses the FFM API from Java 22 instead of additional native code. When
+    enabled and successfully loaded, NIO and NIO2 connector will then make use
+    of OpenSSL for TLS functionality. This is a functional replacement to the
+    <strong>APR Lifecycle Listener</strong> described above.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>The following additional attributes are supported by the <strong>OpenSSL
+    Lifecycle Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener_SSLEngine"><td><code class="attributeName">SSLEngine</code></td><td>
+        <p>Name of the SSLEngine to use, for OpenSSL 1.x.</p>
+        <p>See the <a href="http://www.openssl.org/">Official OpenSSL website</a>
+        for more details on supported SSL hardware engines and manufacturers.
+        </p>
+      </td></tr><tr id="Standard Implementations_OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener_SSLRandomSeed"><td><code class="attributeName">SSLRandomSeed</code></td><td>
+        <p>Entropy source used to seed the SSLEngine's PRNG. The default value
+        is <code>builtin</code>. On development systems, you may want to set
+        this to <code>/dev/urandom</code> to allow quicker start times.</p>
+      </td></tr><tr id="Standard Implementations_OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener_FIPSMode"><td><code class="attributeName">FIPSMode</code></td><td>
+        <p>The behaviour of this attribute depends on whether Tomcat Native has
+        been compiled against OpenSSL 1.x or OpenSSL 3.x.</p>
+        <p>For OpenSSL 1.x: Set to <code>on</code> to request that OpenSSL be in
+        FIPS mode (if OpenSSL is already in FIPS mode, it will remain in FIPS
+        mode).
+        Set to <code>enter</code> to force OpenSSL to enter FIPS mode (an
+        error will occur if OpenSSL is already in FIPS mode).
+        Set to <code>require</code> to require that OpenSSL <i>already</i> be
+        in FIPS mode (an error will occur if OpenSSL is not already in FIPS
+        mode).</p>
+        <p>For OpenSSL 3.x: <code>on</code>, <code>enter</code> and
+        <code>require</code> all behave the same way. If the FIPS provider is
+        the default provider, it will be used. If the FIPS provider is not the
+        default provider, an error will occur.</p>
+        <p>FIPS mode <em>requires you to have a FIPS-capable OpenSSL library</em>.
+        If this attribute is set to anything other than <code>off</code>, the
+        <b>SSLEngine</b> must be enabled as well.</p>
+        <p>The default value is <code>off</code>.</p>
+      </td></tr><tr id="Standard Implementations_OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener_useOpenSSL"><td><code class="attributeName">useOpenSSL</code></td><td>
+        <p>This attribute controls the auto-selection of the OpenSSL JSSE
+        implementation. The default is <code>true</code> which will use OpenSSL
+        if the FFM API is available.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Properties_Role_Mapping_Listener_-_org.apache.catalina.core.PropertiesRoleMappingListener">Properties Role Mapping Listener - org.apache.catalina.core.PropertiesRoleMappingListener</h4><div class="text">
+
+    <p>The <strong>Properties Role Mapping Listener</strong> populates the context's role mapping
+    from a properties file. The keys represent application roles (e.g., admin, user, uservisor,
+    etc.) while the values represent technical roles (e.g., DNs, SIDs, UUIDs, etc.). A key can
+    also be prefixed if, e.g., the properties file contains generic application configuration
+    as well: <code>app-roles.</code>.</p>
+
+    <p>This listener must only be nested within
+    <a href="context.html">Context</a> elements.</p>
+
+    <p>The following additional attributes are supported by the
+    <strong>Properties Role Mapping Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_Properties Role Mapping Listener - org.apache.catalina.core.PropertiesRoleMappingListener_roleMappingFile"><td><code class="attributeName">roleMappingFile</code></td><td>
+        <p>The path to the role mapping properties file. You can use protocol <code>webapp:</code>
+        and whatever <code>ConfigFileLoader</code> supports.</p>
+        <p>The default value is <code>webapp:/WEB-INF/role-mapping.properties</code>.</p>
+      </td></tr><tr id="Standard Implementations_Properties Role Mapping Listener - org.apache.catalina.core.PropertiesRoleMappingListener_keyPrefix"><td><code class="attributeName">keyPrefix</code></td><td>
+        <p>The prefix to filter from property keys. All other keys will be ignored which do
+        not have the prefix.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Security_Lifecycle_Listener_-_org.apache.catalina.security.SecurityListener">Security Lifecycle Listener - org.apache.catalina.security.SecurityListener</h4><div class="text">
+
+    <p>The <strong>Security Lifecycle Listener</strong> performs a number of
+    security checks when Tomcat starts and prevents Tomcat from starting if they
+    fail. The listener is not enabled by default. To enabled it uncomment the
+    listener in $CATALINA_BASE/conf/server.xml. For Tomcat versions before 9.0.7,
+    if the operating system supports umask then the line in
+    $CATALINA_HOME/bin/catalina.sh that obtains the umask also needs to be
+    uncommented. For Tomcat 9.0.7 and later, the umask is automatically
+    passed-into Tomcat.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>The following additional attributes are supported by the <strong>Security
+    Lifecycle Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_Security Lifecycle Listener - org.apache.catalina.security.SecurityListener_checkedOsUsers"><td><code class="attributeName">checkedOsUsers</code></td><td>
+        <p>A comma separated list of OS users that must not be used to start
+        Tomcat. If not specified, the default value of <b>root</b> is used. To
+        disable this check, set the attribute to the empty string. Usernames
+        are checked in a case-insensitive manner.</p>
+      </td></tr><tr id="Standard Implementations_Security Lifecycle Listener - org.apache.catalina.security.SecurityListener_minimumUmask"><td><code class="attributeName">minimumUmask</code></td><td>
+        <p>The least restrictive umask that must be configured before Tomcat
+        will start. If not specified, the default value of <b>0007</b> is used.
+        To disable this check, set the attribute to the empty string. The check
+        is not performed on Windows platforms.</p>
+      </td></tr><tr id="Standard Implementations_Security Lifecycle Listener - org.apache.catalina.security.SecurityListener_buildDateWarningAgeDays"><td><code class="attributeName">buildDateWarningAgeDays</code></td><td>
+        <p>The maximim number of days between the build-date of this instance
+        of Tomcat and its startup date can be before warnings will be logged.
+        Set to anything less than 0 (e.g. -1) to disable this check.
+        If not specified, the default value of <b>-1</b> is used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="StoreConfig_Lifecycle_Listener_-_org.apache.catalina.storeconfig.StoreConfigLifecycleListener">StoreConfig Lifecycle Listener - org.apache.catalina.storeconfig.StoreConfigLifecycleListener</h4><div class="text">
+
+    <p>The <strong>StoreConfig Lifecycle Listener</strong> configures a
+    StoreConfig MBean that may be used to save the current server configuration
+    in server.xml or the current configuration for a web application in a
+    context.xml file.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>The following additional attributes are supported by the
+    <strong>StoreConfig Lifecycle Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_StoreConfig Lifecycle Listener - org.apache.catalina.storeconfig.StoreConfigLifecycleListener_storeConfigClass"><td><code class="attributeName">storeConfigClass</code></td><td>
+        <p>The name of the <code>IStoreConfig</code> implementation to use. If
+        not specified the default of
+        <code>org.apache.catalina.storeconfig.StoreConfig</code> will be
+        used.</p>
+      </td></tr><tr id="Standard Implementations_StoreConfig Lifecycle Listener - org.apache.catalina.storeconfig.StoreConfigLifecycleListener_storeRegistry"><td><code class="attributeName">storeRegistry</code></td><td>
+        <p>The URL of the configuration file that configures how the
+        <code>IStoreConfig</code> is to save the configuration. If not specified
+        the built in resource
+        <code>/org/apache/catalina/storeconfig/server-registry.xml</code> will
+        be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="ThreadLocal_Leak_Prevention_Listener_-_org.apache.catalina.core.ThreadLocalLeakPreventionListener">ThreadLocal Leak Prevention Listener - org.apache.catalina.core.ThreadLocalLeakPreventionListener</h4><div class="text">
+
+    <p>The <strong>ThreadLocal Leak Prevention Listener</strong> triggers the
+    renewal of threads in <a href="executor.html">Executor</a> pools when a
+    <a href="context.html">Context</a> is being stopped to avoid thread-local
+    related memory leaks. Active threads will be renewed one by one when they
+    come back to the pool after executing their task. The renewal happens
+    only for contexts that have their <code>renewThreadsWhenStoppingContext</code>
+    attribute set to <code>true</code>.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <p>No additional attributes are supported by the <strong>ThreadLocal Leak
+    Prevention Listener</strong>.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="TLS_configuration_reload_listener_-_org.apache.catalina.security.TLSCertificateReloadListener">TLS configuration reload listener - org.apache.catalina.security.TLSCertificateReloadListener</h4><div class="text">
+
+    <p>This listener may be used to monitor the expiration dates of TLS
+    certificates and trigger automatic reloading of the TLS configuration a set
+    number of days before the TLS certificate expires.</p>
+
+    <p>This listener assumes there is some other process (certbot, cloud
+    infrastructure, etc) that renews the certificate on a regular basis and
+    replaces the current certificate with the new one.</p>
+
+    <p>This listener does <b>NOT</b> re-read the Tomcat configuration from
+    server.xml. If you make changes to server.xml you must restart the Tomcat
+    process to pick up those changes.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements.</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_TLS configuration reload listener - org.apache.catalina.security.TLSCertificateReloadListener_checkPeriod"><td><code class="attributeName">checkPeriod</code></td><td>
+        <p>The time, in seconds, between reloading checks. The periodic process
+        for <code>LifecycleListener</code> typically runs much more frequently
+        than this listener requires. This attribute controls the period between
+        checks. If not specified, a default of 86,400 seconds (24 hours) is
+        used.</p>
+      </td></tr><tr id="Standard Implementations_TLS configuration reload listener - org.apache.catalina.security.TLSCertificateReloadListener_daysBefore"><td><code class="attributeName">daysBefore</code></td><td>
+        <p>The number of days before the expiry of a TLS certificate that it is
+        expected that the new certificate will be in place and the reloading can
+        be triggered. If not specified, a default of 14 days is used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="UserConfig_-_org.apache.catalina.startup.UserConfig">UserConfig - org.apache.catalina.startup.UserConfig</h4><div class="text">
+
+    <p>The <strong>UserConfig</strong> provides feature of User Web Applications.
+    User Web Applications map a request URI starting with a tilde character ("~")
+    and a username to a directory (commonly named public_html) in that user's
+    home directory on the server.</p>
+
+    <p>See the <a href="host.html#User_Web_Applications">User Web Applications</a>
+    special feature on the <strong>Host</strong> element for more information.</p>
+
+    <p>The following additional attributes are supported by the
+    <strong>UserConfig</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_UserConfig - org.apache.catalina.startup.UserConfig_directoryName"><td><code class="attributeName">directoryName</code></td><td>
+        <p>The directory name to be searched for within each user home directory.
+        The default is <code>public_html</code>.</p>
+      </td></tr><tr id="Standard Implementations_UserConfig - org.apache.catalina.startup.UserConfig_userClass"><td><code class="attributeName">userClass</code></td><td>
+        <p>The class name of the user database class.
+        There are currently two user database, the
+        <code>org.apache.catalina.startup.PasswdUserDatabase</code> is used on a
+        Unix system that uses the /etc/passwd file to identify valid users.
+        The <code>org.apache.catalina.startup.HomesUserDatabase</code> is used on
+        a server where /etc/passwd is not in use. HomesUserDatabase deploy all
+        directories found in a specified base directory.</p>
+      </td></tr><tr id="Standard Implementations_UserConfig - org.apache.catalina.startup.UserConfig_homeBase"><td><code class="attributeName">homeBase</code></td><td>
+        <p>The base directory containing user home directories. This is effective
+        only when <code>org.apache.catalina.startup.HomesUserDatabase</code> is
+        used.</p>
+      </td></tr><tr id="Standard Implementations_UserConfig - org.apache.catalina.startup.UserConfig_allow"><td><code class="attributeName">allow</code></td><td>
+        <p>A regular expression defining user who deployment is allowed. If this
+        attribute is specified, the user to deploy must match for this pattern.
+        If this attribute is not specified, all users will be deployed unless the
+        user matches a deny pattern.</p>
+      </td></tr><tr id="Standard Implementations_UserConfig - org.apache.catalina.startup.UserConfig_deny"><td><code class="attributeName">deny</code></td><td>
+        <p>A regular expression defining user who deployment is denied. If this
+        attribute is specified, the user to deploy must not match for this
+        pattern. If this attribute is not specified, deployment of user will be
+        governed by a allow attribute.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="Version_Logging_Lifecycle_Listener_-_org.apache.catalina.startup.VersionLoggerListener">Version Logging Lifecycle Listener - org.apache.catalina.startup.VersionLoggerListener</h4><div class="text">
+
+    <p>The <strong>Version Logging Lifecycle Listener</strong> logs Tomcat, Java
+    and operating system information when Tomcat starts.</p>
+
+    <p>This listener must only be nested within <a href="server.html">Server</a>
+    elements and should be the first listener defined.</p>
+
+    <p>The following additional attributes are supported by the <strong>Version
+    Logging Lifecycle Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_Version Logging Lifecycle Listener - org.apache.catalina.startup.VersionLoggerListener_logArgs"><td><code class="attributeName">logArgs</code></td><td>
+        <p>If <code>true</code>, the command line arguments passed to Java when
+        Tomcat started will be logged. If not specified, the default value of
+        <code>true</code> will be used.</p>
+      </td></tr><tr id="Standard Implementations_Version Logging Lifecycle Listener - org.apache.catalina.startup.VersionLoggerListener_logEnv"><td><code class="attributeName">logEnv</code></td><td>
+        <p>If <code>true</code>, the current environment variables when Tomcat
+        starts will be logged. If not specified, the default value of
+        <code>false</code> will be used.</p>
+      </td></tr><tr id="Standard Implementations_Version Logging Lifecycle Listener - org.apache.catalina.startup.VersionLoggerListener_logProps"><td><code class="attributeName">logProps</code></td><td>
+        <p>If <code>true</code>, the current Java system properties will be
+        logged. If not specified, the default value of
+        <code>false</code> will be used.</p>
+      </td></tr></table>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="HTTPD_mod_heartmonitor_Listener_-_org.apache.catalina.ha.backend.HeartbeatListener">HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener</h4><div class="text">
+
+    <p>The <strong>HTTPD mod_heartmonitor Listener</strong> allows tomcat to send heart beat message to
+    the Apache HTTPD mod_heartmonitor module.</p>
+
+    <p>The following additional attributes are supported by the <strong>HTTPD mod_heartmonitor
+    Listener</strong>:</p>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_Port"><td><code class="attributeName">Port</code></td><td>
+        <p>Port the connector that will received proxied traffic from HTTPD, default the first connector will be used</p>
+      </td></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_Host"><td><code class="attributeName">Host</code></td><td>
+        <p>Host it is the IP corresponding the <strong>address</strong> of the connector that will received proxied traffic,
+        default empty the <strong>Port</strong> will be used</p>
+      </td></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_proxyURL"><td><code class="attributeName">proxyURL</code></td><td>
+        <p>proxyURL is the URL corresponding to the <strong>Location</strong> in httpd configuration of the heartbeat Handler,
+        default /HeartbeatListener</p>
+      </td></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_ProxyList"><td><code class="attributeName">ProxyList</code></td><td>
+        <p>ProxyList is the list of proxies from which tomcat is going to receive requests,
+        formatted like "address:port,address:port" once filled the multicast logic is disable and the multi parameters are
+        ignored</p>
+      </td></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_Group"><td><code class="attributeName">Group</code></td><td>
+        <p>Group is the Multicast IP to broadcast messages to HTTPD, default 224.0.1.105</p>
+      </td></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_Multiport"><td><code class="attributeName">Multiport</code></td><td>
+        <p>Multiport is the Multicast port to broadcast messages to HTTPD, default 23364</p>
+      </td></tr><tr id="Standard Implementations_HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener_Ttl"><td><code class="attributeName">Ttl</code></td><td>
+        <p>Ttl is the TTL for the broadcast messages, default 16</p>
+      </td></tr></table>
+  </div></div>
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

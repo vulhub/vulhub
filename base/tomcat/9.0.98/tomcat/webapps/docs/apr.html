@@ -1,0 +1,135 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Apache Portable Runtime (APR) based Native library for Tomcat</title><meta name="author" content="Remy Maucherat"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Apache Portable Runtime (APR) based Native library for Tomcat</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Installation">Installation</a><ol><li><a href="#Windows">Windows</a></li><li><a href="#Linux">Linux</a></li></ol></li><li><a href="#APR_Components">APR Components</a></li><li><a href="#APR_Lifecycle_Listener_Configuration">APR Lifecycle Listener Configuration</a></li><li><a href="#APR_Connectors_Configuration">APR Connectors Configuration</a><ol><li><a href="#HTTP/HTTPS">HTTP/HTTPS</a></li><li><a href="#AJP">AJP</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>
+      Tomcat can use the <a href="https://apr.apache.org/">Apache Portable Runtime</a> to
+      provide superior scalability, performance, and better integration with native server
+      technologies. The Apache Portable Runtime is a highly portable library that is at
+      the heart of Apache HTTP Server 2.x. APR has many uses, including access to advanced IO
+      functionality (such as sendfile, epoll and OpenSSL), OS level functionality (random number
+      generation, system status, etc), and native process handling (shared memory, NT
+      pipes and Unix sockets).
+  </p>
+
+  <p>
+      These features allows making Tomcat a general purpose webserver, will enable much better
+      integration with other native web technologies, and overall make Java much more viable as
+      a full fledged webserver platform rather than simply a backend focused technology.
+  </p>
+
+  </div><h3 id="Installation">Installation</h3><div class="text">
+
+    <p>
+      APR support requires three main native components to be installed:
+    </p>
+    <ul>
+      <li>APR library</li>
+      <li>JNI wrappers for APR used by Tomcat (libtcnative)</li>
+      <li>OpenSSL libraries</li>
+    </ul>
+
+    <div class="subsection"><h4 id="Windows">Windows</h4><div class="text">
+
+    <p>
+      Windows binaries are provided for tcnative-1, which is a statically compiled .dll which includes
+      OpenSSL and APR. It can be downloaded from <a href="https://tomcat.apache.org/download-native.cgi">here</a>
+      as 32bit or AMD x86-64 binaries.
+      In security conscious production environments, it is recommended to use separate shared dlls
+      for OpenSSL, APR, and libtcnative-1, and update them as needed according to security bulletins.
+      Windows OpenSSL binaries are linked from the <a href="https://www.openssl.org">Official OpenSSL
+      website</a> (see related/binaries).
+    </p>
+
+    </div></div>
+
+    <div class="subsection"><h4 id="Linux">Linux</h4><div class="text">
+
+    <p>
+      Most Linux distributions will ship packages for APR and OpenSSL. The JNI wrapper (libtcnative) will
+      then have to be compiled. It depends on APR, OpenSSL, and the Java headers.
+    </p>
+
+    <p>
+      Requirements:
+    </p>
+    <ul>
+      <li>APR 1.2+ development headers (libapr1-dev package)</li>
+      <li>OpenSSL 1.0.2+ development headers (libssl-dev package)</li>
+      <li>JNI headers from Java compatible JDK 1.4+</li>
+      <li>GNU development environment (gcc, make)</li>
+    </ul>
+
+    <p>
+      The wrapper library sources are located in the Tomcat binary bundle, in the
+      <code>bin/tomcat-native.tar.gz</code> archive.
+      Once the build environment is installed and the source archive is extracted, the wrapper library
+      can be compiled using (from the folder containing the configure script):
+    </p>
+    <div class="codeBox"><pre><code>./configure &amp;&amp; make &amp;&amp; make install</code></pre></div>
+
+    </div></div>
+
+  </div><h3 id="APR_Components">APR Components</h3><div class="text">
+
+  <p>
+    Once the libraries are properly installed and available to Java (if loading fails, the library path
+    will be displayed), the Tomcat connectors will automatically use APR. Configuration of the connectors
+    is similar to the regular connectors, but have a few extra attributes which are used to configure
+    APR components. Note that the defaults should be well tuned for most use cases, and additional
+    tweaking shouldn't be required.
+  </p>
+
+  <p>
+    When APR is enabled, the following features are also enabled in Tomcat:
+  </p>
+  <ul>
+    <li>Secure session ID generation by default on all platforms (platforms other than Linux required
+        random number generation using a configured entropy)</li>
+    <li>OS level statistics on memory usage and CPU usage by the Tomcat process are displayed by
+        the status servlet</li>
+  </ul>
+
+  </div><h3 id="APR_Lifecycle_Listener_Configuration">APR Lifecycle Listener Configuration</h3><div class="text">
+    <p>See <a href="config/listeners.html#APR_Lifecycle_Listener_-_org.apache.catalina.core.AprLifecycleListener">the
+    listener configuration</a>.</p>
+  </div><h3 id="APR_Connectors_Configuration">APR Connectors Configuration</h3><div class="text">
+
+    <div class="subsection"><h4 id="HTTP/HTTPS">HTTP/HTTPS</h4><div class="text">
+
+      <p>For HTTP configuration, see the <a href="config/http.html">HTTP</a>
+      connector configuration documentation.</p>
+
+      <p>For HTTPS configuration, see the
+      <a href="config/http.html#SSL_Support">HTTPS</a> connector configuration
+      documentation.</p>
+
+      <p>An example SSL Connector declaration is:</p>
+      <div class="codeBox"><pre><code>&lt;Connector port="443" maxHttpHeaderSize="8192"
+                 maxThreads="150"
+                 enableLookups="false" disableUploadTimeout="true"
+                 acceptCount="100" scheme="https" secure="true"
+                 SSLEnabled="true"
+                 SSLCertificateFile="${catalina.base}/conf/localhost.crt"
+                 SSLCertificateKeyFile="${catalina.base}/conf/localhost.key" /&gt;</code></pre></div>
+
+
+    </div></div>
+
+    <div class="subsection"><h4 id="AJP">AJP</h4><div class="text">
+
+      <p>For AJP configuration, see the <a href="config/ajp.html">AJP</a>
+      connector configuration documentation.</p>
+
+    </div></div>
+
+  </div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

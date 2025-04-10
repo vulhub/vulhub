@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+&lt;jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="1.2">
+&lt;jsp:directive.page contentType="text/html"/>
+&lt;jsp:directive.page import="java.util.Date, java.util.Locale"/>
+&lt;jsp:directive.page import="java.text.*"/>
+
+&lt;jsp:declaration>
+  String getDateTimeStr(Locale l) {
+    DateFormat df = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, l);
+    return df.format(new Date());
+  }
+&lt;/jsp:declaration>
+
+&lt;html>
+&lt;head>
+  &lt;title>Example JSP in XML format&lt;/title>
+&lt;/head>
+
+&lt;body>
+This is the output of a simple JSP using XML format.
+&lt;br />
+
+&lt;div>Use a jsp:scriptlet to loop from 1 to 10: &lt;/div>
+&lt;jsp:scriptlet>
+// Note we need to declare CDATA because we don't escape the less than symbol
+&lt;![CDATA[
+  for (int i = 1; i&lt;=10; i++) {
+    out.println(i);
+    if (i &lt; 10) {
+      out.println(", ");
+    }
+  }
+]]>
+&lt;/jsp:scriptlet>
+
+&lt;!-- Because I omit br's end tag, declare it as CDATA -->
+&lt;![CDATA[
+  &lt;br>&lt;br>
+]]>
+
+&lt;div align="left">
+  Use a jsp:expression to write the date and time in the browser's locale:
+  &lt;jsp:expression>getDateTimeStr(request.getLocale())&lt;/jsp:expression>
+&lt;/div>
+
+
+&lt;jsp:text>
+  &amp;lt;p&amp;gt;This sentence is enclosed in a jsp:text element.&amp;lt;/p&amp;gt;
+&lt;/jsp:text>
+
+&lt;/body>
+&lt;/html>
+&lt;/jsp:root>
+</pre></body></html>

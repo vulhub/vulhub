@@ -1,0 +1,193 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Ahead of Time compilation support</title></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Ahead of Time compilation support</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Setup">Setup</a></li><li><a href="#Packaging_and_Building">Packaging and Building</a></li><li><a href="#Native_image_configuration">Native image configuration</a></li><li><a href="#Building_the_native_image">Building the native image</a></li><li><a href="#Compatibility">Compatibility</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+  <p>
+    Tomcat supports using the GraalVM/Mandrel Native Image tool to produce
+    a native binary including the container. This documentation page
+    describes the build process of such an image.
+  </p>
+
+  </div><h3 id="Setup">Setup</h3><div class="text">
+
+  <p>
+    The native image tool is much easier to use with single JARs, as a result
+    the process will use the Maven shade plugin JAR packaging. The
+    idea is to produce a single JAR that contains all necessary classes from
+    Tomcat, the webapps and all additional dependencies. Although Tomcat has
+    received compatibility fixes to support native images, other libraries
+    may not be compatible and may require replacement code (the GraalVM
+    documentation has more details about this).
+  </p>
+
+  <p>
+    Download and install GraalVM or Mandrel.
+  </p>
+
+  <p>
+    Download the Tomcat Stuffed module from
+    <code>https://github.com/apache/tomcat/tree/10.1.x/modules/stuffed</code>.
+    For convinience, an env property can be set:
+    <div class="codeBox"><pre><code>export TOMCAT_STUFFED=/absolute...path...to/stuffed</code></pre></div>
+    The build process now requires both Apache Ant and Maven.
+  </p>
+
+  </div><h3 id="Packaging_and_Building">Packaging and Building</h3><div class="text">
+
+  <p>
+    Inside the <code>$TOMCAT_STUFFED</code> folder, the directory structure
+    is the same as for regular Tomcat. The main configuration files
+    are placed in the <code>conf</code> folder, and if using the default
+    <code>server.xml</code> the webapps are placed in the <code>webapps</code>
+    folder.
+  </p>
+
+  <p>
+    All the webapp classes need to be made available to the Maven shade plugin
+    as well as the compiler during the JSP precompilation step.
+    Any JARs that are present in <code>/WEB-INF/lib</code>
+    need to be made available as Maven dependencies.
+    The <code>webapp-jspc.ant.xml</code> script will copy classes from the
+    <code>/WEB-INF/classes</code> folder of the webapp
+    to the <code>target/classes</code> path that Maven uses as the compilation
+    target, but if any of the JSP sources use them, then they need to be
+    packaged as JARs instead.
+  </p>
+
+  <p>
+    The first step is to build the shaded Tomcat JAR with all dependencies.
+    Any JSP in the webapp must all be precompiled and packaged (assuming
+    that the <code>webapps</code> contains a <code>$WEBAPPNAME</code> webapp):
+    <div class="codeBox"><pre><code>cd $TOMCAT_STUFFED
+mvn package
+ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</code></pre></div>
+    Dependencies for the webapp should now be added to the main
+    <code>$TOMCAT_STUFFED/pom.xml</code>,
+    following by building the shaded JAR:
+    <div class="codeBox"><pre><code>mvn package</code></pre></div>
+  </p>
+
+  <p>
+    As it is best to avoid using reflection whenever possible with Ahead of
+    Time compilation, it can be a good idea to generate and compile Tomcat
+    Embedded code out of the main server.xml configuration as well as the
+    context.xml files used to configure the contexts.
+    <div class="codeBox"><pre><code>$JAVA_HOME/bin/java\
+        -Dcatalina.base=. -Djava.util.logging.config.file=conf/logging.properties\
+        -jar target/tomcat-stuffed-1.0.jar --catalina -generateCode src/main/java</code></pre></div>
+    Then stop Tomcat and use the following command to include the generated
+    embedded code:
+    <div class="codeBox"><pre><code>mvn package</code></pre></div>
+    The rest of the process described here will assume this step was done and
+    the <code>--catalina -useGeneratedCode</code> arguments are added to the
+    command lines. If this was not the case, they should be removed.
+  </p>
+
+  </div><h3 id="Native_image_configuration">Native image configuration</h3><div class="text">
+
+  <p>
+    Native images do not support any form of dynamic classloading or
+    reflection unless it is defined explicitly in descriptors. Generating
+    them uses a tracing agent from the GraalVM, and needs additional manual
+    configuration in some cases.
+  </p>
+
+  <p>
+    Run Tomcat using the GraalVM substrate VM and its trace agent:
+    <div class="codeBox"><pre><code>$JAVA_HOME/bin/java\
+        -agentlib:native-image-agent=config-output-dir=$TOMCAT_STUFFED/target/\
+        -Dorg.graalvm.nativeimage.imagecode=agent\
+        -Dcatalina.base=. -Djava.util.logging.config.file=conf/logging.properties\
+        -jar target/tomcat-stuffed-1.0.jar --catalina -useGeneratedCode</code></pre></div>
+  </p>
+
+  <p>
+    Now all paths from the webapp that lead to dynamic classloading
+    (ex: Servlet access, websockets, etc) need to be accessed using a script
+    that will exercise the webapp. Servlets may be loaded on startup
+    instead of needing an actual access. Listeners may also be used to load
+    additional classes on startup. When that is done, Tomcat can be stopped.
+  </p>
+
+  <p>
+    The descriptors have now been generated in the agent output directory.
+    At this point, further configuration must be made to add items that are
+    not traced, including: base interfaces, resource bundles, BeanInfo based
+    reflection, etc. Please refer to the Graal documentation for more
+    information on this process.
+  </p>
+
+  <p>
+    Even though all classes that are used have to be complied AOT into the
+    native image, webapps must still be left unchanged, and continue including
+    all needed classes and JARs in the <code>WEB-INF</code> folder. Although
+    these classes will not actually be run or loaded, access to them is
+    required.
+  </p>
+
+  </div><h3 id="Building_the_native_image">Building the native image</h3><div class="text">
+
+  <p>
+    If everything has been done properly, the native image can now be built
+    using the native-image tool.
+    <div class="codeBox"><pre><code>$JAVA_HOME/bin/native-image --report-unsupported-elements-at-runtime\
+        --enable-http --enable-https --enable-url-protocols=http,https,jar,jrt\
+        --initialize-at-build-time=org.eclipse.jdt,org.apache.el.parser.SimpleNode,javax.servlet.jsp.JspFactory,org.apache.jasper.servlet.JasperInitializer,org.apache.jasper.runtime.JspFactoryImpl\
+        -H:+UnlockExperimentalVMOptions\
+        -H:+JNI -H:+ReportExceptionStackTraces\
+        -H:ConfigurationFileDirectories=$TOMCAT_STUFFED/target/\
+        -H:ReflectionConfigurationFiles=$TOMCAT_STUFFED/tomcat-reflection.json\
+        -H:ResourceConfigurationFiles=$TOMCAT_STUFFED/tomcat-resource.json\
+        -H:JNIConfigurationFiles=$TOMCAT_STUFFED/tomcat-jni.json\
+        -jar $TOMCAT_STUFFED/target/tomcat-stuffed-1.0.jar</code></pre></div>
+    The additional <code>--static</code> parameter enables static linking of
+    glibc, zlib and libstd++ in the generated binary.
+  </p>
+
+  <p>
+    Running the native image is then:
+    <div class="codeBox"><pre><code>./tomcat-stuffed-1.0 -Dcatalina.base=. -Djava.util.logging.config.file=conf/logging.properties --catalina -useGeneratedCode</code></pre></div>
+  </p>
+
+  </div><h3 id="Compatibility">Compatibility</h3><div class="text">
+
+  <p>
+    Servlets, JSPs, EL, websockets, the Tomcat container, tomcat-native, HTTP/2
+    are all supported out of the box in a native image.
+  </p>
+
+  <p>
+    At the time of writing this documentation, JULI is not supported as the
+    log manager configuration property is not supported by Graal, in addition
+    to some static initializer problems, and the regular java.util.logging
+    loggers and implementation should be used instead.
+  </p>
+
+  <p>
+    If using the default server.xml file, some Server listeners have
+    to be removed from the configuration as they are not compatible with native
+    images, such as a JMX listener (JMX is unsupported) and leak prevention
+    listeners (use of internal code that does not exist in Graal).
+  </p>
+
+  <p>
+    Missing items for better Tomcat functionality:
+    <ul>
+      <li>java.util.logging LogManager: Configuration through a system property
+        is not implemented, so standard java.util.logging must be used instead
+        of JULI</li>
+      <li>Static linking configuration: tomcat-native cannot be statically
+        linked</li>
+    </ul>
+  </p>
+
+  </div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

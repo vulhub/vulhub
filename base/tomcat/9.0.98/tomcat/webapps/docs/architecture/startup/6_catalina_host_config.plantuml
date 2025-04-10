@@ -1,0 +1,90 @@
+@startuml
+
+' Licensed to the Apache Software Foundation (ASF) under one or more
+' contributor license agreements.  See the NOTICE file distributed with
+' this work for additional information regarding copyright ownership.
+' The ASF licenses this file to You under the Apache License, Version 2.0
+' (the "License"); you may not use this file except in compliance with
+' the License.  You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+hide footbox
+skinparam style strictuml
+
+activate Host
+
+== BEFORE_START_EVENT ==
+
+Host -> HostConfig ++:lifecycleEvent(BEFORE_START_EVENT)
+
+HostConfig -> HostConfig  ++: beforeStart()
+return
+
+return
+
+== START_EVENT ==
+
+Host -> HostConfig ++:lifecycleEvent(START_EVENT)
+
+HostConfig -> HostConfig ++: start()
+
+HostConfig -> HostConfig ++: deployApps()
+
+|||
+HostConfig -> HostConfig ++: migrateLegacyApps()
+return
+
+|||
+HostConfig -> HostConfig ++: deployDescriptors()
+return
+
+|||
+HostConfig -> HostConfig ++: deployWARs()
+return
+
+|||
+HostConfig -> HostConfig ++: deployDirectories()
+return
+
+return
+
+return
+
+return
+
+== PERIODIC_EVENT ==
+
+Host -> HostConfig ++:lifecycleEvent(PERIODIC_EVENT)
+
+HostConfig -> HostConfig  ++: check()
+
+group Each DeployedApplication is called sequentially
+HostConfig -> DeployedApplication ++: checkResources()
+note right
+Triggers reloading, redeployment
+or undeployment as appropriate
+depending on which resources have
+been added, removed and/or changed.
+end note
+return
+end group
+
+HostConfig -> HostConfig ++: deployApps()
+note right
+See START_EVENT for an expansion
+of the deployApps() call.
+end note
+return
+
+return
+
+return
+
+@enduml

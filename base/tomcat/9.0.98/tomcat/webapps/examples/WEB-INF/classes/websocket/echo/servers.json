@@ -1,0 +1,20 @@
+{
+   "options": {"failByDrop": false},
+   "outdir": "./reports/servers",
+
+   "servers": [
+                {"agent": "Basic",
+                 "url": "ws://localhost:8080/examples/websocket/echoAnnotation",
+                 "options": {"version": 18}},
+                {"agent": "Stream",
+                 "url": "ws://localhost:8080/examples/websocket/echoStreamAnnotation",
+                 "options": {"version": 18}},
+                {"agent": "Async",
+                 "url": "ws://localhost:8080/examples/websocket/echoAsyncAnnotation",
+                 "options": {"version": 18}}
+              ],
+
+   "cases": ["*"],
+   "exclude-cases": [],
+   "exclude-agent-cases": {}
+}

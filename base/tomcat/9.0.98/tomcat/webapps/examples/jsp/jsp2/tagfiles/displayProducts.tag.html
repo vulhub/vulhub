@@ -1,0 +1,56 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+&lt;%@ attribute name="normalPrice" fragment="true" %>
+&lt;%@ attribute name="onSale" fragment="true" %>
+&lt;%@ variable name-given="name" %>
+&lt;%@ variable name-given="price" %>
+&lt;%@ variable name-given="origPrice" %>
+&lt;%@ variable name-given="salePrice" %>
+
+&lt;table border="1">
+  &lt;tr>
+    &lt;td>
+      &lt;c:set var="name" value="Hand-held Color PDA"/>
+      &lt;c:set var="price" value="$298.86"/>
+      &lt;jsp:invoke fragment="normalPrice"/>
+    &lt;/td>
+    &lt;td>
+      &lt;c:set var="name" value="4-Pack 150 Watt Light Bulbs"/>
+      &lt;c:set var="origPrice" value="$2.98"/>
+      &lt;c:set var="salePrice" value="$2.32"/>
+      &lt;jsp:invoke fragment="onSale"/>
+    &lt;/td>
+    &lt;td>
+      &lt;c:set var="name" value="Digital Cellular Phone"/>
+      &lt;c:set var="price" value="$68.74"/>
+      &lt;jsp:invoke fragment="normalPrice"/>
+    &lt;/td>
+    &lt;td>
+      &lt;c:set var="name" value="Baby Grand Piano"/>
+      &lt;c:set var="price" value="$10,800.00"/>
+      &lt;jsp:invoke fragment="normalPrice"/>
+    &lt;/td>
+    &lt;td>
+      &lt;c:set var="name" value="Luxury Car w/ Leather Seats"/>
+      &lt;c:set var="origPrice" value="$23,980.00"/>
+      &lt;c:set var="salePrice" value="$21,070.00"/>
+      &lt;jsp:invoke fragment="onSale"/>
+    &lt;/td>
+  &lt;/tr>
+&lt;/table>
+</pre></body></html>

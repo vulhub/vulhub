@@ -1,0 +1,62 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Application Developer's Guide (9.0.98) - Introduction</title><meta name="author" content="Craig R. McClanahan"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Application Developer's Guide</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">App Dev Guide Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Contents</h2><ul><li><a href="index.html">Contents</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="installation.html">Installation</a></li><li><a href="deployment.html">Deployment</a></li><li><a href="source.html">Source Code</a></li><li><a href="processes.html">Processes</a></li><li><a href="sample/">Example App</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Introduction</h2><h3 id="Overview">Overview</h3><div class="text">
+
+<p>Congratulations!  You've decided to (or been told to) learn how to
+build web applications using servlets and JSP pages, and picked the
+Tomcat server to use for your learning and development.  But now what
+do you do?</p>
+
+<p>This manual is a primer covering the basic steps of using Tomcat to
+set up a development environment, organize your source code, and then
+build and test your application.  It does not discuss architectures or
+recommended coding practices for web application development,
+or provide in depth instructions on operating the development
+tools that are discussed.  References to sources of additional information
+are included in the following subsections.</p>
+
+<p>The discussion in this manual is aimed at developers who will be using
+a text editor along with command line tools to develop and debug their
+applications.  As such, the recommendations are fairly generic &ndash; but you
+should easily be able to apply them in either a Windows-based or Unix-based
+development environment.  If you are utilizing an Integrated Development
+Environment (IDE) tool, you will need to adapt the advice given here to
+the details of your particular environment.</p>
+
+</div><h3 id="Links">Links</h3><div class="text">
+
+<p>The following links provide access to selected sources of online
+information, documentation, and software that is useful in developing
+web applications with Tomcat.</p>
+<ul>
+<li><p><a href="https://jcp.org/aboutJava/communityprocess/mrel/jsr245/index2.html">https://jcp.org/aboutJava/communityprocess/mrel/jsr245/index2.html</a> -
+    <i>JavaServer Pages (JSP) Specification, Version 2.3</i>.  Describes
+    the programming environment provided by standard implementations
+    of the JavaServer Pages (JSP) technology.  In conjunction with
+    the Servlet API Specification (see below), this document describes
+    what a portable API page is allowed to contain.  Specific
+    information on scripting (Chapter 9), tag extensions (Chapter 7),
+    and packaging JSP pages (Appendix A) is useful.  The Javadoc
+    API Documentation is included in the specification, and with the
+    Tomcat download.</p></li>
+<li><p><a href="https://jcp.org/aboutJava/communityprocess/final/jsr369/index.html">https://jcp.org/aboutJava/communityprocess/final/jsr369/index.html</a> -
+    <i>Servlet API Specification, Version 4.0</i>.  Describes the
+    programming environment that must be provided by all servlet
+    containers conforming to this specification.  In particular, you
+    will need this document to understand the web application
+    directory structure and deployment file (Chapter 10), methods of
+    mapping request URIs to servlets (Chapter 12), container managed
+    security (Chapter 13), and the syntax of the <code>web.xml</code>
+    Web Application Deployment Descriptor (Chapter 14).  The Javadoc
+    API Documentation is included in the specification, and with the
+    Tomcat download.</p></li>
+</ul>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

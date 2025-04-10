@@ -1,0 +1,1126 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - JNDI Resources How-To</title><meta name="author" content="Craig R. McClanahan"><meta name="author" content="Yoav Shapira"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>JNDI Resources How-To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#web.xml_configuration">web.xml configuration</a></li><li><a href="#context.xml_configuration">context.xml configuration</a></li><li><a href="#Global_configuration">Global configuration</a></li><li><a href="#Using_resources">Using resources</a></li><li><a href="#Tomcat_Standard_Resource_Factories">Tomcat Standard Resource Factories</a><ol><li><a href="#Generic_JavaBean_Resources">Generic JavaBean Resources</a></li><li><a href="#Memory_UserDatabase_Resources">Memory UserDatabase Resources</a></li><li><a href="#DataSource_UserDatabase_Resources">DataSource UserDatabase Resources</a></li><li><a href="#JavaMail_Sessions">JavaMail Sessions</a></li><li><a href="#JDBC_Data_Sources">JDBC Data Sources</a></li></ol></li><li><a href="#Adding_Custom_Resource_Factories">Adding Custom Resource Factories</a></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+
+<p>Tomcat provides a JNDI <strong>InitialContext</strong> implementation
+instance for each web application running under it, in a manner that is
+compatible with those provided by a
+<a href="http://www.oracle.com/technetwork/java/javaee/overview/index.html">
+Java Enterprise Edition</a> application server. The Java EE standard provides
+a standard set of elements in the <code>/WEB-INF/web.xml</code> file to
+reference/define resources.</p>
+
+<p>See the following Specifications for more information about programming APIs
+for JNDI, and for the features supported by Java Enterprise Edition (Java EE)
+servers, which Tomcat emulates for the services that it provides:</p>
+<ul>
+<li><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html">
+    Java Naming and Directory Interface</a> (included in JDK 1.4 onwards)</li>
+<li><a href="http://www.oracle.com/technetwork/java/javaee/documentation/index.html">
+    Java EE Platform Specification</a> (in particular, see Chapter 5 on <em>Naming</em>)</li>
+</ul>
+
+</div><h3 id="web.xml_configuration">web.xml configuration</h3><div class="text">
+
+<p>The following elements may be used in the web application deployment
+descriptor (<code>/WEB-INF/web.xml</code>) of your web application to define
+resources:</p>
+<ul>
+<li><code><strong>&lt;env-entry&gt;</strong></code> - Environment entry, a
+    single-value parameter that can be used to configure how the application
+    will operate.</li>
+<li><code><strong>&lt;resource-ref&gt;</strong></code> - Resource reference,
+    which is typically to an object factory for resources such as a JDBC
+    <code>DataSource</code>, a JavaMail <code>Session</code>, or custom
+    object factories configured into Tomcat.</li>
+<li><code><strong>&lt;resource-env-ref&gt;</strong></code> - Resource
+    environment reference, a new variation of <code>resource-ref</code>
+    added in Servlet 2.4 that is simpler to configure for resources
+    that do not require authentication information.</li>
+</ul>
+
+<p>Providing that Tomcat is able to identify an appropriate resource factory to
+use to create the resource and that no further configuration information is
+required, Tomcat will use the information in <code>/WEB-INF/web.xml</code> to
+create the resource.</p>
+
+<p>Tomcat provides a number of Tomcat specific options for JNDI resources that
+cannot be specified in web.xml. These include <code>closeMethod</code> that
+enables faster cleaning-up of JNDI resources when a web application stops and
+<code>singleton</code> that controls whether or not a new instance of the
+resource is created for every JNDI lookup. To use these configuration options
+the resource must be specified in a web application's
+<a href="config/context.html"><code>&lt;Context&gt;</code></a> element or in the
+<a href="config/globalresources.html">
+<code><strong>&lt;GlobalNamingResources&gt;</strong></code></a> element of
+<code>$CATALINA_BASE/conf/server.xml</code>.</p>
+
+</div><h3 id="context.xml_configuration">context.xml configuration</h3><div class="text">
+
+<p>If Tomcat is unable to identify the appropriate resource factory and/or
+additional configuration information is required, additional Tomcat specific
+configuration must be specified before Tomcat can create the resource.
+Tomcat specific resource configuration is entered in
+the <a href="config/context.html"><code>&lt;Context&gt;</code></a> elements that
+can be specified in either <code>$CATALINA_BASE/conf/server.xml</code> or,
+preferably, the per-web-application context XML file
+(<code>META-INF/context.xml</code>).</p>
+
+<p>Tomcat specific resource configuration is performed using the following
+elements in the <a href="config/context.html"><code>&lt;Context&gt;</code></a>
+element:</p>
+
+<ul>
+<li><a href="config/context.html#Environment_Entries">&lt;Environment&gt;</a> -
+    Configure names and values for scalar environment entries that will be
+    exposed to the web application through the JNDI
+    <code>InitialContext</code> (equivalent to the inclusion of an
+    <code>&lt;env-entry&gt;</code> element in the web application
+    deployment descriptor).</li>
+<li><a href="config/context.html#Resource_Definitions">&lt;Resource&gt;</a> -
+    Configure the name and data type of a resource made available to the
+    application (equivalent to the inclusion of a
+    <code>&lt;resource-ref&gt;</code> element in the web application
+    deployment descriptor).</li>
+<li><a href="config/context.html#Resource_Links">&lt;ResourceLink&gt;</a> -
+    Add a link to a resource defined in the global JNDI context. Use resource
+    links to give a web application access to a resource defined in
+    the <a href="config/globalresources.html">&lt;GlobalNamingResources&gt;</a>
+    child element of the <a href="config/server.html">&lt;Server&gt;</a>
+    element.</li>
+<li><a href="config/context.html#Transaction">&lt;Transaction&gt;</a> -
+    Add a resource factory for instantiating the UserTransaction object
+    instance that is available at <code>java:comp/UserTransaction</code>.</li>
+
+</ul>
+
+<p>Any number of these elements may be nested inside a
+<a href="config/context.html"><code>&lt;Context&gt;</code></a> element and will
+be associated only with that particular web application.</p>
+
+<p>If a resource has been defined in a
+<a href="config/context.html"><code>&lt;Context&gt;</code></a> element it is not
+necessary for that resource to be defined in <code>/WEB-INF/web.xml</code>.
+However, it is recommended to keep the entry in <code>/WEB-INF/web.xml</code>
+to document the resource requirements for the web application.</p>
+
+<p>Where the same resource name has been defined for a
+<code>&lt;env-entry&gt;</code> element included in the web application
+deployment descriptor (<code>/WEB-INF/web.xml</code>) and in an
+<code>&lt;Environment&gt;</code> element as part of the
+<a href="config/context.html"><code>&lt;Context&gt;</code></a> element for the
+web application, the values in the deployment descriptor will take precedence
+<strong>only</strong> if allowed by the corresponding
+<code>&lt;Environment&gt;</code> element (by setting the <code>override</code>
+attribute to "true").</p>
+
+</div><h3 id="Global_configuration">Global configuration</h3><div class="text">
+
+<p>Tomcat maintains a separate namespace of global resources for the
+entire server.  These are configured in the
+<a href="config/globalresources.html">
+<code><strong>&lt;GlobalNamingResources&gt;</strong></code></a> element of
+<code>$CATALINA_BASE/conf/server.xml</code>. You may expose these resources to
+web applications by using a
+<a href="config/context.html#Resource_Links">&lt;ResourceLink&gt;</a> to
+include it in the per-web-application context.</p>
+
+<p>If a resource has been defined using a
+<a href="config/context.html#Resource_Links">&lt;ResourceLink&gt;</a>, it is not
+necessary for that resource to be defined in <code>/WEB-INF/web.xml</code>.
+However, it is recommended to keep the entry in <code>/WEB-INF/web.xml</code>
+to document the resource requirements for the web application.</p>
+
+</div><h3 id="Using_resources">Using resources</h3><div class="text">
+
+<p>The <code>InitialContext</code> is configured as a web application is
+initially deployed, and is made available to web application components (for
+read-only access).  All configured entries and resources are placed in
+the <code>java:comp/env</code> portion of the JNDI namespace, so a typical
+access to a resource - in this case, to a JDBC <code>DataSource</code> -
+would look something like this:</p>
+
+<div class="codeBox"><pre><code>// Obtain our environment naming context
+Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+
+// Look up our data source
+DataSource ds = (DataSource)
+  envCtx.lookup("jdbc/EmployeeDB");
+
+// Allocate and use a connection from the pool
+Connection conn = ds.getConnection();
+... use this connection to access the database ...
+conn.close();</code></pre></div>
+
+</div><h3 id="Tomcat_Standard_Resource_Factories">Tomcat Standard Resource Factories</h3><div class="text">
+
+  <p>Tomcat includes a series of standard resource factories that can
+  provide services to your web applications, but give you configuration
+  flexibility (via the
+  <a href="config/context.html"><code>&lt;Context&gt;</code></a> element)
+  without modifying the web application or the deployment descriptor. Each
+  subsection below details the configuration and usage of the standard resource
+  factories.</p>
+
+  <p>See <a href="#Adding_Custom_Resource_Factories">Adding Custom
+  Resource Factories</a> for information about how to create, install,
+  configure, and use your own custom resource factory classes with
+  Tomcat.</p>
+
+  <p><em>NOTE</em> - Of the standard resource factories, only the
+  "JDBC Data Source" and "User Transaction" factories are mandated to
+  be available on other platforms, and then they are required only if
+  the platform implements the Java Enterprise Edition (Java EE) specs.
+  All other standard resource factories, plus custom resource factories
+  that you write yourself, are specific to Tomcat and cannot be assumed
+  to be available on other containers.</p>
+
+  <div class="subsection"><h4 id="Generic_JavaBean_Resources">Generic JavaBean Resources</h4><div class="text">
+
+    <h5>0.  Introduction</h5>
+
+    <p>This resource factory can be used to create objects of <em>any</em>
+    Java class that conforms to standard JavaBeans naming conventions (i.e.
+    it has a zero-arguments constructor, and has property setters that
+    conform to the setFoo() naming pattern.  The resource factory will
+    only create a new instance of the appropriate bean class every time a
+    <code>lookup()</code> for this entry is made if the <code>singleton</code>
+    attribute of the factory is set to <code>false</code>.</p>
+
+    <p>The steps required to use this facility are described below.</p>
+
+    <h5>1.  Create Your JavaBean Class</h5>
+
+    <p>Create the JavaBean class which will be instantiated each time
+    that the resource factory is looked up.  For this example, assume
+    you create a class <code>com.mycompany.MyBean</code>, which looks
+    like this:</p>
+
+<div class="codeBox"><pre><code>package com.mycompany;
+
+public class MyBean {
+
+  private String foo = "Default Foo";
+
+  public String getFoo() {
+    return (this.foo);
+  }
+
+  public void setFoo(String foo) {
+    this.foo = foo;
+  }
+
+  private int bar = 0;
+
+  public int getBar() {
+    return (this.bar);
+  }
+
+  public void setBar(int bar) {
+    this.bar = bar;
+  }
+
+
+}</code></pre></div>
+
+  <h5>2.  Declare Your Resource Requirements</h5>
+
+  <p>Next, modify your web application deployment descriptor
+  (<code>/WEB-INF/web.xml</code>) to declare the JNDI name under which
+  you will request new instances of this bean.  The simplest approach is
+  to use a <code>&lt;resource-env-ref&gt;</code> element, like this:</p>
+
+<div class="codeBox"><pre><code>&lt;resource-env-ref&gt;
+  &lt;description&gt;
+    Object factory for MyBean instances.
+  &lt;/description&gt;
+  &lt;resource-env-ref-name&gt;
+    bean/MyBeanFactory
+  &lt;/resource-env-ref-name&gt;
+  &lt;resource-env-ref-type&gt;
+    com.mycompany.MyBean
+  &lt;/resource-env-ref-type&gt;
+&lt;/resource-env-ref&gt;</code></pre></div>
+
+    <p><strong>WARNING</strong> - Be sure you respect the element ordering
+    that is required by the DTD for web application deployment descriptors!
+    See the
+    <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specifications">Servlet
+    Specification</a> for details.</p>
+
+  <h5>3.  Code Your Application's Use Of This Resource</h5>
+
+  <p>A typical use of this resource environment reference might look
+  like this:</p>
+
+<div class="codeBox"><pre><code>Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+MyBean bean = (MyBean) envCtx.lookup("bean/MyBeanFactory");
+
+writer.println("foo = " + bean.getFoo() + ", bar = " +
+               bean.getBar());</code></pre></div>
+
+    <h5>4.  Configure Tomcat's Resource Factory</h5>
+
+    <p>To configure Tomcat's resource factory, add an element like this to the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    this web application.</p>
+
+<div class="codeBox"><pre><code>&lt;Context ...&gt;
+  ...
+  &lt;Resource name="bean/MyBeanFactory" auth="Container"
+            type="com.mycompany.MyBean"
+            factory="org.apache.naming.factory.BeanFactory"
+            bar="23"/&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+
+    <p>Note that the resource name (here, <code>bean/MyBeanFactory</code>
+    must match the value specified in the web application deployment
+    descriptor.  We are also initializing the value of the <code>bar</code>
+    property, which will cause <code>setBar(23)</code> to be called before
+    the new bean is returned.  Because we are not initializing the
+    <code>foo</code> property (although we could have), the bean will
+    contain whatever default value is set up by its constructor.</p>
+
+    <p>If the bean property is of type <code>String</code>, the BeanFactory
+    will call the property setter using the provided property value. If the
+    bean property type is a primitive or a primitive wrapper, the the
+    BeanFactory will convert the value to the appropriate primitive or
+    primitive wrapper and then use that value when calling the setter. Some
+    beans have properties with types that cannot automatically be converted
+    from <code>String</code>. If the bean provides an alternative setter with
+    the same name that does take a <code>String</code>, the BeanFactory will
+    attempt to use that setter. If the BeanFactory cannot use the value or
+    perform an appropriate conversion, setting the property will fail with a
+    NamingException.</p>
+
+    <p>The <code>forceString</code> property available in earlier Tomcat
+    releases has been removed as a security hardening measure.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="Memory_UserDatabase_Resources">Memory UserDatabase Resources</h4><div class="text">
+
+    <h5>0.  Introduction</h5>
+
+    <p>UserDatabase resources are typically configured as global resources for
+    use by a UserDatabase realm. Tomcat includes a UserDatabaseFactory that
+    creates UserDatabase resources backed by an XML file - usually
+    <code>tomcat-users.xml</code>.</p>
+
+    <p>The steps required to set up a global UserDatabase resource are described
+    below.</p>
+
+    <h5>1. Create/edit the XML file</h5>
+
+    <p>The XML file is typically located at
+    <code>$CATALINA_BASE/conf/tomcat-users.xml</code> however, you are free to
+    locate the file anywhere on the file system. It is recommended that the XML
+    files are placed in <code>$CATALINA_BASE/conf</code>. A typical XML would
+    look like:</p>
+
+<div class="codeBox"><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;tomcat-users&gt;
+  &lt;role rolename="tomcat"/&gt;
+  &lt;role rolename="role1"/&gt;
+  &lt;user username="tomcat" password="tomcat" roles="tomcat"/&gt;
+  &lt;user username="both" password="tomcat" roles="tomcat,role1"/&gt;
+  &lt;user username="role1" password="tomcat" roles="role1"/&gt;
+&lt;/tomcat-users&gt;</code></pre></div>
+
+    <h5>2.  Declare Your Resource</h5>
+
+    <p>Next, modify <code>$CATALINA_BASE/conf/server.xml</code> to create the
+    UserDatabase resource based on your XML file. It should look something like
+    this:</p>
+
+<div class="codeBox"><pre><code>&lt;Resource name="UserDatabase"
+          auth="Container"
+          type="org.apache.catalina.UserDatabase"
+          description="User database that can be updated and saved"
+          factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+          pathname="conf/tomcat-users.xml"
+          readonly="false" /&gt;</code></pre></div>
+
+    <p>The <code>pathname</code> attribute can be a URL, an absolute path or a
+    relative path. If relative, it is relative to <code>$CATALINA_BASE</code>.
+    </p>
+
+    <p>The <code>readonly</code> attribute is optional and defaults to
+    <code>true</code> if not supplied. If the XML is writable then it will be
+    written to when Tomcat starts. <strong>WARNING:</strong> When the file is
+    written it will inherit the default file permissions for the user Tomcat
+    is running as. Ensure that these are appropriate to maintain the security
+    of your installation.</p>
+
+    <p>If referenced in a Realm, the UserDatabase will, by default, monitor
+    <code>pathname</code> for changes and reload the file if a change in the
+    last modified time is observed. This can be disabled by setting the
+    <code>watchSource</code> attribute to <code>false</code>.
+    </p>
+
+    <h5>3.  Configure the Realm</h5>
+
+    <p>Configure a UserDatabase Realm to use this resource as described in the
+    <a href="config/realm.html">Realm configuration documentation</a>.</p>
+
+  </div></div>
+
+
+  <div class="subsection"><h4 id="DataSource_UserDatabase_Resources">DataSource UserDatabase Resources</h4><div class="text">
+
+    <h5>0.  Introduction</h5>
+
+    <p>Tomcat also include a <code>UserDatabase</code> that uses a
+    <code>DataSource</code> resource as the backend. The backend resource
+    must be declared in the same JNDI context as the user database that will use
+    it.</p>
+
+    <p>The steps required to set up a global UserDatabase resource are described
+    below.</p>
+
+    <h5>1. Database schema</h5>
+
+    <p>The database shema for the user database is flexible. It can be the same
+    as the schema used for the <code>DataSourceRealm</code>, with only a table
+    for users (user name, password), and another one listing the roles
+    associated with each user. To support the full <code>UserDatabase</code>
+    features, it must include additional tables for groups, and is
+    compatible with referential integrity between users, groups and roles.</p>
+
+    <p>The full featured schema with groups and referential integrity
+    could be:</p>
+
+<div class="codeBox"><pre><code>create table users (
+  user_name         varchar(32) not null primary key,
+  user_pass         varchar(64) not null,
+  user_fullname     varchar(128)
+  -- Add more attributes as needed
+);
+
+create table roles (
+  role_name         varchar(32) not null primary key,
+  role_description  varchar(128)
+);
+
+create table groups (
+  group_name        varchar(32) not null primary key,
+  group_description varchar(128)
+);
+
+create table user_roles (
+  user_name         varchar(32) references users(user_name),
+  role_name         varchar(32) references roles(role_name),
+  primary key (user_name, role_name)
+);
+
+create table user_groups (
+  user_name         varchar(32) references users(user_name),
+  group_name        varchar(32) references groups(group_name),
+  primary key (user_name, group_name)
+);
+
+create table group_roles (
+  group_name        varchar(32) references groups(group_name),
+  role_name         varchar(32) references roles(role_name),
+  primary key (group_name, role_name)
+);
+</code></pre></div>
+
+    <p>The minimal schema without the ability to use groups will be
+    (it is the same as for the <code>DataSourceRealm</code>):</p>
+
+<div class="codeBox"><pre><code>create table users (
+  user_name         varchar(32) not null primary key,
+  user_pass         varchar(64) not null,
+  -- Add more attributes as needed
+);
+
+create table user_roles (
+  user_name         varchar(32),
+  role_name         varchar(32),
+  primary key (user_name, role_name)
+);
+</code></pre></div>
+
+    <h5>2.  Declare Your Resource</h5>
+
+    <p>Next, modify <code>$CATALINA_BASE/conf/server.xml</code> to create the
+    UserDatabase resource based on your <code>DataSource</code> and its schema.
+    It should look something like this:</p>
+
+<div class="codeBox"><pre><code>&lt;Resource name="UserDatabase" auth="Container"
+              type="org.apache.catalina.UserDatabase"
+              description="User database that can be updated and saved"
+              factory="org.apache.catalina.users.DataSourceUserDatabaseFactory"
+              dataSourceName="jdbc/authority" readonly="false"
+              userTable="users" userNameCol="user_name" userCredCol="user_pass"
+              userRoleTable="user_roles" roleNameCol="role_name"
+              roleTable="roles" groupTable="groups" userGroupTable="user_groups"
+              groupRoleTable="group_roles" groupNameCol="group_name" /&gt;</code></pre></div>
+
+    <p>The <code>dataSourceName</code> attribute is the JNDI name of the
+    <code>DataSource</code> that will be the backend for the
+    <code>UserDatabase</code>. It must be declared in the same JNDI
+    <code>Context</code> as the <code>UserDatabase</code>. Please refer to the
+    <a href="#JDBC_Data_Sources"><code>DataSource</code> resources</a>
+    documentation for further instructions.</p>
+
+    <p>The <code>readonly</code> attribute is optional and defaults to
+    <code>true</code> if not supplied. If the database is writable then changes
+    made through the Tomcat management to the <code>UserDatabase</code> can
+    be persisted to the database using the <code>save</code> operation.</p>
+
+    <p>Alternately, changes can also be made directly to the backend database.
+    </p>
+
+    <h5>3.  Resource configuration</h5>
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_dataSourceName"><td><strong><code class="attributeName">dataSourceName</code></strong></td><td>
+        <p>The name of the JNDI JDBC DataSource for this UserDatabase.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_groupNameCol"><td><code class="attributeName">groupNameCol</code></td><td>
+        <p>Name of the column, in the "groups", "group roles" and "user groups"
+        tables, that contains the group's name.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_groupRoleTable"><td><code class="attributeName">groupRoleTable</code></td><td>
+        <p>Name of the "group roles" table, which must contain columns
+        named by the <code>groupNameCol</code> and <code>roleNameCol</code>
+        attributes.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_groupTable"><td><code class="attributeName">groupTable</code></td><td>
+        <p>Name of the "groups" table, which must contain columns named
+        by the <code>groupNameCol</code> attribute.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_readonly"><td><code class="attributeName">readonly</code></td><td>
+        <p>If this is set to <code>true</code>, then changes to the
+        <code>UserDatabase</code> can be persisted to the
+        <code>DataSource</code> by using the <code>save</code> method.
+        The default value is <code>true</code>.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_roleAndGroupDescriptionCol"><td><code class="attributeName">roleAndGroupDescriptionCol</code></td><td>
+        <p>Name of the column, in the "roles" and "groups" tables, that contains
+        the description for the roles and groups.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_roleNameCol"><td><code class="attributeName">roleNameCol</code></td><td>
+        <p>Name of the column, in the "roles", "user roles" and "group roles"
+        tables, which contains a role name assigned to the corresponding
+        user.</p>
+        <p>This attribute is <strong>required</strong> in majority of
+        configurations. See <strong>allRolesMode</strong> attribute of the
+        associated realm for a rare case when it can be omitted.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_roleTable"><td><code class="attributeName">roleTable</code></td><td>
+        <p>Name of the "roles" table, which must contain columns named
+        by the <code>roleNameCol</code> attribute.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_userCredCol"><td><strong><code class="attributeName">userCredCol</code></strong></td><td>
+        <p>Name of the column, in the "users" table, which contains
+        the user's credentials (i.e. password).  If a
+        <code>CredentialHandler</code> is specified, this component
+        will assume that the passwords have been encoded with the
+        specified algorithm.  Otherwise, they will be assumed to be
+        in clear text.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_userGroupTable"><td><code class="attributeName">userGroupTable</code></td><td>
+        <p>Name of the "user groups" table, which must contain columns
+        named by the <code>userNameCol</code> and <code>groupNameCol</code>
+        attributes.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_userNameCol"><td><strong><code class="attributeName">userNameCol</code></strong></td><td>
+        <p>Name of the column, in the "users", "user groups" and "user roles"
+        tables, that contains the user's username.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_userFullNameCol"><td><code class="attributeName">userFullNameCol</code></td><td>
+        <p>Name of the column, in the "users" table, that contains the user's
+        full name.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_userRoleTable"><td><code class="attributeName">userRoleTable</code></td><td>
+        <p>Name of the "user roles" table, which must contain columns
+        named by the <code>userNameCol</code> and <code>roleNameCol</code>
+        attributes.</p>
+        <p>This attribute is <strong>required</strong> in majority of
+        configurations. See <strong>allRolesMode</strong> attribute of the
+        associated realm for a rare case when it can be omitted.</p>
+      </td></tr><tr id="Tomcat Standard Resource Factories_DataSource UserDatabase Resources_userTable"><td><strong><code class="attributeName">userTable</code></strong></td><td>
+        <p>Name of the "users" table, which must contain columns named
+        by the <code>userNameCol</code> and <code>userCredCol</code>
+        attributes.</p>
+      </td></tr></table>
+
+    <h5>4.  Configure the Realm</h5>
+
+    <p>Configure a UserDatabase Realm to use this resource as described in the
+    <a href="config/realm.html">Realm configuration documentation</a>.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="JavaMail_Sessions">JavaMail Sessions</h4><div class="text">
+
+    <h5>0.  Introduction</h5>
+
+    <p>In many web applications, sending electronic mail messages is a
+    required part of the system's functionality.  The
+    <a href="http://www.oracle.com/technetwork/java/javamail/index.html">Java Mail</a> API
+    makes this process relatively straightforward, but requires many
+    configuration details that the client application must be aware of
+    (including the name of the SMTP host to be used for message sending).</p>
+
+    <p>Tomcat includes a standard resource factory that will create
+    <code>javax.mail.Session</code> session instances for you, already
+    configured to connect to an SMTP server.
+    In this way, the application is totally insulated from changes in the
+    email server configuration environment - it simply asks for, and receives,
+    a preconfigured session whenever needed.</p>
+
+    <p>The steps required for this are outlined below.</p>
+
+    <h5>1.  Declare Your Resource Requirements</h5>
+
+    <p>The first thing you should do is modify the web application deployment
+    descriptor (<code>/WEB-INF/web.xml</code>) to declare the JNDI name under
+    which you will look up preconfigured sessions.  By convention, all such
+    names should resolve to the <code>mail</code> subcontext (relative to the
+    standard <code>java:comp/env</code> naming context that is the root of
+    all provided resource factories.  A typical <code>web.xml</code> entry
+    might look like this:</p>
+<div class="codeBox"><pre><code>&lt;resource-ref&gt;
+  &lt;description&gt;
+    Resource reference to a factory for javax.mail.Session
+    instances that may be used for sending electronic mail
+    messages, preconfigured to connect to the appropriate
+    SMTP server.
+  &lt;/description&gt;
+  &lt;res-ref-name&gt;
+    mail/Session
+  &lt;/res-ref-name&gt;
+  &lt;res-type&gt;
+    javax.mail.Session
+  &lt;/res-type&gt;
+  &lt;res-auth&gt;
+    Container
+  &lt;/res-auth&gt;
+&lt;/resource-ref&gt;</code></pre></div>
+
+    <p><strong>WARNING</strong> - Be sure you respect the element ordering
+    that is required by the DTD for web application deployment descriptors!
+    See the
+    <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specifications">Servlet
+    Specification</a> for details.</p>
+
+    <h5>2.  Code Your Application's Use Of This Resource</h5>
+
+    <p>A typical use of this resource reference might look like this:</p>
+<div class="codeBox"><pre><code>Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+Session session = (Session) envCtx.lookup("mail/Session");
+
+Message message = new MimeMessage(session);
+message.setFrom(new InternetAddress(request.getParameter("from")));
+InternetAddress to[] = new InternetAddress[1];
+to[0] = new InternetAddress(request.getParameter("to"));
+message.setRecipients(Message.RecipientType.TO, to);
+message.setSubject(request.getParameter("subject"));
+message.setContent(request.getParameter("content"), "text/plain");
+Transport.send(message);</code></pre></div>
+
+    <p>Note that the application uses the same resource reference name
+    that was declared in the web application deployment descriptor.  This
+    is matched up against the resource factory that is configured in the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element
+    for the web application as described below.</p>
+
+    <h5>3.  Configure Tomcat's Resource Factory</h5>
+
+    <p>To configure Tomcat's resource factory, add an elements like this to the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    this web application.</p>
+
+<div class="codeBox"><pre><code>&lt;Context ...&gt;
+  ...
+  &lt;Resource name="mail/Session" auth="Container"
+            type="javax.mail.Session"
+            mail.smtp.host="localhost"/&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+
+    <p>Note that the resource name (here, <code>mail/Session</code>) must
+    match the value specified in the web application deployment descriptor.
+    Customize the value of the <code>mail.smtp.host</code> parameter to
+    point at the server that provides SMTP service for your network.</p>
+
+    <p>Additional resource attributes and values will be converted to properties
+    and values and passed to
+    <code>javax.mail.Session.getInstance(java.util.Properties)</code> as part of
+    the <code>java.util.Properties</code> collection. In addition to the
+    properties defined in Annex A of the JavaMail specification, individual
+    providers may also support additional properties.
+    </p>
+
+    <p>If the resource is configured with a <code>password</code> attribute and
+    either a <code>mail.smtp.user</code> or <code>mail.user</code> attribute
+    then Tomcat's resource factory will configure and add a
+    <code>javax.mail.Authenticator</code> to the mail session.</p>
+
+    <h5>4.  Install the JavaMail libraries</h5>
+
+    <p><a href="http://javamail.java.net/">
+    Download the JavaMail API</a>.</p>
+
+    <p>Unpackage the distribution and place mail.jar  into $CATALINA_HOME/lib so
+    that it is available to Tomcat during the initialization of the mail Session
+    Resource. <strong>Note:</strong> placing this jar in both $CATALINA_HOME/lib
+    and a  web application's lib folder will cause an error, so ensure you have
+    it in the $CATALINA_HOME/lib location only.
+    </p>
+
+    <h5>5.  Restart Tomcat</h5>
+
+    <p>For the additional JAR to be visible to Tomcat, it is necessary for the
+    Tomcat instance to be restarted.</p>
+
+
+    <h5>Example Application</h5>
+
+    <p>The <code>/examples</code> application included with Tomcat contains
+    an example of utilizing this resource factory.  It is accessed via the
+    "JSP Examples" link.  The source code for the servlet that actually
+    sends the mail message is in
+    <code>/WEB-INF/classes/SendMailServlet.java</code>.</p>
+
+    <p><strong>WARNING</strong> - The default configuration assumes that there
+    is an SMTP server listing on port 25 on <code>localhost</code>. If this is
+    not the case, edit the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    this web application and modify the parameter value for the
+    <code>mail.smtp.host</code> parameter to be the host name of an SMTP server
+    on your network.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="JDBC_Data_Sources">JDBC Data Sources</h4><div class="text">
+
+    <h5>0.  Introduction</h5>
+
+    <p>Many web applications need to access a database via a JDBC driver,
+    to support the functionality required by that application.  The Java EE
+    Platform Specification requires Java EE Application Servers to make
+    available a <em>DataSource</em> implementation (that is, a connection
+    pool for JDBC connections) for this purpose.  Tomcat offers exactly
+    the same support, so that database-based applications you develop on
+    Tomcat using this service will run unchanged on any Java EE server.</p>
+
+    <p>For information about JDBC, you should consult the following:</p>
+    <ul>
+    <li><a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html">
+        http://www.oracle.com/technetwork/java/javase/jdbc/index.html</a> -
+        Home page for information about Java Database Connectivity.</li>
+    <li><a href="http://java.sun.com/j2se/1.3/docs/guide/jdbc/spec2/jdbc2.1.frame.html">http://java.sun.com/j2se/1.3/docs/guide/jdbc/spec2/jdbc2.1.frame.html</a> -
+        The JDBC 2.1 API Specification.</li>
+    <li><a href="http://java.sun.com/products/jdbc/jdbc20.stdext.pdf">http://java.sun.com/products/jdbc/jdbc20.stdext.pdf</a> -
+        The JDBC 2.0 Standard Extension API (including the
+        <code>javax.sql.DataSource</code> API).  This package is now known
+        as the "JDBC Optional Package".</li>
+    <li><a href="http://www.oracle.com/technetwork/java/javaee/overview/index.htm">
+        http://www.oracle.com/technetwork/java/javaee/overview/index.htm</a> -
+        The Java EE Platform Specification (covers the JDBC facilities that
+        all Java EE platforms must provide to applications).</li>
+    </ul>
+
+    <p><strong>NOTE</strong> - The default data source support in Tomcat
+    is based on the <strong>DBCP 2</strong> connection pool from the
+    <a href="https://commons.apache.org/">Commons</a>
+    project.  However, it is possible to use any other connection pool
+    that implements <code>javax.sql.DataSource</code>, by writing your
+    own custom resource factory, as described
+    <a href="#Adding_Custom_Resource_Factories">below</a>.</p>
+
+    <h5>1.  Install Your JDBC Driver</h5>
+
+    <p>Use of the <em>JDBC Data Sources</em> JNDI Resource Factory requires
+    that you make an appropriate JDBC driver available to both Tomcat internal
+    classes and to your web application.  This is most easily accomplished by
+    installing the driver's JAR file(s) into the
+    <code>$CATALINA_HOME/lib</code> directory, which makes the driver
+    available both to the resource factory and to your application.</p>
+
+    <h5>2.  Declare Your Resource Requirements</h5>
+
+    <p>Next, modify the web application deployment descriptor
+    (<code>/WEB-INF/web.xml</code>) to declare the JNDI name under
+    which you will look up preconfigured data source.  By convention, all such
+    names should resolve to the <code>jdbc</code> subcontext (relative to the
+    standard <code>java:comp/env</code> naming context that is the root of
+    all provided resource factories.  A typical <code>web.xml</code> entry
+    might look like this:</p>
+<div class="codeBox"><pre><code>&lt;resource-ref&gt;
+  &lt;description&gt;
+    Resource reference to a factory for java.sql.Connection
+    instances that may be used for talking to a particular
+    database that is configured in the &lt;Context&gt;
+    configuration for the web application.
+  &lt;/description&gt;
+  &lt;res-ref-name&gt;
+    jdbc/EmployeeDB
+  &lt;/res-ref-name&gt;
+  &lt;res-type&gt;
+    javax.sql.DataSource
+  &lt;/res-type&gt;
+  &lt;res-auth&gt;
+    Container
+  &lt;/res-auth&gt;
+&lt;/resource-ref&gt;</code></pre></div>
+
+    <p><strong>WARNING</strong> - Be sure you respect the element ordering
+    that is required by the DTD for web application deployment descriptors!
+    See the
+    <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specifications">Servlet
+    Specification</a> for details.</p>
+
+    <h5>3.  Code Your Application's Use Of This Resource</h5>
+
+    <p>A typical use of this resource reference might look like this:</p>
+<div class="codeBox"><pre><code>Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+DataSource ds = (DataSource)
+  envCtx.lookup("jdbc/EmployeeDB");
+
+Connection conn = ds.getConnection();
+... use this connection to access the database ...
+conn.close();</code></pre></div>
+
+    <p>Note that the application uses the same resource reference name that was
+    declared in the web application deployment descriptor. This is matched up
+    against the resource factory that is configured in the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    the web application as described below.</p>
+
+    <h5>4.  Configure Tomcat's Resource Factory</h5>
+
+    <p>To configure Tomcat's resource factory, add an element like this to the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    the web application.</p>
+
+<div class="codeBox"><pre><code>&lt;Context ...&gt;
+  ...
+  &lt;Resource name="jdbc/EmployeeDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="dbusername"
+            password="dbpassword"
+            driverClassName="org.hsql.jdbcDriver"
+            url="jdbc:HypersonicSQL:database"
+            maxTotal="8"
+            maxIdle="4"/&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+
+    <p>Note that the resource name (here, <code>jdbc/EmployeeDB</code>) must
+    match the value specified in the web application deployment descriptor.</p>
+
+    <p>This example assumes that you are using the HypersonicSQL database
+    JDBC driver.  Customize the <code>driverClassName</code> and
+    <code>driverName</code> parameters to match your actual database's
+    JDBC driver and connection URL.</p>
+
+    <p>The configuration properties for Tomcat's standard data source
+    resource factory
+    (<code>org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory</code>) are
+    as follows:</p>
+    <ul>
+    <li><strong>driverClassName</strong> - Fully qualified Java class name
+        of the JDBC driver to be used.</li>
+    <li><strong>username</strong> - Database username to be passed to our
+        JDBC driver.</li>
+    <li><strong>password</strong> - Database password to be passed to our
+        JDBC driver.</li>
+    <li><strong>url</strong> - Connection URL to be passed to our JDBC driver.
+        (For backwards compatibility, the property <code>driverName</code>
+        is also recognized.)</li>
+    <li><strong>initialSize</strong> - The initial number of connections
+        that will be created in the pool during pool initialization. Default: 0</li>
+    <li><strong>maxTotal</strong> - The maximum number of connections
+        that can be allocated from this pool at the same time. Default: 8</li>
+    <li><strong>minIdle</strong> - The minimum number of connections that
+        will sit idle in this pool at the same time. Default: 0</li>
+    <li><strong>maxIdle</strong> - The maximum number of connections that
+        can sit idle in this pool at the same time. Default: 8</li>
+    <li><strong>maxWaitMillis</strong> - The maximum number of milliseconds that the
+        pool will wait (when there are no available connections) for a
+        connection to be returned before throwing an exception. Default: -1 (infinite)</li>
+    </ul>
+    <p>Some additional properties handle connection validation:</p>
+    <ul>
+    <li><strong>validationQuery</strong> - SQL query that can be used by the
+        pool to validate connections before they are returned to the
+        application.  If specified, this query MUST be an SQL SELECT
+        statement that returns at least one row.</li>
+    <li><strong>validationQueryTimeout</strong> - Timeout in seconds
+        for the validation query to return. Default: -1 (infinite)</li>
+    <li><strong>testOnBorrow</strong> - true or false: whether a connection
+        should be validated using the validation query each time it is
+        borrowed from the pool. Default: true</li>
+    <li><strong>testOnReturn</strong> - true or false: whether a connection
+        should be validated using the validation query each time it is
+        returned to the pool. Default: false</li>
+    </ul>
+    <p>The optional evictor thread is responsible for shrinking the pool
+    by removing any connections which are idle for a long time. The evictor
+    does not respect <code>minIdle</code>. Note that you do not need to
+    activate the evictor thread if you only want the pool to shrink according
+    to the configured <code>maxIdle</code> property.</p>
+    <p>The evictor is disabled by default and can be configured using
+    the following properties:</p>
+    <ul>
+    <li><strong>timeBetweenEvictionRunsMillis</strong> - The number of
+        milliseconds between consecutive runs of the evictor.
+        Default: -1 (disabled)</li>
+    <li><strong>numTestsPerEvictionRun</strong> - The number of connections
+        that will be checked for idleness by the evictor during each
+        run of the evictor. Default: 3</li>
+    <li><strong>minEvictableIdleTimeMillis</strong> - The idle time in
+        milliseconds after which a connection can be removed from the pool
+        by the evictor. Default: 30*60*1000 (30 minutes)</li>
+    <li><strong>testWhileIdle</strong> - true or false: whether a connection
+        should be validated by the evictor thread using the validation query
+        while sitting idle in the pool. Default: false</li>
+    </ul>
+    <p>Another optional feature is the removal of abandoned connections.
+    A connection is called abandoned if the application does not return it
+    to the pool for a long time. The pool can close such connections
+    automatically and remove them from the pool. This is a workaround
+    for applications leaking connections.</p>
+    <p>The abandoning feature is disabled by default and can be configured
+    using the following properties:</p>
+    <ul>
+    <li><strong>removeAbandonedOnBorrow</strong> - true or false: whether to
+        remove abandoned connections from the pool when a connection is
+        borrowed. Default: false</li>
+    <li><strong>removeAbandonedOnMaintenance</strong> - true or false: whether
+        to remove abandoned connections from the pool during pool maintenance.
+        Default: false</li>
+    <li><strong>removeAbandonedTimeout</strong> - The number of
+        seconds after which a borrowed connection is assumed to be abandoned.
+        Default: 300</li>
+    <li><strong>logAbandoned</strong> - true or false: whether to log
+        stack traces for application code which abandoned a statement
+        or connection. This adds serious overhead. Default: false</li>
+    </ul>
+    <p>Finally there are various properties that allow further fine tuning
+    of the pool behaviour:</p>
+    <ul>
+    <li><strong>defaultAutoCommit</strong> - true or false: default
+        auto-commit state of the connections created by this pool.
+        Default: true</li>
+    <li><strong>defaultReadOnly</strong> - true or false: default
+        read-only state of the connections created by this pool.
+        Default: false</li>
+    <li><strong>defaultTransactionIsolation</strong> - This sets the
+        default transaction isolation level. Can be one of
+        <code>NONE</code>, <code>READ_COMMITTED</code>,
+        <code>READ_UNCOMMITTED</code>, <code>REPEATABLE_READ</code>,
+        <code>SERIALIZABLE</code>. Default: no default set</li>
+    <li><strong>poolPreparedStatements</strong> - true or false: whether to
+        pool PreparedStatements and CallableStatements. Default: false</li>
+    <li><strong>maxOpenPreparedStatements</strong> - The maximum number of open
+        statements that can be allocated from the statement pool at the same time.
+        Default: -1 (unlimited)</li>
+    <li><strong>defaultCatalog</strong> - The name of the default catalog.
+        Default: not set</li>
+    <li><strong>connectionInitSqls</strong> - A list of SQL statements
+        run once after a Connection is created. Separate multiple statements
+        by semicolons (<code>;</code>). Default: no statement</li>
+    <li><strong>connectionProperties</strong> - A list of driver specific
+        properties passed to the driver for creating connections. Each
+        property is given as <code>name=value</code>, multiple properties
+        are separated by semicolons (<code>;</code>). Default: no properties</li>
+    <li><strong>accessToUnderlyingConnectionAllowed</strong> - true or false: whether
+        accessing the underlying connections is allowed. Default: false</li>
+    </ul>
+    <p>For more details, please refer to the Commons DBCP 2 documentation.</p>
+
+  </div></div>
+
+</div><h3 id="Adding_Custom_Resource_Factories">Adding Custom Resource Factories</h3><div class="text">
+
+  <p>If none of the standard resource factories meet your needs, you can write
+  your own factory and integrate it into Tomcat, and then configure the use
+  of this factory in the
+  <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+  the web application. In the example below, we will create a factory that only
+  knows how to create <code>com.mycompany.MyBean</code> beans from the
+  <a href="#Generic_JavaBean_Resources">Generic JavaBean Resources</a> example
+  above.</p>
+
+  <h4>1.  Write A Resource Factory Class</h4>
+
+  <p>You must write a class that implements the JNDI service provider
+  <code>javax.naming.spi.ObjectFactory</code> interface.  Every time your
+  web application calls <code>lookup()</code> on a context entry that is
+  bound to this factory (assuming that the factory is configured with
+  <code>singleton="false"</code>), the
+  <code>getObjectInstance()</code> method is called, with the following
+  arguments:</p>
+  <ul>
+  <li><strong>Object obj</strong> - The (possibly null) object containing
+      location or reference information that can be used in creating an object.
+      For Tomcat, this will always be an object of type
+      <code>javax.naming.Reference</code>, which contains the class name of
+      this factory class, as well as the configuration properties (from the
+      <a href="config/context.html"><code>&lt;Context&gt;</code></a> for the
+      web application) to use in creating objects to be returned.</li>
+  <li><strong>Name name</strong> - The name to which this factory is bound
+      relative to <code>nameCtx</code>, or <code>null</code> if no name
+      is specified.</li>
+  <li><strong>Context nameCtx</strong> - The context relative to which the
+      <code>name</code> parameter is specified, or <code>null</code> if
+      <code>name</code> is relative to the default initial context.</li>
+  <li><strong>Hashtable environment</strong> - The (possibly null)
+      environment that is used in creating this object.  This is generally
+      ignored in Tomcat object factories.</li>
+  </ul>
+
+  <p>To create a resource factory that knows how to produce <code>MyBean</code>
+  instances, you might create a class like this:</p>
+
+<div class="codeBox"><pre><code>package com.mycompany;
+
+import java.util.Enumeration;
+import java.util.Hashtable;
+import javax.naming.Context;
+import javax.naming.Name;
+import javax.naming.NamingException;
+import javax.naming.RefAddr;
+import javax.naming.Reference;
+import javax.naming.spi.ObjectFactory;
+
+public class MyBeanFactory implements ObjectFactory {
+
+  public Object getObjectInstance(Object obj,
+      Name name2, Context nameCtx, Hashtable environment)
+      throws NamingException {
+
+      // Acquire an instance of our specified bean class
+      MyBean bean = new MyBean();
+
+      // Customize the bean properties from our attributes
+      Reference ref = (Reference) obj;
+      Enumeration addrs = ref.getAll();
+      while (addrs.hasMoreElements()) {
+          RefAddr addr = (RefAddr) addrs.nextElement();
+          String name = addr.getType();
+          String value = (String) addr.getContent();
+          if (name.equals("foo")) {
+              bean.setFoo(value);
+          } else if (name.equals("bar")) {
+              try {
+                  bean.setBar(Integer.parseInt(value));
+              } catch (NumberFormatException e) {
+                  throw new NamingException("Invalid 'bar' value " + value);
+              }
+          }
+      }
+
+      // Return the customized instance
+      return (bean);
+
+  }
+
+}</code></pre></div>
+
+  <p>In this example, we are unconditionally creating a new instance of
+  the <code>com.mycompany.MyBean</code> class, and populating its properties
+  based on the parameters included in the <code>&lt;Resource&gt;</code>
+  element that configures this resource (see below).  You should note that any
+  parameter named <code>factory</code> should be skipped - that parameter is
+  used to specify the name of the factory class itself (in this case,
+  <code>com.mycompany.MyBeanFactory</code>) rather than a property of the
+  bean being configured.</p>
+
+  <p>For more information about <code>ObjectFactory</code>, see the
+  <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html">
+  JNDI Service Provider Interface (SPI) Specification</a>.</p>
+
+  <p>You will need to compile this class against a class path that includes
+  all of the JAR files in the <code>$CATALINA_HOME/lib</code> directory.  When you are through,
+  place the factory class (and the corresponding bean class) unpacked under
+  <code>$CATALINA_HOME/lib</code>, or in a JAR file inside
+  <code>$CATALINA_HOME/lib</code>.  In this way, the required class
+  files are visible to both Catalina internal resources and your web
+  application.</p>
+
+  <h4>2.  Declare Your Resource Requirements</h4>
+
+  <p>Next, modify your web application deployment descriptor
+  (<code>/WEB-INF/web.xml</code>) to declare the JNDI name under which
+  you will request new instances of this bean.  The simplest approach is
+  to use a <code>&lt;resource-env-ref&gt;</code> element, like this:</p>
+
+<div class="codeBox"><pre><code>&lt;resource-env-ref&gt;
+  &lt;description&gt;
+    Object factory for MyBean instances.
+  &lt;/description&gt;
+  &lt;resource-env-ref-name&gt;
+    bean/MyBeanFactory
+  &lt;/resource-env-ref-name&gt;
+  &lt;resource-env-ref-type&gt;
+    com.mycompany.MyBean
+  &lt;/resource-env-ref-type&gt;
+&lt;/resource-env-ref&gt;</code></pre></div>
+
+    <p><strong>WARNING</strong> - Be sure you respect the element ordering
+    that is required by the DTD for web application deployment descriptors!
+    See the
+    <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specifications">Servlet
+    Specification</a> for details.</p>
+
+  <h4>3.  Code Your Application's Use Of This Resource</h4>
+
+  <p>A typical use of this resource environment reference might look
+  like this:</p>
+
+<div class="codeBox"><pre><code>Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+MyBean bean = (MyBean) envCtx.lookup("bean/MyBeanFactory");
+
+writer.println("foo = " + bean.getFoo() + ", bar = " +
+               bean.getBar());</code></pre></div>
+
+    <h4>4.  Configure Tomcat's Resource Factory</h4>
+
+    <p>To configure Tomcat's resource factory, add an elements like this to the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    this web application.</p>
+
+<div class="codeBox"><pre><code>&lt;Context ...&gt;
+  ...
+  &lt;Resource name="bean/MyBeanFactory" auth="Container"
+            type="com.mycompany.MyBean"
+            factory="com.mycompany.MyBeanFactory"
+            singleton="false"
+            bar="23"/&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+
+    <p>Note that the resource name (here, <code>bean/MyBeanFactory</code>
+    must match the value specified in the web application deployment
+    descriptor.  We are also initializing the value of the <code>bar</code>
+    property, which will cause <code>setBar(23)</code> to be called before
+    the new bean is returned.  Because we are not initializing the
+    <code>foo</code> property (although we could have), the bean will
+    contain whatever default value is set up by its constructor.</p>
+
+    <p>You will also note that, from the application developer's perspective,
+    the declaration of the resource environment reference, and the programming
+    used to request new instances, is identical to the approach used for the
+    <em>Generic JavaBean Resources</em> example.  This illustrates one of the
+    advantages of using JNDI resources to encapsulate functionality - you can
+    change the underlying implementation without necessarily having to
+    modify applications using the resources, as long as you maintain
+    compatible APIs.</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Channel Interceptor object</title><meta name="author" content="Filip Hanik"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Channel Interceptor object</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Available_Interceptors">Available Interceptors</a></li><li><a href="#Static_Membership">Static Membership</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.TcpFailureDetector_Attributes">org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.interceptors.EncryptInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.EncryptInterceptor Attributes</a></li></ol></li><li><a href="#Nested_Components">Nested Components</a><ol><li><a href="#StaticMember_Attributes">StaticMember Attributes</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+  <p>
+  Apache Tribes supports an interceptor architecture to intercept both messages and membership notifications.
+  This architecture allows decoupling of logic and opens the way for some very useful feature add-ons.
+  </p>
+</div><h3 id="Available_Interceptors">Available Interceptors</h3><div class="text">
+   <ul>
+    <li><code>org.apache.catalina.tribes.group.interceptors.TcpFailureDetector</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.NonBlockingCoordinator</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.OrderInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.SimpleCoordinator</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.StaticMembershipInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.TwoPhaseCommitInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.GzipInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor</code></li>
+    <li><code>org.apache.catalina.tribes.group.interceptors.EncryptInterceptor</code></li>
+   </ul>
+</div><h3 id="Static_Membership">Static Membership</h3><div class="text">
+  <p>
+   In addition to dynamic discovery, Apache Tribes also supports static membership, with membership verification.
+   To achieve this add the <code>org.apache.catalina.tribes.group.interceptors.StaticMembershipInterceptor</code>
+   after the <code>org.apache.catalina.tribes.group.interceptors.TcpFailureDetector</code> interceptor.
+   Inside the <code>StaticMembershipInterceptor</code> you can add the static members you wish to have.
+   The <code>TcpFailureDetector</code> will do a health check on the static members,and also monitor them for crashes
+   so they will have the same level of notification mechanism as the members that are automatically discovered.</p>
+   <div class="codeBox"><pre><code>     &lt;Interceptor className="org.apache.catalina.tribes.group.interceptors.StaticMembershipInterceptor"&gt;
+       &lt;LocalMember className="org.apache.catalina.tribes.membership.StaticMember"
+                  domain="staging-cluster"
+                  uniqueId="{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1}"/&gt;
+       &lt;Member className="org.apache.catalina.tribes.membership.StaticMember"
+                  port="5678"
+                  securePort="-1"
+                  host="tomcat01.mydomain.com"
+                  domain="staging-cluster"
+                  uniqueId="{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}"/&gt;
+     &lt;/Interceptor&gt;</code></pre></div>
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+       Required, as there is no default
+     </td></tr><tr id="Attributes_Common Attributes_optionFlag"><td><code class="attributeName">optionFlag</code></td><td>
+       If you want the interceptor to trigger on certain message depending on the message's option flag,
+       you can setup the interceptors flag here.
+       The default value is <code>0</code>, meaning this interceptor will trigger on all messages.
+     </td></tr></table>
+  </div></div>
+
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor Attributes_domain"><td><strong><code class="attributeName">domain</code></strong></td><td>
+       The logical cluster domain that this Interceptor accepts.
+       Two different type of values are possible:<br>
+       1. Regular string values like "staging-domain" or "tomcat-cluster" will be converted into bytes
+       using ISO-8859-1 encoding.<br>
+       2. byte array in string form, for example {216,123,12,3}<br>
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor Attributes_logInterval"><td><code class="attributeName">logInterval</code></td><td>
+       This value indicates the interval for logging for messages from different domains.
+       The default is 100, which means that to log  per 100 messages.
+     </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor Attributes_expire"><td><code class="attributeName">expire</code></td><td>
+       How long do we keep the fragments in memory and wait for the rest to arrive.
+       The default is 60000 ms.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor Attributes_maxSize"><td><code class="attributeName">maxSize</code></td><td>
+       The maximum message size in bytes. If the message size exceeds this value, this interceptor fragments the message and sends them.
+       If it is less than this value, this interceptor does not fragment the message and sent in as one message. The default is 1024*100.
+     </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes_optionFlag"><td><code class="attributeName">optionFlag</code></td><td>
+       The default and hard coded value is <code>8 (org.apache.catalina.tribes.Channel.SEND_OPTIONS_ASYNCHRONOUS)</code>.
+       The dispatcher will trigger on this value only, as it is predefined by Tribes.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes_alwaysSend"><td><code class="attributeName">alwaysSend</code></td><td>
+       What behavior should be executed when the dispatch queue is full. If <code>true</code> (default), then the message is
+       is sent synchronously, if <code>false</code> an error is thrown.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes_maxQueueSize"><td><code class="attributeName">maxQueueSize</code></td><td>
+       Size in bytes of the dispatch queue, the default value is <code> 1024*1024*64 (64 MiB)</code> sets the maximum queue size for the dispatch queue
+       if the queue fills up, one can trigger the behavior, if <code>alwaysSend</code> is set to true, the message will be sent synchronously
+       if the flag is false, an error is thrown
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes_maxThreads"><td><code class="attributeName">maxThreads</code></td><td>
+       The maximum number of threads in this pool, default is 10.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes_maxSpareThreads"><td><code class="attributeName">maxSpareThreads</code></td><td>
+       The number of threads to keep in the pool, default is 2.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes_keepAliveTime"><td><code class="attributeName">keepAliveTime</code></td><td>
+       Maximum number of milliseconds of until Idle thread terminates. Default value is 5000(5 seconds).
+     </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector_Attributes">org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes_connectTimeout"><td><code class="attributeName">connectTimeout</code></td><td>
+       Specifies the timeout, in milliseconds, to use when attempting a TCP connection
+       to the suspect node. Default is 1000.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes_performSendTest"><td><code class="attributeName">performSendTest</code></td><td>
+       If true is set, send a test message to the suspect node. Default is true.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes_performReadTest"><td><code class="attributeName">performReadTest</code></td><td>
+       If true is set, read the response of the test message that sent. Default is false.
+       <strong>Note:</strong> if <code>performSendTest</code> is false, this attribute will have no effect.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes_readTestTimeout"><td><code class="attributeName">readTestTimeout</code></td><td>
+       Specifies the timeout, in milliseconds, to use when performing a read test
+       to the suspicious node. Default is 5000.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes_removeSuspectsTimeout"><td><code class="attributeName">removeSuspectsTimeout</code></td><td>
+       The maximum time(in seconds)  for remove from removeSuspects. Member of
+       removeSuspects will be automatically removed after removeSuspectsTimeout.
+       If a negative value specified, the removeSuspects members never be
+       removed until disappeared really. If the attribute is not provided,
+       a default of 300 seconds (5 minutes) is used.
+     </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor Attributes_interval"><td><code class="attributeName">interval</code></td><td>
+       If useThread == true, defines the interval of sending a ping message.
+       default is 1000 ms.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor Attributes_useThread"><td><code class="attributeName">useThread</code></td><td>
+       Flag of whether to start a thread for sending a ping message.
+       If set to true, this interceptor will start a local thread for sending a ping message.
+       if set to false, channel heartbeat will send a ping message.
+       default is false.
+     </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor Attributes</h4><div class="text">
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor Attributes_interval"><td><code class="attributeName">interval</code></td><td>
+       Defines the interval in number of messages when we are to report the throughput statistics.
+       The report is logged to the <code>org.apache.juli.logging.LogFactory.getLog(ThroughputInterceptor.class)</code>
+       logger under the <code>INFO</code> level.
+       Default value is to report every <code>10000</code> messages.
+     </td></tr></table>
+  </div></div>
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.interceptors.EncryptInterceptor_Attributes">org.apache.catalina.tribes.group.interceptors.EncryptInterceptor Attributes</h4><div class="text">
+   <p>
+     The EncryptInterceptor adds encryption to the channel messages carrying
+     session data between nodes. Added in Tomcat 9.0.13.
+   </p>
+   <p>
+     If using the <code>TcpFailureDetector</code>, the <code>EncryptInterceptor</code>
+     <i>must</i> be inserted into the interceptor chain <i>before</i> the
+     <code>TcpFailureDetector</code>. This is because when validating cluster
+     members, <code>TcpFailureDetector</code> writes channel data directly
+     to the other members without using the remainder of the interceptor chain,
+     but on the receiving side, the message still goes through the chain (in reverse).
+     Because of this asymmetry, the <code>EncryptInterceptor</code> must execute
+     <i>before</i> the <code>TcpFailureDetector</code> on the sender and <i>after</i>
+     it on the receiver, otherwise message corruption will occur.
+   </p>
+   <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.EncryptInterceptor Attributes_encryptionAlgorithm"><td><code class="attributeName">encryptionAlgorithm</code></td><td>
+       The encryption algorithm to be used, including the mode and padding. Please see
+       <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html">https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html</a>
+       for the standard JCA names that can be used.
+
+       EncryptInterceptor currently supports the following
+       <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">block-cipher modes</a>:
+       CBC, OFB, CFB, and GCM.
+
+       The length of the key will specify the flavor of the encryption algorithm
+       to be used, if applicable (e.g. AES-128 versus AES-256).
+
+       The default algorithm is <code>AES/CBC/PKCS5Padding</code>.
+     </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.interceptors.EncryptInterceptor Attributes_encryptionKey"><td><strong><code class="attributeName">encryptionKey</code></strong></td><td>
+       The key to be used with the encryption algorithm.
+
+       The key should be specified as hex-encoded bytes of the appropriate
+       length for the algorithm (e.g. 16 bytes / 32 characters / 128 bits for
+       AES-128, 32 bytes / 64 characters / 256 bits for AES-256, etc.).
+     </td></tr></table>
+  </div></div>
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+
+  <div class="subsection"><h4 id="StaticMember_Attributes">StaticMember Attributes</h4><div class="text">
+    <p><b>LocalMember:</b> <br>
+    Static member that is the local member of the static cluster group.
+    </p>
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Nested Components_StaticMember Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_port"><td><code class="attributeName">port</code></td><td>
+        There is no need to set.
+        The value of this attribute inherits from the cluster receiver setting.
+      </td></tr><tr id="Nested Components_StaticMember Attributes_securePort"><td><code class="attributeName">securePort</code></td><td>
+        There is no need to set.
+        The value of this attribute inherits from the cluster receiver setting.
+      </td></tr><tr id="Nested Components_StaticMember Attributes_host"><td><code class="attributeName">host</code></td><td>
+        There is no need to set.
+        The value of this attribute inherits from the cluster receiver setting.
+      </td></tr><tr id="Nested Components_StaticMember Attributes_domain"><td><code class="attributeName">domain</code></td><td>
+        The logical cluster domain for that this static member listens for cluster messages.
+        Two different type of values are possible:<br>
+        1. Regular string values like "staging-domain" or "tomcat-cluster" will be converted into bytes
+        using ISO-8859-1 encoding.
+        2. byte array in string form, for example {216,123,12,3}<br>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_uniqueId"><td><strong><code class="attributeName">uniqueId</code></strong></td><td>
+        A universally uniqueId for this static member.
+        The values must be 16 bytes in the following form:<br>
+        1. byte array in string form, for example {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}<br>
+      </td></tr></table>
+
+    <p><b>Member:</b> <br>
+    Static member that add to the static cluster group.
+    </p>
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Nested Components_StaticMember Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_port"><td><strong><code class="attributeName">port</code></strong></td><td>
+        The port that this static member listens to for cluster messages
+      </td></tr><tr id="Nested Components_StaticMember Attributes_securePort"><td><code class="attributeName">securePort</code></td><td>
+        The secure port this static member listens to for encrypted cluster messages
+        default value is <code>-1</code>, this value means the member is not listening on a secure port
+      </td></tr><tr id="Nested Components_StaticMember Attributes_host"><td><strong><code class="attributeName">host</code></strong></td><td>
+        The host (or network interface) that this static member listens for cluster messages.
+        Three different type of values are possible:<br>
+        1. IP address in the form of "216.123.1.23"<br>
+        2. Hostnames like "tomcat01.mydomain.com" or "tomcat01" as long as they resolve correctly<br>
+        3. byte array in string form, for example {216,123,12,3}<br>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_domain"><td><code class="attributeName">domain</code></td><td>
+        The logical cluster domain for that this static member listens for cluster messages.
+        Two different type of values are possible:<br>
+        1. Regular string values like "staging-domain" or "tomcat-cluster" will be converted into bytes
+        using ISO-8859-1 encoding.<br>
+        2. byte array in string form, for example {216,123,12,3}<br>
+      </td></tr><tr id="Nested Components_StaticMember Attributes_uniqueId"><td><strong><code class="attributeName">uniqueId</code></strong></td><td>
+        A universally uniqueId for this static member.
+        The values must be 16 bytes in the following form:<br>
+        1. byte array in string form, for example {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}<br>
+      </td></tr></table>
+  </div></div>
+  
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

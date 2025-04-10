@@ -1,0 +1,102 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="../images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 Configuration Reference (9.0.98) - The Cluster Channel object</title><meta name="author" content="Filip Hanik"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="../images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="../images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9 Configuration Reference</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="../index.html">Docs Home</a></li><li><a href="index.html">Config Ref. Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li><li><a href="#comments_section">User Comments</a></li></ul></div><div><h2>Top Level Elements</h2><ul><li><a href="server.html">Server</a></li><li><a href="service.html">Service</a></li></ul></div><div><h2>Executors</h2><ul><li><a href="executor.html">Executor</a></li></ul></div><div><h2>Connectors</h2><ul><li><a href="http.html">HTTP/1.1</a></li><li><a href="http2.html">HTTP/2</a></li><li><a href="ajp.html">AJP</a></li></ul></div><div><h2>Containers</h2><ul><li><a href="context.html">Context</a></li><li><a href="engine.html">Engine</a></li><li><a href="host.html">Host</a></li><li><a href="cluster.html">Cluster</a></li></ul></div><div><h2>Nested Components</h2><ul><li><a href="cookie-processor.html">CookieProcessor</a></li><li><a href="credentialhandler.html">CredentialHandler</a></li><li><a href="globalresources.html">Global Resources</a></li><li><a href="jar-scanner.html">JarScanner</a></li><li><a href="jar-scan-filter.html">JarScanFilter</a></li><li><a href="listeners.html">Listeners</a></li><li><a href="loader.html">Loader</a></li><li><a href="manager.html">Manager</a></li><li><a href="realm.html">Realm</a></li><li><a href="resources.html">Resources</a></li><li><a href="sessionidgenerator.html">SessionIdGenerator</a></li><li><a href="valve.html">Valve</a></li></ul></div><div><h2>Cluster Elements</h2><ul><li><a href="cluster.html">Cluster</a></li><li><a href="cluster-manager.html">Manager</a></li><li><a href="cluster-channel.html">Channel</a></li><li><a href="cluster-membership.html">Channel/Membership</a></li><li><a href="cluster-sender.html">Channel/Sender</a></li><li><a href="cluster-receiver.html">Channel/Receiver</a></li><li><a href="cluster-interceptor.html">Channel/Interceptor</a></li><li><a href="cluster-valve.html">Valve</a></li><li><a href="cluster-deployer.html">Deployer</a></li><li><a href="cluster-listener.html">ClusterListener</a></li></ul></div><div><h2>web.xml</h2><ul><li><a href="filter.html">Filter</a></li></ul></div><div><h2>Other</h2><ul><li><a href="systemprops.html">System properties</a></li><li><a href="jaspic.html">JASPIC</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>The Cluster Channel object</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Introduction">Introduction</a></li><li><a href="#Nested_Components">Nested Components</a></li><li><a href="#Attributes">Attributes</a><ol><li><a href="#Common_Attributes">Common Attributes</a></li><li><a href="#org.apache.catalina.tribes.group.GroupChannel_Attributes">org.apache.catalina.tribes.group.GroupChannel Attributes</a></li></ol></li></ul>
+</div><h3 id="Introduction">Introduction</h3><div class="text">
+  The cluster channel is the main component of a small framework we've nicknamed Apache Tribes.<br>
+  The channel manages a set of sub components and together they create a group communication framework.<br>
+  This framework is then used internally by the components that need to send messages between different Tomcat instances.
+  <br>
+  A few examples of these components would be the SimpleTcpCluster that does the messaging for the DeltaManager,
+  or the BackupManager that uses a different replication strategy. The ReplicatedContext object does also
+  use the channel object to communicate context attribute changes.
+</div><h3 id="Nested_Components">Nested Components</h3><div class="text">
+  <p><b><a href="cluster-membership.html">Channel/Membership</a>:</b> <br>
+    The Membership component is responsible for auto discovering new nodes in the cluster
+    and also to provide for notifications for any nodes that have not responded with a heartbeat.
+    The default implementation uses multicast.<br>
+    In the membership component you configure how your nodes, aka. members, are to be discovered and/or
+    divided up.
+    You can always find out more about <a href="../tribes/introduction.html">Apache Tribes</a>
+  </p>
+  <p><b><a href="cluster-sender.html">Channel/Sender</a>:</b> <br>
+    The Sender component manages all outbound connections and data messages that are sent
+    over the network from one node to another.
+    This component allows messages to be sent in parallel.
+    The default implementation uses TCP client sockets, and socket tuning for outgoing messages are
+    configured here.<br>
+    You can always find out more about <a href="../tribes/introduction.html">Apache Tribes</a>
+  </p>
+  <p><b><a href="cluster-sender.html#transport">Channel/Sender/Transport</a>:</b> <br>
+    The Transport component is the bottom IO layer for the sender component.
+    The default implementation uses non-blocking TCP client sockets.<br>
+    You can always find out more about <a href="../tribes/introduction.html">Apache Tribes</a>
+  </p>
+  <p><b><a href="cluster-receiver.html">Channel/Receiver</a>:</b> <br>
+    The receiver component listens for messages from other nodes.
+    Here you will configure the cluster thread pool, as it will dispatch incoming
+    messages to a thread pool for faster processing.
+    The default implementation uses non-blocking TCP server sockets.<br>
+    You can always find out more about <a href="../tribes/introduction.html">Apache Tribes</a>
+  </p>
+  <p><b><a href="cluster-interceptor.html">Channel/Interceptor</a>:</b> <br>
+    The channel will send messages through an interceptor stack. Because of this, you have the ability to
+    customize the way messages are sent and received, and even how membership is handled.<br>
+    You can always find out more about <a href="../tribes/introduction.html">Apache Tribes</a>
+  </p>
+</div><h3 id="Attributes">Attributes</h3><div class="text">
+
+  <div class="subsection"><h4 id="Common_Attributes">Common Attributes</h4><div class="text">
+
+  <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_Common Attributes_className"><td><strong><code class="attributeName">className</code></strong></td><td>
+       The default value here is <code>org.apache.catalina.tribes.group.GroupChannel</code> and is
+       currently the only implementation available.
+    </td></tr></table>
+
+
+  </div></div>
+
+  <div class="subsection"><h4 id="org.apache.catalina.tribes.group.GroupChannel_Attributes">org.apache.catalina.tribes.group.GroupChannel Attributes</h4><div class="text">
+
+    <table class="defaultTable"><tr><th style="width: 15%;">
+          Attribute
+        </th><th style="width: 85%;">
+          Description
+        </th></tr><tr id="Attributes_org.apache.catalina.tribes.group.GroupChannel Attributes_heartbeat"><td><code class="attributeName">heartbeat</code></td><td>
+         Flag whether the channel manages its own heartbeat.
+         If set to true,  the channel start a local thread for the heart beat.
+         If set this flag to false, you must set SimpleTcpCluster#heartbeatBackgroundEnabled
+         to true. default value is true.
+      </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.GroupChannel Attributes_heartbeatSleeptime"><td><code class="attributeName">heartbeatSleeptime</code></td><td>
+        If heartbeat == true, specifies the interval of heartbeat thread in milliseconds.
+        The default is 5000 (5 seconds).
+      </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.GroupChannel Attributes_optionCheck"><td><code class="attributeName">optionCheck</code></td><td>
+        If set to true, the GroupChannel will check the option flags that each
+        interceptor is using. Reports an error if two interceptor share the same
+        flag. The default is false.
+      </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.GroupChannel Attributes_jmxEnabled"><td><code class="attributeName">jmxEnabled</code></td><td>
+        Flag whether the channel components register with JMX or not.
+        The default value is true.
+      </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.GroupChannel Attributes_jmxDomain"><td><code class="attributeName">jmxDomain</code></td><td>
+        if <code>jmxEnabled</code> set to true, specifies the jmx domain which
+        this channel should be registered. The ClusterChannel is used as the
+        default value.
+      </td></tr><tr id="Attributes_org.apache.catalina.tribes.group.GroupChannel Attributes_jmxPrefix"><td><code class="attributeName">jmxPrefix</code></td><td>
+        if <code>jmxEnabled</code> set to true, specifies the jmx prefix which
+        will be used with channel ObjectName.
+      </td></tr></table>
+
+  </div></div>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>

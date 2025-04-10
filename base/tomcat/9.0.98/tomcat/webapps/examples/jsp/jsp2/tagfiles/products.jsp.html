@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Source Code</title></head><body><pre>&lt;%--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--%>
+&lt;%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+&lt;html>
+  &lt;head>
+    &lt;title>JSP 2.0 Examples - Display Products Tag File&lt;/title>
+  &lt;/head>
+  &lt;body>
+    &lt;h1>JSP 2.0 Examples - Display Products Tag File&lt;/h1>
+    &lt;hr>
+    &lt;p>This JSP page invokes a tag file that displays a listing of
+    products.  The custom tag accepts two fragments that enable
+    customization of appearance.  One for when the product is on sale
+    and one for normal price.&lt;/p>
+    &lt;p>The tag is invoked twice, using different styles&lt;/p>
+    &lt;hr>
+    &lt;h2>Products&lt;/h2>
+    &lt;tags:displayProducts>
+      &lt;jsp:attribute name="normalPrice">
+        Item: ${name}&lt;br/>
+        Price: ${price}
+      &lt;/jsp:attribute>
+      &lt;jsp:attribute name="onSale">
+        Item: ${name}&lt;br/>
+        &lt;font color="red">&lt;strike>Was: ${origPrice}&lt;/strike>&lt;/font>&lt;br/>
+        &lt;b>Now: ${salePrice}&lt;/b>
+      &lt;/jsp:attribute>
+    &lt;/tags:displayProducts>
+    &lt;hr>
+    &lt;h2>Products (Same tag, alternate style)&lt;/h2>
+    &lt;tags:displayProducts>
+      &lt;jsp:attribute name="normalPrice">
+        &lt;b>${name}&lt;/b> @ ${price} ea.
+      &lt;/jsp:attribute>
+      &lt;jsp:attribute name="onSale">
+        &lt;b>${name}&lt;/b> @ ${salePrice} ea. (was: ${origPrice})
+      &lt;/jsp:attribute>
+    &lt;/tags:displayProducts>
+  &lt;/body>
+&lt;/html>
+</pre></body></html>

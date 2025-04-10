@@ -1,0 +1,477 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en"><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./images/docs-stylesheet.css" rel="stylesheet" type="text/css"><title>Apache Tomcat 9 (9.0.98) - Security Manager How-To</title><meta name="author" content="Glenn Nielsen"><meta name="author" content="Jean-Francois Arcand"></head><body><div id="wrapper"><header><div id="header"><div><div><div class="logo noPrint"><a href="https://tomcat.apache.org/"><img alt="Tomcat Home" src="./images/tomcat.png"></a></div><div style="height: 1px;"></div><div class="asfLogo noPrint"><a href="https://www.apache.org/" target="_blank"><img src="./images/asf-logo.svg" alt="The Apache Software Foundation" style="width: 266px; height: 83px;"></a></div><h1>Apache Tomcat 9</h1><div class="versionInfo">
+            Version 9.0.98,
+            <time datetime="2024-12-05">Dec 5 2024</time></div><div style="height: 1px;"></div><div style="clear: left;"></div></div></div></div></header><div id="middle"><div><div id="mainLeft" class="noprint"><div><nav><div><h2>Links</h2><ul><li><a href="index.html">Docs Home</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">FAQ</a></li></ul></div><div><h2>User Guide</h2><ul><li><a href="introduction.html">1) Introduction</a></li><li><a href="setup.html">2) Setup</a></li><li><a href="appdev/index.html">3) First webapp</a></li><li><a href="deployer-howto.html">4) Deployer</a></li><li><a href="manager-howto.html">5) Manager</a></li><li><a href="host-manager-howto.html">6) Host Manager</a></li><li><a href="realm-howto.html">7) Realms and AAA</a></li><li><a href="security-manager-howto.html">8) Security Manager</a></li><li><a href="jndi-resources-howto.html">9) JNDI Resources</a></li><li><a href="jndi-datasource-examples-howto.html">10) JDBC DataSources</a></li><li><a href="class-loader-howto.html">11) Classloading</a></li><li><a href="jasper-howto.html">12) JSPs</a></li><li><a href="ssl-howto.html">13) SSL/TLS</a></li><li><a href="ssi-howto.html">14) SSI</a></li><li><a href="cgi-howto.html">15) CGI</a></li><li><a href="proxy-howto.html">16) Proxy Support</a></li><li><a href="mbeans-descriptors-howto.html">17) MBeans Descriptors</a></li><li><a href="default-servlet.html">18) Default Servlet</a></li><li><a href="cluster-howto.html">19) Clustering</a></li><li><a href="balancer-howto.html">20) Load Balancer</a></li><li><a href="connectors.html">21) Connectors</a></li><li><a href="monitoring.html">22) Monitoring and Management</a></li><li><a href="logging.html">23) Logging</a></li><li><a href="apr.html">24) APR/Native</a></li><li><a href="virtual-hosting-howto.html">25) Virtual Hosting</a></li><li><a href="aio.html">26) Advanced IO</a></li><li><a href="maven-jars.html">27) Mavenized</a></li><li><a href="security-howto.html">28) Security Considerations</a></li><li><a href="windows-service-howto.html">29) Windows Service</a></li><li><a href="windows-auth-howto.html">30) Windows Authentication</a></li><li><a href="jdbc-pool.html">31) Tomcat's JDBC Pool</a></li><li><a href="web-socket-howto.html">32) WebSocket</a></li><li><a href="rewrite.html">33) Rewrite</a></li><li><a href="cdi.html">34) CDI 2 and JAX-RS</a></li><li><a href="graal.html">35) AOT/GraalVM Support</a></li></ul></div><div><h2>Reference</h2><ul><li><a href="RELEASE-NOTES.txt">Release Notes</a></li><li><a href="config/index.html">Configuration</a></li><li><a href="api/index.html">Tomcat Javadocs</a></li><li><a href="servletapi/index.html">Servlet 4.0 Javadocs</a></li><li><a href="jspapi/index.html">JSP 2.3 Javadocs</a></li><li><a href="elapi/index.html">EL 3.0 Javadocs</a></li><li><a href="websocketapi/index.html">WebSocket 1.1 Javadocs</a></li><li><a href="jaspicapi/index.html">JASPIC 1.1 Javadocs</a></li><li><a href="annotationapi/index.html">Common Annotations 1.3 Javadocs</a></li><li><a href="https://tomcat.apache.org/connectors-doc/">JK 1.2 Documentation</a></li></ul></div><div><h2>Apache Tomcat Development</h2><ul><li><a href="building.html">Building</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions">Status</a></li><li><a href="developers.html">Developers</a></li><li><a href="architecture/index.html">Architecture</a></li><li><a href="tribes/introduction.html">Tribes</a></li></ul></div></nav></div></div><div id="mainRight"><div id="content"><h2>Security Manager How-To</h2><h3 id="Table_of_Contents">Table of Contents</h3><div class="text">
+<ul><li><a href="#Background">Background</a></li><li><a href="#Known_Issues">Known Issues</a></li><li><a href="#Permissions">Permissions</a><ol><li><a href="#Standard_Permissions">Standard Permissions</a></li></ol></li><li><a href="#Configuring_Tomcat_With_A_SecurityManager">Configuring Tomcat With A SecurityManager</a><ol><li><a href="#Permissions_for_packed_WAR_files">Permissions for packed WAR files</a></li></ol></li><li><a href="#Configuring_Package_Protection_in_Tomcat">Configuring Package Protection in Tomcat</a></li><li><a href="#Troubleshooting">Troubleshooting</a></li></ul>
+</div><h3 id="Background">Background</h3><div class="text">
+
+  <p>The Java <strong>SecurityManager</strong> is what allows a web browser
+  to run an applet in its own sandbox to prevent untrusted code from
+  accessing files on the local file system, connecting to a host other
+  than the one the applet was loaded from, and so on.  In the same way
+  the SecurityManager protects you from an untrusted applet running in
+  your browser, use of a SecurityManager while running Tomcat can protect
+  your server from trojan servlets, JSPs, JSP beans, and tag libraries.
+  Or even inadvertent mistakes.</p>
+
+  <p>Imagine if someone who is authorized to publish JSPs on your site
+  inadvertently included the following in their JSP:</p>
+<div class="codeBox"><pre><code>&lt;% System.exit(1); %&gt;</code></pre></div>
+
+  <p>Every time this JSP was executed by Tomcat, Tomcat would exit.
+  Using the Java SecurityManager is just one more line of defense a
+  system administrator can use to keep the server secure and reliable.</p>
+
+  <p><strong>WARNING</strong> - A security audit
+  have been conducted using the Tomcat codebase. Most of the critical
+  package have been protected and a new security package protection mechanism
+  has been implemented. Still, make sure that you are satisfied with your SecurityManager
+  configuration before allowing untrusted users to publish web applications,
+  JSPs, servlets, beans, or tag libraries.  <strong>However, running with a
+  SecurityManager is definitely better than running without one.</strong></p>
+
+</div><h3 id="Known_Issues">Known Issues</h3><div class="text">
+
+  <p>As of Java 17, the SecurityManager has been deprecated with the expectation
+  that it will be removed in a future Java version. Users currently using a
+  SecurityManager are recommended to start planning for its removal.</p>
+
+</div><h3 id="Permissions">Permissions</h3><div class="text">
+
+  <p>Permission classes are used to define what Permissions a class loaded
+  by Tomcat will have.  There are a number of Permission classes that are
+  a standard part of the JDK, and you can create your own Permission class
+  for use in your own web applications.  Both techniques are used in
+  Tomcat.</p>
+
+
+  <div class="subsection"><h4 id="Standard_Permissions">Standard Permissions</h4><div class="text">
+
+    <p>This is just a short summary of the standard system SecurityManager
+    Permission classes applicable to Tomcat.  See
+    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/">
+    http://docs.oracle.com/javase/7/docs/technotes/guides/security/</a>
+    for more information.</p>
+
+    <ul>
+    <li><strong>java.util.PropertyPermission</strong> - Controls read/write
+        access to JVM properties such as <code>java.home</code>.</li>
+    <li><strong>java.lang.RuntimePermission</strong> - Controls use of
+        some System/Runtime functions like <code>exit()</code> and
+        <code>exec()</code>. Also control the package access/definition.</li>
+    <li><strong>java.io.FilePermission</strong> - Controls read/write/execute
+        access to files and directories.</li>
+    <li><strong>java.net.SocketPermission</strong> - Controls use of
+        network sockets.</li>
+    <li><strong>java.net.NetPermission</strong> - Controls use of
+        multicast network connections.</li>
+    <li><strong>java.lang.reflect.ReflectPermission</strong> - Controls
+        use of reflection to do class introspection.</li>
+    <li><strong>java.security.SecurityPermission</strong> - Controls access
+        to Security methods.</li>
+    <li><strong>java.security.AllPermission</strong> - Allows access to all
+        permissions, just as if you were running Tomcat without a
+        SecurityManager.</li>
+    </ul>
+
+  </div></div>
+
+</div><h3 id="Configuring_Tomcat_With_A_SecurityManager">Configuring Tomcat With A SecurityManager</h3><div class="text">
+
+  <h3>Policy File Format</h3>
+
+  <p>The security policies implemented by the Java SecurityManager are
+  configured in the <code>$CATALINA_BASE/conf/catalina.policy</code> file.
+  This file completely replaces the <code>java.policy</code> file present
+  in your JDK system directories.  The <code>catalina.policy</code> file
+  can be edited by hand, or you can use the
+  <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/PolicyGuide.html">policytool</a>
+  application that comes with Java 1.2 or later.</p>
+
+  <p>Entries in the <code>catalina.policy</code> file use the standard
+  <code>java.policy</code> file format, as follows:</p>
+<div class="codeBox"><pre><code>// Example policy file entry
+
+grant [signedBy &lt;signer&gt;,] [codeBase &lt;code source&gt;] {
+  permission  &lt;class&gt;  [&lt;name&gt; [, &lt;action list&gt;]];
+};</code></pre></div>
+
+  <p>The <strong>signedBy</strong> and <strong>codeBase</strong> entries are
+  optional when granting permissions.  Comment lines begin with "//" and
+  end at the end of the current line.  The <code>codeBase</code> is in the
+  form of a URL, and for a file URL can use the <code>${java.home}</code>
+  and <code>${catalina.home}</code> properties (which are expanded out to
+  the directory paths defined for them by the <code>JAVA_HOME</code>,
+  <code>CATALINA_HOME</code> and <code>CATALINA_BASE</code> environment
+  variables).</p>
+
+  <h3>The Default Policy File</h3>
+
+  <p>The default <code>$CATALINA_BASE/conf/catalina.policy</code> file
+  looks like this:</p>
+
+
+<div class="codeBox"><pre><code>// Licensed to the Apache Software Foundation (ASF) under one or more
+// contributor license agreements.  See the NOTICE file distributed with
+// this work for additional information regarding copyright ownership.
+// The ASF licenses this file to You under the Apache License, Version 2.0
+// (the "License"); you may not use this file except in compliance with
+// the License.  You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// ============================================================================
+// catalina.policy - Security Policy Permissions for Tomcat
+//
+// This file contains a default set of security policies to be enforced (by the
+// JVM) when Catalina is executed with the "-security" option.  In addition
+// to the permissions granted here, the following additional permissions are
+// granted to each web application:
+//
+// * Read access to the web application's document root directory
+// * Read, write and delete access to the web application's working directory
+// ============================================================================
+
+
+// ========== SYSTEM CODE PERMISSIONS =========================================
+
+
+// These permissions apply to javac
+grant codeBase "file:${java.home}/lib/-" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to all shared system extensions
+grant codeBase "file:${java.home}/jre/lib/ext/-" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to javac when ${java.home} points at $JAVA_HOME/jre
+grant codeBase "file:${java.home}/../lib/-" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to all shared system extensions when
+// ${java.home} points at $JAVA_HOME/jre
+grant codeBase "file:${java.home}/lib/ext/-" {
+        permission java.security.AllPermission;
+};
+
+// This permission is required when using javac to compile JSPs on Java 9
+// onwards
+//grant codeBase "jrt:/jdk.compiler" {
+//        permission java.security.AllPermission;
+//};
+
+
+// ========== CATALINA CODE PERMISSIONS =======================================
+
+// These permissions apply to the daemon code
+grant codeBase "file:${catalina.home}/bin/commons-daemon.jar" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to the logging API
+// Note: If tomcat-juli.jar is in ${catalina.base} and not in ${catalina.home},
+// update this section accordingly.
+//  grant codeBase "file:${catalina.base}/bin/tomcat-juli.jar" {..}
+grant codeBase "file:${catalina.home}/bin/tomcat-juli.jar" {
+        permission java.io.FilePermission
+         "${java.home}${file.separator}lib${file.separator}logging.properties", "read";
+
+        permission java.io.FilePermission
+         "${catalina.base}${file.separator}conf${file.separator}logging.properties", "read";
+        permission java.io.FilePermission
+         "${catalina.base}${file.separator}logs", "read, write";
+        permission java.io.FilePermission
+         "${catalina.base}${file.separator}logs${file.separator}*", "read, write, delete";
+
+        permission java.lang.RuntimePermission "shutdownHooks";
+        permission java.lang.RuntimePermission "getClassLoader";
+        permission java.lang.RuntimePermission "setContextClassLoader";
+
+        permission java.lang.management.ManagementPermission "monitor";
+
+        permission java.util.logging.LoggingPermission "control";
+
+        permission java.util.PropertyPermission "java.util.logging.config.class", "read";
+        permission java.util.PropertyPermission "java.util.logging.config.file", "read";
+        permission java.util.PropertyPermission "org.apache.juli.AsyncMaxRecordCount", "read";
+        permission java.util.PropertyPermission "org.apache.juli.AsyncOverflowDropType", "read";
+        permission java.util.PropertyPermission "org.apache.juli.ClassLoaderLogManager.debug", "read";
+        permission java.util.PropertyPermission "catalina.base", "read";
+
+        // Note: To enable per context logging configuration, permit read access to
+        // the appropriate file. Be sure that the logging configuration is
+        // secure before enabling such access.
+        // E.g. for the examples web application (uncomment and unwrap
+        // the following to be on a single line):
+        // permission java.io.FilePermission "${catalina.base}${file.separator}
+        //  webapps${file.separator}examples${file.separator}WEB-INF
+        //  ${file.separator}classes${file.separator}logging.properties", "read";
+};
+
+// These permissions apply to the server startup code
+grant codeBase "file:${catalina.home}/bin/bootstrap.jar" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to the servlet API classes
+// and those that are shared across all class loaders
+// located in the "lib" directory
+grant codeBase "file:${catalina.home}/lib/-" {
+        permission java.security.AllPermission;
+};
+
+
+// If using a per instance lib directory, i.e. ${catalina.base}/lib,
+// then the following permission will need to be uncommented
+// grant codeBase "file:${catalina.base}/lib/-" {
+//         permission java.security.AllPermission;
+// };
+
+
+// ========== WEB APPLICATION PERMISSIONS =====================================
+
+
+// These permissions are granted by default to all web applications
+// In addition, a web application will be given a read FilePermission
+// for all files and directories in its document root.
+grant {
+    // Required for JNDI lookup of named JDBC DataSource's and
+    // javamail named MimePart DataSource used to send mail
+    permission java.util.PropertyPermission "java.home", "read";
+    permission java.util.PropertyPermission "java.naming.*", "read";
+    permission java.util.PropertyPermission "javax.sql.*", "read";
+
+    // OS Specific properties to allow read access
+    permission java.util.PropertyPermission "os.name", "read";
+    permission java.util.PropertyPermission "os.version", "read";
+    permission java.util.PropertyPermission "os.arch", "read";
+    permission java.util.PropertyPermission "file.separator", "read";
+    permission java.util.PropertyPermission "path.separator", "read";
+    permission java.util.PropertyPermission "line.separator", "read";
+
+    // JVM properties to allow read access
+    permission java.util.PropertyPermission "java.version", "read";
+    permission java.util.PropertyPermission "java.vendor", "read";
+    permission java.util.PropertyPermission "java.vendor.url", "read";
+    permission java.util.PropertyPermission "java.class.version", "read";
+    permission java.util.PropertyPermission "java.specification.version", "read";
+    permission java.util.PropertyPermission "java.specification.vendor", "read";
+    permission java.util.PropertyPermission "java.specification.name", "read";
+
+    permission java.util.PropertyPermission "java.vm.specification.version", "read";
+    permission java.util.PropertyPermission "java.vm.specification.vendor", "read";
+    permission java.util.PropertyPermission "java.vm.specification.name", "read";
+    permission java.util.PropertyPermission "java.vm.version", "read";
+    permission java.util.PropertyPermission "java.vm.vendor", "read";
+    permission java.util.PropertyPermission "java.vm.name", "read";
+
+    // Required for OpenJMX
+    permission java.lang.RuntimePermission "getAttribute";
+
+    // Allow read of JAXP compliant XML parser debug
+    permission java.util.PropertyPermission "jaxp.debug", "read";
+
+    // All JSPs need to be able to read this package
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat";
+
+    // Precompiled JSPs need access to these packages.
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.jasper.el";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.jasper.runtime";
+    permission java.lang.RuntimePermission
+     "accessClassInPackage.org.apache.jasper.runtime.*";
+
+    // Applications using WebSocket need to be able to access these packages
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat.websocket";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat.websocket.server";
+};
+
+
+// The Manager application needs access to the following packages to support the
+// session display functionality. It also requires the custom Tomcat
+// DeployXmlPermission to enable the use of META-INF/context.xml
+// These settings support the following configurations:
+// - default CATALINA_HOME == CATALINA_BASE
+// - CATALINA_HOME != CATALINA_BASE, per instance Manager in CATALINA_BASE
+// - CATALINA_HOME != CATALINA_BASE, shared Manager in CATALINA_HOME
+grant codeBase "file:${catalina.base}/webapps/manager/-" {
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.ha.session";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager.util";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.util";
+    permission org.apache.catalina.security.DeployXmlPermission "manager";
+};
+grant codeBase "file:${catalina.home}/webapps/manager/-" {
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.ha.session";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager.util";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.util";
+    permission org.apache.catalina.security.DeployXmlPermission "manager";
+};
+
+// The Host Manager application needs the custom Tomcat DeployXmlPermission to
+// enable the use of META-INF/context.xml
+// These settings support the following configurations:
+// - default CATALINA_HOME == CATALINA_BASE
+// - CATALINA_HOME != CATALINA_BASE, per instance Host Manager in CATALINA_BASE
+// - CATALINA_HOME != CATALINA_BASE, shared Host Manager in CATALINA_HOME
+grant codeBase "file:${catalina.base}/webapps/host-manager/-" {
+    permission org.apache.catalina.security.DeployXmlPermission "host-manager";
+};
+grant codeBase "file:${catalina.home}/webapps/host-manager/-" {
+    permission org.apache.catalina.security.DeployXmlPermission "host-manager";
+};
+
+
+// You can assign additional permissions to particular web applications by
+// adding additional "grant" entries here, based on the code base for that
+// application, /WEB-INF/classes/, or /WEB-INF/lib/ jar files.
+//
+// Different permissions can be granted to JSP pages, classes loaded from
+// the /WEB-INF/classes/ directory, all jar files in the /WEB-INF/lib/
+// directory, or even to individual jar files in the /WEB-INF/lib/ directory.
+//
+// For instance, assume that the standard "examples" application
+// included a JDBC driver that needed to establish a network connection to the
+// corresponding database and used the scrape taglib to get the weather from
+// the NOAA web server.  You might create a "grant" entries like this:
+//
+// The permissions granted to the context root directory apply to JSP pages.
+// grant codeBase "file:${catalina.base}/webapps/examples/-" {
+//      permission java.net.SocketPermission "dbhost.mycompany.com:5432", "connect";
+//      permission java.net.SocketPermission "*.noaa.gov:80", "connect";
+// };
+//
+// The permissions granted to the context WEB-INF/classes directory
+// grant codeBase "file:${catalina.base}/webapps/examples/WEB-INF/classes/-" {
+// };
+//
+// The permission granted to your JDBC driver
+// grant codeBase "jar:file:${catalina.base}/webapps/examples/WEB-INF/lib/driver.jar!/-" {
+//      permission java.net.SocketPermission "dbhost.mycompany.com:5432", "connect";
+// };
+// The permission granted to the scrape taglib
+// grant codeBase "jar:file:${catalina.base}/webapps/examples/WEB-INF/lib/scrape.jar!/-" {
+//      permission java.net.SocketPermission "*.noaa.gov:80", "connect";
+// };
+
+// To grant permissions for web applications using packed WAR files, use the
+// Tomcat specific WAR url scheme.
+//
+// The permissions granted to the entire web application
+// grant codeBase "war:file:${catalina.base}/webapps/examples.war*/-" {
+// };
+//
+// The permissions granted to a specific JAR
+// grant codeBase "war:file:${catalina.base}/webapps/examples.war*/WEB-INF/lib/foo.jar" {
+// };</code></pre></div>
+
+  <h3>Starting Tomcat With A SecurityManager</h3>
+
+  <p>Once you have configured the <code>catalina.policy</code> file for use
+  with a SecurityManager, Tomcat can be started with a SecurityManager in
+  place by using the "-security" option:</p>
+<div class="codeBox"><pre><code>$CATALINA_HOME/bin/catalina.sh start -security    (Unix)
+%CATALINA_HOME%\bin\catalina start -security      (Windows)</code></pre></div>
+
+  <div class="subsection"><h4 id="Permissions_for_packed_WAR_files">Permissions for packed WAR files</h4><div class="text">
+
+    <p>When using packed WAR files, it is necessary to use Tomcat's custom war
+    URL protocol to assign permissions to web application code.</p>
+
+    <p>To assign permissions to the entire web application the entry in the
+    policy file would look like this:</p>
+
+<div class="codeBox"><pre><code>// Example policy file entry
+grant codeBase "war:file:${catalina.base}/webapps/examples.war*/-" {
+    ...
+};
+</code></pre></div>
+
+    <p>To assign permissions to a single JAR within the web application the
+    entry in the policy file would look like this:</p>
+
+<div class="codeBox"><pre><code>// Example policy file entry
+grant codeBase "war:file:${catalina.base}/webapps/examples.war*/WEB-INF/lib/foo.jar" {
+    ...
+};
+</code></pre></div>
+
+  </div></div>
+
+</div><h3 id="Configuring_Package_Protection_in_Tomcat">Configuring Package Protection in Tomcat</h3><div class="text">
+  <p>Starting with Tomcat 5, it is now possible to configure which Tomcat
+  internal package are protected against package definition and access. See
+  <a href="http://www.oracle.com/technetwork/java/seccodeguide-139067.html">
+    http://www.oracle.com/technetwork/java/seccodeguide-139067.html</a>
+    for more information.</p>
+
+
+  <p><strong>WARNING</strong>: Be aware that removing the default package protection
+  could possibly open a security hole</p>
+
+  <h3>The Default Properties File</h3>
+
+  <p>The default <code>$CATALINA_BASE/conf/catalina.properties</code> file
+  looks like this:</p>
+<div class="codeBox"><pre><code>#
+# List of comma-separated packages that start with or equal this string
+# will cause a security exception to be thrown when
+# passed to checkPackageAccess unless the
+# corresponding RuntimePermission ("accessClassInPackage."+package) has
+# been granted.
+package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.tomcat.,
+org.apache.jasper.
+#
+# List of comma-separated packages that start with or equal this string
+# will cause a security exception to be thrown when
+# passed to checkPackageDefinition unless the
+# corresponding RuntimePermission ("defineClassInPackage."+package) has
+# been granted.
+#
+# by default, no packages are restricted for definition, and none of
+# the class loaders supplied with the JDK call checkPackageDefinition.
+#
+package.definition=sun.,java.,org.apache.catalina.,org.apache.coyote.,
+org.apache.tomcat.,org.apache.jasper.</code></pre></div>
+  <p>Once you have configured the <code>catalina.properties</code> file for use
+  with a SecurityManager, remember to re-start Tomcat.</p>
+</div><h3 id="Troubleshooting">Troubleshooting</h3><div class="text">
+
+  <p>If your web application attempts to execute an operation that is
+  prohibited by lack of a required Permission, it will throw an
+  <code>AccessControLException</code> or a <code>SecurityException</code>
+  when the SecurityManager detects the violation.  Debugging the permission
+  that is missing can be challenging, and one option is to turn on debug
+  output of all security decisions that are made during execution.  This
+  is done by setting a system property before starting Tomcat.  The easiest
+  way to do this is via the <code>CATALINA_OPTS</code> environment variable.
+  Execute this command:</p>
+<div class="codeBox"><pre><code>export CATALINA_OPTS=-Djava.security.debug=all    (Unix)
+set CATALINA_OPTS=-Djava.security.debug=all       (Windows)</code></pre></div>
+
+  <p>before starting Tomcat.</p>
+
+  <p><strong>WARNING</strong> - This will generate <em>many megabytes</em>
+  of output!  However, it can help you track down problems by searching
+  for the word "FAILED" and determining which permission was being checked
+  for.  See the Java security documentation for more options that you can
+  specify here as well.</p>
+
+</div></div></div></div></div><footer><div id="footer">
+    Copyright &copy; 1999-2024, The Apache Software Foundation
+    <br>
+    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    are either registered trademarks or trademarks of the Apache Software
+    Foundation.
+    </div></footer></div></body></html>
