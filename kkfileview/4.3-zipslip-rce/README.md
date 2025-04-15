@@ -48,12 +48,24 @@ You can see the `touch /tmp/success` has been executed successful:
 
 ### Inject memshell
 
-Upload `cmd.zip` and then preview.
+First, generate a craft POC by [cmd.py](cmd.py):
+
+```
+python cmd.py
+```
+
+A `cmd.zip` file will be written.
+
+Upload `cmd.zip` to the kkFileView server:
 
 ![](4.png)
 
+Then, click the "preview" button of `cmd.zip`, the zip file will be listed:
+
 Then click sample.odt to exploit the code execution vulnerability and inject a memshell.
+
+![](5.png)
 
 Access `http://your-ip:8012?cmd=whoami` to retrieve the command execution result.
 
-![](5.png)
+![](6.png)

@@ -46,12 +46,24 @@ python poc.py
 
 ### 注入内存马
 
-上传`cmd.zip`并预览
+首先，执行[cmd.py](cmd.py)，生成POC文件：
+
+```
+python cmd.py
+```
+
+然后，`cmd.zip`将被写入到当前目录下。
+
+上传`cmd.zip`到kkFileView服务中：
 
 ![](4.png)
 
+然后，点击`cmd.zip`的“预览”按钮，可以看到zip压缩包中的文件列表：
+
 再点击`sample.odt`，触发代码执行漏洞，注入内存马。
+
+![](5.png)
 
 访问`http://your-ip:8012?cmd=whoami`获取命令执行结果。
 
-![](5.png)
+![](6.png)
