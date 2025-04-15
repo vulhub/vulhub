@@ -10,7 +10,7 @@ kkFileView是一个文档预览解决方案。
 
 ## 漏洞环境
 
-执行如下命令启动一个kkFileView 3.4.0服务器：
+执行如下命令启动一个kkFileView 4.3.0服务器：
 
 ```
 docker compose up -d
@@ -19,6 +19,8 @@ docker compose up -d
 服务启动后，访问`http://your-ip:8012`即可查看到首页。
 
 ## 漏洞复现
+
+### 执行命令
 
 首先，修改并执行[poc.py](poc.py)，生成POC文件：
 
@@ -41,3 +43,15 @@ python poc.py
 可见，`touch /tmp/success`已经成功被执行：
 
 ![](3.png)
+
+### 注入内存马
+
+上传`cmd.zip`并预览
+
+![](4.png)
+
+再点击`sample.odt`，触发代码执行漏洞，注入内存马。
+
+访问`http://your-ip:8012?cmd=whoami`获取命令执行结果。
+
+![](5.png)

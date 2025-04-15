@@ -12,7 +12,7 @@ References:
 
 ## Vulnerable environment
 
-Execute following command to start a kkFileView 3.4.0:
+Execute following command to start a kkFileView 4.3.0:
 
 ```
 docker compose up -d
@@ -21,6 +21,8 @@ docker compose up -d
 After the server is started, you can see the index page at `http://your-ip:8012`.
 
 ## Exploit
+
+### Execute command
 
 First, generate a craft POC by [poc.py](poc.py):
 
@@ -43,3 +45,15 @@ Finally, click the "preview" button of `sample.odt`.
 You can see the `touch /tmp/success` has been executed successful:
 
 ![](3.png)
+
+### Inject memshell
+
+Upload `cmd.zip` and then preview.
+
+![](4.png)
+
+Then click sample.odt to exploit the code execution vulnerability and inject a memshell.
+
+Access `http://your-ip:8012?cmd=whoami` to retrieve the command execution result.
+
+![](5.png)
