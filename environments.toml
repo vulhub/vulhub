@@ -751,6 +751,13 @@ path = "influxdb/CVE-2019-20933"
 tags = ["Auth Bypass", "Hard Coding"]
 
 [[environment]]
+name = "Kubernetes Ingress-NGINX Unauthenticated Remote Code Execution"
+cve = ["CVE-2025-1974"]
+app = "ingress-nginx"
+path = "ingress-nginx/CVE-2025-1974"
+tags = ["RCE", "Webserver"]
+
+[[environment]]
 name = "Jackson-databind Deserialization Remote Command Execution"
 cve = ["CVE-2017-7525"]
 app = "Jackson-Databind"
