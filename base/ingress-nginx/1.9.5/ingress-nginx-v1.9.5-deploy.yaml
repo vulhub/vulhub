@@ -353,7 +353,7 @@ spec:
     port: 80
     protocol: TCP
     targetPort: http
-    nodePort: 32080
+    nodePort: 30080
   - appProtocol: https
     name: https
     port: 443
@@ -382,7 +382,7 @@ spec:
     name: https-webhook
     port: 443
     targetPort: webhook
-    nodePort: 32043
+    nodePort: 30443
   selector:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: ingress-nginx
