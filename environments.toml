@@ -2046,7 +2046,8 @@ path = "zabbix/CVE-2020-11800"
 tags = ["RCE"]
 
 [[environment]]
-name = "IngressNightmare: Kubernetes Ingress Unauthenticated Remote Code Execution Vulnerability"
+name = "Kubernetes Ingress Unauthenticated Remote Code Execution Vulnerability"
 cve = ["CVE-2025-1974"]
 app = "ingress-nginx"
 path = "ingress-nginx/CVE-2025-1974"
+tags = ["RCE"]
