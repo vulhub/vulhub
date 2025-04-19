@@ -646,11 +646,25 @@ path = "grafana/admin-ssrf"
 tags = ["SSRF"]
 
 [[environment]]
-name = "H2 Database Console Unauthorized Access"
-cve = []
+name = "H2 Database Web Console Authentication Remote Code Execution"
+cve = ["CVE-2018-10054"]
 app = "Springboot H2 Database"
-path = "h2database/h2-console-unacc"
-tags = ["Auth Bypass", "Database"]
+path = "h2database/CVE-2018-10054"
+tags = ["Database", "RCE"]
+
+[[environment]]
+name = "H2 Database Web Console Pre-Auth JNDI Injection RCE"
+cve = ["CVE-2021-42392"]
+app = "Springboot H2 Database"
+path = "h2database/CVE-2021-42392"
+tags = ["Database", "RCE"]
+
+[[environment]]
+name = "H2 Database Web Console Pre-Auth JDBC Attack RCE"
+cve = ["CVE-2022-23221"]
+app = "Springboot H2 Database"
+path = "h2database/CVE-2022-23221"
+tags = ["Database", "RCE"]
 
 [[environment]]
 name = "Hadoop YARN ResourceManager Unauthorized Access"
