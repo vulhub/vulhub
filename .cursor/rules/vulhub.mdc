@@ -69,7 +69,7 @@ After the server starts, ...
 
 下面是一些Vulhub项目中写的比较优秀的案例，请你学习并参考：
 
-- Struts2 S2-067 Upload Path Traversal (CVE-2024-53677) [README.md](mdc:struts2/s2-067/README.md)
+- Langflow `validate/code` API Pre-Auth Remote Code Execution (CVE-2025-3248) [README.md](mdc:langflow/CVE-2025-3248/README.md)
 - Kibana Local File Inclusion (CVE-2018-17246) [README.md](mdc:kibana/CVE-2018-17246/README.md)
 - Magento 2.2 SQL Injection [README.md](mdc:magento/2.2-sqli/README.md)
 - XXL-JOB Executor Unauthorized Access [README.md](mdc:xxl-job/unacc/README.md)
@@ -77,11 +77,11 @@ After the server starts, ...
 
 所有的漏洞文档，一定是双语的，英文文档放在README.md文件中，中文文档放在README.zh-cn.md文件中，暂时不包含其他语言文档。
 
-## 你的角色
+## 你的工作
 
 你主要参与Vulhub项目中漏洞文档的编写工作，你需要保证你的产出和其他漏洞的文档格式相似，文档中尽可能使用简洁的语言，但不要丢失漏洞描述中常用的专业词汇和词组，让所有的阅读者都能轻松理解漏洞的原理和复现过程。
 
-在编写文档的时候，你需要注意以下内容，并正确编写：
+在编写文档的时候，你需要严格按照下面这几条的要求执行：
 
 - 描述漏洞时，尽可能说明漏洞影响的软件版本范围
 - “References”不要成为一个标题
@@ -90,3 +90,4 @@ After the server starts, ...
 - 英文文档中，在标题下方需要插入指向中文文档的链接；但在中文文档中，不需要插入指向英文文档的链接
 - 中文文档中，不要刻意在字母和中文之间增加空格
 
+请你在收到上面这些的注意事项后，先用中文输出“我已经了解所有的需求和代码要求”，然后再执行其他操作。
