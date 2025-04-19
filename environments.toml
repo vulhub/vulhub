@@ -2,7 +2,7 @@ tags = [
     # Vulnerability type
     "Auth Bypass", "Backdoor", "Deserialization", "DoS", "Environment Injection", "Expression Injection", "File Upload", "File Deletion", "Hard Coding", "Info Disclosure", "Path Traversal", "Privilege Escalation", "RCE", "SQL Injection", "SSRF", "SSTI", "XXE", "XSS", "SSRF",
     # Application type
-    "CMS", "Database", "Framework", "Message Queue", "Webserver",
+    "CMS", "Database", "Framework", "Message Queue", "Webserver", "LLM",
     # Other
     "Other",  
 ]
@@ -952,6 +952,13 @@ cve = []
 app = "kkFileView"
 path = "kkfileview/4.3-zipslip-rce"
 tags = ["RCE", "Path Traversal"]
+
+[[environment]]
+name = "Langflow `validate/code` API Pre-Auth Remote Code Execution"
+cve = ["CVE-2025-3248"]
+app = "Langflow"
+path = "langflow/CVE-2025-3248"
+tags = ["LLM", "RCE"]
 
 [[environment]]
 name = "Laravel Ignition 2.5.1 Remote Code Execution"
