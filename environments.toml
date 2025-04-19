@@ -1983,7 +1983,7 @@ path = "weblogic/CVE-2020-14882"
 tags = ["RCE", "Webserver"]
 
 [[environment]]
-name = "WebLogic Unauthorized Remote Code Execution"
+name = "WebLogic Pre-Auth Remote Command Execution"
 cve = ["CVE-2023-21839"]
 app = "WebLogic"
 path = "weblogic/CVE-2023-21839"
