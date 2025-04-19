@@ -2,14 +2,15 @@ FROM maven:3-jdk-8 AS builder
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-COPY ./ /usr/src/
+COPY pom.xml /usr/src/pom.xml
+COPY src /usr/src/src
 
 WORKDIR /usr/src
 
 RUN cd /usr/src; \
     mvn -U clean package -Dmaven.test.skip=true
 
-FROM eclipse-temurin:8u442-b06-jre
+FROM eclipse-temurin:8u302-b08-jre
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
