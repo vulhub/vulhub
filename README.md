@@ -56,7 +56,7 @@ Each environment directory contains a detailed **README** with reproduction step
 docker compose down -v
 ```
 
-> **Note:**
+> [!NOTE]
 > - Use a VPS or VM with at least 1GB RAM for best results.
 > - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP.
 > - **All environments are for testing and educational purposes only. Do not use in production!**
@@ -94,7 +94,6 @@ Our partners and users:
 Sponsor Vulhub on [Patreon](https://www.patreon.com/bePatron?u=12677520) or [OpenCollective](https://opencollective.com/vulhub#backer) 🙏
 
 <p>
-  <a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/sponsor/patreon.png" width="150"></a>
   <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
   <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>

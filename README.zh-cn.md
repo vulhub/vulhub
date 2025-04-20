@@ -89,7 +89,6 @@ docker compose down -v
 欢迎通过[Patreon](https://www.patreon.com/bePatron?u=12677520)或[OpenCollective](https://opencollective.com/vulhub#backer)支持Vulhub 🙏
 
 <p>
-  <a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/sponsor/patreon.png" width="150"></a>
   <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
   <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
