@@ -16,7 +16,7 @@ Vulhub是一个开源的、即开即用的漏洞靶场环境集合。无需Docke
 
 ## 快速开始
 
-1. **安装Docker**（以Ubuntu 22.04为例）：
+**安装Docker**（以Ubuntu 22.04为例）：
 
 ```bash
 curl -s https://get.docker.com/ | sh
@@ -25,13 +25,13 @@ systemctl start docker
 
 其他操作系统请参考[Docker官方文档](https://docs.docker.com/)。
 
-2. **下载并解压Vulhub：**
+**下载并解压Vulhub：**
 
 ```bash
 git clone --depth 1 https://github.com/vulhub/vulhub
 ```
 
-3. **启动一个漏洞环境：**
+**启动一个漏洞环境：**
 
 ```bash
 cd langflow/CVE-2025-3248  # Example: enter a vulnerability directory
@@ -40,13 +40,14 @@ docker compose up -d
 
 每个环境目录下都包含详细的**README**，请参阅以了解复现步骤和使用说明。
 
-4. **测试完成后清理环境：**
+**测试完成后清理环境：**
 
 ```bash
 docker compose down -v
 ```
 
-> **注意：**
+> [!NOTE]
+> 
 > - 推荐使用至少1GB内存的VPS或虚拟机。
 > - 文档中的`your-ip`指你的主机/VPS IP，不是Docker容器内部IP。
 > - **所有环境仅供测试与学习，严禁用于生产环境！**

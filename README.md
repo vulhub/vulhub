@@ -18,7 +18,7 @@ Vulhub is an open-source collection of pre-built, ready-to-use vulnerable Docker
 
 ## Quick Start
 
-1. **Install Docker** (example for Ubuntu 24.04):
+**Install Docker** (example for Ubuntu 24.04):
 
 ```bash
 # Install the latest version docker
@@ -30,13 +30,13 @@ systemctl start docker
 
 For other operating systems, see the [Docker documentation](https://docs.docker.com/).
 
-2. **Download and set up Vulhub:**
+**Download and set up Vulhub:**
 
 ```bash
 git clone --depth 1 https://github.com/vulhub/vulhub
 ```
 
-3. **Launch a vulnerable environment:**
+**Launch a vulnerable environment:**
 
 ```bash
 cd langflow/CVE-2025-3248  # Example: enter a vulnerability directory
@@ -45,13 +45,14 @@ docker compose up -d
 
 Each environment directory contains a detailed **README** with reproduction steps and usage instructions.
 
-4. **Clean up after testing:**
+**Clean up after testing:**
 
 ```bash
 docker compose down -v
 ```
 
 > [!NOTE]
+> 
 > - Use a VPS or VM with at least 1GB RAM for best results.
 > - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP.
 > - **All environments are for testing and educational purposes only. Do not use in production!**
