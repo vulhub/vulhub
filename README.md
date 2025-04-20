@@ -30,6 +30,8 @@ systemctl start docker
 
 For other operating systems, see the [Docker documentation](https://docs.docker.com/).
 
+Although all Vulhub environments are running based on Docker Compose, you no longer need to install docker-compose separately. Instead, you can use the built-in `docker compose` command to start Vulhub environments.
+
 **Download and set up Vulhub:**
 
 ```bash
@@ -39,7 +41,7 @@ git clone --depth 1 https://github.com/vulhub/vulhub
 **Launch a vulnerable environment:**
 
 ```bash
-cd langflow/CVE-2025-3248  # Example: enter a vulnerability directory
+cd vulhub/langflow/CVE-2025-3248  # Example: enter a vulnerability directory
 docker compose up -d
 ```
 

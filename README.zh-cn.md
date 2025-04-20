@@ -25,6 +25,8 @@ systemctl start docker
 
 其他操作系统请参考[Docker官方文档](https://docs.docker.com/)。
 
+虽然所有Vulhub环境都基于Docker compose制作，但你不再需要安装独立的docker-compose，而是使用Docker自带的compose命令来启动Vulhub环境。
+
 **下载并解压Vulhub：**
 
 ```bash
@@ -34,7 +36,7 @@ git clone --depth 1 https://github.com/vulhub/vulhub
 **启动一个漏洞环境：**
 
 ```bash
-cd langflow/CVE-2025-3248  # Example: enter a vulnerability directory
+cd vulhub/langflow/CVE-2025-3248  # Example: enter a vulnerability directory
 docker compose up -d
 ```
 
