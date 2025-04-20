@@ -53,14 +53,11 @@ docker compose down -v
 
 > [!NOTE]
 >
-> - Use a VPS or VM with at least 1GB RAM for best results.
-> - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP.
+> - Use a VPS or VM with at least 1GB RAM for best results
+> - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP
+> - Ensure Docker has permission to access all files in the current directory to avoid permission errors
+> - Vulhub currently supports only x86 architectures (not ARM)
 > - **All environments are for testing and educational purposes only. Do not use in production!**
-
-## Notices
-
-- Ensure Docker has permission to access all files in the current directory to avoid permission errors.
-- Vulhub currently supports only x86 architectures (not ARM).
 
 ## Contributing
 

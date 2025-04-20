@@ -48,14 +48,11 @@ docker compose down -v
 
 > [!NOTE]
 >
-> - 推荐使用至少1GB内存的VPS或虚拟机。
-> - 文档中的`your-ip`指你的主机/VPS IP，不是Docker容器内部IP。
+> - 推荐使用至少1GB内存的VPS或虚拟机
+> - 文档中的`your-ip`指你的主机/VPS IP，不是Docker容器内部IP
+> - 请确保Docker有权限访问当前目录下所有文件，避免权限错误
+> - Vulhub目前仅支持x86架构（不支持ARM）
 > - **所有环境仅供测试与学习，严禁用于生产环境！**
-
-## 注意事项
-
-- 请确保Docker有权限访问当前目录下所有文件，避免权限错误。
-- Vulhub目前仅支持x86架构（不支持ARM）。
 
 ## 贡献
 
