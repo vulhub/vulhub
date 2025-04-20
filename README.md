@@ -91,7 +91,7 @@ Sponsor Vulhub on [GitHub Sponsor](https://github.com/sponsors/phith0n), [OpenCo
   <a href="https://github.com/sponsors/phith0n"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
-More ways to [donate](http://vulhub.org/).
+More ways to [donate](https://vulhub.org/).
 
 ## License
 

@@ -12,7 +12,7 @@
   <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub"></a>
 </p>
 
-Vulhub是一个开源的、即开即用的漏洞靶场环境集合。无需Docker基础，只需两条命令即可快速启动用于安全研究、学习或演示的漏洞环境。
+Vulhub是一个开源的、即开即用的漏洞靶场环境集合。无需Docker基础，只需一条命令即可快速启动用于安全研究、学习或演示的漏洞环境。
 
 ## 快速开始
 
@@ -86,7 +86,7 @@ docker compose down -v
   <a href="https://github.com/sponsors/phith0n"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
-更多[捐助方式](http://vulhub.org)。
+更多[捐助方式](https://vulhub.org)。
 
 ## License
 
