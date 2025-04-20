@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://discord.gg/bQCpZEK" target="_blank"><img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord"></a>
   <a href="https://github.com/sponsors/phith0n" target="_blank"><img src="https://img.shields.io/github/sponsors/phith0n?color=aqua" alt="GitHub Sponsors"></a>
-  <a href="https://vulhub.org/environments" target="_blank"><img alt="Vulnerabilities count" src="https://img.shields.io/badge/vulnerabilities-295-blue"></a>
+  <a href="https://vulhub.org/environments" target="_blank"><img alt="Vulnerabilities count" src="https://img.shields.io/badge/dynamic/json?url=https://vulhub.org/api/statistic&query=%24.environments&label=vulnerabilities"></a>
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/vulhub/vulhub?color=yellow">
   <a href="https://github.com/vulhub/vulhub/graphs/contributors" target="_blank"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors-anon/vulhub/vulhub?color=orange"></a>
   <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub"></a>
