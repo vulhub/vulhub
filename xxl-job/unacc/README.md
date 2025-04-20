@@ -8,9 +8,9 @@ XXL-JOB is divided into two parts: admin and executor, where the former is the b
 
 References:
 
-- https://mp.weixin.qq.com/s/jzXIVrEl0vbjZxI4xlUm-g
-- https://landgrey.me/blog/18/
-- https://github.com/OneSourceCat/XxlJob-Hessian-RCE
+- <https://mp.weixin.qq.com/s/jzXIVrEl0vbjZxI4xlUm-g>
+- <https://landgrey.me/blog/18/>
+- <https://github.com/OneSourceCat/XxlJob-Hessian-RCE>
 
 ## Environment Setup
 
