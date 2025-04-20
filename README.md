@@ -52,7 +52,7 @@ docker compose down -v
 ```
 
 > [!NOTE]
-> 
+>
 > - Use a VPS or VM with at least 1GB RAM for best results.
 > - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP.
 > - **All environments are for testing and educational purposes only. Do not use in production!**

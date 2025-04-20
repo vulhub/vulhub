@@ -47,7 +47,7 @@ docker compose down -v
 ```
 
 > [!NOTE]
-> 
+>
 > - 推荐使用至少1GB内存的VPS或虚拟机。
 > - 文档中的`your-ip`指你的主机/VPS IP，不是Docker容器内部IP。
 > - **所有环境仅供测试与学习，严禁用于生产环境！**
