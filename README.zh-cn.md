@@ -86,11 +86,11 @@ docker compose down -v
   <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
 </p>
 
-欢迎通过[Patreon](https://www.patreon.com/bePatron?u=12677520)或[OpenCollective](https://opencollective.com/vulhub#backer)支持Vulhub 🙏
+欢迎通过[GitHub Sponsor](https://github.com/sponsors/phith0n)、[OpenCollective](https://opencollective.com/vulhub#backer)或[Patreon](https://www.patreon.com/bePatron?u=12677520)支持Vulhub 🙏
 
 <p>
-  <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
-  <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
+  <a href="https://github.com/sponsors/phith0n"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
+  <a href="https://github.com/sponsors/phith0n"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
 更多[捐助方式](http://vulhub.org)。

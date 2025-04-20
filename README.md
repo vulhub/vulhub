@@ -91,11 +91,11 @@ Our partners and users:
   <a href="https://xz.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
 </p>
 
-Sponsor Vulhub on [Patreon](https://www.patreon.com/bePatron?u=12677520) or [OpenCollective](https://opencollective.com/vulhub#backer) 🙏
+Sponsor Vulhub on [GitHub Sponsor](https://github.com/sponsors/phith0n), [OpenCollective](https://opencollective.com/vulhub#backer), or [Patreon](https://www.patreon.com/bePatron?u=12677520) 🙏
 
 <p>
-  <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
-  <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
+  <a href="https://github.com/sponsors/phith0n"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
+  <a href="https://github.com/sponsors/phith0n"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
 More ways to [donate](http://vulhub.org/).
