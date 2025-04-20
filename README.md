@@ -1,23 +1,15 @@
 <!-- markdownlint-disable first-line-heading -->
 <p align="center">
-  <a href="https://vulhub.org" target="_blank">
-    <img src=".github/assets/banner.png" alt="Vulhub" height="auto" />
-  </a>
+  <a href="https://vulhub.org" target="_blank"><img src=".github/assets/banner.png" alt="Vulhub" height="auto" /></a>
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/bQCpZEK" target="_blank">
-    <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
-  </a>
-  <a href="https://github.com/sponsors/phith0n" target="_blank">
-    <img src="https://img.shields.io/github/sponsors/phith0n" alt="GitHub Sponsors">
-  </a>
-  <img alt="Static Badge" src="https://img.shields.io/badge/Environments-295-blue">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/vulhub/vulhub">
-  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/vulhub/vulhub">
-  <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE" target="_blank">
-    <img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub">
-  </a>
+  <a href="https://discord.gg/bQCpZEK" target="_blank"><img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord"></a>
+  <a href="https://github.com/sponsors/phith0n" target="_blank"><img src="https://img.shields.io/github/sponsors/phith0n?color=aqua" alt="GitHub Sponsors"></a>
+  <a href="https://vulhub.org/environments" target="_blank"><img alt="Vulnerabilities count" src="https://img.shields.io/badge/vulnerabilities-295-blue"></a>
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/vulhub/vulhub?color=yellow">
+  <a href="https://github.com/vulhub/vulhub/graphs/contributors" target="_blank"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors-anon/vulhub/vulhub?color=orange"></a>
+  <a href="https://github.com/vulhub/vulhub/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/vulhub/vulhub.svg" alt="GitHub"></a>
 </p>
 
 Vulhub is an open-source collection of pre-built, ready-to-use vulnerable Docker environments. With just one command you can launch a vulnerable environment for security research, learning, or demonstration, no prior Docker experience required.
