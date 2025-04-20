@@ -9,21 +9,21 @@
       <img src="https://img.shields.io/discord/485505185167179778.svg" alt="Chat on Discord">
     </a>
     <a href="https://www.patreon.com/phith0n">
-      <img src="https://img.shields.io/badge/sponsor-patreon-73d6a1.svg" alt="Backers and sponors on Patreon">
+      <img src="https://img.shields.io/badge/sponsor-patreon-73d6a1.svg" alt="Backers and sponsors on Patreon">
     </a>
     <a href="https://opencollective.com/vulhub#backer">
-      <img src="https://img.shields.io/badge/backer-opencollective-f89a76.svg" alt="Backers and sponors on Opencollective">
+      <img src="https://img.shields.io/badge/backer-opencollective-f89a76.svg" alt="Backers and sponsors on Opencollective">
     </a>
   </p>
 </p>
 
-Vulhub is an open-source collection of pre-built vulnerable docker environments. No pre-existing knowledge of docker is required, just execute two simple commands and you have a vulnerable environment.
+Vulhub is an open-source collection of pre-built, ready-to-use vulnerable Docker environments. With just one command you can launch a vulnerable environment for security research, learning, or demonstration, no prior Docker experience required.
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-## Installation
+## Quick Start
 
-Install Docker on Ubuntu 22.04:
+1. **Install Docker** (example for Ubuntu 24.04):
 
 ```bash
 # Install the latest version docker
@@ -33,63 +33,55 @@ curl -s https://get.docker.com/ | sh
 systemctl start docker
 ```
 
-Note that as of April 2022, `docker compose` is merged into Docker as a subcommand as [Docker Compose V2](https://www.docker.com/blog/announcing-compose-v2-general-availability/), the Python version of docker-compose will be deprecated after June 2023. So Vulhub will no longer require the installation of additional `docker-compose`, and all documentation will be modified to use the `docker compose` instead.
+For other operating systems, see the [Docker documentation](https://docs.docker.com/).
 
-The installation steps of Docker and Docker Compose for other operating systems might be slightly different, please refer to the [docker documentation](https://docs.docker.com/) for details.
-
-## Usage
+2. **Download and set up Vulhub:**
 
 ```bash
-# Download project
-wget https://github.com/vulhub/vulhub/archive/master.zip -O vulhub-master.zip
-unzip vulhub-master.zip
-cd vulhub-master
+git clone --depth 1 https://github.com/vulhub/vulhub
+```
 
-# Enter the directory of vulnerability/environment
-cd flask/ssti
+3. **Launch a vulnerable environment:**
 
-# Compile environment
-docker compose build
-
-# Run environment
+```bash
+cd langflow/CVE-2025-3248  # Example: enter a vulnerability directory
 docker compose up -d
 ```
 
-There is a **README** document in each environment directory, please read this file for vulnerability/environment testing and usage.
+Each environment directory contains a detailed **README** with reproduction steps and usage instructions.
 
-After the test, delete the environment with the following command.
+4. **Clean up after testing:**
 
-```
+```bash
 docker compose down -v
 ```
 
-It is recommended to use a VPS of at least 1GB memory to build a vulnerability environment. The `your-ip` mentioned in the documentation refers to the IP address of your VPS. If you are using a virtual machine, it refers to your virtual machine IP, not the IP inside the docker container.
+> **Note:**
+> - Use a VPS or VM with at least 1GB RAM for best results.
+> - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP.
+> - **All environments are for testing and educational purposes only. Do not use in production!**
 
-**All environments in this project are for testing purposes only and should not be used as a production environment!**
+## Notices
 
-## Notice
+- Ensure Docker has permission to access all files in the current directory to avoid permission errors.
+- Vulhub currently supports only x86 architectures (not ARM).
 
-1. To prevent permission errors, please ensure that the docker container has permission to access all files in the current directory.
-2. Vulhub does not support running on machines with non-x86 architecture such as ARM for now.
+## Contributing
 
-## Contribution
+If you encounter errors during build or runtime, please first check if they are caused by Docker or related dependencies. If you confirm an issue with a Dockerfile or Vulhub code, submit an issue. See [FAQ](https://vulhub.org/documentation/faq) for troubleshooting tips.
 
-This project relies on docker. So any error during compilation and running are thrown by docker and related programs. Please find the cause of the error by yourself first. If it is determined that the dockerfile is written incorrectly (or the code is wrong in vulhub), then submit the issue. More details please 👉[Common reasons for compilation failure](https://github.com/phith0n/vulhub/wiki/%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0), hope it can help you.
-
-For more question, please contact:
+For questions, contact us:
 
 - [Discord](https://discord.gg/bQCpZEK)
 - [Twitter](https://twitter.com/vulhub)
 
-Thanks for the following contributors:
+Thanks to all [contributors](contributors.md):
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
 
-More contributors：[Contributors List](contributors.md)
+## Partners
 
-## Partner
-
-Our Partners and users:
+Our partners and users:
 
 <p>
   <a href="https://www.wangan.com/vulhub" target="_blank"><img src="https://vulhub.org/sponsor/wangan.png" width="200"></a>
@@ -99,19 +91,16 @@ Our Partners and users:
   <a href="https://xz.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
 </p>
 
-Sponsor vulhub on patreon 🙏
-
-<a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/sponsor/patreon.png" width="150"></a>
-
-Sponsor vulhub on opencollective 🙏
+Sponsor Vulhub on [Patreon](https://www.patreon.com/bePatron?u=12677520) or [OpenCollective](https://opencollective.com/vulhub#backer) 🙏
 
 <p>
+  <a href="https://www.patreon.com/bePatron?u=12677520"><img src="https://vulhub.org/sponsor/patreon.png" width="150"></a>
   <a href="https://opencollective.com/vulhub#backer"><img src="https://opencollective.com/vulhub/backers.svg?width=138"></a>
   <a href="https://opencollective.com/vulhub#sponsor"><img src="https://opencollective.com/vulhub/sponsors.svg?width=138"></a>
 </p>
 
-More [Donate](http://vulhub.org/).
+More ways to [donate](http://vulhub.org/).
 
 ## License
 
-Vulhub is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
+Vulhub is licensed under the MIT License. See [LICENSE](LICENSE) for details.
