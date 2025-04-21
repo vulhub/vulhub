@@ -2,7 +2,7 @@ tags = [
     # Vulnerability type
     "Auth Bypass", "Backdoor", "Deserialization", "DoS", "Environment Injection", "Expression Injection", "File Upload", "File Deletion", "Hard Coding", "Info Disclosure", "Path Traversal", "Privilege Escalation", "RCE", "SQL Injection", "SSRF", "SSTI", "XXE", "XSS", "SSRF",
     # Application type
-    "CMS", "Database", "Framework", "Message Queue", "Webserver", "LLM",
+    "CMS", "Database", "Framework", "Message Queue", "Webserver",
     # Other
     "Other",  
 ]
@@ -646,25 +646,11 @@ path = "grafana/admin-ssrf"
 tags = ["SSRF"]
 
 [[environment]]
-name = "H2 Database Web Console Authentication Remote Code Execution"
-cve = ["CVE-2018-10054"]
+name = "H2 Database Console Unauthorized Access"
+cve = []
 app = "Springboot H2 Database"
-path = "h2database/CVE-2018-10054"
-tags = ["Database", "RCE"]
-
-[[environment]]
-name = "H2 Database Web Console Pre-Auth JNDI Injection RCE"
-cve = ["CVE-2021-42392"]
-app = "Springboot H2 Database"
-path = "h2database/CVE-2021-42392"
-tags = ["Database", "RCE"]
-
-[[environment]]
-name = "H2 Database Web Console Pre-Auth JDBC Attack RCE"
-cve = ["CVE-2022-23221"]
-app = "Springboot H2 Database"
-path = "h2database/CVE-2022-23221"
-tags = ["Database", "RCE"]
+path = "h2database/h2-console-unacc"
+tags = ["Auth Bypass", "Database"]
 
 [[environment]]
 name = "Hadoop YARN ResourceManager Unauthorized Access"
@@ -763,13 +749,6 @@ cve = ["CVE-2019-20933"]
 app = "InfluxDB"
 path = "influxdb/CVE-2019-20933"
 tags = ["Auth Bypass", "Hard Coding"]
-
-[[environment]]
-name = "Kubernetes Ingress-NGINX Unauthenticated Remote Code Execution"
-cve = ["CVE-2025-1974"]
-app = "ingress-nginx"
-path = "ingress-nginx/CVE-2025-1974"
-tags = ["RCE", "Webserver"]
 
 [[environment]]
 name = "Jackson-databind Deserialization Remote Command Execution"
@@ -952,13 +931,6 @@ cve = []
 app = "kkFileView"
 path = "kkfileview/4.3-zipslip-rce"
 tags = ["RCE", "Path Traversal"]
-
-[[environment]]
-name = "Langflow `validate/code` API Pre-Auth Remote Code Execution"
-cve = ["CVE-2025-3248"]
-app = "Langflow"
-path = "langflow/CVE-2025-3248"
-tags = ["LLM", "RCE"]
 
 [[environment]]
 name = "Laravel Ignition 2.5.1 Remote Code Execution"
@@ -1983,7 +1955,7 @@ path = "weblogic/CVE-2020-14882"
 tags = ["RCE", "Webserver"]
 
 [[environment]]
-name = "WebLogic Pre-Auth Remote Command Execution"
+name = "WebLogic Unauthorized Remote Code Execution"
 cve = ["CVE-2023-21839"]
 app = "WebLogic"
 path = "weblogic/CVE-2023-21839"
@@ -2071,4 +2043,18 @@ name = "Zabbix Server Active Proxy Trapper Command Injection Bypass"
 cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
+tags = ["RCE"]
+
+[[environment]]
+name = "Kubernetes Ingress Unauthenticated Remote Code Execution Vulnerability"
+cve = ["CVE-2025-1974"]
+app = "ingress-nginx"
+path = "ingress-nginx/CVE-2025-1974"
+tags = ["RCE"]
+
+[[environment]]
+name = "Unauthenticated Remote Code Execution in Erlang OTP/SSH"
+cve = ["CVE-2025-32433"]
+app = "Erlang OTP/SSH"
+path = "erlang/CVE-2025-32433"
 tags = ["RCE"]
