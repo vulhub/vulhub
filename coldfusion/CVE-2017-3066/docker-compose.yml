@@ -1,0 +1,6 @@
+version: '2'
+services:
+  coldfusion:
+    image: vulhub/coldfusion:11u3
+    ports:
+      - "8500:8500"

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!--
+   This is an example of a simple "solr.xml" file for configuring one or
+   more Solr Cores, as well as allowing Cores to be added, removed, and
+   reloaded via HTTP requests.
+
+   More information about options available in this configuration file,
+   and Solr Core administration can be found online:
+   https://lucene.apache.org/solr/guide/format-of-solr-xml.html
+-->
+
+<solr>
+
+  <int name="maxBooleanClauses">${solr.max.booleanClauses:1024}</int>
+  <str name="sharedLib">${solr.sharedLib:}</str>
+  <str name="allowPaths">${solr.allowPaths:}</str>
+
+  <solrcloud>
+
+    <str name="host">${host:}</str>
+    <int name="hostPort">${jetty.port:8983}</int>
+    <str name="hostContext">${hostContext:solr}</str>
+
+    <bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
+
+    <int name="zkClientTimeout">${zkClientTimeout:30000}</int>
+    <int name="distribUpdateSoTimeout">${distribUpdateSoTimeout:600000}</int>
+    <int name="distribUpdateConnTimeout">${distribUpdateConnTimeout:60000}</int>
+    <str name="zkCredentialsProvider">${zkCredentialsProvider:org.apache.solr.common.cloud.DefaultZkCredentialsProvider}</str>
+    <str name="zkACLProvider">${zkACLProvider:org.apache.solr.common.cloud.DefaultZkACLProvider}</str>
+
+  </solrcloud>
+
+  <shardHandlerFactory name="shardHandlerFactory"
+    class="HttpShardHandlerFactory">
+    <int name="socketTimeout">${socketTimeout:600000}</int>
+    <int name="connTimeout">${connTimeout:60000}</int>
+    <str name="shardsWhitelist">${solr.shardsWhitelist:}</str>
+  </shardHandlerFactory>
+
+</solr>

@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/elfinder:2.1.58
+   ports:
+    - "8080:80"

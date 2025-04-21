@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.devMode" value="false"/>
+    <!--<constant name="struts.custom.i18n.resources" value="global"/>-->
+    <!-- <constant name="struts.multipart.parser" value="jakarta-stream" /> -->
+    <!--constant name="struts.multipart.maxSize" value="1" /-->
+
+    <package name="default" namespace="/" extends="struts-default">
+        <default-action-ref name="index"/>
+        <action name="index" class="org.pwntester.action.IndexAction" method="changeId">
+            <result>index.jsp</result>
+        </action>
+    </package>
+
+</struts>

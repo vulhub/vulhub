@@ -1,0 +1,18 @@
+version: '2'
+services:
+ admin:
+   image: vulhub/xxl-job:2.2.0-admin
+   depends_on:
+    - db
+   ports:
+    - "8080:8080"
+ executor:
+   image: vulhub/xxl-job:2.2.0-executor
+   depends_on:
+    - admin
+   ports:
+    - "9999:9999"
+ db:
+   image: mysql:5.7
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root

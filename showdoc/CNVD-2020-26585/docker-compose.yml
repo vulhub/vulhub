@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/showdoc:2.8.2
+   ports:
+    - "8080:80"

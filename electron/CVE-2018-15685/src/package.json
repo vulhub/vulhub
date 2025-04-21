@@ -1,0 +1,14 @@
+{
+  "name": "cve-2018-15685",
+  "version": "0.0.1",
+  "main": "main.js",
+  "scripts": {
+    "build-win32": "electron-packager . cve-2018-15685 --platform=win32 --arch=ia32 --electronVersion=2.0.7 --appVersion=0.0.1 --out=/build --overwrite",
+    "build-win64": "electron-packager . cve-2018-15685 --platform=win32 --arch=x64 --electronVersion=2.0.7 --appVersion=0.0.1 --out=/build --overwrite",
+    "build-mac": "electron-packager . cve-2018-15685 --platform=darwin --arch=x64 --electronVersion=2.0.7 --appVersion=0.0.1 --out=/build --overwrite",
+    "build-linux": "electron-packager . cve-2018-15685 --platform=linux --arch=x64 --electronVersion=2.0.7 --appVersion=0.0.1 --out=/build --overwrite"
+  },
+  "devDependencies": {
+    "electron-packager": "^12.0.2"
+  }
+}

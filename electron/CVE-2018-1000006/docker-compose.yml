@@ -1,0 +1,15 @@
+version: '2'
+services:
+ electron:
+   image: vulhub/electron:wine
+   command: bash /docker-entrypoint.sh
+   volumes:
+    - ./src:/project
+    - ./build:/build
+    - ./docker-entrypoint.sh:/docker-entrypoint.sh
+ web:
+   image: nginx:1
+   volumes:
+    - ./build:/usr/share/nginx/html
+   ports:
+    - "8080:80"

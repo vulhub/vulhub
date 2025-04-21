@@ -1,0 +1,18 @@
+{
+    "name": "nextjs-middleware-auth-bypass-poc",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "bootstrap": "5.3.3",
+        "next": "15.2.2",
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
+    },
+    "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+}

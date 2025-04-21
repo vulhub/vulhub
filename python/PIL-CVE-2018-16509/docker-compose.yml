@@ -1,0 +1,9 @@
+version: '2'
+services:
+ web:
+   image: vulhub/ghostscript:9.23-with-flask
+   command: python app.py
+   volumes: 
+    - ./app.py:/usr/src/app.py
+   ports:
+    - "8000:8000"

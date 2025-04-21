@@ -1,0 +1,4 @@
+ARG HADOOP_VERSION=2.8.1
+FROM uhopper/hadoop:${HADOOP_VERSION}
+
+COPY files /

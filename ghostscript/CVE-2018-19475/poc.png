@@ -1,0 +1,4 @@
+%!PS
+0 1 300367 {} for
+{save restore} stopped {} if
+(%pipe%id > /tmp/success && cat /tmp/success) (w) file

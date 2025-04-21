@@ -1,0 +1,5 @@
+services:
+  web:
+    image: vulhub/superset:2.0.1
+    ports:
+      - 8088:8088

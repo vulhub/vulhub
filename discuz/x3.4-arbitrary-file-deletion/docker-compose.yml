@@ -1,0 +1,12 @@
+services:
+  discuz:
+    image: vulhub/discuz:x3.4
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+  db:
+    image: mysql:5.5
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ultrax

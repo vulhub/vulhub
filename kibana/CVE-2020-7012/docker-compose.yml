@@ -1,0 +1,11 @@
+services:
+  kibana:
+    image: vulhub/kibana:7.6.2
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+  elasticsearch:
+    image: vulhub/elasticsearch:7.6.2
+    environment:
+      - discovery.type=single-node

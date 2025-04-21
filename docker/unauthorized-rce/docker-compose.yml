@@ -1,0 +1,6 @@
+services:
+ docker:
+   build: .
+   ports:
+    - "2375:2375"
+   privileged: true

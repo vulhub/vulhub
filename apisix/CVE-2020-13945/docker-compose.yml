@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  apisix:
+    image: vulhub/apisix:2.11.0
+    volumes:
+      - ./config.yml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    ports:
+      - "9080:9080"
+      - "9091:9091"
+      - "9443:9443"
+  etcd:
+    image: bitnami/etcd:3.4.15
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379/tcp"

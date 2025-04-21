@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd /opt/jumpserver/lion/ || exit 1
+
+export BIND_HOST=127.0.0.1
+export HTTPD_PORT=8081
+
+wait-for-it -t 0 127.0.0.1:8080 -- echo "core host is up"
+wait-for-it -t 0 127.0.0.1:4822 -- echo "guacd is up"
+./lion

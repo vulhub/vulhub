@@ -1,0 +1,9 @@
+services:
+ glassfish:
+   image: vulhub/glassfish:4.1
+   ports:
+    - "4848:4848"
+    - "5005:5005"
+   environment:
+    - ADMIN_PASSWORD=vulhub_default_password
+    - JAVA_DEBUGGER_PORT=5005

@@ -1,0 +1,5 @@
+services:
+ web:
+   image: vulhub/thinkphp:6.0.12
+   ports:
+    - "8080:80"

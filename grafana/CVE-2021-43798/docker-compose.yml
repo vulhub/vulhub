@@ -1,0 +1,6 @@
+version: '2'
+services:
+  web:
+    image: vulhub/grafana:8.2.6
+    ports:
+      - "3000:3000"
