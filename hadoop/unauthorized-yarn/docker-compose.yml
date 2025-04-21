@@ -1,0 +1,35 @@
+services:
+  namenode:
+    image: vulhub/hadoop:2.8.1
+    environment:
+      - HDFS_CONF_dfs_namenode_name_dir=file:///hadoop/dfs/name
+      - CLUSTER_NAME=vulhub
+      - HDFS_CONF_dfs_replication=1
+    command: /namenode.sh
+
+  datanode:
+    image: vulhub/hadoop:2.8.1
+    environment:
+      - HDFS_CONF_dfs_datanode_data_dir=file:///hadoop/dfs/data
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+      - CLUSTER_NAME=vulhub
+      - HDFS_CONF_dfs_replication=1
+    command: /datanode.sh
+
+  resourcemanager:
+    image: vulhub/hadoop:2.8.1
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+      - YARN_CONF_yarn_log___aggregation___enable=true
+    command: /resourcemanager.sh
+    ports:
+      - "8088:8088"
+
+  nodemanager:
+    image: vulhub/hadoop:2.8.1
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+      - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+      - YARN_CONF_yarn_log___aggregation___enable=true
+      - YARN_CONF_yarn_nodemanager_remote___app___log___dir=/app-logs
+    command: /nodemanager.sh

@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/phpmyadmin:2.8.0.4
+   ports:
+    - "8080:80"

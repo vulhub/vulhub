@@ -1,0 +1,10 @@
+version: '2'
+services:
+ kibana:
+   image: vulhub/kibana:5.6.12
+   depends_on:
+    - elasticsearch
+   ports:
+    - "5601:5601"
+ elasticsearch:
+   image: vulhub/elasticsearch:5.6.16

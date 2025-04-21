@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export BIND_HOST=127.0.0.1
+export BIND_PORT=9090
+export WORK_DIR="/opt/jumpserver/magnus"
+export COMPONENT_NAME="magnus"
+export EXECUTE_PROGRAM="/opt/jumpserver/magnus/magnus"
+export WISP_HOST=127.0.0.1
+export WISP_PORT=9090
+
+wait-for-it -t 0 127.0.0.1:8080 -- echo "core host is up"
+/opt/jumpserver/wisp/wisp

@@ -1,0 +1,9 @@
+services:
+  k3s:
+    image: vulhub/ingress-nginx:1.9.5
+    privileged: true
+    environment:
+      - K3S_KUBECONFIG_MODE=666
+    ports:
+      - 30080:30080
+      - 30443:30443

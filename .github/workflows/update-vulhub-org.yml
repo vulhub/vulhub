@@ -1,0 +1,86 @@
+name: Update Vulhub.org Environments
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "environments.toml"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run mode (no push to repository)"
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  update-environments:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout vulhub repository
+        uses: actions/checkout@v4
+        with:
+          path: vulhub
+          fetch-depth: 0
+
+      - name: Checkout vulhub-org repository
+        uses: actions/checkout@v4
+        with:
+          repository: vulhub/vulhub-org
+          path: vulhub-org
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Update environments.json
+        run: |
+          cd vulhub-org
+          yarn install --frozen-lockfile
+          ./scripts/update_environments.js -i ../vulhub -o ./lib/environments.json
+
+      - name: Upload environments.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: environments.json
+          path: vulhub-org/lib/environments.json
+
+      - name: Check for changes and commit
+        id: commit
+        run: |
+          cd vulhub-org
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add lib/environments.json
+          git --no-pager diff --staged
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Update environments.json from vulhub/environments.toml"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push changes
+        if: steps.commit.outputs.has_changes == 'true' && (github.event_name != 'workflow_dispatch' || !inputs.dry_run)
+        uses: ad-m/github-push-action@master
+        with:
+          repository: vulhub/vulhub-org
+          github_token: ${{ secrets.VULHUB_ORG_TOKEN }}
+          branch: main
+          directory: vulhub-org
+
+      - name: Dry run summary
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run
+        run: |
+          echo "### Dry Run Mode - Changes Not Pushed" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.commit.outputs.has_changes }}" == "true" ]; then
+            echo "✅ Changes were detected and would have been pushed to the repository" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No changes were detected" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -1,0 +1,9 @@
+version: '2'
+services:
+ web:
+   image: vulhub/bash:4.3.0-with-httpd
+   ports:
+    - "8080:80"
+   volumes:
+    - ./safe.cgi:/var/www/html/safe.cgi
+    - ./victim.cgi:/var/www/html/victim.cgi

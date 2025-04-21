@@ -1,0 +1,6 @@
+services:
+ web:
+   image: vulhub/ofbiz:18.12.15
+   ports:
+    - "8443:8443"
+    - "5005:5005"

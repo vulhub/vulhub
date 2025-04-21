@@ -1,0 +1,12 @@
+services:
+  web:
+    image: vulhub/langflow:1.2.0
+    ports:
+      - 7860:7860
+    environment:
+      - LANGFLOW_HOST=0.0.0.0
+      - LANGFLOW_AUTO_LOGIN=false
+      - LANGFLOW_SUPERUSER=administrator
+      - LANGFLOW_SUPERUSER_PASSWORD=vulhub
+      - DO_NOT_TRACK=true
+      - GIT_PYTHON_REFRESH=quiet

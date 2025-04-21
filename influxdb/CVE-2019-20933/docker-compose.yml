@@ -1,0 +1,11 @@
+version: '2'
+services:
+ web:
+   image: vulhub/influxdb:1.6.6
+   environment: 
+    - INFLUXDB_HTTP_AUTH_ENABLED=true
+    - INFLUXDB_ADMIN_USER=admin
+    - INFLUXDB_ADMIN_PASSWORD=admin
+    - INFLUXDB_DB=sample
+   ports:
+    - "8086:8086"

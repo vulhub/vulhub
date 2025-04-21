@@ -1,0 +1,13 @@
+services:
+ xdebug2:
+   image: vulhub/php:7.1-xdebug
+   ports:
+    - "8080:80"
+   volumes:
+    - ./index.php:/var/www/html/index.php
+ xdebug3:
+   image: vulhub/php:7.4-xdebug
+   ports:
+    - "8081:80"
+   volumes:
+    - ./index.php:/var/www/html/index.php

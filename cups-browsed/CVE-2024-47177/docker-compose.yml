@@ -1,0 +1,6 @@
+services:
+ cups:
+   image: vulhub/cups-browsed:2.0.1
+   ports:
+    - "631:631/tcp"
+    - "631:631/udp"

@@ -1,0 +1,9 @@
+version: '2'
+services:
+ web:
+   image: vulhub/librsvg:2.50.7-php
+   command: php -t /var/www/html -S 0.0.0.0:8080
+   volumes:
+    - ./index.php:/var/www/html/index.php
+   ports:
+    - "8080:8080"

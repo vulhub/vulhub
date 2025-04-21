@@ -1,0 +1,7 @@
+services:
+ web:
+   image: vulhub/php:7.0.30
+   volumes:
+    - ./www:/var/www/html
+   ports:
+    - "8080:80"

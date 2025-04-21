@@ -1,0 +1,15 @@
+Apache Shiro
+Copyright 2008-2020 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+The implementation for org.apache.shiro.util.SoftHashMap is based 
+on initial ideas from Dr. Heinz Kabutz's publicly posted version 
+available at http://www.javaspecialists.eu/archive/Issue015.html,
+with continued modifications.  
+
+Certain parts (StringUtils, IpAddressMatcher, etc.) of the source
+code for this  product was copied for simplicity and to reduce
+dependencies  from the source code developed by the Spring Framework
+Project  (http://www.springframework.org).

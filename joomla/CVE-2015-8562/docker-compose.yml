@@ -1,0 +1,18 @@
+version: '2'
+services:
+ web:
+   image: vulhub/joomla:3.4.5
+   depends_on:
+    - mysql
+   environment: 
+    - JOOMLA_DB_HOST=mysql
+    - JOOMLA_DB_PORT=3306
+    - JOOMLA_DB_USER=root
+    - JOOMLA_DB_PASSWORD=vulhub
+    - JOOMLA_DB_NAME=joomla
+   ports:
+    - "8080:80"
+ mysql:
+   image: mysql:5.5
+   environment: 
+    - MYSQL_ROOT_PASSWORD=vulhub

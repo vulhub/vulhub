@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/uwsgi-php:2.0.16
+   ports:
+    - "8080:8080"

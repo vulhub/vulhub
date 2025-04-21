@@ -1,0 +1,6 @@
+services:
+  hertzbeat:
+    image: vulhub/hertzbeat:1.4.4
+    ports:
+      - "1157:1157"
+      - "5005:5005"
