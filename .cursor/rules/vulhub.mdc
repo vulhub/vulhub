@@ -23,7 +23,7 @@ Vulhub项目的文件结构如下：
 除了漏洞环境以外，漏洞文档README可以说是最重要的部分，其大致需要包含下面几个部分：
 
 1. 漏洞标题。如果该漏洞有CVE编号，需要在标题中用括号引用这个编号
-2. 中文翻译引用。如果这个文档是一个英文文档README.md，则需要增加一个引用到中文文档README.zh-cn.md的超链接
+2. 中文翻译引用。如果这个文档是一个英文文档README.md，则需要增加一个引用到中文文档README.zh-cn.md的超链接，链接文字为“中文版本(Chinese version)”
 3. 漏洞组件描述。使用一到两句话来介绍一下当前漏洞影响的组件（或软件）信息
 4. 漏洞描述。使用一段话来描述这个漏洞的原理，影响的版本号，并描述攻击者使用该漏洞能造成什么危害
 5. 参考链接。列出不超过5个参考链接
@@ -69,19 +69,19 @@ After the server starts, ...
 
 下面是一些Vulhub项目中写的比较优秀的案例，请你学习并参考：
 
-- Struts2 S2-067 Upload Path Traversal (CVE-2024-53677) [README.md](mdc:struts2/s2-067/README.md)
-- Kibana Local File Inclusion (CVE-2018-17246) [README.md](mdc:kibana/CVE-2018-17246/README.md)
-- Magento 2.2 SQL Injection [README.md](mdc:magento/2.2-sqli/README.md)
-- XXL-JOB Executor Unauthorized Access [README.md](mdc:xxl-job/unacc/README.md)
+- Langflow `validate/code` API Pre-Auth Remote Code Execution (CVE-2025-3248) [README.md](mdc:langflow/CVE-2025-3248/README.md)
 - CraftCMS `register_argc_argv` Leads to Remote Code Execution (CVE-2024-56145) [README.md](mdc:craftcms/CVE-2024-56145/README.md)
+- GeoServer Unauthenticated Remote Code Execution in Evaluating Property Name Expressions (CVE-2024-36401) [README.md](mdc:geoserver/CVE-2024-36401/README.md)
+- Apache HertzBeat SnakeYaml Deserialization Remote Code Execution (CVE-2024-42323) [README.md](mdc:hertzbeat/CVE-2024-42323/README.md)
+- XXL-JOB Executor Unauthorized Access [README.md](mdc:xxl-job/unacc/README.md)
 
 所有的漏洞文档，一定是双语的，英文文档放在README.md文件中，中文文档放在README.zh-cn.md文件中，暂时不包含其他语言文档。
 
-## 你的角色
+## 你的工作
 
 你主要参与Vulhub项目中漏洞文档的编写工作，你需要保证你的产出和其他漏洞的文档格式相似，文档中尽可能使用简洁的语言，但不要丢失漏洞描述中常用的专业词汇和词组，让所有的阅读者都能轻松理解漏洞的原理和复现过程。
 
-在编写文档的时候，你需要注意以下内容，并正确编写：
+在编写文档的时候，你需要严格按照下面这几条的要求执行：
 
 - 描述漏洞时，尽可能说明漏洞影响的软件版本范围
 - “References”不要成为一个标题
@@ -90,3 +90,4 @@ After the server starts, ...
 - 英文文档中，在标题下方需要插入指向中文文档的链接；但在中文文档中，不需要插入指向英文文档的链接
 - 中文文档中，不要刻意在字母和中文之间增加空格
 
+请你在收到上面这些的注意事项后，请在你的回答中告诉我“你已经了解所有的需求和代码要求”。
