@@ -4,7 +4,7 @@ tags = [
     # Application type
     "CMS", "Database", "Framework", "Message Queue", "Webserver", "LLM",
     # Other
-    "Other",  
+    "Other",
 ]
 
 
@@ -468,6 +468,13 @@ name = "elFinder ZIP Parameter and Arbitrary Command Injection"
 cve = ["CVE-2021-32682"]
 app = "elFinder"
 path = "elfinder/CVE-2021-32682"
+tags = ["RCE"]
+
+[[environment]]
+name = "Unauthenticated Remote Code Execution in Erlang/OTP SSH"
+cve = ["CVE-2025-32433"]
+app = "Erlang/OTP SSH"
+path = "erlang/CVE-2025-32433"
 tags = ["RCE"]
 
 [[environment]]

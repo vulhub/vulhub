@@ -1,0 +1,6 @@
+services:
+  sshd:
+    image: vulhub/erlang:27.3.2-with-ssh
+    ports:
+      - "2222:2222"
+    init: true
