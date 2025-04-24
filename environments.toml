@@ -471,6 +471,13 @@ path = "elfinder/CVE-2021-32682"
 tags = ["RCE"]
 
 [[environment]]
+name = "Unauthenticated Remote Code Execution in Erlang/OTP SSH"
+cve = ["CVE-2025-32433"]
+app = "Erlang/OTP SSH"
+path = "erlang/CVE-2025-32433"
+tags = ["RCE"]
+
+[[environment]]
 name = "Fastjson 1.2.24 Deserialization Remote Command Execution"
 cve = ["CVE-2017-18349"]
 app = "Fastjson"
@@ -2071,11 +2078,4 @@ name = "Zabbix Server Active Proxy Trapper Command Injection Bypass"
 cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
-tags = ["RCE"]
-
-[[environment]]
-name = "Unauthenticated Remote Code Execution in Erlang OTP/SSH"
-cve = ["CVE-2025-32433"]
-app = "Erlang OTP/SSH"
-path = "erlang/CVE-2025-32433"
 tags = ["RCE"]
