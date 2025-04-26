@@ -639,7 +639,7 @@ path = "gogs/CVE-2018-18925"
 tags = ["Auth Bypass", "Path Traversal"]
 
 [[environment]]
-name = "Gradio file Directory Traversal"
+name = "Gradio `/file` Interface Directory Traversal"
 cve = ["CVE-2023-51449"]
 app = "Gradio"
 path = "gradio/CVE-2023-51449"
