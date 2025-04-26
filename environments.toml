@@ -643,7 +643,7 @@ name = "Gradio file Directory Traversal"
 cve = ["CVE-2023-51449"]
 app = "Gradio"
 path = "gradio/CVE-2023-51449"
-tags = ["Path Traversal"]
+tags = ["Path Traversal", "LLM"]
 
 [[environment]]
 name = "Grafana 8.x Plug-in Module Directory Traversal"
