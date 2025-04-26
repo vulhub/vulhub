@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  redis:
+    image: redis:4.0.14-alpine
+
+  postgresql:
+    image: postgres:11.9-alpine
+    environment:
+    - POSTGRES_USER=gitlab
+    - POSTGRES_PASSWORD=password
+    - POSTGRES_DB=gitlabhq_production
+    - DB_EXTENSION=pg_trgm
+    volumes:
+    - ./load-extensions.sh:/docker-entrypoint-initdb.d/load-extensions.sh
+
+  gitlab:
+    image: vulhub/gitlab:8.13.1
+    depends_on:
+    - redis
+    - postgresql
+    ports:
+    - "8080:80"
+    - "10022:22"
+    environment:
+    - DEBUG=false
+    - GITLAB_PORT=8080
+    - GITLAB_SSH_PORT=10022
+    - GITLAB_SECRETS_DB_KEY_BASE=secret-key-is-here1
+    - GITLAB_SECRETS_SECRET_KEY_BASE=secret-key-is-here2
+    - GITLAB_SECRETS_OTP_KEY_BASE=secret-key-is-here3
+    - DB_ADAPTER=postgresql
+    - DB_HOST=postgresql
+    - DB_USER=gitlab
+    - DB_PASS=password
+    - DB_NAME=gitlabhq_production
+    - REDIS_HOST=redis
+    - GITLAB_ROOT_PASSWORD=vulhub123456

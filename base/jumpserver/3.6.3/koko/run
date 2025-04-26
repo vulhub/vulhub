@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd /opt/jumpserver/koko/ || exit 1
+
+export SSHD_PORT=2222
+export HTTPD_PORT=5000
+export BIND_HOST=0.0.0.0
+
+wait-for-it -t 0 127.0.0.1:8080 -- echo "core host is up"
+./koko

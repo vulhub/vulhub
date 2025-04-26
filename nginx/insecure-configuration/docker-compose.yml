@@ -1,0 +1,11 @@
+services:
+ nginx:
+   image: vulhub/nginx:1
+   volumes:
+    - ./configuration:/etc/nginx/conf.d
+    - ./files/:/home/
+    - ./www/:/usr/share/nginx/html/
+   ports:
+    - "8080:8080"
+    - "8081:8081"
+    - "8082:8082"

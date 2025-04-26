@@ -1,0 +1,12 @@
+services:
+ web:
+   image: vulhub/magento:2.2.7
+   depends_on:
+    - mysql
+   ports:
+    - "8080:80"
+ mysql:
+   image: mysql:5.7
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=magento

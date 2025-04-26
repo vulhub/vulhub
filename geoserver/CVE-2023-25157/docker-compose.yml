@@ -1,0 +1,16 @@
+version: '3'
+services:
+ web:
+   image: vulhub/geoserver:2.22.1
+   depends_on:
+    - postgres
+   ports:
+    - "8080:8080"
+   volumes:
+     - ./startup.sh:/startup.sh
+   command: bash /startup.sh
+ postgres:
+   image: postgis/postgis:14-3.3-alpine
+   environment: 
+    - POSTGRES_PASSWORD=vulhub
+    - POSTGRES_DB=geoserver

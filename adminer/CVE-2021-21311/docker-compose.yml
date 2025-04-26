@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/adminer:4.7.8
+   ports:
+    - "8080:80"

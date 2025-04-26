@@ -1,0 +1,5 @@
+services:
+ rsync:
+   build: .
+   ports:
+    - "873:873"

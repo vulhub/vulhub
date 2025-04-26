@@ -1,0 +1,6 @@
+services:
+  jboss:
+    image: vulhub/jboss:as-6.1.0
+    ports:
+      - "9990:9990"
+      - "8080:8080"

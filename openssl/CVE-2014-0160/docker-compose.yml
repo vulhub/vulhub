@@ -1,0 +1,9 @@
+version: '2'
+services:
+ nginx:
+   image: vulhub/openssl:1.0.1c-with-nginx
+   volumes:
+    - ./www:/var/www/html
+   ports:
+    - "8080:80"
+    - "8443:443"

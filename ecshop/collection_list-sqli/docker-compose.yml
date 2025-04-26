@@ -1,0 +1,11 @@
+services:
+ web:
+   image: vulhub/ecshop:4.0.6
+   depends_on:
+    - mysql
+   ports:
+    - "8080:80"
+ mysql:
+   image: mysql:5.5
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root

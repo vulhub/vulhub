@@ -1,0 +1,5 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+http.port: 9200
+transport.host: localhost
+transport.tcp.port: 9300

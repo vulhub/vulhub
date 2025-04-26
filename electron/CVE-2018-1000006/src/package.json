@@ -1,0 +1,12 @@
+{
+  "name": "vulhub-app",
+  "version": "0.0.1",
+  "main": "main.js",
+  "scripts": {
+    "build-32": "electron-packager . vulhub-app --platform=win32 --arch=ia32 --electronVersion=1.8.1 --appVersion=0.0.1 --out=/build",
+    "build-64": "electron-packager . vulhub-app --platform=win32 --arch=x64 --electronVersion=1.8.1 --appVersion=0.0.1 --out=/build"
+  },
+  "devDependencies": {
+    "electron-packager": "^12.0.2"
+  }
+}

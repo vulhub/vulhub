@@ -1,0 +1,19 @@
+@   IN  SOA     ns.vulhub.org.  sa.vulhub.org. ( 
+    1            ; serial number 
+    3600         ; refresh   [1h] 
+    600          ; retry     [10m] 
+    86400        ; expire    [1d] 
+    3600 )       ; min TTL   [1h]
+
+  IN  NS   ns1
+  IN  NS   ns2
+
+ns1 IN  A   10.0.0.1
+ns2 IN  A   10.0.0.2
+www IN  A   10.1.1.1
+sa  IN  A   10.1.1.2
+cdn IN  A   10.1.1.3
+admin IN  A   10.1.1.4
+wap IN CNAME   www
+static IN CNAME www
+git IN A   10.1.1.4

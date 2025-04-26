@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <p>This window does not have access to node bindings.</p>
+    <pre>process: <script>document.write(process)</script></pre>
+
+    <p id="content">output...</p>
+    <p>
+      <label>input your script: </label>
+      <textarea rows="5" cols="20" id="script"></textarea>
+
+      <input type="button" onclick="document.getElementById('content').innerHTML = document.getElementById('script').value" value="Submit">
+    </p>
+    
+  </body>
+</html>

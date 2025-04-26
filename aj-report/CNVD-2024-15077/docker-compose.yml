@@ -1,0 +1,20 @@
+version: '2'
+services:
+ web:
+   image: vulhub/aj-report:1.4.0
+   depends_on:
+    - db
+   environment:
+    - MYSQL_HOST=db
+    - MYSQL_PORT=3306
+    - MYSQL_DB=aj_report
+    - MYSQL_USERNAME=root
+    - MYSQL_PASSWORD=root
+   ports:
+    - "9095:9095"
+    - "5005:5005"
+ db:
+   image: mysql:5.7
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=aj_report

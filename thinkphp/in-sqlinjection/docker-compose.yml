@@ -1,0 +1,18 @@
+services:
+ web:
+   image: vulhub/thinkphp:5.0.9
+   depends_on:
+    - mysql
+   ports:
+    - "80:80"
+   volumes:
+    - ./www/controller:/var/www/application/index/controller
+    - ./www/model:/var/www/application/index/model
+    - ./www/database.php:/var/www/application/database.php
+ mysql:
+   image: mysql:5.5
+   environment: 
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=cat
+   volumes:
+    - ./www/init.sql:/docker-entrypoint-initdb.d/init.sql

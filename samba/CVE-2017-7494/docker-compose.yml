@@ -1,0 +1,10 @@
+version: '2'
+services:
+ samba:
+   image: vulhub/samba:4.6.3
+   tty: true
+   volumes:
+    - ./smb.conf:/usr/local/samba/etc/smb.conf
+   ports:
+    - "445:445"
+    - "6699:6699"

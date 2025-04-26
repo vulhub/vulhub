@@ -1,0 +1,7 @@
+services:
+ php:
+   image: vulhub/php:5.4.1-cgi
+   volumes:
+    - ./www:/var/www/html
+   ports:
+    - "8080:80"

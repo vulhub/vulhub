@@ -1,0 +1,5 @@
+services:
+ spring-security:
+   image: vulhub/spring-security:5.6.3
+   ports:
+    - "8080:8080"

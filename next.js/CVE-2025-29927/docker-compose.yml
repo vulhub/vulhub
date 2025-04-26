@@ -1,0 +1,7 @@
+services:
+  web:
+    image: vulhub/nextjs:15.2.2
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production

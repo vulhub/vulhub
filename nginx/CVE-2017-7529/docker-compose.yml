@@ -1,0 +1,7 @@
+services:
+ nginx:
+   image: vulhub/nginx:1.13.2
+   volumes:
+    - ./default.conf:/etc/nginx/conf.d/default.conf
+   ports:
+    - "8080:8080"
