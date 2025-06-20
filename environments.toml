@@ -2093,3 +2093,12 @@ cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
 tags = ["RCE"]
+
+
+[[environment]]
+name = "Emlog data.php SQL Injection"
+cve = ["CVE-2023-39121"]
+app = "Emlog"
+path = "emlog/CVE-2023-39121"
+tags = ["SQL Injection"]
+
