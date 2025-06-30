@@ -2,6 +2,11 @@ version: '2'
 services:
  tomcat:
    image: vulhub/tomcat:8.0
+   ulimits:
+     nofile:
+       soft: 122880
+       hard: 122880
+   mem_limit: 1G
    volumes:
     - ./tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     - ./context.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml
