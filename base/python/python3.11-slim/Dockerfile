@@ -4,7 +4,7 @@ LABEL maintainer="hx294 <hx294@qq.com>"
 
 WORKDIR /app
 
-COPY static requirements.txt aiohttpServer.py /app/
+COPY requirements.txt aiohttpServer.py /app/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
