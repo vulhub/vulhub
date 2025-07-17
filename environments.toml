@@ -2100,3 +2100,10 @@ cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
 tags = ["RCE"]
+
+[[environment]]
+name = "aiohttp Directory Traversal Vulnerability"
+cve = ["CVE-2024-23334"]
+app = "Python"
+path = "python/CVE-2024-23334"
+tags = ["Path Traversal"]
