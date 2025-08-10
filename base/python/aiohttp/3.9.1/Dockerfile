@@ -6,7 +6,8 @@ WORKDIR /app
 
 COPY requirements.txt aiohttpServer.py /app/
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir -p /app/static \
+    && pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8080
 
