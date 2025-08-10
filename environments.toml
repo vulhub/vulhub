@@ -51,6 +51,13 @@ path = "adminer/CVE-2021-43008"
 tags = ["Path Traversal"]
 
 [[environment]]
+name = "aiohttp Directory Traversal Vulnerability"
+cve = ["CVE-2024-23334"]
+app = "Python"
+path = "python/CVE-2024-23334"
+tags = ["Path Traversal"]
+
+[[environment]]
 name = "Apache Airflow Command Injection"
 cve = ["CVE-2020-11978"]
 app = "Apache Airflow"
@@ -2100,10 +2107,3 @@ cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
 tags = ["RCE"]
-
-[[environment]]
-name = "aiohttp Directory Traversal Vulnerability"
-cve = ["CVE-2024-23334"]
-app = "Python"
-path = "python/CVE-2024-23334"
-tags = ["Path Traversal"]
