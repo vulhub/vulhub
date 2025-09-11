@@ -7,6 +7,12 @@ tags = [
     "Other",
 ]
 
+[[environment]]
+name = "1panel SQL Injection"
+cve = ["CVE-2024-39907"]
+app = "1panel"
+path = "1panel/CVE-2024-39907"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "Apache ActiveMQ Deserialization"
@@ -2107,10 +2113,3 @@ cve = ["CVE-2020-11800"]
 app = "Zabbix"
 path = "zabbix/CVE-2020-11800"
 tags = ["RCE"]
-
-[[environment]]
-name = "1panel SQL Injection"
-cve = ["CVE-2024-39907"]
-app = "1panel"
-path = "1panel/CVE-2024-39907"
-tags = ["SQL Injection"]
