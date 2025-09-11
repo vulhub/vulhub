@@ -7,6 +7,12 @@ tags = [
     "Other",
 ]
 
+[[environment]]
+name = "1Panel Control Panel PostAuth SQL Injection"
+cve = ["CVE-2024-39907"]
+app = "1panel"
+path = "1panel/CVE-2024-39907"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "Apache ActiveMQ Deserialization"
@@ -48,13 +54,6 @@ name = "Adminer Remote Arbitrary File Read"
 cve = ["CVE-2021-43008"]
 app = "Adminer"
 path = "adminer/CVE-2021-43008"
-tags = ["Path Traversal"]
-
-[[environment]]
-name = "aiohttp Directory Traversal Vulnerability"
-cve = ["CVE-2024-23334"]
-app = "Python"
-path = "python/CVE-2024-23334"
 tags = ["Path Traversal"]
 
 [[environment]]
@@ -1442,6 +1441,13 @@ cve = ["CVE-2019-9193"]
 app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
 tags = ["RCE", "Database"]
+
+[[environment]]
+name = "aiohttp Directory Traversal Vulnerability"
+cve = ["CVE-2024-23334"]
+app = "Python"
+path = "python/CVE-2024-23334"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Python PIL/Pillow Remote Command Execution by GhostScript GhostButt"
