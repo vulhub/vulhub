@@ -8,7 +8,7 @@ tags = [
 ]
 
 [[environment]]
-name = "1panel SQL Injection"
+name = "1Panel Control Panel PostAuth SQL Injection"
 cve = ["CVE-2024-39907"]
 app = "1panel"
 path = "1panel/CVE-2024-39907"
