@@ -57,13 +57,6 @@ path = "adminer/CVE-2021-43008"
 tags = ["Path Traversal"]
 
 [[environment]]
-name = "aiohttp Directory Traversal Vulnerability"
-cve = ["CVE-2024-23334"]
-app = "Python"
-path = "python/CVE-2024-23334"
-tags = ["Path Traversal"]
-
-[[environment]]
 name = "Apache Airflow Command Injection"
 cve = ["CVE-2020-11978"]
 app = "Apache Airflow"
@@ -1448,6 +1441,13 @@ cve = ["CVE-2019-9193"]
 app = "PostgreSQL"
 path = "postgres/CVE-2019-9193"
 tags = ["RCE", "Database"]
+
+[[environment]]
+name = "aiohttp Directory Traversal Vulnerability"
+cve = ["CVE-2024-23334"]
+app = "Python"
+path = "python/CVE-2024-23334"
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "Python PIL/Pillow Remote Command Execution by GhostScript GhostButt"
