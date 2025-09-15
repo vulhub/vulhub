@@ -1324,6 +1324,13 @@ path = "pgadmin/CVE-2023-5002"
 tags = ["RCE"]
 
 [[environment]]
+name = "pgAdmin4 <= 9.1 Authenticated Remote Code Execution"
+cve = ["CVE-2025-2945"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2025-2945"
+tags = ["RCE"]
+
+[[environment]]
 name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
