@@ -1,3 +1,12 @@
 zabbix/CVE-2016-10134/database/* linguist-vendored
 zabbix/CVE-2017-2824/database/* linguist-vendored
 zabbix/CVE-2020-11800/database/* linguist-vendored
+pgadmin/CVE-2025-2945/exp.py linguist-vendored
+cmsms/CVE-2019-9053/poc.py linguist-vendored
+cmsms/CVE-2021-26120/poc.py linguist-vendored
+couchdb/CVE-2022-24706/poc.py linguist-vendored
+tomcat/CVE-2020-1938/poc.py linguist-vendored
+opensmtpd/CVE-2020-7247/poc.py linguist-vendored
+tikiwiki/CVE-2020-15906/poc.py linguist-vendored
+uwsgi/unacc/poc.py linguist-vendored
+jenkins/CVE-2018-1000861/poc.py linguist-vendored
