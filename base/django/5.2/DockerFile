@@ -1,0 +1,6 @@
+FROM m.daocloud.io/docker.io/library/python:3.11-slim
+
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN set -ex \
+    && pip install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple -U pip \
+    && pip install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple "Django==5.2" "psycopg2-binary==2.9.10"
