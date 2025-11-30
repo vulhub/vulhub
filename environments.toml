@@ -351,6 +351,13 @@ path = "django/CVE-2022-34265"
 tags = ["SQL Injection", "Framework"]
 
 [[environment]]
+name = "Django FilteredRelation Alias SQL Injection"
+cve = ["CVE-2025-57833"]
+app = "Django"
+path = "django/CVE-2025-57833"
+tags = ["SQL Injection", "Framework"]
+
+[[environment]]
 name = "DNS Domain Transfer"
 cve = []
 app = "DNS"
