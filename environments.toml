@@ -1492,6 +1492,13 @@ path = "rails/CVE-2019-5418"
 tags = ["Path Traversal", "Framework"]
 
 [[environment]]
+name = "React Server Components Flight Protocol Deserialization RCE"
+cve = ["CVE-2025-55182"]
+app = "React"
+path = "react/CVE-2025-55182"
+tags = ["RCE", "Deserialization", "Framework"]
+
+[[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
 cve = []
 app = "Redis"
