@@ -2,9 +2,9 @@ FROM python:3.13-slim
 
 LABEL maintainer="Cycloctane <Cycloctane@octane.top>"
 
-RUN apt update && apt install -y --no-install-recommends postgresql-client-17 && apt clean
+RUN apt-get update && apt-get install -y --no-install-recommends postgresql-client-17
 
-RUN pip install pgadmin4==9.10 -i https://mirrors.aliyun.com/pypi/simple
+RUN pip install --no-cache-dir pgadmin4==9.10
 
 COPY config_local.py /usr/local/lib/python3.13/site-packages/pgadmin4/config_local.py
 COPY servers.json /tmp/servers.json
