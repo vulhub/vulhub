@@ -1,0 +1,23 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "main",
+      "Group": "Servers",
+      "Host": "pgsql",
+      "Port": 5432,
+      "MaintenanceDB": "vulhub",
+      "Username": "vulhub",
+      "UseSSHTunnel": 0,
+      "TunnelPort": "22",
+      "TunnelAuthentication": 0,
+      "KerberosAuthentication": false,
+      "ConnectionParameters": {
+        "sslmode": "prefer",
+        "connect_timeout": 10,
+        "sslcert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+        "sslkey": "<STORAGE_DIR>/.postgresql/postgresql.key"
+      },
+      "Tags": []
+    }
+  }
+}
