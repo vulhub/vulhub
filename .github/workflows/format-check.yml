@@ -27,7 +27,7 @@ jobs:
         node-version: '20.x'
     - name: install dependencies
       run: |
-        npm install -g markdownlint-cli
+        npm install -g markdownlint-cli@0.47.0
     - name: check markdown
       run: |
         markdownlint -c tests/markdownlint.json .
