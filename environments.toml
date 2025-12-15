@@ -1331,6 +1331,13 @@ path = "pgadmin/CVE-2025-2945"
 tags = ["RCE"]
 
 [[environment]]
+name = "pgAdmin4 <= 9.10 Database Restore Tool Command Injection"
+cve = ["CVE-2025-13780"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2025-13780"
+tags = ["RCE"]
+
+[[environment]]
 name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
