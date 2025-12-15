@@ -19,22 +19,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout vulhub repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: vulhub
           fetch-depth: 0
 
       - name: Checkout vulhub-org repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: vulhub/vulhub-org
           path: vulhub-org
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Update environments.json
         run: |
@@ -43,7 +43,7 @@ jobs:
           ./scripts/update_environments.js -i ../vulhub -o ./lib/environments.json
 
       - name: Upload environments.json
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: environments.json
           path: vulhub-org/lib/environments.json
