@@ -6,5 +6,6 @@
   "no-alt-text": false,
   "fenced-code-language": false,
   "no-inline-html": false,
-  "descriptive-link-text": false
+  "descriptive-link-text": false,
+  "table-column-style": false
 }

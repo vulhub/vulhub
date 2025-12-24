@@ -1338,6 +1338,13 @@ path = "pgadmin/CVE-2025-2945"
 tags = ["RCE"]
 
 [[environment]]
+name = "pgAdmin4 <= 9.10 Database Restore Tool Command Injection"
+cve = ["CVE-2025-13780"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2025-13780"
+tags = ["RCE"]
+
+[[environment]]
 name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
@@ -1497,6 +1504,13 @@ cve = ["CVE-2019-5418"]
 app = "Ruby on Rails"
 path = "rails/CVE-2019-5418"
 tags = ["Path Traversal", "Framework"]
+
+[[environment]]
+name = "React Server Components Flight Protocol Deserialization RCE"
+cve = ["CVE-2025-55182"]
+app = "React"
+path = "react/CVE-2025-55182"
+tags = ["RCE", "Deserialization", "Framework"]
 
 [[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"
