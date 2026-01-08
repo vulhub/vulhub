@@ -1023,6 +1023,13 @@ path = "liferay-portal/CVE-2020-7961"
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
+name = "Livewire Component Property Hydration Remote Code Execution"
+cve = ["CVE-2025-54068"]
+app = "Laravel Livewire"
+path = "livewire/CVE-2025-54068"
+tags = ["RCE", "Framework"]
+
+[[environment]]
 name = "Apache Log4j TCP Server Deserialization Remote Code Execution"
 cve = ["CVE-2017-5645"]
 app = "Apache Log4j"
