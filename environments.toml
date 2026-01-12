@@ -288,6 +288,13 @@ path = "craftcms/CVE-2024-56145"
 tags = ["RCE", "CMS"]
 
 [[environment]]
+name = "CraftCMS Yii Class Injection Remote Code Execution"
+cve = ["CVE-2025-32432"]
+app = "CraftCMS"
+path = "craftcms/CVE-2025-32432"
+tags = ["RCE", "CMS"]
+
+[[environment]]
 name = "OpenPrinting Cups-Browsed Remote Code Execution via The FoomaticRIPCommandLine PPD parameter"
 cve = ["CVE-2024-47177"]
 app = "OpenPrinting Cups-Browsed"
