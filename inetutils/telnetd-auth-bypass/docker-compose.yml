@@ -1,0 +1,6 @@
+version: '2'
+services:
+  telnetd:
+    build: .
+    ports:
+      - "2323:23"
