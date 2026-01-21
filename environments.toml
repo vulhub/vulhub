@@ -7,6 +7,12 @@ tags = [
     "Other",
 ]
 
+[[environment]]
+name = "1Panel Control Panel PostAuth SQL Injection"
+cve = ["CVE-2024-39907"]
+app = "1panel"
+path = "1panel/CVE-2024-39907"
+tags = ["SQL Injection"]
 
 [[environment]]
 name = "Apache ActiveMQ Deserialization"
@@ -77,6 +83,13 @@ cve = []
 app = "AJ-Report"
 path = "aj-report/CNVD-2024-15077"
 tags = ["RCE", "Auth Bypass"]
+
+[[environment]]
+name = "Apache CXF Aegis DataBinding Server-Side Request Forgery"
+cve = ["CVE-2024-28752"]
+app = "Apache CXF"
+path = "apache-cxf/CVE-2024-28752"
+tags = ["SSRF"]
 
 [[environment]]
 name = "Apache Druid Embedded Javascript Remote Code Execution"
@@ -272,6 +285,13 @@ name = "CraftCMS register_argc_argv Leads to Remote Code Execution"
 cve = ["CVE-2024-56145"]
 app = "CraftCMS"
 path = "craftcms/CVE-2024-56145"
+tags = ["RCE", "CMS"]
+
+[[environment]]
+name = "CraftCMS Yii Class Injection Remote Code Execution"
+cve = ["CVE-2025-32432"]
+app = "CraftCMS"
+path = "craftcms/CVE-2025-32432"
 tags = ["RCE", "CMS"]
 
 [[environment]]
@@ -639,6 +659,20 @@ path = "gogs/CVE-2018-18925"
 tags = ["Auth Bypass", "Path Traversal"]
 
 [[environment]]
+name = "Gradio File Path Traversal"
+cve = ["CVE-2023-51449"]
+app = "Gradio"
+path = "gradio/CVE-2023-51449"
+tags = ["Path Traversal", "LLM"]
+
+[[environment]]
+name = "Gradio Arbitrary File Read"
+cve = ["CVE-2024-1561"]
+app = "Gradio"
+path = "gradio/CVE-2024-1561"
+tags = ["Path Traversal", "LLM"]
+
+[[environment]]
 name = "Grafana 8.x Plug-in Module Directory Traversal"
 cve = ["CVE-2021-43798"]
 app = "Grafana"
@@ -996,6 +1030,13 @@ path = "liferay-portal/CVE-2020-7961"
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
+name = "Livewire Component Property Hydration Remote Code Execution"
+cve = ["CVE-2025-54068"]
+app = "Laravel Livewire"
+path = "livewire/CVE-2025-54068"
+tags = ["RCE", "Framework"]
+
+[[environment]]
 name = "Apache Log4j TCP Server Deserialization Remote Code Execution"
 cve = ["CVE-2017-5645"]
 app = "Apache Log4j"
@@ -1297,6 +1338,20 @@ path = "pgadmin/CVE-2023-5002"
 tags = ["RCE"]
 
 [[environment]]
+name = "pgAdmin4 <= 9.1 Authenticated Remote Code Execution"
+cve = ["CVE-2025-2945"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2025-2945"
+tags = ["RCE"]
+
+[[environment]]
+name = "pgAdmin4 <= 9.10 Database Restore Tool Command Injection"
+cve = ["CVE-2025-13780"]
+app = "pgAdmin"
+path = "pgadmin/CVE-2025-13780"
+tags = ["RCE"]
+
+[[environment]]
 name = "PHP 8.1.0-dev User-Agentt Backdoor Remote Code Execution"
 cve = []
 app = "PHP"
@@ -1416,6 +1471,13 @@ path = "postgres/CVE-2019-9193"
 tags = ["RCE", "Database"]
 
 [[environment]]
+name = "aiohttp Directory Traversal Vulnerability"
+cve = ["CVE-2024-23334"]
+app = "Python"
+path = "python/CVE-2024-23334"
+tags = ["Path Traversal"]
+
+[[environment]]
 name = "Python PIL/Pillow Remote Command Execution by GhostScript GhostButt"
 cve = ["CVE-2017-8291"]
 app = "Python"
@@ -1449,6 +1511,13 @@ cve = ["CVE-2019-5418"]
 app = "Ruby on Rails"
 path = "rails/CVE-2019-5418"
 tags = ["Path Traversal", "Framework"]
+
+[[environment]]
+name = "React Server Components Flight Protocol Deserialization RCE"
+cve = ["CVE-2025-55182"]
+app = "React"
+path = "react/CVE-2025-55182"
+tags = ["RCE", "Deserialization", "Framework"]
 
 [[environment]]
 name = "Redis 4.x/5.x Command Execution due to Master-Slave Replication"

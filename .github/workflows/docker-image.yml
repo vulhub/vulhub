@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'longtime' }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - uses: satackey/action-docker-layer-caching@v0.0.11
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
@@ -37,7 +37,7 @@ jobs:
     if: ${{ github.event.inputs.scope == 'all' || github.event.inputs.scope == 'normal' }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - uses: satackey/action-docker-layer-caching@v0.0.11
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
