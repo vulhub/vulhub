@@ -799,11 +799,11 @@ path = "imagemagick/CVE-2022-44268"
 tags = ["Path Traversal"]
 
 [[environment]]
-name = "GNU InetUtils telnetd Remote Authentication Bypass"
-cve = []
+name = "GNU InetUtils telnetd Argument Injection Authentication Bypass"
+cve = ["CVE-2026-24061"]
 app = "GNU InetUtils"
-path = "inetutils/telnetd-auth-bypass"
-tags = ["Auth Bypass", "Privilege Escalation"]
+path = "inetutils/CVE-2026-24061"
+tags = ["Auth Bypass", "RCE", "Environment Injection"]
 
 [[environment]]
 name = "InfluxDB Empty JWT Secret Key Authentication Bypass"
