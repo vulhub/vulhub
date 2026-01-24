@@ -1,0 +1,6 @@
+version: '2'
+services:
+ web:
+   image: vulhub/responsivefilemanager:9.13.4
+   ports:
+    - "8000:80"
