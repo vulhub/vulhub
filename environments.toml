@@ -218,6 +218,13 @@ path = "coldfusion/CVE-2023-29300"
 tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
+name = "ComfyUI-Manager Remote Code Execution"
+cve = ["CVE-2025-67303"]
+app = "ComfyUI"
+path = "comfyui/CVE-2025-67303"
+tags = ["RCE", "LLM"]
+
+[[environment]]
 name = "Atlassian Confluence Path Traversal Leads to RCE"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
