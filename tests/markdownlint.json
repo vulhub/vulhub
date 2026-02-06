@@ -7,5 +7,6 @@
   "fenced-code-language": false,
   "no-inline-html": false,
   "descriptive-link-text": false,
-  "table-column-style": false
+  "table-column-style": false,
+  "no-emphasis-as-heading": false
 }
