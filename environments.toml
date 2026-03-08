@@ -687,6 +687,13 @@ path = "grafana/CVE-2021-43798"
 tags = ["Path Traversal"]
 
 [[environment]]
+name = "Grafana SQL Expressions Remote Code Execution"
+cve = ["CVE-2024-9264"]
+app = "Grafana"
+path = "grafana/CVE-2024-9264"
+tags = ["RCE", "SQL Injection"]
+
+[[environment]]
 name = "Grafana Management Background SSRF"
 cve = []
 app = "Grafana"
