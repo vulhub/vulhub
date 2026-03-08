@@ -58,12 +58,29 @@ docker compose down -v
 > - Use a VPS or VM with at least 1GB RAM for best results
 > - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP
 > - Ensure Docker has permission to access all files in the current directory to avoid permission errors
-> - Vulhub currently supports only x86 architectures (not ARM)
+> - Some environments may not support ARM architectures, see [Troubleshooting](#troubleshooting) for details
 > - **All environments are for testing and educational purposes only. Do not use in production!**
 
-## Community
+## Troubleshooting
 
-If you encounter errors during build or runtime, please first check if they are caused by Docker or related dependencies. If you confirm an issue with a Dockerfile or Vulhub code, submit an issue. See [FAQ](https://vulhub.org/documentation/faq) for troubleshooting tips.
+**Docker image pull fails in mainland China**
+
+Docker Hub may be inaccessible from mainland China. Use a registry mirror or run Vulhub on an overseas VPS.
+
+**Environments fail to start on Apple Silicon (M-series) Macs**
+
+Most Vulhub environments run natively on Docker Desktop for Mac with M-series chips. If an environment fails, try setting the platform explicitly:
+
+```bash
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+docker compose up -d
+```
+
+**Environments fail on Kali Linux**
+
+Some environments may fail on Kali Linux due to a low `ulimit nofile` setting. See the [FAQ](https://vulhub.org/documentation/faq) for the fix.
+
+If you encounter issues that you cannot resolve, feel free to seek help from the community:
 
 - [Discord](https://discord.gg/bQCpZEK)
 - [X (Twitter)](https://x.com/vulhub)
