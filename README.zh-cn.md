@@ -16,7 +16,7 @@ Vulhub是一个开源的、即开即用的漏洞靶场环境集合。无需Docke
 
 ## 快速开始
 
-**安装Docker**（以Ubuntu 22.04为例）：
+**安装Docker**（以Ubuntu 24.04为例）：
 
 ```bash
 curl -s https://get.docker.com/ | sh
@@ -53,19 +53,38 @@ docker compose down -v
 > - 推荐使用至少1GB内存的VPS或虚拟机
 > - 文档中的`your-ip`指你的主机/VPS IP，不是Docker容器内部IP
 > - 请确保Docker有权限访问当前目录下所有文件，避免权限错误
-> - Vulhub目前仅支持x86架构（不支持ARM）
+> - 部分环境可能不支持ARM架构，详见[常见问题](#常见问题)
 > - **所有环境仅供测试与学习，严禁用于生产环境！**
+
+## 常见问题
+
+**中国大陆拉取镜像失败**
+
+Docker Hub 在中国大陆可能无法访问，可以使用镜像站加速，或使用境外VPS进行测试。
+
+**Apple Silicon（M系列芯片）Mac 上环境启动失败**
+
+大部分Vulhub环境可以在M系列芯片的Docker Desktop上直接运行。如果遇到启动失败，可以尝试指定平台后再运行：
+
+```bash
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+docker compose up -d
+```
+
+**Kali Linux 上环境运行失败**
+
+部分环境在Kali Linux上运行失败，可能是因为 `ulimit nofile` 设置过低，请参考[FAQ](https://vulhub.org/documentation/faq)进行修复。
+
+如果遇到无法解决的问题，欢迎到社区寻求帮助：
+
+- [Discord](https://discord.gg/bQCpZEK)
+- [X (Twitter)](https://x.com/vulhub)
 
 ## 贡献
 
-如遇到编译或运行错误，请优先排查Docker及相关依赖问题。如确认是Dockerfile或Vulhub代码问题，请提交issue。常见问题可参考[FAQ](https://vulhub.org/documentation/faq)。
+欢迎贡献！请阅读[贡献指南](CONTRIBUTING.md)了解详情。
 
-如有疑问，欢迎联系我们：
-
-- [Discord](https://discord.gg/bQCpZEK)
-- [Twitter](https://twitter.com/vulhub)
-
-感谢所有[贡献者](contributors.md)：
+感谢所有贡献者：
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
 

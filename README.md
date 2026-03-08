@@ -58,19 +58,38 @@ docker compose down -v
 > - Use a VPS or VM with at least 1GB RAM for best results
 > - The `your-ip` in documentation refers to your host/VPS IP, not the Docker container IP
 > - Ensure Docker has permission to access all files in the current directory to avoid permission errors
-> - Vulhub currently supports only x86 architectures (not ARM)
+> - Some environments may not support ARM architectures, see [Troubleshooting](#troubleshooting) for details
 > - **All environments are for testing and educational purposes only. Do not use in production!**
+
+## Troubleshooting
+
+**Docker image pull fails in mainland China**
+
+Docker Hub may be inaccessible from mainland China. Use a registry mirror or run Vulhub on an overseas VPS.
+
+**Environments fail to start on Apple Silicon (M-series) Macs**
+
+Most Vulhub environments run natively on Docker Desktop for Mac with M-series chips. If an environment fails, try setting the platform explicitly:
+
+```bash
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+docker compose up -d
+```
+
+**Environments fail on Kali Linux**
+
+Some environments may fail on Kali Linux due to a low `ulimit nofile` setting. See the [FAQ](https://vulhub.org/documentation/faq) for the fix.
+
+If you encounter issues that you cannot resolve, feel free to seek help from the community:
+
+- [Discord](https://discord.gg/bQCpZEK)
+- [X (Twitter)](https://x.com/vulhub)
 
 ## Contributing
 
-If you encounter errors during build or runtime, please first check if they are caused by Docker or related dependencies. If you confirm an issue with a Dockerfile or Vulhub code, submit an issue. See [FAQ](https://vulhub.org/documentation/faq) for troubleshooting tips.
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to get started.
 
-For questions, contact us:
-
-- [Discord](https://discord.gg/bQCpZEK)
-- [Twitter](https://twitter.com/vulhub)
-
-Thanks to all [contributors](contributors.md):
+Thanks to all contributors:
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
 
@@ -83,7 +102,7 @@ Our partners and users:
   <a href="https://www.cvebase.com" target="_blank"><img src="https://vulhub.org/sponsor/cvebase.png" width="200"></a>
   <a href="https://www.huoxian.cn" target="_blank"><img src="https://vulhub.org/sponsor/huoxian.png" width="200"></a>
   <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/sponsor/chaitin.png" width="200"></a>
-  <a href="https://xz.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
+  <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
 </p>
 
 Sponsor Vulhub on [GitHub Sponsor](https://github.com/sponsors/phith0n), [OpenCollective](https://opencollective.com/vulhub#backer), or [Patreon](https://www.patreon.com/bePatron?u=12677520) 🙏
