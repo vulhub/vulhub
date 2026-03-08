@@ -16,7 +16,7 @@ Vulhub是一个开源的、即开即用的漏洞靶场环境集合。无需Docke
 
 ## 快速开始
 
-**安装Docker**（以Ubuntu 22.04为例）：
+**安装Docker**（以Ubuntu 24.04为例）：
 
 ```bash
 curl -s https://get.docker.com/ | sh
@@ -56,16 +56,18 @@ docker compose down -v
 > - Vulhub目前仅支持x86架构（不支持ARM）
 > - **所有环境仅供测试与学习，严禁用于生产环境！**
 
-## 贡献
+## 社区
 
 如遇到编译或运行错误，请优先排查Docker及相关依赖问题。如确认是Dockerfile或Vulhub代码问题，请提交issue。常见问题可参考[FAQ](https://vulhub.org/documentation/faq)。
 
-如有疑问，欢迎联系我们：
-
 - [Discord](https://discord.gg/bQCpZEK)
-- [Twitter](https://twitter.com/vulhub)
+- [X (Twitter)](https://x.com/vulhub)
 
-感谢所有[贡献者](contributors.md)：
+## 贡献
+
+欢迎贡献！请阅读[贡献指南](CONTRIBUTING.md)了解详情。
+
+感谢所有贡献者：
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
 

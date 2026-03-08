@@ -61,16 +61,18 @@ docker compose down -v
 > - Vulhub currently supports only x86 architectures (not ARM)
 > - **All environments are for testing and educational purposes only. Do not use in production!**
 
-## Contributing
+## Community
 
 If you encounter errors during build or runtime, please first check if they are caused by Docker or related dependencies. If you confirm an issue with a Dockerfile or Vulhub code, submit an issue. See [FAQ](https://vulhub.org/documentation/faq) for troubleshooting tips.
 
-For questions, contact us:
-
 - [Discord](https://discord.gg/bQCpZEK)
-- [Twitter](https://twitter.com/vulhub)
+- [X (Twitter)](https://x.com/vulhub)
 
-Thanks to all [contributors](contributors.md):
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to get started.
+
+Thanks to all contributors:
 
 [![](https://opencollective.com/vulhub/contributors.svg?width=890&button=false)](https://github.com/vulhub/vulhub/graphs/contributors)
 
@@ -83,7 +85,7 @@ Our partners and users:
   <a href="https://www.cvebase.com" target="_blank"><img src="https://vulhub.org/sponsor/cvebase.png" width="200"></a>
   <a href="https://www.huoxian.cn" target="_blank"><img src="https://vulhub.org/sponsor/huoxian.png" width="200"></a>
   <a href="https://www.chaitin.cn" target="_blank"><img src="https://vulhub.org/sponsor/chaitin.png" width="200"></a>
-  <a href="https://xz.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
+  <a href="https://xianzhi.aliyun.com/" target="_blank"><img src="https://vulhub.org/sponsor/aliyun.svg" width="200"></a>
 </p>
 
 Sponsor Vulhub on [GitHub Sponsor](https://github.com/sponsors/phith0n), [OpenCollective](https://opencollective.com/vulhub#backer), or [Patreon](https://www.patreon.com/bePatron?u=12677520) 🙏
