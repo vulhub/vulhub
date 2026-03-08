@@ -32,6 +32,8 @@ base/<software>/<version>/Dockerfile          # Only if this version doesn't exi
 environments.toml                              # Add entry
 ```
 
+If the vulnerability is not a CVE, the directory name should be lowercase vulnerability name and the CVE-ID should be replaced with the directory name.
+
 ## Naming Conventions
 
 | Item | Rule | Example |
@@ -65,8 +67,6 @@ FROM <official-upstream-image>:<version>
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-USER root
-
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends <packages> \
@@ -74,16 +74,13 @@ RUN set -ex \
     && apt-get purge -y <build-only-packages> \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
-
-USER <original-user>
 ```
 
 Guidelines:
 
 - Use official upstream images as the base when available
-- If upstream is Alpine-based and you need glibc binaries, use the `-ubuntu` variant
 - Clean up package manager caches (`rm -rf /var/lib/apt/lists/*`)
-- Switch back to the non-root user at the end if upstream expects it
+- Prefer Debian-based images, do not choose `-alpine` variants when available
 - Must pass `hadolint` linting (the CI runs this automatically)
 
 ## Step 3: Write docker-compose.yml
@@ -102,6 +99,7 @@ Rules:
 
 - Do NOT include `version: '2'` or any version header — newer environments omit it
 - Only expose ports users need to interact with
+- Use default port if possible, do not change the port number
 - Add environment variables only if required for the vulnerability
 - For multi-service setups (e.g., app + database), use `depends_on`
 
@@ -195,7 +193,7 @@ docker compose up -d
 # Verify output matches what README describes
 
 # Clean up
-docker compose down
+docker compose down -v
 ```
 
 Confirm:
