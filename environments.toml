@@ -1156,6 +1156,13 @@ path = "nacos/CVE-2021-29442"
 tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
+name = "n8n Content-Type Confusion Arbitrary File Read to RCE"
+cve = ["CVE-2026-21858"]
+app = "n8n"
+path = "n8n/CVE-2026-21858"
+tags = ["Path Traversal", "RCE"]
+
+[[environment]]
 name = "Neo4j Shell Server Deserialization"
 cve = ["CVE-2021-34371"]
 app = "Neo4j"
