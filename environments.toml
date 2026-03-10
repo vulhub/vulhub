@@ -1163,6 +1163,13 @@ path = "n8n/CVE-2026-21858"
 tags = ["Path Traversal", "RCE"]
 
 [[environment]]
+name = "n8n Expression Sandbox Escape to RCE"
+cve = ["CVE-2025-68613"]
+app = "n8n"
+path = "n8n/CVE-2025-68613"
+tags = ["Expression Injection", "RCE"]
+
+[[environment]]
 name = "Neo4j Shell Server Deserialization"
 cve = ["CVE-2021-34371"]
 app = "Neo4j"
