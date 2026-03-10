@@ -1240,6 +1240,13 @@ path = "nginx/nginx_parsing_vulnerability"
 tags = ["Webserver"]
 
 [[environment]]
+name = "Nginx UI Unauthenticated Backup Download with Encryption Key Disclosure"
+cve = ["CVE-2026-27944"]
+app = "Nginx UI"
+path = "nginx-ui/CVE-2026-27944"
+tags = ["Info Disclosure"]
+
+[[environment]]
 name = "Node.js 8.5.0 Path Traversal"
 cve = ["CVE-2017-14849"]
 app = "Node.JS"
