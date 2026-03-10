@@ -1,0 +1,19 @@
+#!/command/with-contenv sh
+
+if [ "$NGINX_UI_NODE_SKIP_INSTALLATION" = "true" ]; then
+  {
+    DB=/etc/nginx-ui/database.db
+    i=0
+    while [ $i -lt 60 ]; do
+      [ -f "$DB" ] && sqlite3 "$DB" "SELECT id FROM users WHERE id=1" >/dev/null 2>&1 && break
+      sleep 0.5
+      i=$((i + 1))
+    done
+
+    sqlite3 "$DB" <<'EOSQL'
+UPDATE users SET password='$2b$12$O9X03ogvxjZd8I1QKlDLGOT1A0b9PTLH0sKCN6VHMju5ABrYDwiWG' WHERE id=1 AND (password='' OR password IS NULL);
+EOSQL
+  } &
+fi
+
+exec nginx-ui --config /etc/nginx-ui/app.ini
