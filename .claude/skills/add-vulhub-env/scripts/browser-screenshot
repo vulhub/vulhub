@@ -1,0 +1,128 @@
+#!/bin/bash
+# Browser Screenshot - capture full browser window including address bar
+# Uses Xwayland + ImageMagick import on GNOME Wayland sessions
+
+set -euo pipefail
+
+# Defaults
+OUTPUT=""
+WAIT=6
+WINDOW_SIZE="1280,900"
+VERBOSE=false
+BROWSER="google-chrome"
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS] <URL>
+
+Capture a full browser window screenshot (including address bar) on GNOME Wayland.
+
+Arguments:
+  URL                    The URL to capture
+
+Options:
+  -o, --output FILE      Output file path (default: screenshot_YYYYMMDD_HHMMSS.png)
+  -w, --wait SECONDS     Wait time for page load (default: $WAIT)
+  -s, --size WxH         Browser window size (default: $WINDOW_SIZE)
+  -b, --browser CMD      Browser command (default: $BROWSER)
+  -v, --verbose          Show detailed output
+  -h, --help             Show this help message
+
+Examples:
+  $(basename "$0") https://example.com
+  $(basename "$0") -o shot.png -w 10 https://example.com
+  $(basename "$0") --size 1920,1080 --wait 8 https://example.com
+EOF
+    exit 0
+}
+
+die() { echo "Error: $*" >&2; exit 1; }
+log() { [[ "$VERBOSE" == true ]] && echo "[info] $*" || true; }
+
+# Parse options
+ARGS=$(getopt -o 'o:w:s:b:vh' --long 'output:,wait:,size:,browser:,verbose,help' -n "$(basename "$0")" -- "$@") || { usage; }
+eval set -- "$ARGS"
+
+while true; do
+    case "$1" in
+        -o|--output)  OUTPUT="$2"; shift 2 ;;
+        -w|--wait)    WAIT="$2"; shift 2 ;;
+        -s|--size)    WINDOW_SIZE="$2"; shift 2 ;;
+        -b|--browser) BROWSER="$2"; shift 2 ;;
+        -v|--verbose) VERBOSE=true; shift ;;
+        -h|--help)    usage ;;
+        --)           shift; break ;;
+        *)            die "Unexpected option: $1" ;;
+    esac
+done
+
+# Validate URL argument
+URL="${1:-}"
+[[ -z "$URL" ]] && die "URL is required. Use -h for help."
+[[ "$URL" =~ ^https?:// ]] || die "Invalid URL: $URL (must start with http:// or https://)"
+
+# Validate numeric wait
+[[ "$WAIT" =~ ^[0-9]+$ ]] || die "Wait time must be a positive integer, got: $WAIT"
+
+# Default output filename
+[[ -z "$OUTPUT" ]] && OUTPUT="screenshot_$(date +%Y%m%d_%H%M%S).png"
+
+# Check dependencies
+for cmd in "$BROWSER" xwininfo import; do
+    command -v "$cmd" >/dev/null 2>&1 || die "'$cmd' not found. Please install it."
+done
+
+# Extract GNOME Wayland session env vars from mutter-x11-frames process
+MUTTER_PID=$(pgrep -u "$(whoami)" mutter-x11 | head -1)
+[[ -z "$MUTTER_PID" ]] && die "GNOME Wayland session not found (mutter-x11-frames not running)"
+
+get_env() {
+    tr '\0' '\n' < "/proc/$MUTTER_PID/environ" | grep "^$1=" | cut -d= -f2-
+}
+
+export DISPLAY="$(get_env DISPLAY)"
+export XAUTHORITY="$(get_env XAUTHORITY)"
+export WAYLAND_DISPLAY="$(get_env WAYLAND_DISPLAY)"
+export XDG_RUNTIME_DIR="$(get_env XDG_RUNTIME_DIR)"
+export DBUS_SESSION_BUS_ADDRESS="$(get_env DBUS_SESSION_BUS_ADDRESS)"
+
+log "DISPLAY=$DISPLAY  WAYLAND_DISPLAY=$WAYLAND_DISPLAY"
+
+# Use a temporary user data dir to avoid session restore prompts
+CHROME_TMPDIR=$(mktemp -d /tmp/chrome-screenshot.XXXXXX)
+trap 'log "Closing browser..."; kill "$CHROME_PID" 2>/dev/null; wait "$CHROME_PID" 2>/dev/null; rm -rf "$CHROME_TMPDIR"' EXIT
+
+# Launch browser in X11 mode (via Xwayland) with a clean profile
+echo "Opening: $URL"
+nohup "$BROWSER" \
+    --no-first-run \
+    --no-default-browser-check \
+    --disable-session-crashed-bubble \
+    --disable-infobars \
+    --hide-crash-restore-bubble \
+    --ozone-platform=x11 \
+    --window-size="$WINDOW_SIZE" \
+    --user-data-dir="$CHROME_TMPDIR" \
+    "$URL" > /dev/null 2>&1 &
+CHROME_PID=$!
+
+echo "Waiting ${WAIT}s for page to load..."
+sleep "$WAIT"
+
+# Check if browser is still running
+kill -0 "$CHROME_PID" 2>/dev/null || die "Browser exited unexpectedly"
+
+# Find browser window ID
+WIN_ID=$(xwininfo -root -tree 2>/dev/null \
+    | grep -i '"Google-chrome\|"Chromium"' \
+    | grep -v '10x10' \
+    | head -1 \
+    | awk '{print $1}' || true)
+
+[[ -z "$WIN_ID" ]] && die "Browser window not found"
+
+log "Window ID: $WIN_ID"
+
+# Capture the window
+import -window "$WIN_ID" "$OUTPUT"
+echo "Screenshot saved: $OUTPUT ($(du -h "$OUTPUT" | cut -f1))"

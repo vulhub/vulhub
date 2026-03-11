@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""
+GNOME Wayland Screenshot - capture screen via xdg-desktop-portal.
+
+Works for ALL windows (including pure Wayland apps) on GNOME Wayland sessions.
+Uses the xdg-desktop-portal Screenshot API, which is the only reliable way to
+capture native Wayland windows without special permissions.
+
+Modes:
+  - Full screen (default): captures entire screen, no user interaction needed
+  - Interactive: opens GNOME's built-in screenshot UI for selecting
+    a specific window or area
+
+Dependencies: python3, python3-dbus, python3-gi (all pre-installed on Ubuntu with GNOME)
+"""
+
+import argparse
+import os
+import shutil
+import subprocess
+import sys
+import time
+
+def get_dbus_env():
+    """Get DBUS_SESSION_BUS_ADDRESS from mutter process (needed in terminal/SSH sessions)."""
+    result = subprocess.run(
+        ["pgrep", "-u", str(os.getuid()), "mutter-x11"],
+        capture_output=True, text=True
+    )
+    pids = result.stdout.strip().split('\n')
+    mutter_pid = pids[0] if pids[0] else None
+    if not mutter_pid:
+        print("Error: GNOME Wayland session not found (mutter-x11-frames not running)", file=sys.stderr)
+        sys.exit(1)
+
+    with open(f"/proc/{mutter_pid}/environ", "rb") as f:
+        env_data = f.read()
+    for item in env_data.split(b'\0'):
+        if item.startswith(b'DBUS_SESSION_BUS_ADDRESS='):
+            os.environ['DBUS_SESSION_BUS_ADDRESS'] = item.split(b'=', 1)[1].decode()
+            return
+    print("Error: Could not find DBUS_SESSION_BUS_ADDRESS", file=sys.stderr)
+    sys.exit(1)
+
+
+def take_screenshot(interactive=False, timeout=30):
+    """Take a screenshot via xdg-desktop-portal and return the file path."""
+    import dbus
+    from dbus.mainloop.glib import DBusGMainLoop
+    from gi.repository import GLib
+
+    DBusGMainLoop(set_as_default=True)
+    bus = dbus.SessionBus()
+    loop = GLib.MainLoop()
+
+    result = {"uri": None, "error": None}
+
+    def on_response(response, results):
+        if response == 0:
+            result["uri"] = str(results.get("uri", ""))
+        elif response == 1:
+            result["error"] = "Screenshot cancelled by user"
+        else:
+            result["error"] = f"Portal returned error code {response}"
+        loop.quit()
+
+    portal = bus.get_object(
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop"
+    )
+    iface = dbus.Interface(portal, "org.freedesktop.portal.Screenshot")
+
+    sender = bus.get_unique_name().replace(".", "_").replace(":", "")
+    token = f"vulhub_{int(time.time())}"
+    request_path = f"/org/freedesktop/portal/desktop/request/{sender}/{token}"
+
+    bus.add_signal_receiver(
+        on_response,
+        signal_name="Response",
+        dbus_interface="org.freedesktop.portal.Request",
+        path=request_path,
+    )
+
+    options = dbus.Dictionary({
+        "interactive": dbus.Boolean(interactive),
+        "handle_token": token,
+    }, signature="sv")
+
+    iface.Screenshot("", options)
+
+    GLib.timeout_add_seconds(timeout, lambda: (
+        result.update({"error": "Timeout waiting for screenshot"}),
+        loop.quit(),
+    )[-1])
+    loop.run()
+
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Capture screenshot on GNOME Wayland via xdg-desktop-portal"
+    )
+    parser.add_argument(
+        "-o", "--output",
+        help="Output file path (default: screenshot_YYYYMMDD_HHMMSS.png)"
+    )
+    parser.add_argument(
+        "-i", "--interactive",
+        action="store_true",
+        help="Open GNOME screenshot UI to select window or area"
+    )
+    parser.add_argument(
+        "-t", "--timeout",
+        type=int, default=30,
+        help="Timeout in seconds (default: 30)"
+    )
+    args = parser.parse_args()
+
+    output = args.output
+    if not output:
+        output = time.strftime("screenshot_%Y%m%d_%H%M%S.png")
+
+    # Ensure we have D-Bus access
+    if "DBUS_SESSION_BUS_ADDRESS" not in os.environ:
+        get_dbus_env()
+
+    if args.interactive:
+        print("Opening GNOME screenshot UI... select a window or area")
+    else:
+        print("Capturing full screen...")
+
+    result = take_screenshot(interactive=args.interactive, timeout=args.timeout)
+
+    if result["error"]:
+        print(f"Error: {result['error']}", file=sys.stderr)
+        sys.exit(1)
+
+    # Portal saves to its own location; copy to our target
+    portal_path = result["uri"]
+    if portal_path.startswith("file://"):
+        portal_path = portal_path[7:]
+
+    # Make output path absolute
+    if not os.path.isabs(output):
+        output = os.path.join(os.getcwd(), output)
+
+    os.makedirs(os.path.dirname(output) or ".", exist_ok=True)
+    shutil.move(portal_path, output)
+
+    size = os.path.getsize(output)
+    if size > 1024 * 1024:
+        size_str = f"{size / 1024 / 1024:.1f}M"
+    else:
+        size_str = f"{size / 1024:.0f}K"
+    print(f"Screenshot saved: {output} ({size_str})")
+
+
+if __name__ == "__main__":
+    main()
