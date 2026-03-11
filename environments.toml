@@ -169,6 +169,13 @@ path = "celery/celery3_redis_unauth"
 tags = ["Deserialization", "Auth Bypass"]
 
 [[environment]]
+name = "Chartbrew MongoDB Dataset Query Remote Code Execution"
+cve = ["CVE-2026-25887"]
+app = "Chartbrew"
+path = "chartbrew/CVE-2026-25887"
+tags = ["RCE"]
+
+[[environment]]
 name = "CGI Application Environment Variable Injection by HTTPoxy"
 cve = ["CVE-2016-5385"]
 app = "CGI"
