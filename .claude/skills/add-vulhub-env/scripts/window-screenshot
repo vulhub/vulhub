@@ -1,0 +1,109 @@
+#!/bin/bash
+# Window Screenshot - capture any X11/Xwayland window by title or class
+# Uses Xwayland + ImageMagick import on GNOME Wayland sessions
+
+set -euo pipefail
+
+# Defaults
+OUTPUT=""
+MATCH=""
+MATCH_TYPE="name"  # "name" or "class"
+VERBOSE=false
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS] <MATCH_STRING>
+
+Capture a window screenshot by title or class on GNOME Wayland.
+
+Arguments:
+  MATCH_STRING             Window title substring or WM_CLASS to match
+
+Options:
+  -o, --output FILE        Output file path (default: screenshot_YYYYMMDD_HHMMSS.png)
+  -c, --class              Match by WM_CLASS instead of window title (default: match by title)
+  -v, --verbose            Show detailed output
+  -h, --help               Show this help message
+
+Examples:
+  $(basename "$0") "Terminal"
+  $(basename "$0") -c "gnome-terminal" -o terminal.png
+  $(basename "$0") -o shot.png "My Application"
+
+How it works:
+  On GNOME Wayland, GUI windows are rendered on Xwayland and can be found via
+  xwininfo. This script locates the target window by searching the X11 window
+  tree for a matching title (or WM_CLASS), then uses ImageMagick's 'import'
+  command to capture it.
+EOF
+    exit 0
+}
+
+die() { echo "Error: $*" >&2; exit 1; }
+log() { [[ "$VERBOSE" == true ]] && echo "[info] $*" || true; }
+
+# Parse options
+ARGS=$(getopt -o 'o:cvh' --long 'output:,class,verbose,help' -n "$(basename "$0")" -- "$@") || { usage; }
+eval set -- "$ARGS"
+
+while true; do
+    case "$1" in
+        -o|--output)  OUTPUT="$2"; shift 2 ;;
+        -c|--class)   MATCH_TYPE="class"; shift ;;
+        -v|--verbose) VERBOSE=true; shift ;;
+        -h|--help)    usage ;;
+        --)           shift; break ;;
+        *)            die "Unexpected option: $1" ;;
+    esac
+done
+
+# Validate match argument
+MATCH="${1:-}"
+[[ -z "$MATCH" ]] && die "Window match string is required. Use -h for help."
+
+# Default output filename
+[[ -z "$OUTPUT" ]] && OUTPUT="screenshot_$(date +%Y%m%d_%H%M%S).png"
+
+# Check dependencies
+for cmd in xwininfo import; do
+    command -v "$cmd" >/dev/null 2>&1 || die "'$cmd' not found. Please install it (apt install x11-utils imagemagick)."
+done
+
+# Extract GNOME Wayland session env vars from mutter-x11-frames process
+MUTTER_PID=$(pgrep -u "$(whoami)" mutter-x11 | head -1)
+[[ -z "$MUTTER_PID" ]] && die "GNOME Wayland session not found (mutter-x11-frames not running)"
+
+get_env() {
+    tr '\0' '\n' < "/proc/$MUTTER_PID/environ" | grep "^$1=" | cut -d= -f2-
+}
+
+export DISPLAY="$(get_env DISPLAY)"
+export XAUTHORITY="$(get_env XAUTHORITY)"
+export WAYLAND_DISPLAY="$(get_env WAYLAND_DISPLAY)"
+export XDG_RUNTIME_DIR="$(get_env XDG_RUNTIME_DIR)"
+export DBUS_SESSION_BUS_ADDRESS="$(get_env DBUS_SESSION_BUS_ADDRESS)"
+
+log "DISPLAY=$DISPLAY  WAYLAND_DISPLAY=$WAYLAND_DISPLAY"
+
+# Find window ID
+if [[ "$MATCH_TYPE" == "class" ]]; then
+    WIN_ID=$(xwininfo -root -tree 2>/dev/null \
+        | grep -i "\"$MATCH\"" \
+        | grep -v '10x10\|1x1' \
+        | head -1 \
+        | awk '{print $1}' || true)
+else
+    WIN_ID=$(xwininfo -root -tree 2>/dev/null \
+        | grep -i "$MATCH" \
+        | grep -v '10x10\|1x1' \
+        | head -1 \
+        | awk '{print $1}' || true)
+fi
+
+[[ -z "$WIN_ID" ]] && die "Window matching '$MATCH' not found. Try running: xwininfo -root -tree | grep -i '$MATCH'"
+
+log "Window ID: $WIN_ID"
+
+# Capture the window
+import -window "$WIN_ID" "$OUTPUT"
+echo "Screenshot saved: $OUTPUT ($(du -h "$OUTPUT" | cut -f1))"
