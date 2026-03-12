@@ -1,6 +1,7 @@
-FROM owncloud/server:10.12
+FROM owncloud/server:10.12.1
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 RUN set -ex \
-    && sed -i 's/,phpinfo//g' /etc/php/7.4/apache2/conf.d/99-owncloud-apache.ini
+    && sed -i 's/public function isTrustedDomain($domainWithPort) {/public function isTrustedDomain($domainWithPort) { return true;/' \
+       /var/www/owncloud/lib/private/Security/TrustedDomainHelper.php
