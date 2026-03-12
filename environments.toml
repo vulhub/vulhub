@@ -1366,6 +1366,13 @@ path = "opentsdb/CVE-2023-25826"
 tags = ["RCE"]
 
 [[environment]]
+name = "ownCloud graphapi Information Disclosure"
+cve = ["CVE-2023-49103"]
+app = "ownCloud"
+path = "owncloud/CVE-2023-49103"
+tags = ["Info Disclosure"]
+
+[[environment]]
 name = "PDF.js Arbitrary JavaScript Code Execution"
 cve = ["CVE-2024-4367"]
 app = "PDF.js"

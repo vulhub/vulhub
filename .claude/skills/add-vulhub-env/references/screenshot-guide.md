@@ -15,9 +15,14 @@ bash <skill-dir>/scripts/browser-screenshot -w 15 -o 1.png http://localhost:8080
 
 # Custom window size
 bash <skill-dir>/scripts/browser-screenshot -s 1920,1080 -o 1.png http://localhost:8080
+
+# Enable remote debugging (for CDP-based DOM interaction, see below)
+bash <skill-dir>/scripts/browser-screenshot -d 9222 -w 0 -o 1.png http://localhost:8080
 ```
 
 Replace `<skill-dir>` with the actual path to this skill directory (typically `.claude/skills/add-vulhub-env`).
+
+The script includes Chrome flags to prevent common screenshot interference: extensions are disabled, password save prompts are suppressed, and the search engine choice screen is skipped.
 
 Dependencies: `google-chrome`, `xwininfo` (from `x11-utils`), `import` (from `imagemagick`). The script auto-detects the GNOME Wayland session environment.
 
@@ -59,11 +64,68 @@ python3 <skill-dir>/scripts/gnome-screenshot -o /tmp/fullscreen.png
 convert /tmp/fullscreen.png -crop 1280x900+100+200 1.png
 ```
 
+## DOM Interaction via Remote Debugging (CDP)
+
+When a screenshot requires user interaction (e.g. filling a login form, clicking buttons, navigating through multi-step flows), use Chrome's remote debugging protocol (CDP) to manipulate the DOM programmatically. **Always prefer CDP over tools like `xdotool`** — xdotool operates at the X11 window level and is fragile (wrong coordinates, focus issues, no access to shadow DOM), while CDP operates directly on the page DOM and is reliable.
+
+### Workflow
+
+1. Launch browser-screenshot with `--debug-port` and `--wait 0` (so it doesn't capture immediately):
+
+```bash
+bash <skill-dir>/scripts/browser-screenshot -d 9222 -w 0 -o 2.png http://localhost:8080/login
+```
+
+2. Connect to Chrome via CDP (Python example with `websocket-client` and `requests`):
+
+```python
+import json, requests, websocket
+
+# Find the page target (skip chrome-extension:// background pages)
+targets = requests.get("http://localhost:9222/json").json()
+ws_url = next(t["webSocketDebuggerUrl"] for t in targets
+              if t["type"] == "page" and "chrome-extension" not in t["url"])
+
+ws = websocket.create_connection(ws_url, timeout=15)
+msg_id = 0
+
+def evaluate(expr):
+    global msg_id
+    msg_id += 1
+    ws.send(json.dumps({"id": msg_id, "method": "Runtime.evaluate",
+                         "params": {"expression": expr, "returnByValue": True}}))
+    while True:
+        data = json.loads(ws.recv())
+        if data.get("id") == msg_id:
+            return data
+
+# Fill form and submit
+evaluate("document.getElementById('user').value = 'admin'")
+evaluate("document.getElementById('password').value = 'secret123'")
+evaluate("document.getElementById('submit').click()")
+```
+
+3. Wait for the page to load, then capture the window using `xwininfo` + `import` (same method as browser-screenshot uses internally).
+
+### When to use CDP
+
+- Filling login forms with leaked credentials (common for demonstrating impact)
+- Navigating multi-step exploit flows
+- Dismissing popups or dialogs before taking screenshots
+- Any scenario where you need to interact with page elements
+
+### Important notes
+
+- **Do NOT use xdotool** for typing or clicking inside browser pages. It is unreliable for form input and breaks easily with different window managers, focus states, and coordinate systems.
+- When connecting via CDP `/json` endpoint, filter targets by `type == "page"` and skip `chrome-extension://` URLs to find the actual page target.
+- The `--disable-extensions` flag is already included in browser-screenshot, but some Chrome built-in extensions may still appear as targets.
+
 ## Which Script to Use
 
 | Scenario | Script | Notes |
 |----------|--------|-------|
 | Web page screenshot | `browser-screenshot` | Best for web vulns — includes address bar, clean profile |
+| Need to interact with page (login, click) | `browser-screenshot -d 9222` + CDP | See "DOM Interaction via Remote Debugging" above |
 | Xwayland app window | `window-screenshot` | For apps using X11 compatibility |
 | Pure Wayland app / full screen | `gnome-screenshot` | Uses portal API, sees all windows |
 | Need to select a region interactively | `gnome-screenshot -i` | Opens GNOME's screenshot UI |
