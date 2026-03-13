@@ -10,6 +10,7 @@ WAIT=6
 WINDOW_SIZE="1280,900"
 VERBOSE=false
 BROWSER="google-chrome"
+DEBUG_PORT=""
 
 usage() {
     cat <<EOF
@@ -25,6 +26,7 @@ Options:
   -w, --wait SECONDS     Wait time for page load (default: $WAIT)
   -s, --size WxH         Browser window size (default: $WINDOW_SIZE)
   -b, --browser CMD      Browser command (default: $BROWSER)
+  -d, --debug-port PORT  Enable Chrome remote debugging on PORT (e.g. 9222)
   -v, --verbose          Show detailed output
   -h, --help             Show this help message
 
@@ -32,6 +34,7 @@ Examples:
   $(basename "$0") https://example.com
   $(basename "$0") -o shot.png -w 10 https://example.com
   $(basename "$0") --size 1920,1080 --wait 8 https://example.com
+  $(basename "$0") -d 9222 -w 0 http://localhost:8080  # keep browser open for CDP
 EOF
     exit 0
 }
@@ -40,19 +43,20 @@ die() { echo "Error: $*" >&2; exit 1; }
 log() { [[ "$VERBOSE" == true ]] && echo "[info] $*" || true; }
 
 # Parse options
-ARGS=$(getopt -o 'o:w:s:b:vh' --long 'output:,wait:,size:,browser:,verbose,help' -n "$(basename "$0")" -- "$@") || { usage; }
+ARGS=$(getopt -o 'o:w:s:b:d:vh' --long 'output:,wait:,size:,browser:,debug-port:,verbose,help' -n "$(basename "$0")" -- "$@") || { usage; }
 eval set -- "$ARGS"
 
 while true; do
     case "$1" in
-        -o|--output)  OUTPUT="$2"; shift 2 ;;
-        -w|--wait)    WAIT="$2"; shift 2 ;;
-        -s|--size)    WINDOW_SIZE="$2"; shift 2 ;;
-        -b|--browser) BROWSER="$2"; shift 2 ;;
-        -v|--verbose) VERBOSE=true; shift ;;
-        -h|--help)    usage ;;
-        --)           shift; break ;;
-        *)            die "Unexpected option: $1" ;;
+        -o|--output)      OUTPUT="$2"; shift 2 ;;
+        -w|--wait)        WAIT="$2"; shift 2 ;;
+        -s|--size)        WINDOW_SIZE="$2"; shift 2 ;;
+        -b|--browser)     BROWSER="$2"; shift 2 ;;
+        -d|--debug-port)  DEBUG_PORT="$2"; shift 2 ;;
+        -v|--verbose)     VERBOSE=true; shift ;;
+        -h|--help)        usage ;;
+        --)               shift; break ;;
+        *)                die "Unexpected option: $1" ;;
     esac
 done
 
@@ -92,18 +96,33 @@ log "DISPLAY=$DISPLAY  WAYLAND_DISPLAY=$WAYLAND_DISPLAY"
 CHROME_TMPDIR=$(mktemp -d /tmp/chrome-screenshot.XXXXXX)
 trap 'log "Closing browser..."; kill "$CHROME_PID" 2>/dev/null; wait "$CHROME_PID" 2>/dev/null; rm -rf "$CHROME_TMPDIR"' EXIT
 
+# Disable password manager via preferences (prevents "Save password?" popup)
+mkdir -p "$CHROME_TMPDIR/Default"
+cat > "$CHROME_TMPDIR/Default/Preferences" << 'PREFS'
+{"credentials_enable_service":false,"profile":{"password_manager_enabled":false}}
+PREFS
+
+# Build Chrome flags
+CHROME_FLAGS=(
+    --no-first-run
+    --no-default-browser-check
+    --disable-session-crashed-bubble
+    --disable-infobars
+    --hide-crash-restore-bubble
+    --disable-extensions
+    --disable-search-engine-choice-screen
+    --disable-features=PasswordManagerOnboarding
+    --ozone-platform=x11
+    --window-size="$WINDOW_SIZE"
+    --user-data-dir="$CHROME_TMPDIR"
+)
+if [[ -n "$DEBUG_PORT" ]]; then
+    CHROME_FLAGS+=(--remote-debugging-port="$DEBUG_PORT" --remote-allow-origins=*)
+fi
+
 # Launch browser in X11 mode (via Xwayland) with a clean profile
 echo "Opening: $URL"
-nohup "$BROWSER" \
-    --no-first-run \
-    --no-default-browser-check \
-    --disable-session-crashed-bubble \
-    --disable-infobars \
-    --hide-crash-restore-bubble \
-    --ozone-platform=x11 \
-    --window-size="$WINDOW_SIZE" \
-    --user-data-dir="$CHROME_TMPDIR" \
-    "$URL" > /dev/null 2>&1 &
+nohup "$BROWSER" "${CHROME_FLAGS[@]}" "$URL" > /dev/null 2>&1 &
 CHROME_PID=$!
 
 echo "Waiting ${WAIT}s for page to load..."
