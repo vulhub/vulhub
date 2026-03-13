@@ -182,7 +182,7 @@ Critical rules summary:
 
 Every environment needs screenshots, but not all screenshots can be taken automatically. Before attempting to capture screenshots, decide whether automation is feasible:
 
-- **Can automate**: The exploit result is visible in a browser page or an Xwayland GUI window (e.g., a web response showing command output, an admin panel, an error page with version info). Read `references/screenshot-guide.md` in this skill directory for the complete guide on using the bundled screenshot scripts.
+- **Can automate**: The exploit result is visible in a browser page or an Xwayland GUI window (e.g., a web response showing command output, an admin panel, an error page with version info). Use the `vulhub-screenshot` skill which provides browser-screenshot, window-screenshot, and gnome-screenshot scripts.
 - **Cannot automate — leave for humans**: The screenshot requires interactive tools that an LLM cannot operate (e.g., Burp Suite, a native desktop app, a complex multi-step GUI interaction), or the exploit output is only visible in a terminal session that you are running yourself (terminal screenshots of your own shell are not meaningful). In this case, skip the screenshot step and note in your output that screenshots need to be added manually.
 
 ## Step 6: Test Locally
