@@ -1,6 +1,21 @@
-# Screenshot Guide
+---
+name: vulhub-screenshot
+description: "Capture screenshots for Vulhub vulnerability environments on GNOME Wayland. Use this skill whenever you need to take screenshots of web pages, browser windows, Xwayland application windows, or full-screen captures for vulnerability documentation. Also trigger when you need to interact with a web page via Chrome DevTools Protocol (CDP) before capturing (e.g., filling login forms, clicking buttons, navigating multi-step flows). This skill provides scripts for browser screenshots, window captures, and GNOME portal-based screenshots. Use it for any screenshot task in a GNOME Wayland session, especially when documenting exploit reproduction steps."
+---
 
-Every environment needs screenshots showing the exploit in action. This skill bundles scripts in `scripts/` to make capturing screenshots easy on GNOME Wayland (where standard screenshot tools often don't work from a terminal/SSH session).
+# Vulhub Screenshot Tool
+
+This skill provides scripts for capturing screenshots on GNOME Wayland sessions, designed for documenting vulnerability reproduction in Vulhub environments.
+
+## Quick Reference
+
+| Scenario | Script | Notes |
+|----------|--------|-------|
+| Web page screenshot | `browser-screenshot` | Includes address bar, clean Chrome profile |
+| Interact with page first (login, click) | `browser-screenshot -d 9222` + CDP | See "DOM Interaction" below |
+| Xwayland app window | `window-screenshot` | Match by title or WM_CLASS |
+| Pure Wayland app / full screen | `gnome-screenshot` | Uses portal API, sees all windows |
+| Select a region interactively | `gnome-screenshot -i` | Opens GNOME's screenshot UI |
 
 ## Browser Screenshots
 
@@ -20,11 +35,11 @@ bash <skill-dir>/scripts/browser-screenshot -s 1920,1080 -o 1.png http://localho
 bash <skill-dir>/scripts/browser-screenshot -d 9222 -w 0 -o 1.png http://localhost:8080
 ```
 
-Replace `<skill-dir>` with the actual path to this skill directory (typically `.claude/skills/add-vulhub-env`).
+Replace `<skill-dir>` with the actual path to this skill directory (typically `.claude/skills/vulhub-screenshot`).
 
 The script includes Chrome flags to prevent common screenshot interference: extensions are disabled, password save prompts are suppressed, and the search engine choice screen is skipped.
 
-Dependencies: `google-chrome`, `xwininfo` (from `x11-utils`), `import` (from `imagemagick`). The script auto-detects the GNOME Wayland session environment.
+Dependencies: `google-chrome`, `xwininfo` (from `x11-utils`), `import` (from `imagemagick`).
 
 ## Non-Browser Screenshots (Xwayland windows)
 
@@ -119,16 +134,6 @@ evaluate("document.getElementById('submit').click()")
 - **Do NOT use xdotool** for typing or clicking inside browser pages. It is unreliable for form input and breaks easily with different window managers, focus states, and coordinate systems.
 - When connecting via CDP `/json` endpoint, filter targets by `type == "page"` and skip `chrome-extension://` URLs to find the actual page target.
 - The `--disable-extensions` flag is already included in browser-screenshot, but some Chrome built-in extensions may still appear as targets.
-
-## Which Script to Use
-
-| Scenario | Script | Notes |
-|----------|--------|-------|
-| Web page screenshot | `browser-screenshot` | Best for web vulns — includes address bar, clean profile |
-| Need to interact with page (login, click) | `browser-screenshot -d 9222` + CDP | See "DOM Interaction via Remote Debugging" above |
-| Xwayland app window | `window-screenshot` | For apps using X11 compatibility |
-| Pure Wayland app / full screen | `gnome-screenshot` | Uses portal API, sees all windows |
-| Need to select a region interactively | `gnome-screenshot -i` | Opens GNOME's screenshot UI |
 
 ## Environment Requirements
 
