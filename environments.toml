@@ -980,7 +980,7 @@ name = "Java RMI codebase Remote Code Execution"
 cve = []
 app = "Java RMI"
 path = "java/rmi-codebase"
-dockerfile = {}
+dockerfile = {"vulhub/j2ee:8u222" = "base/j2ee/8u222"}
 tags = ["RCE"]
 
 [[environment]]
@@ -988,7 +988,7 @@ name = "Java < JDK8u232_b09 RMI Registry Deserialization Remote Code Execution B
 cve = []
 app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization-bypass"
-dockerfile = {}
+dockerfile = {"vulhub/j2ee:8u111" = "base/j2ee/8u111"}
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
@@ -996,7 +996,7 @@ name = "Java <= JDK 8u111 RMI Registry Deserialization Remote Code Execution"
 cve = []
 app = "Java RMI"
 path = "java/rmi-registry-bind-deserialization"
-dockerfile = {}
+dockerfile = {"vulhub/j2ee:8u131" = "base/j2ee/8u131"}
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
@@ -1324,7 +1324,7 @@ name = "Nacos Authentication Bypass"
 cve = ["CVE-2021-29441"]
 app = "Nacos"
 path = "nacos/CVE-2021-29441"
-dockerfile = {}
+dockerfile = {"vulhub/nacos:1.4.0" = "base/nacos/1.4.0"}
 tags = ["Auth Bypass"]
 
 [[environment]]
