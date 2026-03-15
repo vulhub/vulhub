@@ -1780,7 +1780,7 @@ name = "Python Unpickle Deserialization Remote Code Execution"
 cve = []
 app = "Python"
 path = "python/unpickle"
-dockerfile = {}
+dockerfile = {"vulhub/flask:1.1.1" = "base/flask/1.1.1"}
 tags = ["RCE", "Deserialization"]
 
 [[environment]]

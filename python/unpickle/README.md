@@ -18,7 +18,6 @@ References:
 Execute the following command to start the vulnerable Flask application:
 
 ```
-docker compose build
 docker compose up -d
 ```
 
