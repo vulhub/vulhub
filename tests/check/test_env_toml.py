@@ -16,7 +16,8 @@ def test_toml_format():
         assert 'app' in env
         assert 'path' in env
         assert 'tags' in env
-        assert len(env) == 5
+        assert 'dockerfile' in env
+        assert len(env) == 6
 
         assert len(env['tags']) > 0
         assert isinstance(env['name'], str)
@@ -24,7 +25,12 @@ def test_toml_format():
         assert isinstance(env['app'], str)
         assert isinstance(env['path'], str)
         assert isinstance(env['tags'], list)
+        assert isinstance(env['dockerfile'], dict)
         assert os.path.exists(os.path.join(basedir, env['path']))
+
+        for image, dockerfile_dir in env['dockerfile'].items():
+            assert image.startswith('vulhub/'), f"Image {image} should start with 'vulhub/'"
+            assert os.path.isfile(os.path.join(basedir, dockerfile_dir, 'Dockerfile')), f"Dockerfile not found at {dockerfile_dir}"
 
         blocks = env['path'].split('/')
         assert len(blocks) == 2
