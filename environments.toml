@@ -141,6 +141,13 @@ path = "bash/CVE-2014-6271"
 tags = ["RCE"]
 
 [[environment]]
+name = "Budibase Authentication Bypass via Webhook Query Parameter"
+cve = ["CVE-2026-31816"]
+app = "Budibase"
+path = "budibase/CVE-2026-31816"
+tags = ["Auth Bypass"]
+
+[[environment]]
 name = "Cacti remote_agent.php Pre-Auth Command Injection"
 cve = ["CVE-2022-46169"]
 app = "Cacti"
