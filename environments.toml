@@ -1644,7 +1644,7 @@ name = "PHP-FPM Remote Code Execution"
 cve = ["CVE-2019-11043"]
 app = "PHP-FPM"
 path = "php/CVE-2019-11043"
-dockerfile = {}
+dockerfile = {"vulhub/php:7.2.10-fpm" = "base/php/7.2.10-fpm"}
 tags = ["RCE"]
 
 [[environment]]
