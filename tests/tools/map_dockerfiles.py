@@ -17,9 +17,7 @@ IMAGE_OVERRIDES = {
     "ffmpeg:3.2.4-with-php": "base/ffmpeg/3.2.4-php",
     "comfyui:3.37-with-manager": "base/comfyui/with-manager/3.37",
     "erlang:27.3.2-with-ssh": "base/erlang/with-ssh/27.3.2",
-    "drupal:7.57": None,  # No Dockerfile exists
-    "php:httpoxy": None,   # No Dockerfile exists
-    "php:5.6-apache": None,  # No Dockerfile exists
+    "php:httpoxy": "base/httpd/bad-http",
 }
 
 # Name prefix mappings: image name -> base directory prefix

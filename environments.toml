@@ -212,7 +212,7 @@ name = "CGI Application Environment Variable Injection by HTTPoxy"
 cve = ["CVE-2016-5385"]
 app = "CGI"
 path = "cgi/CVE-2016-5385"
-dockerfile = {}
+dockerfile = {"vulhub/php:httpoxy" = "base/httpd/bad-http"}
 tags = ["Environment Injection"]
 
 [[environment]]
@@ -476,7 +476,7 @@ name = "Drupal Drupalgeddon 3 Authenticated Remote Code Execution"
 cve = ["CVE-2018-7602"]
 app = "Drupal"
 path = "drupal/CVE-2018-7602"
-dockerfile = {}
+dockerfile = {"vulhub/drupal:7.57" = "base/drupal/7.57"}
 tags = ["RCE", "CMS"]
 
 [[environment]]
@@ -1692,7 +1692,7 @@ name = "PHPMailer Arbitrary File Read"
 cve = ["CVE-2017-5223"]
 app = "PHPMailer"
 path = "phpmailer/CVE-2017-5223"
-dockerfile = {}
+dockerfile = {"vulhub/php:5.6-apache" = "base/php/5.6-apache"}
 tags = ["Path Traversal"]
 
 [[environment]]
