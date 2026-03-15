@@ -900,7 +900,7 @@ name = "Apache HTTP Server SSI Remote Command Execution"
 cve = []
 app = "Apache HTTP Server"
 path = "httpd/ssi-rce"
-dockerfile = {}
+dockerfile = {"vulhub/php:7.4.33-apache" = "base/php/7.4.33-apache"}
 tags = ["RCE", "Webserver"]
 
 [[environment]]
