@@ -1692,7 +1692,7 @@ name = "PHPMailer Arbitrary File Read"
 cve = ["CVE-2017-5223"]
 app = "PHPMailer"
 path = "phpmailer/CVE-2017-5223"
-dockerfile = {"vulhub/php:5.6-apache" = "base/php/5.6-apache"}
+dockerfile = {"vulhub/phpmailer:5.2.20" = "base/phpmailer/5.2.20"}
 tags = ["Path Traversal"]
 
 [[environment]]
