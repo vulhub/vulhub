@@ -396,7 +396,7 @@ name = "Django < 2.0.8 Open Redirect in CommonMiddleware"
 cve = ["CVE-2018-14574"]
 app = "Django"
 path = "django/CVE-2018-14574"
-dockerfile = {}
+dockerfile = {"vulhub/django:2.0.7" = "base/django/2.0.7"}
 tags = ["Framework"]
 
 [[environment]]
@@ -892,7 +892,7 @@ name = "Apache HTTPD Multiple Extension Parsing Vulnerability"
 cve = []
 app = "Apache HTTP Server"
 path = "httpd/apache_parsing_vulnerability"
-dockerfile = {}
+dockerfile = {"vulhub/php:7.1.3-apache" = "base/php/7.1.3-apache"}
 tags = ["Webserver"]
 
 [[environment]]
