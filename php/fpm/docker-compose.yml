@@ -1,5 +1,5 @@
 services:
  php:
-   image: php:fpm
+   image: vulhub/php:7.1.3-fpm
    ports:
     - "9000:9000"

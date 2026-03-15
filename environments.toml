@@ -1660,7 +1660,7 @@ name = "PHP-FPM FastCGI Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "PHP-FPM"
 path = "php/fpm"
-dockerfile = {}
+dockerfile = {"vulhub/php:7.1.3-fpm" = "base/php/7.1.3-fpm"}
 tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
