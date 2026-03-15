@@ -1668,7 +1668,7 @@ name = "PHP Local File Inclusion RCE with PHPINFO"
 cve = []
 app = "PHP"
 path = "php/inclusion"
-dockerfile = {}
+dockerfile = {"vulhub/php:7.1.3-apache" = "base/php/7.1.3-apache"}
 tags = ["RCE", "Path Traversal"]
 
 [[environment]]
