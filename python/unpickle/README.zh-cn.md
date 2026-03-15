@@ -16,7 +16,6 @@ Python的pickle模块是一个流行的序列化/反序列化工具，可以将P
 执行以下命令启动存在漏洞的Flask应用：
 
 ```
-docker compose build
 docker compose up -d
 ```
 

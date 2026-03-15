@@ -1,6 +1,6 @@
 services:
   rmi:
-    build: "."
+    image: vulhub/j2ee:8u131
     ports:
       - 1099:1099
     environment:

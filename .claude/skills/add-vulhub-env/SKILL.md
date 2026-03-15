@@ -130,6 +130,7 @@ name = "Human-readable Vulnerability Title"
 cve = ["CVE-XXXX-XXXXX"]
 app = "Software Name"
 path = "<software>/<CVE-ID>"
+dockerfile = {"vulhub/<software>:<version>" = "base/<software>/<version>"}
 tags = ["RCE"]
 ```
 
@@ -141,6 +142,7 @@ Field requirements:
 | `cve` | list | CVE IDs; use `[]` if no CVE assigned |
 | `app` | string | Software name with proper casing (e.g., "Grafana") |
 | `path` | string | Relative path with exactly 2 path components |
+| `dockerfile` | inline table | Maps each `vulhub/*` image name to its Dockerfile directory under `base/`; use `{}` if no vulhub image |
 | `tags` | list | At least one tag from the available tags |
 
 Available tags (defined at the top of `environments.toml`):
@@ -233,6 +235,7 @@ Every PR runs these checks automatically:
 Common failures:
 
 - Missing `environments.toml` entry for new `docker-compose.yml`
+- Missing or incorrect `dockerfile` field in `environments.toml` entry
 - CRLF line endings (all text files must use LF)
 - Archive files > 4096 bytes
 - Wrong directory casing (software dirs lowercase, CVE dirs UPPERCASE)
@@ -246,7 +249,7 @@ Common failures:
 - [ ] `README.md` follows the style guide
 - [ ] `README.zh-cn.md` follows the style guide
 - [ ] Screenshots included (`1.png`, `2.png`, ...)
-- [ ] Entry added to `environments.toml` with valid tags
+- [ ] Entry added to `environments.toml` with valid tags and correct `dockerfile` mapping
 - [ ] Environment tested: `docker compose up -d` works, exploit reproduces
 - [ ] All text files use LF line endings
 - [ ] Branch name is lowercase
