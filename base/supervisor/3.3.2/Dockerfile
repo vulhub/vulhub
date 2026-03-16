@@ -1,10 +1,10 @@
-FROM vulhub/python:2.7
+FROM python:2.7
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
-RUN pip install -U pip \
+RUN set -ex \
     && pip install "supervisor==3.3.2" \
     && echo_supervisord_conf | tee /usr/local/etc/supervisord.conf \
     && { \
