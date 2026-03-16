@@ -2264,6 +2264,14 @@ dockerfile = {"vulhub/teamcity:2023.05.3" = "base/teamcity/2023.05.3"}
 tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
+name = "JetBrains TeamCity Authentication Bypass"
+cve = ["CVE-2024-27198"]
+app = "TeamCity"
+path = "teamcity/CVE-2024-27198"
+dockerfile = {"vulhub/teamcity:2023.11.3" = "base/teamcity/2023.11.3"}
+tags = ["Auth Bypass", "RCE"]
+
+[[environment]]
 name = "ThinkPHP 2.x Remote Code Execution"
 cve = []
 app = "ThinkPHP"
