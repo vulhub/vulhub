@@ -2252,7 +2252,7 @@ name = "Supervisord XML-RPC Remote Command Execution"
 cve = ["CVE-2017-11610"]
 app = "Supervisor"
 path = "supervisor/CVE-2017-11610"
-dockerfile = {"vulhub/python:2.7.7" = "base/python/2.7.7"}
+dockerfile = {"vulhub/supervisor:3.3.2" = "base/supervisor/3.3.2"}
 tags = ["RCE"]
 
 [[environment]]
