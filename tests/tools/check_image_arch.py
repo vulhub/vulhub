@@ -4,35 +4,49 @@
 Finds all environments whose Docker images are missing amd64 or arm64 variants.
 Designed to run as a CI checker in GitHub Actions.
 
-Uses the Docker Hub REST API. Note that PAT/OAT tokens must use the "JWT"
-authorization scheme, not "Bearer" (Docker Hub rejects Bearer for these tokens).
-
-Docker Hub rate limits: 180 requests per ~60s window (even with authentication).
-The script throttles requests to stay within this limit.
+Uses the Docker Registry v2 API to check manifest lists. Authenticates via
+auth.docker.io token endpoint. Team/Pro/Business accounts have unlimited
+pull rate limits on the Registry API, unlike the Hub REST API which has a
+per-IP 180 req/min limit regardless of account type.
 
 Usage:
-    python3 check_image_arch.py
-    python3 check_image_arch.py --token dckr_pat_xxx
-    python3 check_image_arch.py --token dckr_oat_xxx --format json
+    python3 check_image_arch.py --username vulhub --token dckr_oat_xxx
+    python3 check_image_arch.py --username user --token dckr_pat_xxx --format json
 """
 
 import argparse
 import json
+import signal
 import sys
+import threading
 import tomllib
 import time
 from collections import defaultdict
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 
 import requests
 
-DOCKERHUB_API = "https://hub.docker.com/v2/repositories"
+AUTH_URL = "https://auth.docker.io/token"
+REGISTRY_URL = "https://registry-1.docker.io/v2"
 DEFAULT_ARCHS = "amd64,arm64"
 MAX_RETRIES = 3
+RETRY_BACKOFF = 5
 
-# Docker Hub enforces 180 requests per ~60s window.
-# Use 170/60 ≈ 0.35s interval to stay safely under the limit.
-REQUEST_INTERVAL = 60.0 / 170
+MANIFEST_LIST_TYPES = [
+    "application/vnd.docker.distribution.manifest.list.v2+json",
+    "application/vnd.oci.image.index.v1+json",
+]
+MANIFEST_ACCEPT = ", ".join(
+    MANIFEST_LIST_TYPES
+    + [
+        "application/vnd.docker.distribution.manifest.v2+json",
+        "application/vnd.oci.image.manifest.v1+json",
+    ]
+)
+
+# Event to signal all threads to stop; set on Ctrl+C.
+_shutdown = threading.Event()
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,6 +61,12 @@ def parse_args() -> argparse.Namespace:
         help="Path to environments.toml (default: auto-detected from repo root)",
     )
     parser.add_argument(
+        "-u",
+        "--username",
+        default="",
+        help="Docker Hub username (or org name for OAT)",
+    )
+    parser.add_argument(
         "-t",
         "--token",
         default="",
@@ -59,6 +79,13 @@ def parse_args() -> argparse.Namespace:
         help=f"Comma-separated required architectures (default: {DEFAULT_ARCHS})",
     )
     parser.add_argument(
+        "-j",
+        "--jobs",
+        type=int,
+        default=8,
+        help="Number of concurrent API requests (default: 8)",
+    )
+    parser.add_argument(
         "--format",
         choices=["text", "json"],
         default="text",
@@ -67,55 +94,112 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def create_session(token: str) -> requests.Session:
-    session = requests.Session()
-    session.headers["User-Agent"] = "vulhub-arch-checker/1.0"
-    if token:
-        # Docker Hub requires "JWT" scheme for PAT/OAT tokens, not "Bearer".
-        # Using "Bearer" results in a 401 error.
-        session.headers["Authorization"] = f"JWT {token}"
-        print("Using authenticated Docker Hub API.", file=sys.stderr)
-    else:
-        print(
-            "WARNING: No token provided, using anonymous API (rate limit ~100 req/6h).\n"
-            "Use --token to provide a Docker Hub access token.\n",
-            file=sys.stderr,
-        )
-    return session
+class RegistryClient:
+    """Docker Registry v2 API client with auth.docker.io token caching."""
 
+    def __init__(self, username: str = "", token: str = ""):
+        self.username = username
+        self.token = token
+        self.session = requests.Session()
+        self.session.headers["User-Agent"] = "vulhub-arch-checker/1.0"
+        self._token_cache: dict[str, tuple[str, float]] = {}
+        self._lock = threading.Lock()
 
-def get_image_archs(session: requests.Session, repo: str, tag: str) -> set[str]:
-    """Query Docker Hub for the architectures available for repo:tag."""
-    url = f"{DOCKERHUB_API}/{repo}/tags/{tag}"
-    for attempt in range(MAX_RETRIES):
-        try:
-            resp = session.get(url, timeout=30)
-        except requests.RequestException as e:
-            print(f"  Request error: {e}, retrying...", file=sys.stderr)
-            time.sleep(5)
-            continue
+    def _get_registry_token(self, repo: str) -> str:
+        """Get a bearer token for the given repo, with caching."""
+        with self._lock:
+            if repo in self._token_cache:
+                token, expires = self._token_cache[repo]
+                if time.time() < expires:
+                    return token
 
-        if resp.status_code == 429:
-            retry_after = int(resp.headers.get("Retry-After", 10))
-            print(f"  Rate limited, waiting {retry_after}s...", file=sys.stderr)
-            time.sleep(retry_after)
-            continue
-        if resp.status_code == 404:
-            return set()
+        params = {
+            "service": "registry.docker.io",
+            "scope": f"repository:{repo}:pull",
+        }
+        auth = None
+        if self.username and self.token:
+            auth = (self.username, self.token)
 
+        resp = self.session.get(AUTH_URL, params=params, auth=auth, timeout=30)
         resp.raise_for_status()
         data = resp.json()
-        return {
-            img["architecture"]
-            for img in data.get("images", [])
-            if img.get("os") == "linux"
-        }
+        token = data["token"]
+        expires_in = data.get("expires_in", 300)
+        with self._lock:
+            self._token_cache[repo] = (token, time.time() + expires_in - 60)
+        return token
 
-    return set()
+    def get_image_archs(self, repo: str, tag: str) -> set[str]:
+        """Get the set of linux architectures available for repo:tag."""
+        for attempt in range(MAX_RETRIES):
+            if _shutdown.is_set():
+                return set()
+
+            try:
+                token = self._get_registry_token(repo)
+                url = f"{REGISTRY_URL}/{repo}/manifests/{tag}"
+                headers = {
+                    "Authorization": f"Bearer {token}",
+                    "Accept": MANIFEST_ACCEPT,
+                }
+                resp = self.session.get(url, headers=headers, timeout=30)
+            except requests.RequestException as e:
+                print(f"  Request error: {e}, retrying...", file=sys.stderr)
+                _shutdown.wait(RETRY_BACKOFF)
+                continue
+
+            if resp.status_code == 429:
+                retry_after = int(resp.headers.get("Retry-After", RETRY_BACKOFF))
+                print(f"  Rate limited, waiting {retry_after}s...", file=sys.stderr)
+                _shutdown.wait(retry_after)
+                continue
+            if resp.status_code == 404:
+                return set()
+            if resp.status_code == 401:
+                with self._lock:
+                    self._token_cache.pop(repo, None)
+                _shutdown.wait(1)
+                continue
+
+            resp.raise_for_status()
+            data = resp.json()
+            media_type = data.get("mediaType", resp.headers.get("Content-Type", ""))
+
+            if media_type in MANIFEST_LIST_TYPES:
+                return {
+                    m["platform"]["architecture"]
+                    for m in data.get("manifests", [])
+                    if m.get("platform", {}).get("os") == "linux"
+                }
+
+            # Single manifest — fetch config blob to determine architecture.
+            config_digest = data.get("config", {}).get("digest", "")
+            if config_digest:
+                return self._get_arch_from_config(repo, config_digest, token)
+
+            return set()
+
+        return set()
+
+    def _get_arch_from_config(
+        self, repo: str, digest: str, token: str
+    ) -> set[str]:
+        """Fetch the image config blob to extract its architecture."""
+        url = f"{REGISTRY_URL}/{repo}/blobs/{digest}"
+        headers = {"Authorization": f"Bearer {token}"}
+        try:
+            resp = self.session.get(url, headers=headers, timeout=30)
+            if resp.ok:
+                arch = resp.json().get("architecture", "")
+                return {arch} if arch else set()
+        except requests.RequestException:
+            pass
+        return set()
 
 
 def check_image(
-    session: requests.Session, image: str, required_archs: set[str]
+    client: RegistryClient, image: str, required_archs: set[str]
 ) -> dict | None:
     """Check a single image. Returns a result dict if archs are missing, else None."""
     parts = image.split(":", 1)
@@ -123,7 +207,7 @@ def check_image(
         return None
 
     repo, tag = parts
-    archs = get_image_archs(session, repo, tag)
+    archs = client.get_image_archs(repo, tag)
     missing_archs = required_archs - archs
 
     if missing_archs:
@@ -178,7 +262,20 @@ def output_json(results: list[dict], image_envs: dict[str, list[str]], total: in
 def main():
     args = parse_args()
     required_archs = {a.strip() for a in args.archs.split(",")}
-    session = create_session(args.token)
+
+    if args.username and args.token:
+        print(
+            f"Authenticating as '{args.username}' via Docker Registry API.",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            "WARNING: No credentials provided, using anonymous Registry API.\n"
+            "Anonymous rate limit is ~100 pulls/6h. Use --username and --token to authenticate.\n",
+            file=sys.stderr,
+        )
+
+    client = RegistryClient(username=args.username, token=args.token)
 
     if not args.file.exists():
         print(f"Error: {args.file} not found.", file=sys.stderr)
@@ -186,37 +283,70 @@ def main():
 
     images, image_envs = load_images(args.file)
     total = len(images)
-    eta = total * REQUEST_INTERVAL
     print(
-        f"Checking {total} unique images (archs: {', '.join(sorted(required_archs))}), "
-        f"ETA ~{eta:.0f}s...\n",
+        f"Checking {total} unique images (archs: {', '.join(sorted(required_archs))})...\n",
         file=sys.stderr,
     )
 
     results: list[dict] = []
+    checked = 0
 
-    for i, image in enumerate(images, 1):
-        start = time.monotonic()
+    # First Ctrl+C: set shutdown event so threads exit gracefully.
+    # Second Ctrl+C: restore default handler to force-kill immediately.
+    def _handle_sigint(signum, frame):
+        _shutdown.set()
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+        print(
+            "\nInterrupted, shutting down (press Ctrl+C again to force quit)...",
+            file=sys.stderr,
+        )
 
-        try:
-            result = check_image(session, image, required_archs)
-        except Exception as e:
-            print(f"[{i}/{total}] {image} ... ERROR: {e}", file=sys.stderr)
-            continue
+    signal.signal(signal.SIGINT, _handle_sigint)
 
-        if result:
-            results.append(result)
-            print(
-                f"[{i}/{total}] {image} ... MISSING {result['missing']}",
-                file=sys.stderr,
-            )
-        else:
-            print(f"[{i}/{total}] {image} ... OK", file=sys.stderr)
+    try:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+            future_to_image = {
+                pool.submit(check_image, client, image, required_archs): image
+                for image in images
+            }
+            pending = set(future_to_image)
 
-        # Throttle to stay under rate limit.
-        elapsed = time.monotonic() - start
-        if elapsed < REQUEST_INTERVAL:
-            time.sleep(REQUEST_INTERVAL - elapsed)
+            while pending and not _shutdown.is_set():
+                done, pending = wait(
+                    pending, timeout=0.5, return_when=FIRST_COMPLETED
+                )
+                for future in done:
+                    checked += 1
+                    image = future_to_image[future]
+                    try:
+                        result = future.result()
+                    except Exception as e:
+                        print(
+                            f"[{checked}/{total}] {image} ... ERROR: {e}",
+                            file=sys.stderr,
+                        )
+                        continue
+
+                    if result:
+                        results.append(result)
+                        print(
+                            f"[{checked}/{total}] {image} ... MISSING {result['missing']}",
+                            file=sys.stderr,
+                        )
+                    else:
+                        print(
+                            f"[{checked}/{total}] {image} ... OK", file=sys.stderr
+                        )
+
+            if _shutdown.is_set():
+                for f in pending:
+                    f.cancel()
+    finally:
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+    if _shutdown.is_set():
+        print("Aborted.", file=sys.stderr)
+        sys.exit(130)
 
     results.sort(key=lambda r: r["image"])
 
