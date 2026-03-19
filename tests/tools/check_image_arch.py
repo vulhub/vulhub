@@ -15,7 +15,9 @@ Usage:
 
 import argparse
 import json
+import signal
 import sys
+import threading
 import tomllib
 import time
 from collections import defaultdict
@@ -28,6 +30,9 @@ DOCKERHUB_API = "https://hub.docker.com/v2/repositories"
 DEFAULT_ARCHS = "amd64,arm64"
 MAX_RETRIES = 3
 RETRY_BACKOFF = 5
+
+# Event to signal all threads to stop; set on Ctrl+C.
+_shutdown = threading.Event()
 
 
 def parse_args() -> argparse.Namespace:
@@ -90,17 +95,20 @@ def get_image_archs(session: requests.Session, repo: str, tag: str) -> set[str]:
     """Query Docker Hub for the architectures available for repo:tag."""
     url = f"{DOCKERHUB_API}/{repo}/tags/{tag}"
     for attempt in range(MAX_RETRIES):
+        if _shutdown.is_set():
+            return set()
+
         try:
             resp = session.get(url, timeout=30)
         except requests.RequestException as e:
             print(f"  Request error: {e}, retrying...", file=sys.stderr)
-            time.sleep(RETRY_BACKOFF)
+            _shutdown.wait(RETRY_BACKOFF)
             continue
 
         if resp.status_code == 429:
             retry_after = int(resp.headers.get("Retry-After", RETRY_BACKOFF))
             print(f"  Rate limited, waiting {retry_after}s...", file=sys.stderr)
-            time.sleep(retry_after)
+            _shutdown.wait(retry_after)
             continue
         if resp.status_code == 404:
             return set()
@@ -196,30 +204,51 @@ def main():
     results: list[dict] = []
     checked = 0
 
-    with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-        futures = {
-            pool.submit(check_image, session, image, required_archs): image
-            for image in images
-        }
-        for future in as_completed(futures):
-            checked += 1
-            image = futures[future]
-            try:
-                result = future.result()
-            except Exception as e:
-                print(
-                    f"[{checked}/{total}] {image} ... ERROR: {e}", file=sys.stderr
-                )
-                continue
+    # Allow Ctrl+C to interrupt immediately by signaling all threads to stop.
+    original_sigint = signal.getsignal(signal.SIGINT)
 
-            if result:
-                results.append(result)
-                print(
-                    f"[{checked}/{total}] {image} ... MISSING {result['missing']}",
-                    file=sys.stderr,
-                )
-            else:
-                print(f"[{checked}/{total}] {image} ... OK", file=sys.stderr)
+    def _handle_sigint(signum, frame):
+        _shutdown.set()
+        print("\nInterrupted, shutting down...", file=sys.stderr)
+
+    signal.signal(signal.SIGINT, _handle_sigint)
+
+    try:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+            futures = {
+                pool.submit(check_image, session, image, required_archs): image
+                for image in images
+            }
+            for future in as_completed(futures):
+                if _shutdown.is_set():
+                    for f in futures:
+                        f.cancel()
+                    break
+
+                checked += 1
+                image = futures[future]
+                try:
+                    result = future.result()
+                except Exception as e:
+                    print(
+                        f"[{checked}/{total}] {image} ... ERROR: {e}", file=sys.stderr
+                    )
+                    continue
+
+                if result:
+                    results.append(result)
+                    print(
+                        f"[{checked}/{total}] {image} ... MISSING {result['missing']}",
+                        file=sys.stderr,
+                    )
+                else:
+                    print(f"[{checked}/{total}] {image} ... OK", file=sys.stderr)
+    finally:
+        signal.signal(signal.SIGINT, original_sigint)
+
+    if _shutdown.is_set():
+        print("Aborted.", file=sys.stderr)
+        sys.exit(130)
 
     results.sort(key=lambda r: r["image"])
 
