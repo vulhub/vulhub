@@ -60,6 +60,12 @@ jobs:
             arch-check-result.json >> "$GITHUB_STEP_SUMMARY"
         fi
 
+    - name: Upload result artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: arch-check-result
+        path: arch-check-result.json
+
     - name: Check for failures
       run: |
         missing=$(jq '.missing_count' arch-check-result.json)
