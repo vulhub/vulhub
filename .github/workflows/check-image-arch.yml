@@ -1,8 +1,6 @@
 name: Check Image Multi-Arch Support
 
 on:
-  schedule:
-    - cron: "0 2 * * *"
   workflow_dispatch:
     inputs:
       bypass_cache:
