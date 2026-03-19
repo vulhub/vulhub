@@ -272,6 +272,14 @@ dockerfile = {"vulhub/comfyui:3.37-with-manager" = "base/comfyui/with-manager/3.
 tags = ["RCE", "LLM"]
 
 [[environment]]
+name = "ComfyUI-Manager CRLF Injection in Configuration Handler"
+cve = ["CVE-2026-22777"]
+app = "ComfyUI"
+path = "comfyui/CVE-2026-22777"
+dockerfile = {"vulhub/comfyui:3.37-with-manager" = "base/comfyui/with-manager/3.37"}
+tags = ["Other", "LLM"]
+
+[[environment]]
 name = "Atlassian Confluence Path Traversal Leads to RCE"
 cve = ["CVE-2019-3396"]
 app = "Confluence"
