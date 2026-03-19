@@ -21,7 +21,7 @@ import threading
 import tomllib
 import time
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 
 import requests
@@ -205,46 +205,50 @@ def main():
     checked = 0
 
     # Allow Ctrl+C to interrupt immediately by signaling all threads to stop.
-    original_sigint = signal.getsignal(signal.SIGINT)
-
+    # First Ctrl+C: set shutdown event so threads exit gracefully.
+    # Second Ctrl+C: restore default handler to force-kill immediately.
     def _handle_sigint(signum, frame):
         _shutdown.set()
-        print("\nInterrupted, shutting down...", file=sys.stderr)
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+        print("\nInterrupted, shutting down (press Ctrl+C again to force quit)...", file=sys.stderr)
 
     signal.signal(signal.SIGINT, _handle_sigint)
 
     try:
         with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-            futures = {
+            future_to_image = {
                 pool.submit(check_image, session, image, required_archs): image
                 for image in images
             }
-            for future in as_completed(futures):
-                if _shutdown.is_set():
-                    for f in futures:
-                        f.cancel()
-                    break
+            pending = set(future_to_image)
 
-                checked += 1
-                image = futures[future]
-                try:
-                    result = future.result()
-                except Exception as e:
-                    print(
-                        f"[{checked}/{total}] {image} ... ERROR: {e}", file=sys.stderr
-                    )
-                    continue
+            while pending and not _shutdown.is_set():
+                done, pending = wait(pending, timeout=0.5, return_when=FIRST_COMPLETED)
+                for future in done:
+                    checked += 1
+                    image = future_to_image[future]
+                    try:
+                        result = future.result()
+                    except Exception as e:
+                        print(
+                            f"[{checked}/{total}] {image} ... ERROR: {e}", file=sys.stderr
+                        )
+                        continue
 
-                if result:
-                    results.append(result)
-                    print(
-                        f"[{checked}/{total}] {image} ... MISSING {result['missing']}",
-                        file=sys.stderr,
-                    )
-                else:
-                    print(f"[{checked}/{total}] {image} ... OK", file=sys.stderr)
+                    if result:
+                        results.append(result)
+                        print(
+                            f"[{checked}/{total}] {image} ... MISSING {result['missing']}",
+                            file=sys.stderr,
+                        )
+                    else:
+                        print(f"[{checked}/{total}] {image} ... OK", file=sys.stderr)
+
+            if _shutdown.is_set():
+                for f in pending:
+                    f.cancel()
     finally:
-        signal.signal(signal.SIGINT, original_sigint)
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     if _shutdown.is_set():
         print("Aborted.", file=sys.stderr)
