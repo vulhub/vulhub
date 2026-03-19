@@ -7,6 +7,9 @@ Designed to run as a CI checker in GitHub Actions.
 Uses the Docker Hub REST API. Note that PAT/OAT tokens must use the "JWT"
 authorization scheme, not "Bearer" (Docker Hub rejects Bearer for these tokens).
 
+Docker Hub rate limits: 180 requests per ~60s window (even with authentication).
+The script throttles requests to stay within this limit.
+
 Usage:
     python3 check_image_arch.py
     python3 check_image_arch.py --token dckr_pat_xxx
@@ -15,13 +18,10 @@ Usage:
 
 import argparse
 import json
-import signal
 import sys
-import threading
 import tomllib
 import time
 from collections import defaultdict
-from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 
 import requests
@@ -29,10 +29,10 @@ import requests
 DOCKERHUB_API = "https://hub.docker.com/v2/repositories"
 DEFAULT_ARCHS = "amd64,arm64"
 MAX_RETRIES = 3
-RETRY_BACKOFF = 5
 
-# Event to signal all threads to stop; set on Ctrl+C.
-_shutdown = threading.Event()
+# Docker Hub enforces 180 requests per ~60s window.
+# Use 170/60 ≈ 0.35s interval to stay safely under the limit.
+REQUEST_INTERVAL = 60.0 / 170
 
 
 def parse_args() -> argparse.Namespace:
@@ -57,13 +57,6 @@ def parse_args() -> argparse.Namespace:
         "--archs",
         default=DEFAULT_ARCHS,
         help=f"Comma-separated required architectures (default: {DEFAULT_ARCHS})",
-    )
-    parser.add_argument(
-        "-j",
-        "--jobs",
-        type=int,
-        default=4,
-        help="Number of concurrent API requests (default: 4)",
     )
     parser.add_argument(
         "--format",
@@ -95,20 +88,17 @@ def get_image_archs(session: requests.Session, repo: str, tag: str) -> set[str]:
     """Query Docker Hub for the architectures available for repo:tag."""
     url = f"{DOCKERHUB_API}/{repo}/tags/{tag}"
     for attempt in range(MAX_RETRIES):
-        if _shutdown.is_set():
-            return set()
-
         try:
             resp = session.get(url, timeout=30)
         except requests.RequestException as e:
             print(f"  Request error: {e}, retrying...", file=sys.stderr)
-            _shutdown.wait(RETRY_BACKOFF)
+            time.sleep(5)
             continue
 
         if resp.status_code == 429:
-            retry_after = int(resp.headers.get("Retry-After", RETRY_BACKOFF))
+            retry_after = int(resp.headers.get("Retry-After", 10))
             print(f"  Rate limited, waiting {retry_after}s...", file=sys.stderr)
-            _shutdown.wait(retry_after)
+            time.sleep(retry_after)
             continue
         if resp.status_code == 404:
             return set()
@@ -196,63 +186,37 @@ def main():
 
     images, image_envs = load_images(args.file)
     total = len(images)
+    eta = total * REQUEST_INTERVAL
     print(
-        f"Checking {total} unique images (archs: {', '.join(sorted(required_archs))})...\n",
+        f"Checking {total} unique images (archs: {', '.join(sorted(required_archs))}), "
+        f"ETA ~{eta:.0f}s...\n",
         file=sys.stderr,
     )
 
     results: list[dict] = []
-    checked = 0
 
-    # Allow Ctrl+C to interrupt immediately by signaling all threads to stop.
-    # First Ctrl+C: set shutdown event so threads exit gracefully.
-    # Second Ctrl+C: restore default handler to force-kill immediately.
-    def _handle_sigint(signum, frame):
-        _shutdown.set()
-        signal.signal(signal.SIGINT, signal.SIG_DFL)
-        print("\nInterrupted, shutting down (press Ctrl+C again to force quit)...", file=sys.stderr)
+    for i, image in enumerate(images, 1):
+        start = time.monotonic()
 
-    signal.signal(signal.SIGINT, _handle_sigint)
+        try:
+            result = check_image(session, image, required_archs)
+        except Exception as e:
+            print(f"[{i}/{total}] {image} ... ERROR: {e}", file=sys.stderr)
+            continue
 
-    try:
-        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-            future_to_image = {
-                pool.submit(check_image, session, image, required_archs): image
-                for image in images
-            }
-            pending = set(future_to_image)
+        if result:
+            results.append(result)
+            print(
+                f"[{i}/{total}] {image} ... MISSING {result['missing']}",
+                file=sys.stderr,
+            )
+        else:
+            print(f"[{i}/{total}] {image} ... OK", file=sys.stderr)
 
-            while pending and not _shutdown.is_set():
-                done, pending = wait(pending, timeout=0.5, return_when=FIRST_COMPLETED)
-                for future in done:
-                    checked += 1
-                    image = future_to_image[future]
-                    try:
-                        result = future.result()
-                    except Exception as e:
-                        print(
-                            f"[{checked}/{total}] {image} ... ERROR: {e}", file=sys.stderr
-                        )
-                        continue
-
-                    if result:
-                        results.append(result)
-                        print(
-                            f"[{checked}/{total}] {image} ... MISSING {result['missing']}",
-                            file=sys.stderr,
-                        )
-                    else:
-                        print(f"[{checked}/{total}] {image} ... OK", file=sys.stderr)
-
-            if _shutdown.is_set():
-                for f in pending:
-                    f.cancel()
-    finally:
-        signal.signal(signal.SIGINT, signal.SIG_DFL)
-
-    if _shutdown.is_set():
-        print("Aborted.", file=sys.stderr)
-        sys.exit(130)
+        # Throttle to stay under rate limit.
+        elapsed = time.monotonic() - start
+        if elapsed < REQUEST_INTERVAL:
+            time.sleep(REQUEST_INTERVAL - elapsed)
 
     results.sort(key=lambda r: r["image"])
 
