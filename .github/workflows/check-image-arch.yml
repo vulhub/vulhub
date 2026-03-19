@@ -1,0 +1,70 @@
+name: Check Image Multi-Arch Support
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      bypass_cache:
+        description: "Bypass daily cache and force a fresh check"
+        type: boolean
+        default: false
+
+jobs:
+  check-arch:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Generate cache key
+      id: cache-key
+      run: |
+        echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+    - name: Restore cached result
+      if: ${{ github.event.inputs.bypass_cache != 'true' }}
+      id: cache
+      uses: actions/cache/restore@v4
+      with:
+        path: arch-check-result.json
+        key: arch-check-${{ steps.cache-key.outputs.date }}
+
+    - name: Run arch check
+      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+      run: |
+        python3 tests/tools/check_image_arch.py \
+          --username vulhub \
+          --token "${{ secrets.DOCKERHUB_TOKEN }}" \
+          --format json \
+          > arch-check-result.json || true
+
+    - name: Save cache
+      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+      uses: actions/cache/save@v4
+      with:
+        path: arch-check-result.json
+        key: arch-check-${{ steps.cache-key.outputs.date }}
+
+    - name: Report results
+      run: |
+        total=$(jq '.total' arch-check-result.json)
+        missing=$(jq '.missing_count' arch-check-result.json)
+        echo "## Image Multi-Arch Check" >> "$GITHUB_STEP_SUMMARY"
+        echo "" >> "$GITHUB_STEP_SUMMARY"
+        if [ "$missing" -eq 0 ]; then
+          echo "All $total images have both amd64 and arm64 support." >> "$GITHUB_STEP_SUMMARY"
+        else
+          echo "**$missing / $total** images are missing multi-arch support:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Image | Has | Missing | Environments |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-----|---------|--------------|" >> "$GITHUB_STEP_SUMMARY"
+          jq -r '.images[] | "| `\(.image)` | \(.has | join(", ")) | \(.missing | join(", ")) | \(.environments | join(", ")) |"' \
+            arch-check-result.json >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+    - name: Check for failures
+      run: |
+        missing=$(jq '.missing_count' arch-check-result.json)
+        if [ "$missing" -gt 0 ]; then
+          echo "::warning::$missing images are missing multi-arch support"
+        fi
