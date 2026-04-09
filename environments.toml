@@ -1376,6 +1376,14 @@ dockerfile = {"vulhub/n8n:1.65.0" = "base/n8n/1.65.0"}
 tags = ["Expression Injection", "RCE"]
 
 [[environment]]
+name = "OpenClaw Token Exfiltration to RCE"
+cve = ["CVE-2026-25253"]
+app = "OpenClaw"
+path = "openclaw/CVE-2026-25253"
+dockerfile = {"vulhub/openclaw:2026.1.28" = "base/openclaw/2026.1.28"}
+tags = ["RCE", "Info Disclosure"]
+
+[[environment]]
 name = "Neo4j Shell Server Deserialization"
 cve = ["CVE-2021-34371"]
 app = "Neo4j"
