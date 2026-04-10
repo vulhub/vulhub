@@ -1536,12 +1536,12 @@ dockerfile = {"vulhub/ofbiz:18.12.15" = "base/ofbiz/18.12.15"}
 tags = ["RCE", "SSRF"]
 
 [[environment]]
-name = "OpenClaw Token Exfiltration to RCE"
+name = "OpenClaw Cross-Site WebSocket Hijacking"
 cve = ["CVE-2026-25253"]
 app = "OpenClaw"
 path = "openclaw/CVE-2026-25253"
 dockerfile = {"vulhub/openclaw:2026.1.28" = "base/openclaw/2026.1.28"}
-tags = ["RCE", "Info Disclosure"]
+tags = ["XSS", "Info Disclosure"]
 
 [[environment]]
 name = "Openfire Management Background Authentication Bypass"
