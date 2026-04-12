@@ -135,6 +135,12 @@ evaluate("document.getElementById('submit').click()")
 - When connecting via CDP `/json` endpoint, filter targets by `type == "page"` and skip `chrome-extension://` URLs to find the actual page target.
 - The `--disable-extensions` flag is already included in browser-screenshot, but some Chrome built-in extensions may still appear as targets.
 
+## Important: No Fake Screenshots
+
+**NEVER fabricate screenshots by constructing fake HTML pages, images, or any other artificial representation to simulate tool output.** If a vulnerability can only be reproduced via command-line tools (e.g., `curl --request-target`) and you cannot capture a real terminal screenshot, do NOT create an HTML page styled to look like terminal output and screenshot that. This is dishonest and misleading.
+
+When you cannot take a genuine screenshot of the exploit result, simply skip the screenshot and clearly tell the user that this screenshot needs to be added manually. It is always better to have no screenshot than a fake one.
+
 ## Environment Requirements
 
 All three scripts require a GNOME Wayland session with `mutter-x11-frames` running. They will NOT work in:

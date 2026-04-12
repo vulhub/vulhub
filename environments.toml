@@ -2432,6 +2432,14 @@ dockerfile = {"vulhub/vite:6.2.2" = "base/vite/6.2.2"}
 tags = ["Path Traversal"]
 
 [[environment]]
+name = "Vite Development Server Arbitrary File Read via Hash Character Bypass"
+cve = ["CVE-2025-32395"]
+app = "Vite"
+path = "vite/CVE-2025-32395"
+dockerfile = {"vulhub/vite:6.2.5" = "base/vite/6.2.5"}
+tags = ["Path Traversal"]
+
+[[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
 cve = ["CVE-2017-10271"]
 app = "WebLogic"
