@@ -2376,6 +2376,14 @@ dockerfile = {"vulhub/tomcat:9.0.97" = "base/tomcat/9.0.97"}
 tags = ["RCE", "Deserialization", "Webserver"]
 
 [[environment]]
+name = "Tomcat Tribes EncryptInterceptor Bypass Remote Code Execution"
+cve = ["CVE-2026-34486"]
+app = "Apache Tomcat"
+path = "tomcat/CVE-2026-34486"
+dockerfile = {"vulhub/tomcat:9.0.116" = "base/tomcat/9.0.116"}
+tags = ["RCE", "Deserialization", "Webserver"]
+
+[[environment]]
 name = "Tomcat Weak Password"
 cve = []
 app = "Apache Tomcat"
