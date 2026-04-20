@@ -1240,6 +1240,14 @@ dockerfile = {"vulhub/liferay-portal:7.2.0-ga1" = "base/liferay-portal/7.2.0-ga1
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
+name = "Apache Linkis MySQL JDBC Datasource Deserialization Remote Code Execution"
+cve = ["CVE-2022-44645"]
+app = "Apache Linkis"
+path = "linkis/CVE-2022-44645"
+dockerfile = {"vulhub/linkis:1.3.0" = "base/linkis/1.3.0"}
+tags = ["RCE", "Deserialization"]
+
+[[environment]]
 name = "Livewire Component Property Hydration Remote Code Execution"
 cve = ["CVE-2025-54068"]
 app = "Laravel Livewire"
