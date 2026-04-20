@@ -44,6 +44,7 @@ If the vulnerability is not a CVE, the directory name should be lowercase vulner
 | File extensions | lowercase | `.yml`, `.md`, `.png` |
 | Compose file | must be `.yml` | `docker-compose.yml` (NOT `.yaml`) |
 | Branch name | lowercase | `add-grafana-cve-2024-9264` |
+| Main vuln service in compose | `web` if it serves HTTP | `services.web:` (not `services.grafana:`) |
 
 ## Step 1: Research the Vulnerability
 
@@ -89,7 +90,7 @@ Keep it minimal. Reference pre-built images from the `vulhub/` Docker Hub namesp
 
 ```yaml
 services:
-  <service-name>:
+  web:
     image: vulhub/<software>:<version>
     ports:
       - "<host-port>:<container-port>"
@@ -98,10 +99,11 @@ services:
 Rules:
 
 - Do NOT include `version: '2'` or any version header — newer environments omit it
+- Name the main vulnerable container **`web`** whenever it serves HTTP (most do). This way users can always run `docker compose exec web ...` no matter which environment they are in, instead of having to look up the service name each time. For non-HTTP main services (e.g., a raw RPC daemon, a database vulnerability), pick a short descriptive name like `app`, `server`, or the protocol name (`redis`, `ftp`, etc.).
 - Only expose ports users need to interact with
 - Use default port if possible, do not change the port number
 - Add environment variables only if required for the vulnerability
-- For multi-service setups (e.g., app + database), use `depends_on`
+- For multi-service setups (e.g., app + database), use `depends_on`. Prefer the simple list form (`depends_on: - db`) over `condition: service_healthy` unless the vuln container's entrypoint genuinely cannot tolerate the dependency being unready — most images have their own retry loops, in which case adding a `healthcheck` block to the dependency just for `service_healthy` is dead weight.
 
 Multi-service example:
 
