@@ -1,0 +1,13 @@
+server:
+  port: 8100
+spring:
+  datasource:
+    url: jdbc:mysql://db:3306/dataease?autoReconnect=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Password123@mysql
+dataease:
+  origin-list: http://localhost:8100
+  login_timeout: 2880
+  apisix-api:
+    domain: http://127.0.0.1:9180
+    key: edd1c9f034335f136f87ad84b625c8f1

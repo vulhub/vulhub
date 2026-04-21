@@ -408,6 +408,22 @@ dockerfile = {"vulhub/discuz:x3.4" = "base/discuzx/3.4-20170801"}
 tags = ["File Deletion"]
 
 [[environment]]
+name = "DataEase JWT Authentication Bypass"
+cve = ["CVE-2025-49001"]
+app = "DataEase"
+path = "dataease/CVE-2025-49001"
+dockerfile = {"vulhub/dataease:2.10.7" = "base/dataease/2.10.7"}
+tags = ["Auth Bypass"]
+
+[[environment]]
+name = "DataEase H2 JDBC Remote Code Execution"
+cve = ["CVE-2025-32966"]
+app = "DataEase"
+path = "dataease/CVE-2025-32966"
+dockerfile = {"vulhub/dataease:2.10.7" = "base/dataease/2.10.7"}
+tags = ["RCE"]
+
+[[environment]]
 name = "Django 500 Debug Page Cross-Site Scripting (XSS)"
 cve = ["CVE-2017-12794"]
 app = "Django"
