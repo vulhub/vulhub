@@ -46,6 +46,6 @@ COPY --chmod=0755 entrypoint.sh /entrypoint.sh
 USER hadoop
 WORKDIR /opt/linkis-bin
 
-EXPOSE 9001 20303 9101 9105
+EXPOSE 9001 20303 9101 9105 5005
 
 ENTRYPOINT ["/entrypoint.sh"]
