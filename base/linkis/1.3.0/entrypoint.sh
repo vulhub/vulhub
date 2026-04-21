@@ -16,6 +16,7 @@ if [ ! -f /opt/linkis/.installed ]; then
     echo "First-time installation - running install.sh"
     echo "2" | bash bin/install.sh
     sed -i 's|characterEncoding=UTF-8|characterEncoding=UTF-8\&useSSL=false|' /opt/linkis/conf/linkis.properties
+    sed -i 's|^#export DEBUG_PORT=.*|export DEBUG_PORT=5005|' /opt/linkis/sbin/ext/linkis-mg-gateway
     touch /opt/linkis/.installed
     echo "Installation complete."
 fi
