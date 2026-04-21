@@ -84,6 +84,10 @@ Guidelines:
 - Prefer Debian-based images, do not choose `-alpine` variants when available
 - Must pass `hadolint` linting (the CI runs this automatically)
 
+### Java environments: enable JDWP remote debugging
+
+For any Java-based vulnerability environment, configure the base image so a JDWP agent listens on port `5005`, and publish `5005:5005` in the `docker-compose.yml`. Figure out the right mechanism yourself based on the server and JDK version. This is an infrastructure convenience — do **not** mention it in the README (see Step 5).
+
 ## Step 3: Write docker-compose.yml
 
 Keep it minimal. Reference pre-built images from the `vulhub/` Docker Hub namespace:
@@ -103,6 +107,7 @@ Rules:
 - Only expose ports users need to interact with
 - Use default port if possible, do not change the port number
 - Add environment variables only if required for the vulnerability
+- **Java environments**: also publish `"5005:5005"` for the JDWP debug agent (see Step 2)
 - For multi-service setups (e.g., app + database), use `depends_on`. Prefer the simple list form (`depends_on: - db`) over `condition: service_healthy` unless the vuln container's entrypoint genuinely cannot tolerate the dependency being unready — most images have their own retry loops, in which case adding a `healthcheck` block to the dependency just for `service_healthy` is dead weight.
 
 Multi-service example:
@@ -181,6 +186,7 @@ Critical rules summary:
 - Chinese README: do NOT link to English version; do NOT add spaces between Chinese characters and English/numbers
 - Include at least one screenshot (`1.png`, `2.png`, ...)
 - Prefer safe demonstration payloads (e.g., `id` command output over reverse shells)
+- **Never mention the JDWP / 5005 debug port in the README.** Java environments expose it for research convenience only — it is not part of the vulnerability reproduction and should not appear in user-facing documentation.
 
 ## Taking Screenshots
 
@@ -212,6 +218,7 @@ Confirm:
 - Container starts without errors
 - Vulnerability reproduces exactly as documented
 - Exploit output matches README descriptions
+- **For Java environments**: verify JDWP is actually listening with `printf 'JDWP-Handshake' | nc -w 3 127.0.0.1 5005` — the server must echo the same string back.
 
 ## Step 7: Submit Pull Request
 
@@ -253,5 +260,6 @@ Common failures:
 - [ ] Screenshots included (`1.png`, `2.png`, ...)
 - [ ] Entry added to `environments.toml` with valid tags and correct `dockerfile` mapping
 - [ ] Environment tested: `docker compose up -d` works, exploit reproduces
+- [ ] (Java only) JDWP on 5005 configured, published in `docker-compose.yml`, handshake verified, and not mentioned in the README
 - [ ] All text files use LF line endings
 - [ ] Branch name is lowercase
