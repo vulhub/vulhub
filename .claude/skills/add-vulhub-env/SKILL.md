@@ -192,7 +192,7 @@ Critical rules summary:
 
 **Do NOT capture screenshots yourself.** LLM-captured screenshots rarely add real value and waste significant time — a human will shoot the images after reviewing the PR. Your task is only to place correctly-positioned `![](N.png)` placeholders so the human knows what each number should depict.
 
-Think about where a visual artifact would genuinely help a reader follow the exploit (typical spots: the pre-exploit page showing the vulnerable version, the HTTP response after the payload, the admin panel after auth bypass). Put the placeholder at that exact paragraph. 1–3 images usually suffices.
+Think about where a visual artifact would genuinely help a reader follow the exploit (typical spots: the HTTP response showing `id`/`whoami` output rendered by the server, the admin panel reached after auth bypass, `/etc/passwd` contents returned by a path-traversal/LFI, a SQL injection response with leaked database rows, a successful file-upload page triggering RCE). Put the placeholder at that exact paragraph. 1–3 images usually suffices.
 
 Do NOT create the `.png` files and do NOT fabricate them (no rendered HTML, no synthetic terminal shots) — leaving the reference dangling is intentional.
 
