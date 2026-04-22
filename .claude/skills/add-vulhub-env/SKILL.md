@@ -184,21 +184,19 @@ Critical rules summary:
 - Use `docker compose up -d` (NOT `docker-compose up -d`)
 - English README: add `[中文版本(Chinese version)](README.zh-cn.md)` below the title
 - Chinese README: do NOT link to English version; do NOT add spaces between Chinese characters and English/numbers
-- Reference at least one screenshot (`1.png`, `2.png`, ...) in the README at the points where a visual artifact best conveys the exploit result — **do not capture the images yourself**, the human will take them later (see "Screenshots" section below)
+- Reference at least one screenshot in the README — but see "Screenshots" below: you leave the `![](N.png)` placeholders, a human captures the images later
 - Prefer safe demonstration payloads (e.g., `id` command output over reverse shells)
 - **Never mention the JDWP / 5005 debug port in the README.** Java environments expose it for research convenience only — it is not part of the vulnerability reproduction and should not appear in user-facing documentation.
 
 ## Screenshots
 
-**Do NOT capture screenshots yourself.** Prior experience has shown that LLM-captured screenshots rarely add real value to the documentation and waste significant time. Screenshots will be taken by a human after the PR is drafted.
+**Do NOT capture screenshots yourself.** LLM-captured screenshots rarely add real value and waste significant time — a human will shoot the images after reviewing the PR. Your task is only to place correctly-positioned `![](N.png)` placeholders so the human knows what each number should depict.
 
-Your job is to **pretend the screenshots already exist** while writing the README:
+Think about where a visual artifact would genuinely help a reader follow the exploit (typical spots: the pre-exploit page showing the vulnerable version, the HTTP response after the payload, the admin panel after auth bypass). Put the placeholder at that exact paragraph. 1–3 images usually suffices.
 
-- Decide where a visual artifact would genuinely help the reader understand the exploit (typical spots: the pre-exploit page showing the vulnerable version, the HTTP response after sending the payload, the admin panel after auth bypass, the command-output rendered in the browser).
-- Reference them in the README at those exact positions with standard Markdown image syntax: `![](1.png)`, `![](2.png)`, numbered in the order they appear.
-- Place the reference **at the precise paragraph** where the screenshot belongs so the human reviewer knows what to capture for each number — e.g., put `![](1.png)` right after the sentence describing what the reader should see at that step.
-- Do NOT create the `.png` files. Do NOT fabricate images (no fake terminal HTML, no synthetic screenshots). Leaving the image reference dangling is intentional and expected — the human will fill them in.
-- Keep the count small (1–3 images usually suffices). Only add a screenshot reference where text alone would be insufficient.
+Do NOT create the `.png` files and do NOT fabricate them (no rendered HTML, no synthetic terminal shots) — leaving the reference dangling is intentional.
+
+For naming, alt-text, and language-specific placement rules, see the **Screenshots** section of `references/readme-writing-guide.md`.
 
 ## Step 6: Test Locally
 
