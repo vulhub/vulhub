@@ -408,6 +408,14 @@ dockerfile = {"vulhub/discuz:x3.4" = "base/discuzx/3.4-20170801"}
 tags = ["File Deletion"]
 
 [[environment]]
+name = "DataEase Authentication Bypass via Whitelist Path Traversal"
+cve = ["CVE-2024-56511"]
+app = "DataEase"
+path = "dataease/CVE-2024-56511"
+dockerfile = {"vulhub/dataease:2.10.3" = "base/dataease/2.10.3"}
+tags = ["Auth Bypass"]
+
+[[environment]]
 name = "DataEase H2 JDBC Remote Code Execution"
 cve = ["CVE-2025-32966"]
 app = "DataEase"
