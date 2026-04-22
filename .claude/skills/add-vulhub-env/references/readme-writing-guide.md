@@ -118,10 +118,13 @@ docker compose up -d
 
 ### Screenshots
 
+**Do NOT capture or generate screenshot files yourself** — the human author will fill in the actual `.png` files after reviewing the PR. Your job is to leave correctly-placed image references so the human knows what to shoot.
+
 - Name sequentially: `1.png`, `2.png`, `3.png`, ...
-- Include at least one screenshot showing the exploit result
-- Use descriptive alt text in the markdown image syntax
-- Show critical exploitation steps (e.g., successful command execution, data exfiltration)
+- Reference at least one screenshot showing the exploit result (e.g., successful command execution, admin panel access, data exfiltration)
+- Place the image reference at the exact paragraph it illustrates, so the reviewer can tell which step each number corresponds to
+- Use descriptive alt text (English README) or 描述性文字 (Chinese README) so the human knows what the image should depict
+- Do NOT fabricate fake screenshots (no rendered HTML, no synthetic terminal images) — leaving the `.png` missing is intentional
 
 ### Docker Commands
 

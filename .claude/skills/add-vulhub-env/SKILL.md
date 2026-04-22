@@ -28,7 +28,7 @@ base/<software>/<version>/Dockerfile          # Only if this version doesn't exi
 <software>/<CVE-ID>/docker-compose.yml        # Required
 <software>/<CVE-ID>/README.md                 # Required (English)
 <software>/<CVE-ID>/README.zh-cn.md           # Required (Chinese)
-<software>/<CVE-ID>/1.png, 2.png, ...         # Screenshots
+<software>/<CVE-ID>/1.png, 2.png, ...         # Screenshots (referenced in README, captured by humans later)
 environments.toml                              # Add entry
 ```
 
@@ -184,16 +184,19 @@ Critical rules summary:
 - Use `docker compose up -d` (NOT `docker-compose up -d`)
 - English README: add `[中文版本(Chinese version)](README.zh-cn.md)` below the title
 - Chinese README: do NOT link to English version; do NOT add spaces between Chinese characters and English/numbers
-- Include at least one screenshot (`1.png`, `2.png`, ...)
+- Reference at least one screenshot in the README — but see "Screenshots" below: you leave the `![](N.png)` placeholders, a human captures the images later
 - Prefer safe demonstration payloads (e.g., `id` command output over reverse shells)
 - **Never mention the JDWP / 5005 debug port in the README.** Java environments expose it for research convenience only — it is not part of the vulnerability reproduction and should not appear in user-facing documentation.
 
-## Taking Screenshots
+## Screenshots
 
-Every environment needs screenshots, but not all screenshots can be taken automatically. Before attempting to capture screenshots, decide whether automation is feasible:
+**Do NOT capture screenshots yourself.** LLM-captured screenshots rarely add real value and waste significant time — a human will shoot the images after reviewing the PR. Your task is only to place correctly-positioned `![](N.png)` placeholders so the human knows what each number should depict.
 
-- **Can automate**: The exploit result is visible in a browser page or an Xwayland GUI window (e.g., a web response showing command output, an admin panel, an error page with version info). Use the `vulhub-screenshot` skill which provides browser-screenshot, window-screenshot, and gnome-screenshot scripts.
-- **Cannot automate — leave for humans**: The screenshot requires interactive tools that an LLM cannot operate (e.g., Burp Suite, a native desktop app, a complex multi-step GUI interaction), or the exploit output is only visible in a terminal session that you are running yourself (terminal screenshots of your own shell are not meaningful). In this case, skip the screenshot step and note in your output that screenshots need to be added manually. **NEVER fabricate screenshots** by creating fake HTML pages styled to look like terminal output or tool output — this is dishonest. No screenshot is always better than a fake screenshot.
+Think about where a visual artifact would genuinely help a reader follow the exploit (typical spots: the HTTP response showing `id`/`whoami` output rendered by the server, the admin panel reached after auth bypass, `/etc/passwd` contents returned by a path-traversal/LFI, a SQL injection response with leaked database rows, a successful file-upload page triggering RCE). Put the placeholder at that exact paragraph. 1–3 images usually suffices.
+
+Do NOT create the `.png` files and do NOT fabricate them (no rendered HTML, no synthetic terminal shots) — leaving the reference dangling is intentional.
+
+For naming, alt-text, and language-specific placement rules, see the **Screenshots** section of `references/readme-writing-guide.md`.
 
 ## Step 6: Test Locally
 
@@ -257,7 +260,7 @@ Common failures:
 - [ ] `docker-compose.yml` references the correct `vulhub/<software>:<version>` image
 - [ ] `README.md` follows the style guide
 - [ ] `README.zh-cn.md` follows the style guide
-- [ ] Screenshots included (`1.png`, `2.png`, ...)
+- [ ] Screenshot placeholders (`![](1.png)`, ...) referenced in README at the right positions — actual `.png` files left for humans to capture later
 - [ ] Entry added to `environments.toml` with valid tags and correct `dockerfile` mapping
 - [ ] Environment tested: `docker compose up -d` works, exploit reproduces
 - [ ] (Java only) JDWP on 5005 configured, published in `docker-compose.yml`, handshake verified, and not mentioned in the README
