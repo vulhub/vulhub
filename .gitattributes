@@ -11,3 +11,4 @@ tikiwiki/CVE-2020-15906/poc.py linguist-vendored
 uwsgi/unacc/poc.py linguist-vendored
 jenkins/CVE-2018-1000861/poc.py linguist-vendored
 n8n/CVE-2025-68613/exploit.py linguist-vendored
+django/**/migrations/*.py linguist-generated

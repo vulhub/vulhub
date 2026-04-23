@@ -5,6 +5,7 @@ LABEL maintainer="phithon <root@leavesongs.com>"
 ENV ACTIVEMQ_VERSION=6.2.2
 ENV ACTIVEMQ=apache-activemq-${ACTIVEMQ_VERSION}
 ENV ACTIVEMQ_HOME=/opt/activemq
+ENV JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
 
 RUN set -ex \
     && mkdir -p "${ACTIVEMQ_HOME}" \
@@ -15,6 +16,6 @@ RUN set -ex \
 
 WORKDIR ${ACTIVEMQ_HOME}
 
-EXPOSE 61616 8161
+EXPOSE 61616 8161 5005
 
 CMD ["/opt/activemq/bin/activemq", "console"]
