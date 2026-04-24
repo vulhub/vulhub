@@ -2482,6 +2482,7 @@ tags = ["Path Traversal"]
 [[environment]]
 name = "Vite CVE-2026-39363"
 cve = ["CVE-2026-39363"]
+app = "Vite"
 path = "vite/CVE-2026-39363"
 
 [[environment]]
