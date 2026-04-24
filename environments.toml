@@ -2479,9 +2479,9 @@ path = "vite/CVE-2025-32395"
 dockerfile = {"vulhub/vite:6.2.5" = "base/vite/6.2.5"}
 tags = ["Path Traversal"]
 
-
 [[environment]]
 name = "Vite CVE-2026-39363"
+cve = ["CVE-2026-39363"]
 path = "vite/CVE-2026-39363"
 
 [[environment]]
