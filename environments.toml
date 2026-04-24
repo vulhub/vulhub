@@ -2484,6 +2484,8 @@ name = "Vite CVE-2026-39363"
 cve = ["CVE-2026-39363"]
 app = "Vite"
 path = "vite/CVE-2026-39363"
+tags = ["arbitrary-file-read", "websocket"]
+
 
 [[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
