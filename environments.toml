@@ -2480,6 +2480,9 @@ dockerfile = {"vulhub/vite:6.2.5" = "base/vite/6.2.5"}
 tags = ["Path Traversal"]
 
 [[environment]]
+path = "vite/CVE-2026-39363"
+
+[[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
 cve = ["CVE-2017-10271"]
 app = "WebLogic"
