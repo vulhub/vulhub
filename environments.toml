@@ -2479,13 +2479,14 @@ path = "vite/CVE-2025-32395"
 dockerfile = {"vulhub/vite:6.2.5" = "base/vite/6.2.5"}
 tags = ["Path Traversal"]
 
+
 [[environment]]
 name = "Vite CVE-2026-39363 Arbitrary File Read"
 cve = ["CVE-2026-39363"]
 app = "Vite"
 path = "vite/CVE-2026-39363"
 dockerfile = {"vulhub/vite:7.3.1" = "vite/CVE-2026-39363"}
-tags = ["Arbitrary File Read", "WebSocket"]
+tags = ["Path Traversal"]
 
 [[environment]]
 name = "WebLogic < 10.3.6 'wls-wsat' XMLDecoder Deserialization Remote Command Execution"
