@@ -1573,7 +1573,7 @@ cve = ["CVE-2026-25253"]
 app = "OpenClaw"
 path = "openclaw/CVE-2026-25253"
 dockerfile = {"vulhub/openclaw:2026.1.28" = "base/openclaw/2026.1.28"}
-tags = ["XSS", "Info Disclosure"]
+tags = ["RCE", "Info Disclosure"]
 
 [[environment]]
 name = "Openfire Management Background Authentication Bypass"

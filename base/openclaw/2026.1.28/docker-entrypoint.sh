@@ -13,6 +13,9 @@ cat > /root/.config/openclaw/openclaw.json5 <<EOF
     auth: {
       mode: "token",
       token: "$GATEWAY_TOKEN"
+    },
+    controlUi: {
+      allowInsecureAuth: true
     }
   }
 }
@@ -32,6 +35,6 @@ socat TCP-LISTEN:18789,bind=0.0.0.0,reuseaddr,fork TCP:127.0.0.1:18790 &
 
 echo "[+] OpenClaw Gateway is ready on port 18789"
 echo "[+] Gateway token: $GATEWAY_TOKEN"
-echo "[+] Control UI: http://your-ip:18789"
+echo "[+] Control UI: http://your-ip:18789 (paste the token above to log in)"
 
 wait $GATEWAY_PID
