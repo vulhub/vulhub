@@ -2128,6 +2128,14 @@ dockerfile = {"vulhub/spring-webmvc:5.3.17" = "base/spring/spring-webmvc/5.3.17"
 tags = ["RCE", "Framework"]
 
 [[environment]]
+name = "Spring Framework Path Traversal via Jetty URI Parsing Inconsistency"
+cve = ["CVE-2025-41242"]
+app = "Spring"
+path = "spring/CVE-2025-41242"
+dockerfile = {"vulhub/spring-boot-jetty:3.2.4" = "base/spring/spring-boot-jetty/3.2.4"}
+tags = ["Path Traversal", "Info Disclosure", "Framework"]
+
+[[environment]]
 name = "Spring Security Authorization Bypass in RegexRequestMatcher"
 cve = ["CVE-2022-22978"]
 app = "Spring"
