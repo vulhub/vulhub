@@ -1016,6 +1016,14 @@ dockerfile = {"vulhub/ingress-nginx:1.9.5" = "base/ingress-nginx/1.9.5"}
 tags = ["RCE", "Webserver"]
 
 [[environment]]
+name = "Apache InLong JDBC Deserialization Remote Code Execution"
+cve = ["CVE-2022-40955"]
+app = "Apache InLong"
+path = "inlong/CVE-2022-40955"
+dockerfile = {"vulhub/inlong-manager:1.3.0" = "base/inlong-manager/1.3.0"}
+tags = ["RCE", "Deserialization"]
+
+[[environment]]
 name = "Jackson-databind Deserialization Remote Command Execution"
 cve = ["CVE-2017-7525"]
 app = "Jackson-Databind"
