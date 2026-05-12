@@ -13,3 +13,4 @@ jenkins/CVE-2018-1000861/poc.py linguist-vendored
 n8n/CVE-2025-68613/exploit.py linguist-vendored
 openclaw/CVE-2026-25253/*.py linguist-vendored
 django/**/migrations/*.py linguist-generated
+inlong/CVE-2022-40955/init.sql linguist-vendored
