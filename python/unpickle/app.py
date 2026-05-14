@@ -7,10 +7,13 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     try:
-        user = base64.b64decode(request.cookies.get('user'))
+        user_data = request.cookies.get('user')
+        user = base64.b64decode(user_data)
         user = pickle.loads(user)
-        username = user["username"]
-    except:
+        username = user
+        # print(username)
+    except Exception as e:
+        print(e)
         username = "Guest"
 
     return "Hello %s" % username
