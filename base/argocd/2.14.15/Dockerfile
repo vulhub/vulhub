@@ -7,7 +7,6 @@ WORKDIR /opt/k3s
 
 ADD --chmod=755 https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-${TARGETARCH} /usr/local/bin/argocd
 
-COPY argocd-install-v2.14.15.yaml ./argocd-install.yaml
 COPY manifests ./manifests
 COPY bootstrap.sh /usr/local/bin/bootstrap.sh
 COPY entrypoint.sh /entrypoint.sh

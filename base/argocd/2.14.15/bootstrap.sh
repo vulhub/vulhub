@@ -6,9 +6,11 @@ set -eu
 
 log() { echo "[bootstrap] $*"; }
 
-log "Installing Argo CD v2.14.15 manifests"
+ARGOCD_INSTALL_URL="https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.15/manifests/install.yaml"
+
+log "Installing Argo CD v2.14.15 from upstream: $ARGOCD_INSTALL_URL"
 kubectl create namespace argocd 2>/dev/null || true
-kubectl apply -n argocd -f /opt/k3s/argocd-install.yaml
+kubectl apply -n argocd -f "$ARGOCD_INSTALL_URL"
 
 log "Exposing argocd-server via NodePort 30443 (HTTPS)"
 kubectl apply -f /opt/k3s/manifests/02-argocd-server-svc-nodeport.yaml
