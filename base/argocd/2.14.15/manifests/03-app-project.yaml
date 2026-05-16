@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: myproject
+  namespace: argocd
+spec:
+  description: Demo project for CVE-2025-55190 reproduction
+  sourceRepos:
+    - "*"
+  destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  roles:
+    - name: project-automation-role
+      description: |
+        Low-privilege automation role intended only for syncing applications.
+        It deliberately has NO repositories or secrets permissions, yet the
+        /api/v1/projects/{project}/detailed endpoint still leaks repo creds.
+      policies:
+        - p, proj:myproject:project-automation-role, applications, get, myproject/*, allow
+        - p, proj:myproject:project-automation-role, applications, sync, myproject/*, allow
+        - p, proj:myproject:project-automation-role, applications, action/argoproj.io/Rollout/*, myproject/*, allow
+      groups: []

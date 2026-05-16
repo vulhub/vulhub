@@ -40,3 +40,6 @@ electron/CVE-2018-1000006/build/*
 !electron/CVE-2018-1000006/build/index.html
 
 openclaw/CVE-2026-25253/*.drawio
+
+!argocd/**/**
+!base/argocd/**/**
