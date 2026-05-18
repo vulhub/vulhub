@@ -28,25 +28,3 @@ stringData:
   project: gitops-production
   username: vulhub-git-bot
   password: ghp_FAKE0vulhubLEAKED2025pat0deploykey
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: repo-prod-platform-git-ssh
-  namespace: argocd
-  labels:
-    argocd.argoproj.io/secret-type: repository
-stringData:
-  name: prod-platform-git-ssh
-  url: ssh://git@git.example.invalid:22/acme/prod-platform.git
-  type: git
-  project: gitops-production
-  sshPrivateKey: |
-    -----BEGIN OPENSSH PRIVATE KEY-----
-    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-    QyNTUxOQAAACDyIKdOtsI2JxACmB76VAm6E0o73OYIm8mqLJTfrma7VwAAAKhtPMYWbTzG
-    FgAAAAtzc2gtZWQyNTUxOQAAACDyIKdOtsI2JxACmB76VAm6E0o73OYIm8mqLJTfrma7Vw
-    AAAEAkLXqaEBb58r7awzXUsFr9ej1dn8AyG9mic0hffcVSufIgp062wjYnEAKYHvpUCboT
-    Sjvc5gibyaoslN+uZrtXAAAAIHZ1bGh1Yi1jdmUtMjAyNS01NTE5MC1sZWFrZWQta2V5AQ
-    IDBAU=
-    -----END OPENSSH PRIVATE KEY-----
