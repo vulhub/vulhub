@@ -24,7 +24,7 @@ log() { echo "[entrypoint] $*"; }
   log "Running first-time Argo CD bootstrap (this takes several minutes)..."
   if /bin/sh /usr/local/bin/bootstrap.sh; then
     touch "$INIT_MARKER"
-    log "Bootstrap complete. Token at /etc/argocd-demo-token, password at /etc/argocd-admin-password."
+    log "Bootstrap complete. Credentials in /etc/argocd-*-password and /etc/argocd-ci-sync-bot-token."
   else
     log "ERROR: bootstrap failed; see output above."
   fi
