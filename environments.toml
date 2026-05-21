@@ -1392,6 +1392,14 @@ dockerfile = {"vulhub/nacos:1.4.0" = "base/nacos/1.4.0"}
 tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
+name = "Nacos JRaft Hessian Deserialization Remote Code Execution"
+cve = []
+app = "Nacos"
+path = "nacos/CNVD-2023-45001"
+dockerfile = {"vulhub/nacos:2.2.2" = "base/nacos/2.2.2"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
 name = "n8n Content-Type Confusion Arbitrary File Read to RCE"
 cve = ["CVE-2026-21858"]
 app = "n8n"
