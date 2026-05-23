@@ -1,4 +1,4 @@
-# Apache Solr RemoteStreaming 任意文件读取和SSRF漏洞
+# Apache Solr RemoteStreaming 任意文件读取和 SSRF 漏洞
 
 Apache Solr 是一个开源的搜索服务器。当 Apache Solr 未启用身份认证时，攻击者可以构造请求来启用特定配置，从而可能导致服务器端请求伪造（SSRF）或任意文件读取漏洞。
 
@@ -18,7 +18,7 @@ docker compose up -d
 
 ## 漏洞复现
 
-首先，访问`http://your-ip:8983/solr/admin/cores?indexInfo=false&wt=json`获取数据库名：
+首先，访问 `http://your-ip:8983/solr/admin/cores?indexInfo=false&wt=json` 获取数据库名：
 
 ![](1.png)
 

