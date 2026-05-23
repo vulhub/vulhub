@@ -32,6 +32,8 @@ nginx/CVE-2013-4547/www/uploadfiles/*
 
 __pycache__
 
+chinese-copywriting.patch
+
 .env
 .venv
 .python-version

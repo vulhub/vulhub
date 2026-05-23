@@ -1,0 +1,132 @@
+name: Chinese Copywriting Check
+description: Install AutoCorrect and check Chinese README copywriting style.
+
+inputs:
+  autocorrect-version:
+    description: AutoCorrect release version to install.
+    required: false
+    default: v2.16.3
+  reviewdog-version:
+    description: reviewdog release version to install for PR suggestions.
+    required: false
+    default: v0.21.0
+  github-token:
+    description: GitHub token used by reviewdog to publish PR review suggestions.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install AutoCorrect
+      shell: bash
+      env:
+        AUTOCORRECT_VERSION: ${{ inputs.autocorrect-version }}
+      run: |
+        set -euo pipefail
+
+        archive="autocorrect-linux-amd64.tar.gz"
+        base_url="https://github.com/huacnlee/autocorrect/releases/download/${AUTOCORRECT_VERSION}"
+        tmpdir="$(mktemp -d)"
+        trap 'rm -rf "${tmpdir}"' EXIT
+
+        curl -fsSL "${base_url}/${archive}" -o "${tmpdir}/${archive}"
+        curl -fsSL "${base_url}/${archive}.sha256" -o "${tmpdir}/${archive}.sha256"
+
+        cd "${tmpdir}"
+        expected_sha256="$(cat "${archive}.sha256")"
+        echo "${expected_sha256}  ${archive}" | sha256sum -c -
+        tar -xzf "${archive}"
+        install_dir="${RUNNER_TEMP}/autocorrect/bin"
+        mkdir -p "${install_dir}"
+        install -m 0755 autocorrect "${install_dir}/autocorrect"
+        echo "${install_dir}" >> "${GITHUB_PATH}"
+        export PATH="${install_dir}:${PATH}"
+        autocorrect --version
+
+    - name: Check Chinese copywriting
+      id: check
+      shell: bash
+      run: |
+        set +e
+        node tests/tools/check_chinese_copywriting.js --check
+        status="$?"
+        echo "status=${status}" >> "${GITHUB_OUTPUT}"
+        exit 0
+
+    - name: Generate Chinese copywriting patch
+      if: steps.check.outputs.status != '0'
+      shell: bash
+      run: |
+        node tests/tools/check_chinese_copywriting.js --patch
+
+    - name: Install reviewdog
+      id: reviewdog
+      if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && steps.check.outputs.status != '0' && hashFiles('chinese-copywriting.patch') != ''
+      shell: bash
+      env:
+        REVIEWDOG_VERSION: ${{ inputs.reviewdog-version }}
+      run: |
+        set -uo pipefail
+
+        fail() {
+          echo "::warning::Unable to install reviewdog for PR suggestions: $*"
+          echo "available=false" >> "${GITHUB_OUTPUT}"
+          exit 0
+        }
+
+        version="${REVIEWDOG_VERSION#v}"
+        archive="reviewdog_${version}_Linux_x86_64.tar.gz"
+        base_url="https://github.com/reviewdog/reviewdog/releases/download/${REVIEWDOG_VERSION}"
+        tmpdir="$(mktemp -d)"
+        trap 'rm -rf "${tmpdir}"' EXIT
+
+        curl -fsSL "${base_url}/${archive}" -o "${tmpdir}/${archive}" || fail "failed to download ${archive}"
+        curl -fsSL "${base_url}/checksums.txt" -o "${tmpdir}/checksums.txt" || fail "failed to download checksums.txt"
+
+        cd "${tmpdir}" || fail "failed to enter temporary directory"
+        grep "  ${archive}$" checksums.txt | sha256sum -c - || fail "checksum verification failed"
+        tar -xzf "${archive}" || fail "failed to extract ${archive}"
+        install_dir="${RUNNER_TEMP}/reviewdog/bin"
+        mkdir -p "${install_dir}" || fail "failed to create install directory"
+        install -m 0755 reviewdog "${install_dir}/reviewdog" || fail "failed to install reviewdog"
+        echo "${install_dir}" >> "${GITHUB_PATH}"
+        export PATH="${install_dir}:${PATH}"
+        reviewdog -version || fail "installed reviewdog could not run"
+        echo "available=true" >> "${GITHUB_OUTPUT}"
+
+    - name: Suggest Chinese copywriting fixes
+      if: steps.reviewdog.outputs.available == 'true'
+      shell: bash
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github-token }}
+      run: |
+        if [ -z "${REVIEWDOG_GITHUB_API_TOKEN}" ]; then
+          echo "::warning::Skipping reviewdog PR suggestions because github-token is empty."
+          exit 0
+        fi
+
+        if ! reviewdog \
+          -name="Chinese copywriting" \
+          -f=diff \
+          -f.diff.strip=1 \
+          -reporter=github-pr-review \
+          -filter-mode=diff_context \
+          < chinese-copywriting.patch; then
+          echo "::warning::reviewdog failed to publish PR suggestions. Download chinese-copywriting.patch from the job artifact instead."
+        fi
+
+    - name: Upload Chinese copywriting patch
+      if: steps.check.outputs.status != '0' && hashFiles('chinese-copywriting.patch') != ''
+      uses: actions/upload-artifact@v7
+      with:
+        name: chinese-copywriting.patch
+        path: chinese-copywriting.patch
+        if-no-files-found: ignore
+
+    - name: Fail on Chinese copywriting issues
+      if: steps.check.outputs.status != '0'
+      shell: bash
+      run: |
+        echo "Chinese copywriting issues found. See annotations, PR review suggestions, job summary, or the chinese-copywriting.patch artifact."
+        exit 1

@@ -3,7 +3,7 @@ name: Vulhub Format Check and Lint
 on: [push, pull_request]
 
 jobs:
-  format-check: 
+  format-check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -20,6 +20,9 @@ jobs:
         python -m pytest tests/check
   markdown-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
     - uses: actions/checkout@v6
     - uses: actions/setup-node@v6
@@ -28,6 +31,10 @@ jobs:
     - name: install dependencies
       run: |
         npm install -g markdownlint-cli@0.47.0
+    - name: check Chinese copywriting
+      uses: ./.github/actions/chinese-copywriting
+      with:
+        github-token: ${{ github.token }}
     - name: check markdown
       run: |
         markdownlint -c tests/markdownlint.json .

@@ -183,7 +183,7 @@ Critical rules summary:
 - Reproduction steps must be **narrative paragraphs** (NEVER use numbered lists or bullet points for reproduction steps)
 - Use `docker compose up -d` (NOT `docker-compose up -d`)
 - English README: add `[中文版本(Chinese version)](README.zh-cn.md)` below the title
-- Chinese README: do NOT link to English version; do NOT add spaces between Chinese characters and English/numbers
+- Chinese README: do NOT link to English version; follow the [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) — most importantly, add a space between Chinese characters and adjacent Latin letters / Arabic numerals (e.g., `Grafana 11.0.0 至 11.2.1`), and use full-width Chinese punctuation (`，。：（）`)
 - Reference at least one screenshot in the README — but see "Screenshots" below: you leave the `![](N.png)` placeholders, a human captures the images later
 - Prefer safe demonstration payloads (e.g., `id` command output over reverse shells)
 - **Never mention the JDWP / 5005 debug port in the README.** Java environments expose it for research convenience only — it is not part of the vulnerability reproduction and should not appear in user-facing documentation.

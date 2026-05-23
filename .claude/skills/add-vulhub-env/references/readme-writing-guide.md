@@ -56,9 +56,9 @@ Content-Type: application/json
 ```markdown
 # 漏洞标题（CVE-XXXX-XXXXX）
 
-[软件名称]是一个[软件用途的一句话描述]。
+[软件名称] 是一个[软件用途的一句话描述]。
 
-[描述漏洞的段落：根本原因、利用方式、受影响版本范围、影响。注意：中文和英文/数字之间不要加空格。]
+[描述漏洞的段落：根本原因、利用方式、受影响版本范围、影响。中文和拉丁字母 / 阿拉伯数字之间需要加空格，例如 `影响 Grafana 11.0.0 至 11.2.1 版本`。]
 
 参考链接：
 
@@ -67,17 +67,17 @@ Content-Type: application/json
 
 ## 环境搭建
 
-执行如下命令启动[软件名称] [版本号]：
+执行如下命令启动 [软件名称] [版本号]：
 
 ​```
 docker compose up -d
 ​```
 
-服务启动后，访问`http://your-ip:端口`即可看到[服务描述]。
+服务启动后，访问 `http://your-ip:端口` 即可看到[服务描述]。
 
 ## 漏洞复现
 
-[用自然段落描述漏洞利用步骤。使用"首先"、"然后"、"接下来"等连接词。不要使用编号列表或项目符号。]
+[用自然段落描述漏洞利用步骤。使用 “首先”、“然后”、“接下来” 等连接词。不要使用编号列表或项目符号。]
 
 ![截图描述](1.png)
 ```
@@ -107,14 +107,42 @@ docker compose up -d
 
 ### Chinese-Specific Rules
 
-- Do NOT include a link to the English version
-- Do NOT add spaces between Chinese characters and adjacent English words or numbers
-  - Correct: `Grafana是一个开源的数据可视化平台，影响版本11.0.0至11.2.1`
-  - Wrong: `Grafana 是一个开源的数据可视化平台，影响版本 11.0.0 至 11.2.1`
-- Use Chinese punctuation: `，` `。` `：` `（` `）` instead of `, . : ( )`
-- Use `参考链接：` instead of `References:`
-- Use `环境搭建` instead of `Environment Setup`
-- Use `漏洞复现` instead of `Vulnerability Reproduction`
+The Chinese README follows the [中文文案排版指北 (sparanoid/chinese-copywriting-guidelines)](https://github.com/sparanoid/chinese-copywriting-guidelines). The rules below apply that style to vulhub documentation — they exist to make Chinese-mixed-with-English text more legible, which is exactly the situation every CVE write-up is in.
+
+**Structure**
+
+- Do NOT include a link to the English version (the English README links to the Chinese one, not the other way around)
+
+**Spacing**
+
+- Add a space between Chinese characters and adjacent Latin letters or Arabic numerals — this is the single most important rule
+  - Correct: `Grafana 是一个开源的数据可视化平台，影响版本 11.0.0 至 11.2.1`
+  - Wrong: `Grafana是一个开源的数据可视化平台，影响版本11.0.0至11.2.1`
+- Add a space between numbers and units (e.g., `10 Gbps`, `监听 8088 端口`), with two exceptions: `°` and `%` stay tight against the number (`90°`, `15%`)
+- Do NOT add extra spaces around full-width punctuation — full-width characters already carry visual whitespace
+  - Correct: `刚刚购入了一台 iPhone，非常开心！`
+  - Wrong: `刚刚购入了一台 iPhone ，非常开心 ！`
+- Add a space between Chinese characters and inline code spans (backticks behave like Latin content)
+  - Correct: `访问 \`http://your-ip:8088\` 即可看到登录页面`
+  - Wrong: `访问\`http://your-ip:8088\`即可看到登录页面`
+
+**Punctuation**
+
+- Use full-width Chinese punctuation throughout Chinese sentences: `，` `。` `：` `；` `（` `）` `！` `？` `、` `——` `……` (not `, . : ; ( ) ! ? -- ...`)
+- Inside a complete English sentence, proper noun, code span, or URL, keep half-width punctuation — e.g., `引用乔布斯的名言："Stay hungry, stay foolish."`
+- Do NOT repeat punctuation for emphasis: write `！` not `！！！`, `？` not `？？？`
+- Use full-width Chinese quotes `“”` for quoted speech; the original guideline recommends corner brackets `「」` `『』` but vulhub READMEs consistently use `“”` so stay consistent with the existing corpus
+
+**Proper nouns**
+
+- Use the canonical casing for product / project / company names: `GitHub`, `iOS`, `macOS`, `JavaScript`, `TypeScript`, `Grafana`, `CraftCMS`, `Apache`, `Spring`, `Tomcat`, `JDK`
+- Do NOT write `github` / `GITHUB` / `Github`, `javascript`, `jdk`, etc.
+- Do NOT invent abbreviations the upstream doesn't use (`TS` for TypeScript, `RJS` for React, `h5` for HTML5)
+
+**Section headings and fixed phrases**
+
+- Section headings stay in Chinese: `参考链接：`, `环境搭建`, `漏洞复现` (not the English equivalents)
+- Transitional words for the reproduction narrative: `首先`、`然后`、`接下来`、`之后`、`最后`
 
 ### Screenshots
 
