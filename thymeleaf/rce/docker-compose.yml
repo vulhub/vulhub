@@ -1,0 +1,6 @@
+services:
+  web:
+    image: vulhub/spring-thymeleaf:3.0.11
+    ports:
+      - "8090:8090"
+      - "5005:5005"
