@@ -2064,6 +2064,14 @@ dockerfile = {"vulhub/spark:2.3.1" = "base/spark/2.3.1"}
 tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
+name = "Apache Spark UI Command Injection"
+cve = ["CVE-2022-33891"]
+app = "Apache Spark"
+path = "spark/CVE-2022-33891"
+dockerfile = {"vulhub/spark:3.2.1" = "base/spark/3.2.1"}
+tags = ["RCE"]
+
+[[environment]]
 name = "Spring Security Oauth2 Remote Command Execution"
 cve = ["CVE-2016-4977"]
 app = "Spring Security Oauth2"
