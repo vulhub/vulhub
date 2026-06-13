@@ -38,4 +38,6 @@ runs:
 
     - name: Check Chinese copywriting
       shell: bash
-      run: node tests/tools/check_chinese_copywriting.js --lint
+      run: |
+        files=$(find . -path ./node_modules -prune -o -name 'README.zh-cn.md' -print | sort)
+        autocorrect --lint $files

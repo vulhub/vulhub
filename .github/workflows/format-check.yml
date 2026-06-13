@@ -32,4 +32,4 @@ jobs:
       uses: ./.github/actions/chinese-copywriting
     - name: check markdown
       run: |
-        markdownlint -c tests/markdownlint.json .
+        markdownlint -c tests/markdownlint.json -r tests/tools/markdownlint-rule-cjk-inline-spacing.cjs .
