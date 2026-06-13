@@ -20,7 +20,7 @@ function walk(token, lines, onError) {
       if (prev && SPACING_CHAR.test(prev)) {
         onError({
           lineNumber: startLine,
-          detail: "需要在 Markdown 行内元素前添加空格",
+          detail: "Missing space before Markdown inline element",
           range: [startColumn - 1, 2],
           fixInfo: { editColumn: startColumn, insertText: " " },
         });
@@ -33,7 +33,7 @@ function walk(token, lines, onError) {
       if (next && SPACING_CHAR.test(next)) {
         onError({
           lineNumber: endLine,
-          detail: "需要在 Markdown 行内元素后添加空格",
+          detail: "Missing space after Markdown inline element",
           range: [endColumn - 1, 2],
           fixInfo: { editColumn: endColumn, insertText: " " },
         });
@@ -46,7 +46,7 @@ function walk(token, lines, onError) {
 
 module.exports = {
   names: ["cjk-inline-spacing"],
-  description: "Markdown 行内元素与中文 / 拉丁字符之间需要空格",
+  description: "Markdown inline elements need spaces around CJK/Latin characters",
   tags: ["whitespace", "cjk"],
   parser: "micromark",
   function: function rule(params, onError) {
