@@ -25,26 +25,17 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: "24"
-    - name: install dependencies
-      env:
-        AUTOCORRECT_VERSION: v2.16.3
-      run: |
-        set -euo pipefail
-        npm install -g markdownlint-cli@0.47.0
-
-        archive="autocorrect-linux-amd64.tar.gz"
-        base_url="https://github.com/huacnlee/autocorrect/releases/download/${AUTOCORRECT_VERSION}"
-        tmpdir="$(mktemp -d)"
-        trap 'rm -rf "${tmpdir}"' EXIT
-        curl -fsSL "${base_url}/${archive}" -o "${tmpdir}/${archive}"
-        curl -fsSL "${base_url}/${archive}.sha256" -o "${tmpdir}/${archive}.sha256"
-        cd "${tmpdir}"
-        echo "$(cat "${archive}.sha256")  ${archive}" | sha256sum -c -
-        tar -xzf "${archive}"
-        install_dir="${RUNNER_TEMP}/autocorrect/bin"
-        mkdir -p "${install_dir}"
-        install -m 0755 autocorrect "${install_dir}/autocorrect"
-        echo "${install_dir}" >> "${GITHUB_PATH}"
+    - name: install markdownlint
+      run: npm install -g markdownlint-cli@0.47.0
+    - name: download AutoCorrect
+      uses: robinraju/release-downloader@v1.13
+      with:
+        repository: huacnlee/autocorrect
+        tag: v2.16.3
+        fileName: autocorrect-linux-amd64.tar.gz
+        extract: true
+    - name: install AutoCorrect
+      run: sudo install -m 0755 autocorrect /usr/local/bin/autocorrect
     - name: check Chinese copywriting
       run: |
         files=$(find . -path ./node_modules -prune -o -name 'README.zh-cn.md' -print | sort)
