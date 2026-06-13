@@ -56,9 +56,9 @@ Content-Type: application/json
 ```markdown
 # 漏洞标题（CVE-XXXX-XXXXX）
 
-[软件名称]是一个[软件用途的一句话描述]。
+[软件名称] 是一个[软件用途的一句话描述]。
 
-[描述漏洞的段落：根本原因、利用方式、受影响版本范围、影响。注意：中文和英文/数字之间不要加空格。]
+[描述漏洞的段落：根本原因、利用方式、受影响版本范围、影响。中文和拉丁字母 / 阿拉伯数字之间需要加空格，例如 `影响 Grafana 11.0.0 至 11.2.1 版本`。]
 
 参考链接：
 
@@ -67,17 +67,17 @@ Content-Type: application/json
 
 ## 环境搭建
 
-执行如下命令启动[软件名称] [版本号]：
+执行如下命令启动 [软件名称] [版本号]：
 
 ​```
 docker compose up -d
 ​```
 
-服务启动后，访问`http://your-ip:端口`即可看到[服务描述]。
+服务启动后，访问 `http://your-ip:端口` 即可看到[服务描述]。
 
 ## 漏洞复现
 
-[用自然段落描述漏洞利用步骤。使用"首先"、"然后"、"接下来"等连接词。不要使用编号列表或项目符号。]
+[用自然段落描述漏洞利用步骤。使用 “首先”、“然后”、“接下来” 等连接词。不要使用编号列表或项目符号。]
 
 ![截图描述](1.png)
 ```
@@ -108,9 +108,6 @@ docker compose up -d
 ### Chinese-Specific Rules
 
 - Do NOT include a link to the English version
-- Do NOT add spaces between Chinese characters and adjacent English words or numbers
-  - Correct: `Grafana是一个开源的数据可视化平台，影响版本11.0.0至11.2.1`
-  - Wrong: `Grafana 是一个开源的数据可视化平台，影响版本 11.0.0 至 11.2.1`
 - Use Chinese punctuation: `，` `。` `：` `（` `）` instead of `, . : ( )`
 - Use `参考链接：` instead of `References:`
 - Use `环境搭建` instead of `Environment Setup`

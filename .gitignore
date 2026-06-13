@@ -32,6 +32,8 @@ nginx/CVE-2013-4547/www/uploadfiles/*
 
 __pycache__
 
+node_modules/
+
 .env
 .venv
 .python-version

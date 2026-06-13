@@ -1,12 +1,12 @@
-# Celery <4.0 Redis未授权访问+Pickle反序列化利用
+# Celery <4.0 Redis 未授权访问+Pickle 反序列化利用
 
 Celery 是一个简单、灵活且可靠的分布式系统，用于处理大量消息，同时为操作提供维护此类系统所需的工具。它是一个专注于实时处理的任务队列，同时也支持任务调度。
 
-在Celery < 4.0版本默认使用Pickle进行任务消息的序列化传递，当所用队列服务（比如Redis、RabbitMQ、RocketMQ等等等）存在未授权访问问题时，可利用Pickle反序列化漏洞执行任意代码。
+在 Celery < 4.0 版本默认使用 Pickle 进行任务消息的序列化传递，当所用队列服务（比如 Redis、RabbitMQ、RocketMQ 等等等）存在未授权访问问题时，可利用 Pickle 反序列化漏洞执行任意代码。
 
 ## 漏洞环境
 
-执行如下命令启动Celery 3.1.23 + Redis：
+执行如下命令启动 Celery 3.1.23 + Redis：
 
 ```bash
 docker compose up -d
@@ -14,7 +14,7 @@ docker compose up -d
 
 ## 漏洞复现
 
-漏洞利用脚本`exploit.py`仅支持在python3下使用
+漏洞利用脚本 `exploit.py` 仅支持在 python3 下使用
 
 ```bash
 pip install redis
@@ -35,7 +35,7 @@ docker compose logs celery
 docker compose exec celery ls -l /tmp
 ```
 
-可以看到成功创建了文件`celery_success`
+可以看到成功创建了文件 `celery_success`
 
 ![](b.png)
 
