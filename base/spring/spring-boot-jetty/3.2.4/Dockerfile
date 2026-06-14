@@ -9,8 +9,10 @@ FROM eclipse-temurin:17-jre
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
-COPY --from=builder /usr/src/target/app.jar /app.jar
+WORKDIR /app
+
+COPY --from=builder /usr/src/target/app.jar /app/app.jar
 
 EXPOSE 8080 5005
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app.jar"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/app.jar"]
