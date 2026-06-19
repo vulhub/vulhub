@@ -1,0 +1,7 @@
+services:
+  web:
+    image: vulhub/nacos:2.2.2
+    ports:
+      - "8848:8848"
+      - "7848:7848"
+      - "5005:5005"
