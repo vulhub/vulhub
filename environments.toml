@@ -2384,6 +2384,22 @@ dockerfile = {"vulhub/thinkphp:6.0.12" = "base/thinkphp/6.0.12"}
 tags = ["Path Traversal"]
 
 [[environment]]
+name = "Thymeleaf Sandbox Bypass in Spring Boot Admin MailNotifier"
+cve = ["CVE-2023-38286"]
+app = "Thymeleaf"
+path = "thymeleaf/CVE-2023-38286"
+dockerfile = {"vulhub/spring-boot-admin:3.1.0" = "base/spring/spring-boot-admin/3.1.0"}
+tags = ["SSTI", "RCE", "Framework"]
+
+[[environment]]
+name = "Thymeleaf View Name Manipulation Remote Code Execution"
+cve = []
+app = "Thymeleaf"
+path = "thymeleaf/rce"
+dockerfile = {"vulhub/spring-thymeleaf:3.0.11" = "base/spring/spring-thymeleaf/3.0.11"}
+tags = ["RCE", "Expression Injection", "Framework"]
+
+[[environment]]
 name = "Tiki Wiki CMS Groupware Authentication Bypass"
 cve = ["CVE-2020-15906"]
 app = "Tiki Wiki"
