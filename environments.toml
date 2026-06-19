@@ -2059,9 +2059,17 @@ tags = ["Path Traversal", "SSRF"]
 name = "Apache Spark Unauthorized Access Leads to Remote Code Execution"
 cve = []
 app = "Apache Spark"
-path = "spark/unacc"
+path = "spark/CVE-2020-9480"
 dockerfile = {"vulhub/spark:2.3.1" = "base/spark/2.3.1"}
 tags = ["RCE", "Auth Bypass"]
+
+[[environment]]
+name = "Apache Spark UI Command Injection"
+cve = ["CVE-2022-33891"]
+app = "Apache Spark"
+path = "spark/CVE-2022-33891"
+dockerfile = {"vulhub/spark:3.2.1" = "base/spark/3.2.1"}
+tags = ["RCE"]
 
 [[environment]]
 name = "Spring Security Oauth2 Remote Command Execution"
