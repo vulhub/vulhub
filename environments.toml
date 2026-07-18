@@ -2560,7 +2560,7 @@ dockerfile = {"vulhub/webmin:1.910" = "base/webmin/1.910"}
 tags = ["RCE"]
 
 [[environment]]
-name = "Wordpress Pre-Auth RCE via Batch Route Confusion and SQL Injection (wp2shell)"
+name = "WordPress Pre-Auth RCE via REST API Batch Route Confusion and SQL Injection (wp2shell)"
 cve = ["CVE-2026-63030", "CVE-2026-60137"]
 app = "Wordpress"
 path = "wordpress/CVE-2026-63030"
