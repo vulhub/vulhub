@@ -10,6 +10,7 @@ opensmtpd/CVE-2020-7247/poc.py linguist-vendored
 tikiwiki/CVE-2020-15906/poc.py linguist-vendored
 uwsgi/unacc/poc.py linguist-vendored
 jenkins/CVE-2018-1000861/poc.py linguist-vendored
+fastjson/1.2.83-rce/poc.py linguist-generated
 n8n/CVE-2025-68613/exploit.py linguist-vendored
 openclaw/CVE-2026-25253/*.py linguist-vendored
 wordpress/CVE-2026-63030/poc.py linguist-vendored
