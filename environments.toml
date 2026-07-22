@@ -656,6 +656,14 @@ dockerfile = {"vulhub/fastjson:1.2.45" = "base/fastjson/1.2.45"}
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
+name = "Fastjson 1.2.83 Deserialization Remote Command Execution via jar Protocol"
+cve = []
+app = "Fastjson"
+path = "fastjson/1.2.83-rce"
+dockerfile = {"vulhub/fastjson:1.2.83" = "base/fastjson/1.2.83"}
+tags = ["RCE", "Deserialization"]
+
+[[environment]]
 name = "FFmpeg Arbitrary File Read and SSRF"
 cve = ["CVE-2016-1897", "CVE-2016-1898"]
 app = "FFmpeg"
