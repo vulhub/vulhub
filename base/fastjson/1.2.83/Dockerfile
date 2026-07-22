@@ -8,7 +8,7 @@ WORKDIR /usr/src
 RUN set -ex \
     && mvn package
 
-FROM eclipse-temurin:8
+FROM eclipse-temurin:8-jre
 
 COPY --from=builder /usr/src/target/fastjsondemo-1.0.0-SNAPSHOT.jar /usr/src/fastjsondemo.jar
 EXPOSE 8090 5005
