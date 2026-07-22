@@ -2,13 +2,12 @@
 
 Fastjson 是阿里巴巴开发的一款被广泛使用的 JSON 库。当它反序列化带有 `@type` 字段的 JSON 对象时，会把该字段的值当作类名交给类加载器，这正是历代 Fastjson 反序列化漏洞的根源。
 
-即使在 `autoType` 默认关闭、classpath 上没有任何 gadget 类的情况下，Fastjson 1.2.83 仍可借助 JVM 的 `jar:` 协议被利用。在处理任意 `@type` 时，`checkAutoType` 会先做一次 `@JSONType` 注解探测：它在校验类名之前就对 `<类名>.class` 调用 `getResourceAsStream`。如果 `@type` 的值是一个 `jar:` URL，JVM 便会打开它——通过 `jar:http` 下载远程 JAR，或通过 `jar:file` 读取本地 JAR。当这个 JAR 中的类带有 `@JSONType` 注解时，它无需 `autoType`、无需 `expectClass`、也无需任何继承关系即可通过加载闸门，随后 Fastjson 会实例化该类，从而在它的静态初始化块与构造器中执行攻击者代码。该利用手法影响 `autoType` 保持默认关闭且未开启 `safeMode` 的 Fastjson 1.2.x 直至 1.2.83 版本；开启 `safeMode` 即可防御。
+即使在 `autoType` 默认关闭、classpath 上没有任何 gadget 类的情况下，Fastjson 1.2.83 仍可借助 JVM 的 `jar:` 协议被利用。在处理任意 `@type` 时，`checkAutoType` 会先做一次 `@JSONType` 注解探测：它在校验类名之前就对 `<类名>.class` 调用 `getResourceAsStream`。如果 `@type` 的值是一个 `jar:` URL，JVM 便会打开它——通过 `jar:file` 读取本地 JAR，或通过 `jar:http` 下载远程 JAR。不过远程 `jar:http` 加载并非在所有环境下都成立：标准 JVM 的默认类加载器并不会去拉取远程 JAR，这一手法需要在 Spring Boot 应用（如本环境）下才能复现——其 `URLClassLoader` 会真正发起该请求。当这个 JAR 中的类带有 `@JSONType` 注解时，它无需 `autoType`、无需 `expectClass`、也无需任何继承关系即可通过加载闸门，随后 Fastjson 会实例化该类，从而在它的静态初始化块与构造器中执行攻击者代码。该利用手法影响 `autoType` 保持默认关闭且未开启 `safeMode` 的 Fastjson 1.2.x 直至 1.2.83 版本；开启 `safeMode` 即可防御。
 
 参考链接：
 
-- <https://github.com/alibaba/fastjson>
-- <https://github.com/alibaba/fastjson/wiki/enable_autotype>
-- <https://github.com/alibaba/fastjson/wiki/fastjson_safemode>
+- <https://github.com/alibaba/fastjson2/wiki/Security-Advisory:-Remote-Code-Execution-in-fastjson-1.2.68%E2%80%931.2.83>
+- <https://fearsoff.org/research/fastjson-1-2-83-rce>
 
 ## 环境搭建
 

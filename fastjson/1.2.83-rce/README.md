@@ -4,13 +4,12 @@
 
 Fastjson is a widely used JSON library developed by Alibaba. When it deserializes a JSON object that carries a `@type` field, it treats the value as a class name and hands it to a class loader, which is the root of the well-known Fastjson deserialization vulnerabilities.
 
-Even with `autoType` disabled (the default) and no gadget classes on the classpath, Fastjson 1.2.83 remains exploitable through the JVM's `jar:` protocol. While handling any `@type`, `checkAutoType` performs an `@JSONType` annotation probe that calls `getResourceAsStream` on `<typeName>.class` before validating the class name. If the `@type` value is a `jar:` URL, the JVM opens it — downloading a remote JAR over `jar:http`, or reading a local one over `jar:file`. A class inside that JAR annotated with `@JSONType` passes the load gate without requiring `autoType`, an `expectClass`, or any inheritance relationship, and Fastjson then instantiates it, running attacker code in its static initializer and constructor. This technique affects Fastjson 1.2.x up to and including 1.2.83 whenever `autoType` is left at its default and `safeMode` is not enabled; it is defeated by turning on `safeMode`.
+Even with `autoType` disabled (the default) and no gadget classes on the classpath, Fastjson 1.2.83 remains exploitable through the JVM's `jar:` protocol. While handling any `@type`, `checkAutoType` performs an `@JSONType` annotation probe that calls `getResourceAsStream` on `<typeName>.class` before validating the class name. If the `@type` value is a `jar:` URL, the JVM opens it — reading a local JAR over `jar:file`, or downloading a remote one over `jar:http`. The remote `jar:http` fetch is not universal, though: a stock JVM's default class loader will not retrieve a remote JAR, and this technique is reproducible specifically under a Spring Boot application (as in this environment), whose `URLClassLoader` performs the fetch. A class inside that JAR annotated with `@JSONType` passes the load gate without requiring `autoType`, an `expectClass`, or any inheritance relationship, and Fastjson then instantiates it, running attacker code in its static initializer and constructor. This technique affects Fastjson 1.2.x up to and including 1.2.83 whenever `autoType` is left at its default and `safeMode` is not enabled; it is defeated by turning on `safeMode`.
 
 References:
 
-- <https://github.com/alibaba/fastjson>
-- <https://github.com/alibaba/fastjson/wiki/enable_autotype>
-- <https://github.com/alibaba/fastjson/wiki/fastjson_safemode>
+- <https://github.com/alibaba/fastjson2/wiki/Security-Advisory:-Remote-Code-Execution-in-fastjson-1.2.68%E2%80%931.2.83>
+- <https://fearsoff.org/research/fastjson-1-2-83-rce>
 
 ## Environment Setup
 
