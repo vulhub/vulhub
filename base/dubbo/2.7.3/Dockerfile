@@ -1,4 +1,4 @@
-FROM maven:3.8.1-jdk-8 AS builder
+FROM maven:3.8-jdk-8 AS builder
 
 LABEL maintainer="phithon <root@leavesongs.com>"
 
@@ -8,11 +8,11 @@ RUN set -ex \
     && cd /usr/src \
     && mvn clean package
 
-FROM openjdk:8-jre
+FROM eclipse-temurin:8-jre-jammy
 
 COPY --from=builder /usr/src/target/dubbo-sample-1.0-SNAPSHOT.jar /dubbo-sample-1.0-SNAPSHOT.jar
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
-EXPOSE 8080
+EXPOSE 8080 5005
 
 CMD ["bash", "/docker-entrypoint.sh"]

@@ -552,6 +552,70 @@ dockerfile = {"vulhub/dubbo:2.7.3" = "base/dubbo/2.7.3"}
 tags = ["Deserialization", "RCE"]
 
 [[environment]]
+name = "Apache Dubbo Provider Deserialization Remote Code Execution"
+cve = ["CVE-2020-1948"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2020-1948"
+dockerfile = {"vulhub/dubbo:2.7.5" = "base/dubbo/2.7.5"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo Serialization ID Deserialization Remote Code Execution"
+cve = ["CVE-2021-25641"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2021-25641"
+dockerfile = {"vulhub/dubbo:2.7.7" = "base/dubbo/2.7.7"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo GenericFilter Native Java Deserialization Remote Code Execution"
+cve = ["CVE-2021-30179"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2021-30179"
+dockerfile = {"vulhub/dubbo:2.7.9" = "base/dubbo/2.7.9"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo Migration Rule YAML Deserialization Remote Code Execution"
+cve = ["CVE-2021-36162"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2021-36162"
+dockerfile = {"vulhub/dubbo:2.7.12" = "base/dubbo/2.7.12"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo Hessian2 Deserialization Remote Code Execution"
+cve = ["CVE-2021-43297"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2021-43297"
+dockerfile = {"vulhub/dubbo:2.7.9-with-xbean-el" = "base/dubbo/2.7.9-with-xbean-el"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo Hessian-Lite Deserialization Remote Code Execution"
+cve = ["CVE-2022-39198"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2022-39198"
+dockerfile = {"vulhub/dubbo:3.0.10" = "base/dubbo/3.0.10"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo Generic Invoke Deserialization Remote Code Execution"
+cve = ["CVE-2023-23638"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2023-23638"
+dockerfile = {"vulhub/dubbo:2.7.20" = "base/dubbo/2.7.20"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
+name = "Apache Dubbo Telnet Handler PojoUtils Remote Code Execution"
+cve = ["CVE-2021-32824"]
+app = "Apache Dubbo"
+path = "dubbo/CVE-2021-32824"
+dockerfile = {"vulhub/dubbo:2.7.9" = "base/dubbo/2.7.9"}
+tags = ["Deserialization", "RCE"]
+
+[[environment]]
 name = "ECShop 4.x collection_list SQL Injection"
 cve = []
 app = "ECshop"

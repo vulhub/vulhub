@@ -25,9 +25,13 @@
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder/>
 
-    <dubbo:application name="http-consumer"/>
+    <dubbo:application name="dubbo-provider"/>
 
-    <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:2181"/>
+    <dubbo:registry address="N/A"/>
 
-    <dubbo:reference id="calcService" interface="org.vulhub.api.CalcService"/>
+    <dubbo:protocol name="dubbo" id="dubbo" port="20880" serialization="hessian2"/>
+
+    <bean id="calcService" class="org.vulhub.impl.CalcServiceImpl"/>
+
+    <dubbo:service interface="org.vulhub.api.CalcService" ref="calcService" protocol="dubbo"/>
 </beans>
