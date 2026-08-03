@@ -112,6 +112,14 @@ dockerfile = {"vulhub/aj-report:1.4.0" = "base/aj-report/1.4.0"}
 tags = ["RCE", "Auth Bypass"]
 
 [[environment]]
+name = "Apache Axis 1.4 Remote Code Execution"
+cve = ["CVE-2019-0227"]
+app = "Apache Axis"
+path = "apache-axis/CVE-2019-0227"
+dockerfile = {"vulhub/apache-axis:1.4" = "base/apache-axis/1.4"}
+tags = ["RCE"]
+
+[[environment]]
 name = "Apache CXF Aegis DataBinding Server-Side Request Forgery"
 cve = ["CVE-2024-28752"]
 app = "Apache CXF"
