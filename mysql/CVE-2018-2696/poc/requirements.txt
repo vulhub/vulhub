@@ -1,0 +1,1 @@
+mysql_connector_repackaged==0.3.1
