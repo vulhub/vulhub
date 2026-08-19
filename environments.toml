@@ -1872,6 +1872,14 @@ dockerfile = {"vulhub/rails:5.2.2" = "base/rails/5.2.2"}
 tags = ["Path Traversal", "Framework"]
 
 [[environment]]
+name = "Ray Job Submission API Unauthenticated Remote Code Execution"
+cve = ["CVE-2023-48022"]
+app = "Ray"
+path = "ray/CVE-2023-48022"
+dockerfile = {"vulhub/ray:2.8.0" = "base/ray/2.8.0"}
+tags = ["RCE"]
+
+[[environment]]
 name = "React Server Components Flight Protocol Deserialization RCE"
 cve = ["CVE-2025-55182"]
 app = "React"
