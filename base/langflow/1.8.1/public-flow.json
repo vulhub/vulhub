@@ -1,0 +1,8 @@
+{
+  "id": "e8b4f8c2-7a1d-4e5f-9b3c-2a6d8f0e1b4a",
+  "name": "My Flow",
+  "description": "A demo flow shared via the playground",
+  "data": {"nodes": [], "edges": []},
+  "endpoint_name": "my-flow",
+  "access_type": "PUBLIC"
+}
