@@ -1240,6 +1240,14 @@ dockerfile = {"vulhub/langflow:1.2.0" = "base/langflow/1.2.0"}
 tags = ["LLM", "RCE"]
 
 [[environment]]
+name = "Langflow Public Flow Build API Unauthenticated Remote Code Execution"
+cve = ["CVE-2026-33017"]
+app = "Langflow"
+path = "langflow/CVE-2026-33017"
+dockerfile = {"vulhub/langflow:1.8.1" = "base/langflow/1.8.1"}
+tags = ["LLM", "RCE"]
+
+[[environment]]
 name = "Laravel Ignition 2.5.1 Remote Code Execution"
 cve = ["CVE-2021-3129"]
 app = "Laravel"
