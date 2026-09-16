@@ -19,8 +19,17 @@ RUN set -ex \
     && uv pip install --no-cache --no-deps langflow==1.8.1 \
     && rm -rf /root/.cache/uv
 
+# Model a realistic deployment: authentication is enabled (AUTO_LOGIN off)
+# and the administrator has shared one flow through the playground feature.
+# Langflow imports the JSON into the database at startup via
+# LANGFLOW_LOAD_FLOWS_PATH, keeping the fixed flow UUID below stable.
+COPY public-flow.json /app/flows/public-flow.json
+
 ENV LANGFLOW_HOST=0.0.0.0 \
-    LANGFLOW_AUTO_LOGIN=true \
+    LANGFLOW_AUTO_LOGIN=false \
+    LANGFLOW_SUPERUSER=administrator \
+    LANGFLOW_SUPERUSER_PASSWORD=vulhub \
+    LANGFLOW_LOAD_FLOWS_PATH=/app/flows \
     DO_NOT_TRACK=true
 
 CMD ["uv", "run", "langflow", "run"]
