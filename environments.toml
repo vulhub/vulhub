@@ -792,6 +792,14 @@ dockerfile = {"vulhub/gitlab:13.10.1" = "base/gitlab/13.10.1"}
 tags = ["RCE"]
 
 [[environment]]
+name = "GitLab Unauthenticated Arbitrary Local File Read"
+cve = ["CVE-2026-85706"]
+app = "GitLab"
+path = "gitlab/CVE-2026-85706"
+dockerfile = {"vulhub/gitlab:19.3.1" = "base/gitlab/19.3.1"}
+tags = ["Info Disclosure", "Path Traversal"]
+
+[[environment]]
 name = "gitlist 0.6.0 Remote Command Execution"
 cve = ["CVE-2018-1000533"]
 app = "GitList"
