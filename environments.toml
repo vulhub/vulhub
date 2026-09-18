@@ -840,6 +840,14 @@ dockerfile = {"vulhub/gogs:0.11.66" = "base/gogs/0.11.66"}
 tags = ["Auth Bypass", "Path Traversal"]
 
 [[environment]]
+name = "Gotenberg 8.30.1 ExifTool Argument Injection via PDF Metadata Values"
+cve = ["CVE-2026-40281"]
+app = "Gotenberg"
+path = "gotenberg/CVE-2026-40281"
+dockerfile = {"vulhub/gotenberg:8.30.1" = "base/gotenberg/8.30.1"}
+tags = ["RCE"]
+
+[[environment]]
 name = "Gradio File Path Traversal"
 cve = ["CVE-2023-51449"]
 app = "Gradio"
