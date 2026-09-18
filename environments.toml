@@ -845,7 +845,7 @@ cve = ["CVE-2026-40281"]
 app = "Gotenberg"
 path = "gotenberg/CVE-2026-40281"
 dockerfile = {"vulhub/gotenberg:8.30.1" = "base/gotenberg/8.30.1"}
-tags = ["File Upload", "RCE"]
+tags = ["RCE"]
 
 [[environment]]
 name = "Gradio File Path Traversal"
