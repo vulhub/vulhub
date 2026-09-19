@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="header">
+    <h3>Spring Boot Web Thymeleaf Example</h3>
+</div>
+<div th:fragment="main">
+    <span th:text="'Hello, ' + ${message}"></span>
+</div>
+</body>
+</html>
