@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: gitops-production
+  namespace: argocd
+spec:
+  description: |
+    Production GitOps project. Imagine a real cluster: this project owns the
+    Helm chart repo and the manifests git repo that drive the prod deploy.
+    Used in the CVE-2025-55190 lab to show how a low-privilege CI token can
+    still exfiltrate those repository credentials.
+  sourceRepos:
+    - "*"
+  destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  roles:
+    - name: ci-sync-bot
+      description: |
+        Low-privilege automation role intended only for syncing applications
+        from CI pipelines. It deliberately has NO `repositories` permission,
+        yet the /api/v1/projects/{project}/detailed endpoint still leaks
+        repo credentials to any token that holds it.
+      policies:
+        - p, proj:gitops-production:ci-sync-bot, applications, get, gitops-production/*, allow
+        - p, proj:gitops-production:ci-sync-bot, applications, sync, gitops-production/*, allow
+        - p, proj:gitops-production:ci-sync-bot, applications, action/argoproj.io/Rollout/*, gitops-production/*, allow
+      groups: []
