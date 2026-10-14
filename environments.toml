@@ -800,6 +800,14 @@ dockerfile = {"vulhub/gitlab:19.3.1" = "base/gitlab/19.3.1"}
 tags = ["Info Disclosure", "Path Traversal"]
 
 [[environment]]
+name = "GitLab CI/CD Regular Expression Compiler Remote Code Execution"
+cve = ["CVE-2026-97229"]
+app = "GitLab"
+path = "gitlab/CVE-2026-97229"
+dockerfile = {"vulhub/gitlab:19.4.1" = "base/gitlab/19.4.1"}
+tags = ["RCE"]
+
+[[environment]]
 name = "gitlist 0.6.0 Remote Command Execution"
 cve = ["CVE-2018-1000533"]
 app = "GitList"
