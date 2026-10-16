@@ -664,6 +664,14 @@ dockerfile = {"vulhub/fastjson:1.2.83" = "base/fastjson/1.2.83"}
 tags = ["RCE", "Deserialization"]
 
 [[environment]]
+name = "File Browser Hook Authentication Pre-Auth Command Injection"
+cve = ["CVE-2026-54088"]
+app = "File Browser"
+path = "filebrowser/CVE-2026-54088"
+dockerfile = {"vulhub/filebrowser:2.63.5" = "base/filebrowser/2.63.5"}
+tags = ["RCE"]
+
+[[environment]]
 name = "FFmpeg Arbitrary File Read and SSRF"
 cve = ["CVE-2016-1897", "CVE-2016-1898"]
 app = "FFmpeg"
