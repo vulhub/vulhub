@@ -15,3 +15,4 @@ n8n/CVE-2025-68613/exploit.py linguist-vendored
 openclaw/CVE-2026-25253/*.py linguist-vendored
 wordpress/CVE-2026-63030/poc.py linguist-vendored
 django/**/migrations/*.py linguist-generated
+gitlab/CVE-2026-97229/poc.py linguist-vendored
