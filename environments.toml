@@ -160,6 +160,14 @@ dockerfile = {"vulhub/appweb:7.0.1" = "base/appweb/7.0.1"}
 tags = ["Auth Bypass", "Webserver"]
 
 [[environment]]
+name = "Argo CD Project API Token Exposes Repository Credentials"
+cve = ["CVE-2025-55190"]
+app = "Argo CD"
+path = "argocd/CVE-2025-55190"
+dockerfile = {"vulhub/argocd:2.14.15" = "base/argocd/2.14.15"}
+tags = ["Info Disclosure", "Auth Bypass"]
+
+[[environment]]
 name = "Aria2 Arbitrary File Write"
 cve = []
 app = "Aria2"

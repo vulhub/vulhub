@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repo-prod-charts-helm
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  name: prod-charts-helm
+  url: https://charts.example.invalid
+  type: helm
+  project: gitops-production
+  username: vulhub-helm-bot
+  password: s3cr3t-helm-pass-2025
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repo-prod-manifests-git
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  name: prod-manifests-git
+  url: https://git.example.invalid/acme/prod-manifests.git
+  type: git
+  project: gitops-production
+  username: vulhub-git-bot
+  password: ghp_FAKE0vulhubLEAKED2025pat0deploykey
