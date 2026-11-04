@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java "-Ddubbo.registry.address=${DUBBO_REGISTRY}" -jar /dubbo-sample-1.0-SNAPSHOT.jar
+exec java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 $JAVA_OPTS -jar /dubbo-sample-1.0-SNAPSHOT.jar

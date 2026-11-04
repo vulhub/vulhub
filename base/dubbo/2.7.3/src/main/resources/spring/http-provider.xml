@@ -27,7 +27,7 @@
 
     <dubbo:application name="http-provider"/>
 
-    <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:2181"/>
+    <dubbo:registry address="${dubbo.registry.address:N/A}"/>
 
     <dubbo:protocol name="http" id="http" port="${servlet.port:8080}" server="${servlet.container:tomcat}"/>
 
