@@ -76,9 +76,9 @@ RUN apk add ${APK_FLAGS_DEV} --virtual build-deps tzdata alpine-sdk coreutils au
         && apk del ${APK_FLAGS_COMMON} --purge build-deps \
         && rm -rf /var/cache/apk/* /tmp/zabbix/
 
-COPY docker-entrypoint.sh /
+COPY docker-entrypoint.sh docker-healthcheck.sh /
 
 EXPOSE 10051/TCP 162/UDP
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-HEALTHCHECK --interval=15s --timeout=3s --retries=3 CMD nc -vz localhost 10051 || exit 1
+HEALTHCHECK --interval=15s --timeout=3s --retries=3 CMD ["/docker-healthcheck.sh"]
