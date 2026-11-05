@@ -13,6 +13,7 @@ __stop() {
 trap "__stop; exit 0" SIGTERM SIGINT
 
 if [ "$1" == "server" ]; then
+    printf '%s\n' "$ZBX_SRV_PORT" > /var/run/zabbix/healthcheck-port
     sed -e "s/.*\(ListenPort=\).*/\1$ZBX_SRV_PORT/g" \
         -e "s/.*\(DBHost=\).*/\1$DATABASE_HOST/g" \
         -e "s/^\(DBName=\).*/\1$DATABASE_NAME/g" \
@@ -22,6 +23,7 @@ if [ "$1" == "server" ]; then
     echo "> Running zabbix server..."
     exec su zabbix -s "/bin/bash" -c "/usr/sbin/zabbix_server --foreground -c /etc/zabbix/zabbix_server.conf"
 elif [ "$1" == "agent" ]; then
+    printf '%s\n' "$ZBX_AGT_PORT" > /var/run/zabbix/healthcheck-port
     sed -e "s/^\(Server=\).*/\1$ZBX_SRV_HOST/g" \
         -e "s/^\(ServerActive=\).*/\1$ZBX_SRV_HOST_ACT/g" \
         -e "s/.*\(StartAgents=\).*/\1$ZBX_AGT_NUM/g" \
